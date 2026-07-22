@@ -1,6 +1,7 @@
 import Oka.Algebra.Category.ModuleCat.Presheaf.Submodule
 import Oka.Algebra.Category.ModuleCat.Sheaf.Annihilator
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Basic
+import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Criterion
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Locality
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Stability
 import Oka.Algebra.Category.ModuleCat.Sheaf.Free
@@ -10,4 +11,9 @@ import Oka.Algebra.Category.ModuleCat.Sheaf.Submodule
 import Oka.CategoryTheory.Sites.CoversTop.Over
 import Oka.CategoryTheory.Sites.Over
 import Oka.CategoryTheory.Sites.Whiskering
+import Oka.Coherent
+import Oka.LocalOkaRing
+import Oka.OkaRing
 import Oka.Statement
+import Oka.StructureSheaf
+import Oka.Weierstrass
