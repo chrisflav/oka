@@ -304,6 +304,70 @@ theorem isCoherentStructureSheaf_of_hasLocalRelations (h : Y.HasLocalRelations) 
         exact h6.symm
       rw [h3, h1, hsum, h4]
 
+section Restrict
+
+variable {X : LocallyRingedSpace.{u}} (U : Opens X)
+
+/-- An open subset of the open subspace `U`, viewed as an open subset of `X`. -/
+abbrev imOpen (W : Opens (X.restrict U.isOpenEmbedding)) : Opens X :=
+  U.isOpenEmbedding.isOpenMap.functor.obj W
+
+/-- An open subset of `X`, viewed as an open subset of the open subspace `U`. -/
+abbrev preOpen (V : Opens X) : Opens (X.restrict U.isOpenEmbedding) :=
+  ⟨Subtype.val ⁻¹' (V : Set X), V.isOpen.preimage continuous_subtype_val⟩
+
+@[simp]
+lemma restrict_res {W W' : Opens (X.restrict U.isOpenEmbedding)} (h : W' ≤ W)
+    (s : (X.restrict U.isOpenEmbedding).presheaf.obj (op W)) :
+    (X.restrict U.isOpenEmbedding).res h s = X.res (Set.image_mono h) s :=
+  rfl
+
+lemma imOpen_le (W : Opens (X.restrict U.isOpenEmbedding)) : imOpen U W ≤ U := by
+  rintro x ⟨y, _, rfl⟩; exact y.2
+
+lemma imOpen_preOpen {V : Opens X} (hVU : V ≤ U) : imOpen U (preOpen U V) = V := by
+  ext x
+  exact ⟨by rintro ⟨y, hy, rfl⟩; exact hy, fun hx ↦ ⟨⟨x, hVU hx⟩, hx, rfl⟩⟩
+
+lemma preOpen_le_of_le_imOpen {V : Opens X} {W : Opens (X.restrict U.isOpenEmbedding)}
+    (h : V ≤ imOpen U W) : preOpen U V ≤ W := by
+  intro z hz
+  obtain ⟨w, hw, hwz⟩ := h hz
+  exact (Subtype.val_injective hwz) ▸ hw
+
+/-- Having locally finitely generated relations transfers from an open subspace of `X` to `X`
+itself, over that open set. -/
+theorem HasLocalRelations.hasLocalRelationsOn
+    (h : (X.restrict U.isOpenEmbedding).HasLocalRelations) :
+    X.HasLocalRelationsOn U := by
+  intro V hVU m f x hx
+  have hV : imOpen U (preOpen U V) = V := imOpen_preOpen U hVU
+  obtain ⟨W', hW'V', k, g, hxW', hrel, hgen⟩ :=
+    h (preOpen U V) m (fun i ↦ X.res hV.le (f i)) ⟨x, hVU hx⟩ hx
+  refine ⟨imOpen U W', (Set.image_mono hW'V').trans hV.le, k, g,
+    ⟨⟨x, hVU hx⟩, hxW', rfl⟩, fun l ↦ ?_, fun W2 hW2le a ha y hy ↦ ?_⟩
+  · have h1 := hrel l
+    simp only [restrict_res, res_res] at h1
+    exact h1
+  · have hW2 : imOpen U (preOpen U W2) = W2 :=
+      imOpen_preOpen U (hW2le.trans (imOpen_le U W'))
+    have hpre : preOpen U W2 ≤ W' := preOpen_le_of_le_imOpen U hW2le
+    have hyU : y ∈ U := (hW2le.trans (imOpen_le U W')) hy
+    have hrel2 : ∑ i, X.res hW2.le (a i) *
+        X.res (Set.image_mono (hpre.trans hW'V')) (X.res hV.le (f i)) = 0 := by
+      have h2 := congrArg (X.res hW2.le) ha
+      simp only [res_sum, res_mul, res_res, res_zero] at h2
+      simpa only [res_res] using h2
+    obtain ⟨W3, hW3, hyW3, c, hc⟩ :=
+      hgen (preOpen U W2) hpre (fun i ↦ X.res hW2.le (a i)) hrel2 ⟨y, hyU⟩ hy
+    refine ⟨imOpen U W3, (Set.image_mono hW3).trans hW2.le, ⟨⟨y, hyU⟩, hyW3, rfl⟩,
+      c, fun i ↦ ?_⟩
+    have h3 := hc i
+    simp only [restrict_res, res_res] at h3
+    exact h3
+
+end Restrict
+
 end AlgebraicGeometry.LocallyRingedSpace
 
 open AlgebraicGeometry

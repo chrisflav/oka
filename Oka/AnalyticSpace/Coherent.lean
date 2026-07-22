@@ -48,8 +48,7 @@ universe u
 
 namespace ComplexAnalytic
 
-/-- If the restriction of `X` to an open set `U` is a local model, then `𝒪_X` has locally
-finitely generated relations over `U`.
+/-- The structure sheaf of a local model has locally finitely generated relations.
 
 This is the geometric heart of the deduction, and the point at which Oka's coherence theorem
 for `ℂ^n` is used. Writing the local model as a closed immersion `i : X|_U ⟶ Y` into an open
@@ -69,9 +68,8 @@ what step 1 delivers, since `𝒪_Y ↠ i_*𝒪_M` is surjective on stalks and n
 is the reason `SheafOfModules.isCoherent_of_forall_kernel_of_locally` was proved: the
 sectionwise variant of this statement would be a vanishing statement for `H¹` on arbitrary open
 sets and is not available. -/
-theorem IsLocalModel.hasLocalRelationsOn {X : LocallyRingedSpace.{u}} (U : Opens X)
-    (h : IsLocalModel (X.restrict U.isOpenEmbedding)) :
-    X.HasLocalRelationsOn U :=
+theorem IsLocalModel.hasLocalRelations {M : LocallyRingedSpace.{u}} (h : IsLocalModel M) :
+    M.HasLocalRelations :=
   sorry
 
 /-- **Coherence of the structure sheaf of a complex analytic space.**
@@ -85,6 +83,7 @@ theorem AnalyticSpace.isCoherentStructureSheaf (X : AnalyticSpace.{u}) :
   refine LocallyRingedSpace.isCoherentStructureSheaf_of_hasLocalRelations
     (LocallyRingedSpace.hasLocalRelations_of_openCover
       (fun x : X.toLocallyRingedSpace ↦ (U x).1) (fun x ↦ ⟨x, (U x).2⟩) fun x ↦ ?_)
-  exact IsLocalModel.hasLocalRelationsOn _ (IsLocalModel.of_iso (he x).some (hM x))
+  exact LocallyRingedSpace.HasLocalRelations.hasLocalRelationsOn _
+    (IsLocalModel.of_iso (he x).some (hM x)).hasLocalRelations
 
 end ComplexAnalytic
