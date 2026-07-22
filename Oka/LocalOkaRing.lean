@@ -3,6 +3,14 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
+import Mathlib.Algebra.MvPolynomial.Funext
+import Mathlib.Analysis.Analytic.Uniqueness
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+import Mathlib.RingTheory.MvPowerSeries.Inverse
+import Mathlib.RingTheory.MvPowerSeries.Rename
+import Mathlib.RingTheory.Polynomial.DegreeLT
+import Mathlib.RingTheory.PowerSeries.Order
 import Oka.StructureSheaf
 
 /-!
@@ -23,6 +31,11 @@ holomorphic functions on `ℂ^ι`.
   ideal the series with vanishing constant term.
 - `OkaRing.toLocalOkaRingHom`: the `ℂ`-algebra map sending a holomorphic function defined on an
   open set `U ∋ 0` to its Taylor series at the origin.
+- `MvPowerSeries.fromPolynomial` and `MvPowerSeries.fromPolynomial'`: a polynomial in one
+  distinguished variable over the power series in the remaining variables, viewed as a power
+  series in all variables.
+- `MvPowerSeries.partialEval`: the restriction `P ↦ P(0, ..., z_i, ..., 0)` of a power series
+  to the `i`-th coordinate axis.
 
 ## Main results
 
@@ -989,53 +1002,230 @@ end Germ
 
 variable {n : ℕ}
 
-#check MvPowerSeries
-
 section
 
 open Polynomial
 
-variable {σ : Type*} {R : Type*} [CommRing R]
+variable {σ τ : Type*} {R : Type*} [CommRing R]
 
-def MvPowerSeries.fromPolynomial (i : σ) :
+instance Filter.TendstoCofinite.subtypeVal {α : Type*} {p : α → Prop} :
+    TendstoCofinite (Subtype.val : Subtype p → α) :=
+  tendstoCofinite_of_injective Subtype.val_injective
+
+namespace MvPowerSeries
+
+section Aux
+
+variable (f : τ → σ) [TendstoCofinite f] (hf : Function.Injective f) {i : σ}
+  (hi : i ∉ Set.range f)
+
+include hf hi in
+/-- Auxiliary lemma for `MvPowerSeries.coeff_fromPolynomial` and
+`MvPowerSeries.coeff_fromPolynomial'`. -/
+private lemma coeff_eval₂AlgHom_rename (Q : (MvPowerSeries τ R)[X]) (e : τ →₀ ℕ) (k : ℕ) :
+    coeff (Finsupp.mapDomain f e + Finsupp.single i k)
+      (Polynomial.eval₂AlgHom (rename f) (X i) (fun _ ↦ Commute.all _ _) Q) =
+        coeff e (Q.coeff k) := by
+  have hD : ∀ x : τ →₀ ℕ, Finsupp.mapDomain f x i = 0 := fun x ↦
+    Finsupp.mapDomain_notin_range x i hi
+  induction Q using Polynomial.induction_on' with
+  | add p q hp hq => simp only [map_add, Polynomial.coeff_add, hp, hq]
+  | monomial k' a =>
+    rw [Polynomial.eval₂AlgHom_apply, Polynomial.eval₂_monomial, X_pow_eq, coeff_mul_monomial]
+    simp only [RingHom.coe_coe]
+    -- the monomial `X i ^ k'` divides the exponent `mapDomain f e + single i k` iff `k' ≤ k`
+    have hle : Finsupp.single i k' ≤ Finsupp.mapDomain f e + Finsupp.single i k ↔ k' ≤ k := by
+      refine ⟨fun h ↦ by simpa [hD] using h i, fun h j ↦ ?_⟩
+      rcases eq_or_ne j i with rfl | hj
+      · simpa [hD] using h
+      · simp [hj]
+    have hsub : ∀ m : ℕ, Finsupp.mapDomain f e + Finsupp.single i k - Finsupp.single i m =
+        Finsupp.mapDomain f e + Finsupp.single i (k - m) := by
+      refine fun m ↦ Finsupp.ext fun j ↦ ?_
+      rcases eq_or_ne j i with rfl | hj
+      · simp [hD]
+      · simp [hj]
+    -- and the renamed coefficients only see the exponents avoiding `i`
+    have hcoeff : ∀ m : ℕ, coeff (Finsupp.mapDomain f e + Finsupp.single i m) (rename f a) =
+        if m = 0 then coeff e a else 0 := by
+      intro m
+      rcases eq_or_ne m 0 with rfl | hm
+      · have h : Finsupp.mapDomain f e = Finsupp.embDomain ⟨f, hf⟩ e :=
+          (Finsupp.embDomain_eq_mapDomain ⟨f, hf⟩ e).symm
+        rw [if_pos rfl, Finsupp.single_zero, add_zero, h]
+        exact coeff_embDomain_rename ⟨f, hf⟩ a e
+      · rw [if_neg hm]
+        refine coeff_rename_eq_zero f a ?_
+        rintro ⟨x, hx⟩
+        exact hm (by simpa [hD] using (congrArg (fun g ↦ g i) hx).symm)
+    rw [Polynomial.coeff_monomial]
+    rcases le_or_gt k' k with h | h
+    · rw [if_pos (hle.mpr h), hsub, hcoeff, mul_one]
+      rcases eq_or_ne k' k with rfl | hk
+      · simp
+      · rw [if_neg (by omega : ¬ k - k' = 0), if_neg hk, map_zero]
+    · have hlt : ¬ Finsupp.single i k' ≤ Finsupp.mapDomain f e + Finsupp.single i k := fun hc ↦
+        absurd (hle.mp hc) (by omega)
+      rw [if_neg hlt, if_neg (by omega : ¬ k' = k), map_zero]
+
+include hf hi in
+/-- Auxiliary lemma for `MvPowerSeries.fromPolynomial_injective` and
+`MvPowerSeries.fromPolynomial'_injective`. -/
+private lemma eval₂AlgHom_rename_injective :
+    Function.Injective (Polynomial.eval₂AlgHom (R := R) (rename f) (X i)
+      (fun _ ↦ Commute.all _ _)) := by
+  intro P Q h
+  refine Polynomial.ext fun k ↦ MvPowerSeries.ext fun e ↦ ?_
+  rw [← coeff_eval₂AlgHom_rename f hf hi P e k, ← coeff_eval₂AlgHom_rename f hf hi Q e k, h]
+
+end Aux
+
+section FromPolynomial
+
+variable (i : σ)
+
+/-- The `R`-algebra map from the polynomials over the power series in the variables `j ≠ i` to
+the power series in all variables, sending the polynomial variable to `X i`. -/
+noncomputable def fromPolynomial :
     (MvPowerSeries { j : σ // j ≠ i } R)[X] →ₐ[R] MvPowerSeries σ R :=
-  -- TODO: define this
-  sorry
+  Polynomial.eval₂AlgHom (rename Subtype.val) (X i) fun _ ↦ Commute.all _ _
 
-def MvPowerSeries.fromPolynomial' :
+variable {i}
+
+private lemma notMem_range_subtypeVal :
+    i ∉ Set.range (Subtype.val : { j : σ // j ≠ i } → σ) := by
+  rintro ⟨⟨j, hj⟩, hji⟩
+  exact hj hji
+
+@[simp]
+lemma fromPolynomial_C (P : MvPowerSeries { j : σ // j ≠ i } R) :
+    fromPolynomial i (Polynomial.C P) = rename Subtype.val P :=
+  Polynomial.eval₂_C _ _
+
+@[simp]
+lemma fromPolynomial_X : fromPolynomial (R := R) i Polynomial.X = X i :=
+  Polynomial.eval₂_X _ _
+
+/-- The coefficients of `MvPowerSeries.fromPolynomial i Q` are the coefficients of the
+coefficients of `Q`. -/
+lemma coeff_fromPolynomial (Q : (MvPowerSeries { j : σ // j ≠ i } R)[X])
+    (e : { j : σ // j ≠ i } →₀ ℕ) (k : ℕ) :
+    coeff (Finsupp.mapDomain Subtype.val e + Finsupp.single i k) (fromPolynomial i Q) =
+      coeff e (Q.coeff k) :=
+  coeff_eval₂AlgHom_rename _ Subtype.val_injective notMem_range_subtypeVal Q e k
+
+lemma fromPolynomial_injective : Function.Injective (fromPolynomial (R := R) i) :=
+  eval₂AlgHom_rename_injective _ Subtype.val_injective notMem_range_subtypeVal
+
+end FromPolynomial
+
+section FromPolynomial'
+
+/-- The `R`-algebra map from the polynomials over the power series in `n` variables to the
+power series in `n + 1` variables, sending the polynomial variable to the last variable. -/
+noncomputable def fromPolynomial' :
     (MvPowerSeries (Fin n) R)[X] →ₐ[R] MvPowerSeries (Fin (n + 1)) R :=
-  -- TODO: define this
-  sorry
+  Polynomial.eval₂AlgHom (rename Fin.castSucc) (X (Fin.last n)) fun _ ↦ Commute.all _ _
 
-def MvPowerSeries.IsPolynomialIn (P : MvPowerSeries ι R) (i : ι) :
+private lemma last_notMem_range_castSucc :
+    Fin.last n ∉ Set.range (Fin.castSucc : Fin n → Fin (n + 1)) := by
+  simp
+
+@[simp]
+lemma fromPolynomial'_C (P : MvPowerSeries (Fin n) R) :
+    fromPolynomial' (Polynomial.C P) = rename Fin.castSucc P :=
+  Polynomial.eval₂_C _ _
+
+@[simp]
+lemma fromPolynomial'_X : fromPolynomial' (R := R) (n := n) Polynomial.X = X (Fin.last n) :=
+  Polynomial.eval₂_X _ _
+
+/-- The coefficients of `MvPowerSeries.fromPolynomial' Q` are the coefficients of the
+coefficients of `Q`. -/
+lemma coeff_fromPolynomial' (Q : (MvPowerSeries (Fin n) R)[X]) (e : Fin n →₀ ℕ) (k : ℕ) :
+    coeff (Finsupp.mapDomain Fin.castSucc e + Finsupp.single (Fin.last n) k)
+      (fromPolynomial' Q) = coeff e (Q.coeff k) :=
+  coeff_eval₂AlgHom_rename _ (Fin.castSucc_injective n) last_notMem_range_castSucc Q e k
+
+lemma fromPolynomial'_injective :
+    Function.Injective (fromPolynomial' (R := R) (n := n)) :=
+  eval₂AlgHom_rename_injective _ (Fin.castSucc_injective n) last_notMem_range_castSucc
+
+end FromPolynomial'
+
+def IsPolynomialIn (P : MvPowerSeries ι R) (i : ι) :
     Prop :=
   ∃ (Q : (MvPowerSeries { j : ι //  j ≠ i } R)[X]),
     MvPowerSeries.fromPolynomial i Q = P
 
 noncomputable
-def MvPowerSeries.IsPolyonmialIn.polynomial {P : MvPowerSeries ι R}
+def IsPolyonmialIn.polynomial {P : MvPowerSeries ι R}
     {i : ι}
     (h : P.IsPolynomialIn i) :
     (MvPowerSeries { j : ι //   j ≠ i } R)[X] :=
   h.choose
 
--- TODO: the map P ↦ P(0, ...., z_i, 0, ..., 0)
-def MvPowerSeries.partialEval (i : ι) :
-    MvPowerSeries ι R →ₐ[R] PowerSeries R :=
-  sorry
+section PartialEval
+
+variable (i : σ)
+
+/-- The map `P ↦ P(0, ..., z_i, 0, ..., 0)`, as an `R`-algebra map to the power series in one
+variable. -/
+noncomputable def partialEval : MvPowerSeries σ R →ₐ[R] PowerSeries R :=
+  killCompl ⟨fun _ ↦ i, Function.injective_of_subsingleton _⟩
+
+variable {i}
+
+@[simp]
+lemma coeff_partialEval (P : MvPowerSeries σ R) (k : ℕ) :
+    PowerSeries.coeff k (partialEval i P) = coeff (Finsupp.single i k) P :=
+  (coeff_killCompl P (Finsupp.single () k)).trans (by
+    rw [Finsupp.embDomain_single]
+    rfl)
+
+@[simp]
+lemma partialEval_C (r : R) : partialEval i (C r : MvPowerSeries σ R) = PowerSeries.C r :=
+  killCompl_C r
+
+@[simp]
+lemma partialEval_X_self : partialEval i (X i : MvPowerSeries σ R) = PowerSeries.X :=
+  killCompl_X ()
+
+@[simp]
+lemma partialEval_X_of_ne {j : σ} (h : j ≠ i) : partialEval i (X j : MvPowerSeries σ R) = 0 :=
+  killCompl_X_eq_zero (by simpa using h)
+
+@[simp]
+lemma constantCoeff_partialEval (P : MvPowerSeries σ R) :
+    PowerSeries.constantCoeff (partialEval i P) = constantCoeff P := by
+  rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, coeff_partialEval,
+    ← coeff_zero_eq_constantCoeff_apply, Finsupp.single_zero]
+
+/-- Restricting `MvPowerSeries.fromPolynomial i Q` to the `i`-th axis amounts to evaluating the
+coefficients of `Q` at the origin. -/
+lemma partialEval_fromPolynomial (Q : (MvPowerSeries { j : σ // j ≠ i } R)[X]) :
+    partialEval i (fromPolynomial i Q) = (Q.map constantCoeff).toPowerSeries := by
+  refine PowerSeries.ext fun k ↦ ?_
+  rw [coeff_partialEval, Polynomial.coeff_coe, Polynomial.coeff_map,
+    ← coeff_zero_eq_constantCoeff_apply, ← coeff_fromPolynomial Q 0 k]
+  simp
+
+end PartialEval
 
 noncomputable
-def MvPowerSeries.orderIn (P : MvPowerSeries ι R) (i : ι) : ℕ∞ :=
+def orderIn (P : MvPowerSeries ι R) (i : ι) : ℕ∞ :=
   (MvPowerSeries.partialEval i P).order
 
-def MvPowerSeries.IsGeneralIn (P : MvPowerSeries ι R) (i : ι) :
+def IsGeneralIn (P : MvPowerSeries ι R) (i : ι) :
     Prop :=
   MvPowerSeries.partialEval i P ≠ 0
 
-lemma MvPowerSeries.isGeneralIn_iff_orderIn_ne_top
+lemma isGeneralIn_iff_orderIn_ne_top
     (P : MvPowerSeries ι R) (i : ι) :
-    P.IsGeneralIn i ↔ P.orderIn i < ⊤ :=
-  sorry
+    P.IsGeneralIn i ↔ P.orderIn i < ⊤ := by
+  rw [IsGeneralIn, orderIn, lt_top_iff_ne_top, ne_eq, ne_eq, PowerSeries.order_eq_top]
+
+end MvPowerSeries
 
 end
 

@@ -6,7 +6,6 @@ Authors: Christian Merten
 module
 
 public import Mathlib.CategoryTheory.Sites.Over
-public import Mathlib.CategoryTheory.Sites.CoverLifting
 
 /-!
 -/

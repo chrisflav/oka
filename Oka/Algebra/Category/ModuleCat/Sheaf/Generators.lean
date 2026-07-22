@@ -7,9 +7,9 @@ module
 
 public import Mathlib.Algebra.Category.Grp.FilteredColimits
 public import Mathlib.Data.Finite.Sum
-public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Generators
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 public import Oka.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous
+public import Oka.CategoryTheory.Sites.Over
 
 /-!
 -/

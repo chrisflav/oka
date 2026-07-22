@@ -6,10 +6,7 @@ Authors: Christian Merten
 module
 
 public import Oka.Algebra.Category.ModuleCat.Presheaf.Submodule
-public import Oka.CategoryTheory.Sites.Whiskering
-public import Mathlib.Algebra.Category.Grp.ForgetCorepresentable
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf
-public import Mathlib.CategoryTheory.Sites.Subsheaf
 
 /-!
 # Submodules of sheaves of modules

@@ -7,8 +7,6 @@ module
 
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackContinuous
-public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous
-public import Oka.CategoryTheory.Sites.Over
 
 /-!
 -/

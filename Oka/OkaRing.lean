@@ -1,4 +1,25 @@
-import Mathlib
+/-
+Copyright (c) 2026 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+-/
+import Mathlib.Algebra.Polynomial.AlgebraMap
+import Mathlib.Analysis.Analytic.Basic
+import Mathlib.Analysis.Complex.Basic
+
+/-!
+# The ring of holomorphic functions on an open subset of `ℂ^ι`
+
+## Main definitions
+
+- `OkaAnalytic`: a function on an open set `U` of `ℂ^ι` is holomorphic if its extension by zero
+  is analytic on `U`.
+- `okaSubring` and `OkaRing`: the `ℂ`-algebra of holomorphic functions on `U`.
+- `OkaRing.restrict`: restriction of holomorphic functions along an inclusion of opens.
+- `TopologicalSpace.Opens.extend'`: the cylinder `U × ℂ` over an open set `U` of `ℂ^n`.
+- `Polynomial.toOkaRing`: a polynomial over `OkaRing U` viewed as a holomorphic function on the
+  cylinder over `U`.
+-/
 
 noncomputable
 abbrev linOfFun {R : Type*} [CommRing R]
