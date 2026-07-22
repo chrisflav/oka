@@ -22,19 +22,23 @@ open Polynomial TopologicalSpace
 
 variable {n : ℕ}
 
+/-- A local Weierstrass polynomial is a monic polynomial whose coefficients below the leading
+one vanish at the origin. -/
 structure IsLocalWeierstrassPolynomial
   (P : (MvPowerSeries (Fin n) ℂ)[X]) : Prop where
   monic : P.Monic
   apply_zero (i : ℕ) (hi : i < P.degree) :
-  MvPowerSeries.constantCoeff (P.coeff i)  = 0
+  MvPowerSeries.constantCoeff (P.coeff i) = 0
 
-def LocalOkaRing.fromPolynomial : (LocalOkaRing (Fin n))[X] →ₐ[ℂ] LocalOkaRing (Fin (n+1)) := sorry
+/-- A polynomial over the germs in `n` variables, viewed as a germ in `n + 1` variables. -/
+def LocalOkaRing.fromPolynomial :
+    (LocalOkaRing (Fin n))[X] →ₐ[ℂ] LocalOkaRing (Fin (n + 1)) := sorry
 
-/-- uniqueness is omitted ---/
+/-- The Weierstrass preparation theorem for germs; uniqueness is omitted. -/
 theorem localweierstrass_preparation
-    (f : LocalOkaRing (Fin (n+1)))
-    (hf : (f : MvPowerSeries (Fin (n+1)) ℂ).IsGeneralIn  (.last _) ) :
-    ∃ (u : LocalOkaRing (Fin (n+1))) (hu : IsUnit u)
+    (f : LocalOkaRing (Fin (n + 1)))
+    (hf : (f : MvPowerSeries (Fin (n + 1)) ℂ).IsGeneralIn (.last _)) :
+    ∃ (u : LocalOkaRing (Fin (n + 1))) (hu : IsUnit u)
       (g : (LocalOkaRing (Fin (n)))[X])
       (hg : IsLocalWeierstrassPolynomial
            (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) g)),
@@ -47,13 +51,13 @@ theorem localweierstrass_preparation
 
 
 
-/-- uniqueness is omitted ---/
+/-- The Weierstrass division theorem for germs; uniqueness is omitted. -/
 theorem localweierstrass_division
       (q : (LocalOkaRing (Fin (n)))[X])
       (hq : IsLocalWeierstrassPolynomial
            (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) q))
-      (f : LocalOkaRing (Fin (n+1))) :
-      ∃ (a : LocalOkaRing (Fin (n+1)))
+      (f : LocalOkaRing (Fin (n + 1))) :
+      ∃ (a : LocalOkaRing (Fin (n + 1)))
         (b : (LocalOkaRing (Fin (n)))[X]) (hd : b.degree < q.degree),
       f = a * (LocalOkaRing.fromPolynomial q) + (LocalOkaRing.fromPolynomial b) :=
   sorry
@@ -82,7 +86,7 @@ structure IsWeierstrassPolynomial (P : (OkaRing U)[X]) : Prop where
 
 variable (U : Opens (Fin (n + 1) → ℂ))
 
-/-- uniqueness is omitted ---/
+/-- The Weierstrass preparation theorem; uniqueness is omitted. -/
 theorem weierstrass_preparation
     (f : OkaRing U) (h : 0 ∈ U)
     (hf : ∃ (w : ℂ) (hw : Fin.snoc 0 w ∈ U),
@@ -99,7 +103,7 @@ theorem weierstrass_preparation
           h :=
   sorry
 
-/-- uniqueness is omitted ---/
+/-- The Weierstrass division theorem; uniqueness is omitted. -/
 theorem weierstrass_division
       (S : Opens (Fin n → ℂ))
       (g : (OkaRing S)[X]) (hx : 0 ∈ U) (hg : IsWeierstrassPolynomial _ g)
