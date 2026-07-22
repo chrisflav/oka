@@ -1,7 +1,7 @@
 /-
-Copyright (c) 2026 Christian Merten. All rights reserved.
+Copyright (c) 2026 Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Christian Merten
+Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
 import Mathlib.Algebra.Category.Ring.Limits
 import Mathlib.Analysis.Analytic.Within
@@ -18,6 +18,9 @@ sheaf of rings `okaSheaf ι` on the site of opens of `ℂ^ι`.
 
 - `okaPresheaf`: the presheaf of rings `U ↦ OkaRing U`.
 - `okaSheaf`: the structure sheaf of `ℂ^ι`, i.e. `okaPresheaf` together with the sheaf condition.
+- `OkaRing.evalHom`: evaluation of a holomorphic function at a point of its domain.
+- `OkaRing.congr`: the isomorphism of rings of holomorphic functions induced by a `ℂ`-linear
+  change of coordinates `ℂ^ι ≃ ℂ^κ`.
 -/
 
 open CategoryTheory TopologicalSpace Opposite
@@ -45,6 +48,30 @@ lemma restrict_self {U : Opens (ι → ℂ)} (f : OkaRing U) :
 @[simp]
 lemma restrict_restrict {U V W : Opens (ι → ℂ)} (h : U ≤ V) (h' : V ≤ W) (f : OkaRing W) :
     OkaRing.restrict h (OkaRing.restrict h' f) = OkaRing.restrict (h.trans h') f :=
+  rfl
+
+/-- Evaluation of a holomorphic function at a point of its domain, as a ring homomorphism. -/
+def evalHom {U : Opens (ι → ℂ)} {x : ι → ℂ} (hx : x ∈ U) : OkaRing U →+* ℂ where
+  toFun f := f.toFun _ ⟨x, hx⟩
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
+@[simp]
+lemma evalHom_apply {U : Opens (ι → ℂ)} {x : ι → ℂ} (hx : x ∈ U) (f : OkaRing U) :
+    OkaRing.evalHom hx f = f.toFun _ ⟨x, hx⟩ :=
+  rfl
+
+@[simp]
+lemma evalHom_restrict {U V : Opens (ι → ℂ)} (h : V ≤ U) {x : ι → ℂ} (hx : x ∈ V)
+    (f : OkaRing U) :
+    OkaRing.evalHom hx (OkaRing.restrict h f) = OkaRing.evalHom (h hx) f :=
+  rfl
+
+@[simp]
+lemma evalHom_algebraMap {U : Opens (ι → ℂ)} {x : ι → ℂ} (hx : x ∈ U) (c : ℂ) :
+    OkaRing.evalHom hx (algebraMap ℂ (OkaRing U) c) = c :=
   rfl
 
 end OkaRing
@@ -111,6 +138,61 @@ lemma okaAnalytic_of_locally {U : Opens (ι → ℂ)} (f : U → ℂ)
   exact (hV x hxV).congr (extend_eventuallyEq_extend h f hxV)
 
 end Analytic
+
+section Reindex
+
+/-- A continuous linear equivalence induces an order isomorphism on open sets. -/
+abbrev ContinuousLinearEquiv.opensCongr {R E F : Type*} [Semiring R]
+    [AddCommMonoid E] [AddCommMonoid F] [Module R E] [Module R F]
+    [TopologicalSpace E] [TopologicalSpace F] (φ : E ≃L[R] F) :
+    Opens E ≃o Opens F :=
+  φ.toHomeomorph.opensCongr
+
+variable {κ : Type*} [Fintype κ] (φ : (ι → ℂ) ≃L[ℂ] (κ → ℂ))
+
+/-- Precomposing a holomorphic function on `U` with a continuous linear map mapping `V` into `U`
+gives a holomorphic function on `V`. -/
+lemma OkaAnalytic.comp_continuousLinearMap {U : Opens (ι → ℂ)} {V : Opens (κ → ℂ)}
+    (ψ : (κ → ℂ) →L[ℂ] (ι → ℂ)) (h : ∀ y ∈ V, ψ y ∈ U) {f : U → ℂ} (hf : OkaAnalytic f) :
+    OkaAnalytic (fun y : V ↦ f ⟨ψ y, h y y.2⟩) := by
+  have key : ∀ y ∈ V, AnalyticAt ℂ (Function.extend Subtype.val f 0 ∘ ψ) y := fun y hy ↦
+    ((okaAnalytic_iff f).1 hf _ (h y hy)).comp (ψ.analyticAt y)
+  refine (funext fun z ↦ ?_ : (fun y : V ↦ f ⟨ψ y, h y y.2⟩) =
+    fun y : V ↦ (Function.extend Subtype.val f 0 ∘ ψ) y) ▸ okaAnalytic_restrict key
+  exact (Subtype.val_injective.extend_apply _ _ ⟨ψ z, h z z.2⟩).symm
+
+/-- A `ℂ`-linear change of coordinates `φ : ℂ^ι ≃ ℂ^κ` identifies the holomorphic functions on
+`U` with the holomorphic functions on the image of `U`. -/
+noncomputable def OkaRing.congr (U : Opens (ι → ℂ)) :
+    OkaRing U ≃ₐ[ℂ] OkaRing (φ.opensCongr U) where
+  toFun f := OkaRing.mk (fun y ↦ f.toFun _ ⟨φ.symm y, y.2⟩)
+    (f.2.comp_continuousLinearMap (φ.symm : (κ → ℂ) →L[ℂ] (ι → ℂ)) fun _ hy ↦ hy)
+  invFun g := OkaRing.mk (fun z ↦ g.toFun _ ⟨φ z, by simp [z.2]⟩)
+    (g.2.comp_continuousLinearMap (φ : (ι → ℂ) →L[ℂ] (κ → ℂ)) fun _ hz ↦ by simp [hz])
+  left_inv f := by
+    ext z
+    exact congrArg (f.toFun _) (Subtype.ext (φ.symm_apply_apply (z : ι → ℂ)))
+  right_inv g := by
+    ext z
+    exact congrArg (g.toFun _) (Subtype.ext (φ.apply_symm_apply (z : κ → ℂ)))
+  map_mul' f g := rfl
+  map_add' f g := rfl
+  commutes' c := rfl
+
+/-- Changing coordinates commutes with restriction. -/
+lemma OkaRing.congr_restrict {U V : Opens (ι → ℂ)} (h : V ≤ U) (f : OkaRing U) :
+    OkaRing.congr φ V (OkaRing.restrict h f) =
+      OkaRing.restrict (φ.opensCongr.monotone h) (OkaRing.congr φ U f) :=
+  rfl
+
+/-- Changing coordinates back commutes with restriction. -/
+lemma OkaRing.congr_symm_restrict {U V : Opens (ι → ℂ)}
+    (h : φ.opensCongr V ≤ φ.opensCongr U) (g : OkaRing (φ.opensCongr U)) :
+    (OkaRing.congr φ V).symm (OkaRing.restrict h g) =
+      OkaRing.restrict (φ.opensCongr.le_iff_le.mp h) ((OkaRing.congr φ U).symm g) :=
+  rfl
+
+end Reindex
 
 /-- The presheaf of rings of holomorphic functions on `ℂ^ι`. -/
 noncomputable def okaPresheaf (ι : Type u) [Fintype ι] : (Opens (ι → ℂ))ᵒᵖ ⥤ RingCat.{u} where
