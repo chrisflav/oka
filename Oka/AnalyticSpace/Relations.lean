@@ -72,6 +72,45 @@ def HasLocalRelations : Prop :=
           Submodule.span (Y.presheaf.obj (op W'))
             (Set.range fun l ↦ (fun i ↦ Y.res hW' (g l i)))
 
+@[simp]
+lemma res_res {U V W : Opens Y} (h₁ : U ≤ V) (h₂ : V ≤ W) (s : Y.presheaf.obj (op W)) :
+    Y.res h₁ (Y.res h₂ s) = Y.res (h₁.trans h₂) s := by
+  rw [res, res, res, ← ConcreteCategory.comp_apply, ← Functor.map_comp]
+  rfl
+
+/-- The structure sheaf of `Y` has locally finitely generated relations **over the open set
+`U`**: the condition of `HasLocalRelations` for families of sections defined on open subsets
+of `U`. -/
+def HasLocalRelationsOn (U : Opens Y) : Prop :=
+  ∀ (V : Opens Y), V ≤ U → ∀ (m : ℕ) (f : Fin m → Y.presheaf.obj (op V)) (x : Y), x ∈ V →
+    ∃ (W : Opens Y) (hWV : W ≤ V) (k : ℕ) (g : Fin k → (Fin m → Y.presheaf.obj (op W))),
+      x ∈ W ∧ ∀ (W' : Opens Y) (hW' : W' ≤ W),
+        LinearMap.ker (linOfFun fun i ↦ Y.res (hW'.trans hWV) (f i)) =
+          Submodule.span (Y.presheaf.obj (op W'))
+            (Set.range fun l ↦ (fun i ↦ Y.res hW' (g l i)))
+
+variable {Y}
+
+/-- `HasLocalRelations` is `HasLocalRelationsOn` for the whole space. -/
+lemma HasLocalRelationsOn.hasLocalRelations (h : Y.HasLocalRelationsOn ⊤) :
+    Y.HasLocalRelations :=
+  fun V m f x hx ↦ h V le_top m f x hx
+
+/-- Having locally finitely generated relations may be checked on an open cover: it is a local
+condition on `Y`, since the open set `W` produced may always be shrunk. -/
+theorem hasLocalRelations_of_openCover {A : Type*} (U : A → Opens Y)
+    (hU : ∀ x : Y, ∃ a, x ∈ U a) (h : ∀ a, Y.HasLocalRelationsOn (U a)) :
+    Y.HasLocalRelations := by
+  intro V m f x hx
+  obtain ⟨a, ha⟩ := hU x
+  obtain ⟨W, hWV, k, g, hxW, hgen⟩ :=
+    h a (V ⊓ U a) inf_le_right m (fun i ↦ Y.res inf_le_left (f i)) x ⟨hx, ha⟩
+  refine ⟨W, hWV.trans inf_le_left, k, g, hxW, fun W' hW' ↦ ?_⟩
+  have hg := hgen W' hW'
+  simpa only [res_res] using hg
+
+variable (Y)
+
 set_option maxHeartbeats 1000000 in
 /-- A locally ringed space whose structure sheaf has locally finitely generated relations has
 coherent structure sheaf. -/
