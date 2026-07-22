@@ -1,7 +1,7 @@
 /-
-Copyright (c) 2026 Christian Merten. All rights reserved.
+Copyright (c) 2026 Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Christian Merten
+Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
 import Oka.ComplexSpace
 import Oka.Coherent
@@ -508,45 +508,29 @@ lemma complexSpace_ringSheaf (ι : Type u) [Fintype ι] :
   rfl
 
 /-- **Oka's coherence lemma** gives that the structure sheaf of `ℂ^ι` has locally finitely
-generated relations. `oka` is stated in the stronger sectionwise form, which in particular
-implies the local one. -/
+generated relations. -/
 theorem hasLocalRelations_complexSpace (ι : Type u) [Fintype ι] :
     (complexSpace ι).HasLocalRelations := by
-  classical
   intro V m f x hx
-  obtain ⟨W, hWV, k, g, hxW, hgen⟩ := oka (U := V) f x hx
-  -- membership in the span of the `g j`, over an arbitrary smaller open set
-  have hspan : ∀ (W' : Opens (ι → ℂ)) (hW' : W' ≤ W) (b : Fin m → OkaRing W'),
-      (∑ i, b i * OkaRing.restrict (le_trans hW' hWV) (f i) = 0) →
-      ∃ c : Fin k → OkaRing W',
-        ∀ i, b i = ∑ l, c l * OkaRing.restrict hW' (g l i) := by
-    intro W' hW' b hb
-    have hm : b ∈ LinearMap.ker
-        (linOfFun fun i : Fin m ↦ OkaRing.restrict (le_trans hW' hWV) (f i)) :=
-      LinearMap.mem_ker.2 (by rw [linOfFun_apply]; exact hb)
-    rw [hgen W' hW' hW'] at hm
-    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun (OkaRing W')).1 hm
-    refine ⟨c, fun i ↦ ?_⟩
-    have h3 := congrFun hc i
-    simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using h3.symm
-  refine ⟨W, hWV, k, g, hxW, fun l ↦ ?_, fun W' hW' a ha y hy ↦ ?_⟩
-  · have hm : (fun i ↦ OkaRing.restrict le_rfl (g l i)) ∈ LinearMap.ker
-        (linOfFun fun i : Fin m ↦ OkaRing.restrict (le_trans le_rfl hWV) (f i)) := by
-      rw [hgen W le_rfl le_rfl]
-      exact Submodule.subset_span ⟨l, rfl⟩
-    have h2 := LinearMap.mem_ker.1 hm
-    rw [linOfFun_apply] at h2
-    exact h2
-  · obtain ⟨c, hc⟩ := hspan W' hW' a ha
-    refine ⟨W', le_rfl, hy, c, fun i ↦ ?_⟩
-    rw [LocallyRingedSpace.res_self]
-    exact hc i
+  obtain ⟨W, hWV, k, g, hxW, hrel, hgen⟩ := oka (U := V) f x hx
+  exact ⟨W, hWV, k, g, hxW, hrel, hgen⟩
 
 /-- **Oka's coherence theorem**, for `ℂ^ι` as a locally ringed space. -/
 theorem isCoherentStructureSheaf_complexSpace (ι : Type u) [Fintype ι] :
     (complexSpace ι).IsCoherentStructureSheaf :=
   LocallyRingedSpace.isCoherentStructureSheaf_of_hasLocalRelations
     (hasLocalRelations_complexSpace ι)
+
+/-- **Oka's coherence theorem**: the structure sheaf of `ℂ^ι` is a coherent sheaf of modules
+over itself. -/
+theorem isCoherent_unit_okaSheaf (ι : Type u) [Fintype ι] :
+    (SheafOfModules.unit (okaSheaf ι)).IsCoherent :=
+  isCoherentStructureSheaf_complexSpace ι
+
+/-- The structure sheaf of `ℂ^n` is a coherent sheaf of modules over itself. -/
+theorem isCoherent_unit_okaSheaf_fin (n : ℕ) :
+    (SheafOfModules.unit (okaSheaf (Fin n))).IsCoherent :=
+  isCoherent_unit_okaSheaf _
 
 /-- Complex affine `n`-space has coherent structure sheaf. -/
 theorem isCoherentStructureSheaf_complexAffineSpace (n : ℕ) :
