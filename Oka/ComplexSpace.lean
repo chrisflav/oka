@@ -20,7 +20,6 @@ at `x`.
 ## Main definitions
 
 - `okaCommPresheaf`, `okaCommSheaf`: the structure sheaf of `ℂ^ι`, valued in `CommRingCat`.
-- `OkaRing.evalHom`: evaluation of a holomorphic function at a point of its domain.
 - `complexSpace ι`: `ℂ^ι` as a locally ringed space.
 - `complexAffineSpace n`: `ℂ^n` as a locally ringed space in an arbitrary universe.
 
@@ -55,19 +54,6 @@ theorem okaCommPresheaf_isSheaf (ι : Type u) [Fintype ι] :
   exact h
 
 variable {U : Opens (ι → ℂ)}
-
-/-- Evaluation of a holomorphic function at a point of its domain, as a ring homomorphism. -/
-def OkaRing.evalHom {x : ι → ℂ} (hx : x ∈ U) : OkaRing U →+* ℂ where
-  toFun f := f.toFun _ ⟨x, hx⟩
-  map_one' := rfl
-  map_mul' _ _ := rfl
-  map_zero' := rfl
-  map_add' _ _ := rfl
-
-@[simp]
-lemma OkaRing.evalHom_apply {x : ι → ℂ} (hx : x ∈ U) (f : OkaRing U) :
-    OkaRing.evalHom hx f = f.toFun _ ⟨x, hx⟩ :=
-  rfl
 
 instance (x : ι → ℂ) : Nontrivial ((okaCommPresheaf ι).stalk x) := by
   refine ⟨1, 0, fun hcon ↦ ?_⟩
