@@ -5,8 +5,6 @@ Authors: Christian Merten
 -/
 module
 
-public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Abelian
-public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 public import Oka.Algebra.Category.ModuleCat.Sheaf.Generators
 
 /-!

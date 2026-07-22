@@ -5,9 +5,7 @@ Authors: Christian Merten
 -/
 module
 
-public import Mathlib.Algebra.Category.ModuleCat.Presheaf.Submodule
 public import Oka.Algebra.Category.ModuleCat.Sheaf.Submodule
-public import Mathlib.Algebra.Category.ModuleCat.Sheaf
 public import Mathlib.RingTheory.Ideal.Maps
 
 /-!

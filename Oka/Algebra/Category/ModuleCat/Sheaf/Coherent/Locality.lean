@@ -5,7 +5,6 @@ Authors: Christian Merten
 -/
 module
 
-public import Mathlib.Algebra.Category.Grp.FilteredColimits
 public import Mathlib.CategoryTheory.Limits.Constructions.Over.Products
 public import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Basic
 public import Oka.CategoryTheory.Sites.CoversTop.Over

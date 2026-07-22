@@ -3,6 +3,14 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
+import Mathlib.Algebra.MvPolynomial.Funext
+import Mathlib.Analysis.Analytic.Uniqueness
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+import Mathlib.RingTheory.MvPowerSeries.Inverse
+import Mathlib.RingTheory.MvPowerSeries.Rename
+import Mathlib.RingTheory.Polynomial.DegreeLT
+import Mathlib.RingTheory.PowerSeries.Order
 import Oka.StructureSheaf
 
 /-!
