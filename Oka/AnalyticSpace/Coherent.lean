@@ -47,6 +47,21 @@ on `Y`. There:
 - `ComplexAnalytic.AnalyticSpace.isCoherentStructureSheaf`: the structure sheaf of any complex
   analytic space is coherent.
 
+## Remaining work
+
+The reduction above is complete; two ingredients are still open, and everything else in this
+file is proved from them.
+
+- `isCoherent_over_iff_restrict`: transport of coherence along the equivalence of sites
+  `Over U ≌ Opens ↥U`. Mathlib provides the equivalence and the induced equivalence of sheaf
+  categories, but not a transport of `SheafOfModules.IsCoherent`; since coherence quantifies
+  over all objects and their slices, such a transport has to be established simultaneously for
+  a site and all of its slice sites.
+- `IsCutOutBy.isCoherentStructureSheaf`: the geometric step. Besides the closed immersion
+  transfer, this needs coherence of the cokernel of a morphism of coherent sheaves, which is
+  not yet available in `Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Stability` (only
+  `isFiniteType_cokernel` is).
+
 ## References
 
 - [Hans Grauert and Reinhold Remmert, *Coherent analytic sheaves*][grauert-remmert1984], §A
