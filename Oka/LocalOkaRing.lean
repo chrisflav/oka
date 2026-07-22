@@ -1243,21 +1243,3 @@ lemma isGeneralIn_iff_orderIn_ne_top
 end MvPowerSeries
 
 end
-
-open Polynomial
-
-theorem oka_lemma (n : ℕ) (p : ℕ) (d : ℕ)
-    (F : Fin p → (MvPowerSeries (Fin n) ℂ)[X])
-    (hF : ∀ j, (F j).degree < d)
-    (hF' : ∀ j, (F j).Monic) :
-    letI F' (j : Fin p) : MvPowerSeries (Fin (n + 1)) ℂ :=
-      MvPowerSeries.fromPolynomial' (F j)
-    letI f : (Fin p → (MvPowerSeries (Fin n) ℂ)[X]_d) →ₗ[ℂ]
-        (Fin p → (MvPowerSeries (Fin (n + 1)) ℂ)) :=
-      LinearMap.piMap fun i ↦ MvPowerSeries.fromPolynomial'.toLinearMap ∘ₗ
-        (Submodule.subtype _).restrictScalars ℂ
-    letI K_m : Submodule _ (Fin p → (MvPowerSeries (Fin n) ℂ)[X]_d) :=
-      LinearMap.ker ((linOfFun F').restrictScalars ℂ ∘ₗ f)
-    LinearMap.ker (linOfFun F') =
-      Submodule.span _ (Submodule.map f K_m).carrier :=
-  sorry
