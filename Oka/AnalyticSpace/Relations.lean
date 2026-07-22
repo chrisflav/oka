@@ -366,6 +366,41 @@ theorem HasLocalRelations.hasLocalRelationsOn
     simp only [restrict_res, res_res] at h3
     exact h3
 
+lemma preOpen_imOpen (V : Opens (X.restrict U.isOpenEmbedding)) : preOpen U (imOpen U V) = V := by
+  ext z
+  exact ⟨by rintro ⟨w, hw, hwz⟩; exact (Subtype.val_injective hwz) ▸ hw,
+    fun hz ↦ ⟨z, hz, rfl⟩⟩
+
+/-- Having locally finitely generated relations passes to open subspaces. -/
+theorem HasLocalRelations.restrict (h : X.HasLocalRelations) :
+    (X.restrict U.isOpenEmbedding).HasLocalRelations := by
+  intro V m f x hx
+  obtain ⟨W, hWV, k, g, hxW, hrel, hgen⟩ := h (imOpen U V) m f x.1 ⟨x, hx, rfl⟩
+  have hWU : W ≤ U := hWV.trans (imOpen_le U V)
+  have hW : imOpen U (preOpen U W) = W := imOpen_preOpen U hWU
+  refine ⟨preOpen U W, preOpen_le_of_le_imOpen U hWV, k, fun l i ↦ X.res hW.le (g l i),
+    hxW, fun l ↦ ?_, fun W2 hW2 a ha y hy ↦ ?_⟩
+  · have h1 := congrArg (X.res hW.le) (hrel l)
+    simp only [res_sum, res_mul, res_res, res_zero] at h1
+    simp only [restrict_res, res_res]
+    exact h1
+  · have him : imOpen U W2 ≤ W := (Set.image_mono hW2).trans hW.le
+    obtain ⟨a', ha'⟩ : ∃ a' : Fin m → X.presheaf.obj (op (imOpen U W2)), ∀ i, a' i = a i :=
+      ⟨fun i ↦ a i, fun _ ↦ rfl⟩
+    have ha2 : ∑ i, a' i * X.res (him.trans hWV) (f i) = 0 := by
+      simp only [ha']
+      simp only [restrict_res, res_res] at ha
+      exact ha
+    obtain ⟨W3, hW3, hyW3, c, hc⟩ := hgen (imOpen U W2) him a' ha2 y.1 ⟨y, hy, rfl⟩
+    have hW3U : W3 ≤ U := hW3.trans (imOpen_le U W2)
+    have hW3e : imOpen U (preOpen U W3) = W3 := imOpen_preOpen U hW3U
+    refine ⟨preOpen U W3, preOpen_le_of_le_imOpen U hW3, hyW3,
+      fun l ↦ X.res hW3e.le (c l), fun i ↦ ?_⟩
+    have h3 := congrArg (X.res hW3e.le) (hc i)
+    simp only [res_sum, res_mul, res_res, ha'] at h3
+    simp only [restrict_res, res_res]
+    exact h3
+
 end Restrict
 
 end AlgebraicGeometry.LocallyRingedSpace
