@@ -74,6 +74,8 @@ theorem localweierstrass_division
 
 variable {n : ℕ} (U : Opens (Fin n → ℂ))
 
+/-- A Weierstrass polynomial is a monic polynomial whose coefficients below the leading one
+vanish at the origin. -/
 structure IsWeierstrassPolynomial (P : (OkaRing U)[X]) : Prop where
   monic : P.Monic
   apply_zero (i : ℕ) (hi : i < P.degree) : (P.coeff i).toGlobalFun _ 0 = 0
