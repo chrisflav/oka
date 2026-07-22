@@ -43,6 +43,7 @@ relations between the `sᵢ`.
 -/
 
 open CategoryTheory TopologicalSpace Opposite Limits SheafOfModules AlgebraicGeometry
+open AlgebraicGeometry.LocallyRingedSpace
 
 universe u
 
@@ -68,9 +69,160 @@ what step 1 delivers, since `𝒪_Y ↠ i_*𝒪_M` is surjective on stalks and n
 is the reason `SheafOfModules.isCoherent_of_forall_kernel_of_locally` was proved: the
 sectionwise variant of this statement would be a vanishing statement for `H¹` on arbitrary open
 sets and is not available. -/
-theorem IsLocalModel.hasLocalRelations {M : LocallyRingedSpace.{u}} (h : IsLocalModel M) :
-    M.HasLocalRelations :=
-  sorry
+theorem IsLocalModel.hasLocalRelations {M : LocallyRingedSpace.{u}} (hM : IsLocalModel M) :
+    M.HasLocalRelations := by
+  classical
+  obtain ⟨n, k, V, i, f, hcut⟩ := hM
+  have hY : ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).HasLocalRelations :=
+    HasLocalRelations.restrict V (hasLocalRelations_complexSpace _)
+  intro V₀ m s x hx
+  obtain ⟨A, hAx, t, B, hBV₀, hBA, hxB, hlift⟩ :=
+    exists_localLift_family i hcut.surjective_stalkMap s x hx
+  set F : Fin (m + k) →
+      ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.obj (op A) :=
+    Fin.append t (fun j ↦ res _ le_top (f j)) with hFdef
+  obtain ⟨A₁, hA₁A, r, G, hxA₁, hGrel, hGgen⟩ := hY A (m + k) F (i.base x) hAx
+  set W : Opens M := B ⊓ (Opens.map i.base).obj A₁ with hWdef
+  have hWB : W ≤ B := inf_le_left
+  have hWA₁ : W ≤ (Opens.map i.base).obj A₁ := inf_le_right
+  -- the pullback-and-restrict ring homomorphism
+  set π : ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.obj (op A₁) →+*
+      M.presheaf.obj (op W) :=
+    (M.presheaf.map (homOfLE hWA₁).op).hom.comp (i.c.app (op A₁)).hom with hπdef
+  have hπ : ∀ v, π v = M.res hWA₁ (i.c.app (op A₁) v) := fun _ ↦ rfl
+  -- the `f`-block of `F` dies under `π`
+  have hzero : ∀ j : Fin k, π (res _ hA₁A (F (Fin.natAdd m j))) = 0 := by
+    intro j
+    have hz : i.c.app (op ⊤) (f j) = 0 := hcut.c_app_eq_zero j
+    rw [hπ, hFdef]
+    simp only [Fin.append_right]
+    rw [res_res, c_app_res, res_res]
+    exact (congrArg (M.res _) hz).trans (map_zero _)
+  -- the `t`-block of `F` restricts to the given sections
+  have htee : ∀ j : Fin m, π (res _ hA₁A (F (Fin.castAdd k j))) =
+      M.res (hWB.trans hBV₀) (s j) := by
+    intro j
+    rw [hπ, hFdef]
+    simp only [Fin.append_left]
+    rw [c_app_res, res_res]
+    have h3 := congrArg (M.res hWB) (hlift j)
+    simp only [res_res] at h3
+    exact h3
+  refine ⟨W, hWB.trans hBV₀, r, fun l j ↦ π (G l (Fin.castAdd k j)), ⟨hxB, hxA₁⟩, ?_, ?_⟩
+  · intro l
+    have h2 : π (∑ p : Fin (m + k), G l p * res _ hA₁A (F p)) = 0 := by
+      rw [hGrel l, map_zero]
+    rw [map_sum] at h2
+    simp only [map_mul] at h2
+    rw [Fin.sum_univ_add] at h2
+    rw [show (∑ j : Fin k, π (G l (Fin.natAdd m j)) * π (res _ hA₁A (F (Fin.natAdd m j)))) = 0 from
+      Finset.sum_eq_zero fun j _ ↦ by rw [hzero j, mul_zero], add_zero] at h2
+    refine Eq.trans ?_ h2
+    exact Finset.sum_congr rfl fun j _ ↦ by rw [htee j]
+  · intro W' hW'W a ha y hy
+    -- lift the coefficients `a` near `y`
+    obtain ⟨A₂, hA₂y, α, B₂, hB₂W', hB₂A₂, hyB₂, hlift₂⟩ :=
+      exists_localLift_family i hcut.surjective_stalkMap a y hy
+    set A₃ : Opens _ := A₂ ⊓ A₁ with hA₃def
+    have hA₃A₂ : A₃ ≤ A₂ := inf_le_left
+    have hA₃A₁ : A₃ ≤ A₁ := inf_le_right
+    have hA₃A : A₃ ≤ A := hA₃A₁.trans hA₁A
+    have hyA₃ : i.base y ∈ A₃ := ⟨hA₂y, (hW'W.trans hWA₁) hy⟩
+    have hB₂A₃ : B₂ ≤ (Opens.map i.base).obj A₃ :=
+      fun z hz ↦ ⟨hB₂A₂ hz, (hB₂W'.trans (hW'W.trans hWA₁)) hz⟩
+    set w : _ := ∑ j : Fin m, res _ hA₃A₂ (α j) * res _ hA₃A (F (Fin.castAdd k j)) with hwdef
+    -- `w` pulls back to zero near `y`
+    set π₂ : _ →+* M.presheaf.obj (op B₂) :=
+      (M.presheaf.map (homOfLE hB₂A₃).op).hom.comp (i.c.app (op A₃)).hom with hπ₂def
+    have hπ₂ : ∀ v, π₂ v = M.res hB₂A₃ (i.c.app (op A₃) v) := fun _ ↦ rfl
+    have hα : ∀ j, π₂ (res _ hA₃A₂ (α j)) = M.res hB₂W' (a j) := by
+      intro j
+      rw [hπ₂, c_app_res, res_res]
+      exact hlift₂ j
+    have hts : ∀ j : Fin m, π₂ (res _ hA₃A (F (Fin.castAdd k j))) =
+        M.res (hB₂W'.trans (hW'W.trans (hWB.trans hBV₀))) (s j) := by
+      intro j
+      rw [hπ₂, hFdef]
+      simp only [Fin.append_left]
+      rw [c_app_res, res_res]
+      have h3 := congrArg (M.res (hB₂W'.trans (hW'W.trans hWB))) (hlift j)
+      simp only [res_res] at h3
+      exact h3
+    have hw0 : π₂ w = 0 := by
+      set ρ : M.presheaf.obj (op W') →+* M.presheaf.obj (op B₂) :=
+        (M.presheaf.map (homOfLE hB₂W').op).hom with hρdef
+      have hρ : ∀ v, ρ v = M.res hB₂W' v := fun _ ↦ rfl
+      have h4 := congrArg ρ ha
+      rw [map_sum, map_zero] at h4
+      simp only [map_mul] at h4
+      rw [hwdef, map_sum]
+      simp only [map_mul, hα, hts]
+      simpa only [hρ, res_res, map_zero] using h4
+    -- hence the germ of `w` lies in the ideal generated by the germs of the `f`
+    have hker : ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.germ A₃
+        (i.base y) hyA₃ w ∈ Ideal.span (Set.range fun j ↦
+          ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.Γgerm
+            (i.base y) (f j)) := by
+      rw [← hcut.ker_stalkMap y]
+      show (i.stalkMap y) _ = 0
+      rw [LocallyRingedSpace.stalkMap_germ_apply i A₃ y hyA₃ w,
+        ← germ_res hB₂A₃ y hyB₂ (i.c.app (op A₃) w)]
+      rw [show M.res hB₂A₃ (i.c.app (op A₃) w) = π₂ w from rfl, hw0, map_zero]
+    obtain ⟨A₄, hA₄A₃, hyA₄, c, hc⟩ :=
+      exists_localCombination w f (i.base y) hyA₃ hker
+    have hA₄A₁ : A₄ ≤ A₁ := hA₄A₃.trans hA₃A₁
+    have hA₄A : A₄ ≤ A := hA₄A₃.trans hA₃A
+    set σ : ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.obj (op A₃) →+*
+        ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.obj (op A₄) :=
+      (((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.map
+        (homOfLE hA₄A₃).op).hom with hσdef
+    have hσ : ∀ v, σ v = res _ hA₄A₃ v := fun _ ↦ rfl
+    set β : Fin (m + k) → _ :=
+      Fin.append (fun j ↦ res _ (hA₄A₃.trans hA₃A₂) (α j)) (fun l ↦ -(c l)) with hβdef
+    have hβrel : ∑ p : Fin (m + k), β p * res _ hA₄A (F p) = 0 := by
+      rw [Fin.sum_univ_add]
+      have e1 : ∑ j : Fin m, β (Fin.castAdd k j) * res _ hA₄A (F (Fin.castAdd k j)) = σ w := by
+        rw [hwdef, map_sum]
+        refine Finset.sum_congr rfl fun j _ ↦ ?_
+        rw [map_mul, hσ, hσ, hβdef]
+        simp only [Fin.append_left]
+        rw [res_res, res_res]
+      have e2 : ∑ l : Fin k, β (Fin.natAdd m l) * res _ hA₄A (F (Fin.natAdd m l)) =
+          -∑ l : Fin k, c l * res _ le_top (f l) := by
+        rw [← Finset.sum_neg_distrib]
+        refine Finset.sum_congr rfl fun l _ ↦ ?_
+        rw [hβdef, hFdef]
+        simp only [Fin.append_right]
+        rw [res_res, neg_mul]
+      rw [e1, e2, hσ, hc, add_neg_cancel]
+    obtain ⟨A₅, hA₅A₄, hyA₅, d, hd⟩ := hGgen A₄ hA₄A₁ β hβrel (i.base y) hyA₄
+    set W'' : Opens M := B₂ ⊓ (Opens.map i.base).obj A₅ with hW''def
+    have hW''B₂ : W'' ≤ B₂ := inf_le_left
+    have hW''A₅ : W'' ≤ (Opens.map i.base).obj A₅ := inf_le_right
+    set π₅ : ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.obj (op A₅) →+*
+        M.presheaf.obj (op W'') :=
+      (M.presheaf.map (homOfLE hW''A₅).op).hom.comp (i.c.app (op A₅)).hom with hπ₅def
+    have hπ₅ : ∀ v, π₅ v = M.res hW''A₅ (i.c.app (op A₅) v) := fun _ ↦ rfl
+    refine ⟨W'', hW''B₂.trans hB₂W', ⟨hyB₂, hyA₅⟩, fun l ↦ π₅ (d l), fun j ↦ ?_⟩
+    have h6 := congrArg π₅ (hd (Fin.castAdd k j))
+    rw [map_sum] at h6
+    simp only [map_mul] at h6
+    have hL : π₅ (res _ hA₅A₄ (β (Fin.castAdd k j))) =
+        M.res (hW''B₂.trans hB₂W') (a j) := by
+      rw [hβdef]
+      simp only [Fin.append_left]
+      rw [hπ₅, res_res, c_app_res, res_res]
+      have h7 := congrArg (M.res hW''B₂) (hlift₂ j)
+      simp only [res_res] at h7
+      exact h7
+    have hR : ∀ l, π₅ (res _ (hA₅A₄.trans hA₄A₁) (G l (Fin.castAdd k j))) =
+        M.res ((hW''B₂.trans hB₂W').trans hW'W) (π (G l (Fin.castAdd k j))) := by
+      intro l
+      rw [hπ₅, c_app_res, res_res, hπ, res_res]
+    rw [hL] at h6
+    simp only [hR] at h6
+    exact h6
+
 
 /-- **Coherence of the structure sheaf of a complex analytic space.**
 
