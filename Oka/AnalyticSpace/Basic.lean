@@ -74,6 +74,52 @@ def IsLocalModel (X : LocallyRingedSpace.{u}) : Prop :=
     (f : Fin k → ((complexAffineSpace.{u} n).restrict U.isOpenEmbedding).presheaf.obj (op ⊤)),
     IsCutOutBy i f
 
+/-- The underlying homeomorphism of an isomorphism of locally ringed spaces. -/
+noncomputable def _root_.AlgebraicGeometry.LocallyRingedSpace.homeoOfIso (e : X ≅ Y) : X ≃ₜ Y :=
+  TopCat.homeoOfIso (LocallyRingedSpace.forgetToTop.mapIso e)
+
+@[simp]
+lemma _root_.AlgebraicGeometry.LocallyRingedSpace.homeoOfIso_apply (e : X ≅ Y) (x : X) :
+    LocallyRingedSpace.homeoOfIso e x = e.hom.base x :=
+  rfl
+
+/-- Cutting out by a family of sections is invariant under precomposition with an isomorphism:
+if `i : X ⟶ Y` cuts out `X` by `f` and `e : X' ≅ X`, then `e.hom ≫ i` cuts out `X'` by `f`. -/
+theorem IsCutOutBy.comp_iso {X' : LocallyRingedSpace.{u}} {i : X ⟶ Y} {k : ℕ}
+    {f : Fin k → Y.presheaf.obj (op ⊤)} (hf : IsCutOutBy i f) (e : X' ≅ X) :
+    IsCutOutBy (e.hom ≫ i) f := by
+  have hstalk (x : X') : Function.Bijective (e.hom.stalkMap x).hom :=
+    ConcreteCategory.bijective_of_isIso _
+  have hcomp (x : X') (a : Y.presheaf.stalk ((e.hom ≫ i).base x)) :
+      ((e.hom ≫ i).stalkMap x).hom a =
+        (e.hom.stalkMap x).hom ((i.stalkMap (e.hom.base x)).hom a) := by
+    rw [LocallyRingedSpace.stalkMap_comp]
+    rfl
+  have hsurj : Function.Surjective ⇑e.hom.base :=
+    (LocallyRingedSpace.homeoOfIso e).surjective
+  refine ⟨hf.isClosedEmbedding.comp (LocallyRingedSpace.homeoOfIso e).isClosedEmbedding, ?_,
+    fun x ↦ ?_, fun x ↦ ?_⟩
+  · rw [show ⇑(e.hom ≫ i).base = ⇑i.base ∘ ⇑e.hom.base from rfl, Set.range_comp,
+      hsurj.range_eq, Set.image_univ]
+    exact hf.range_base
+  · rw [show ⇑((e.hom ≫ i).stalkMap x).hom =
+      ⇑(e.hom.stalkMap x).hom ∘ ⇑(i.stalkMap (e.hom.base x)).hom from funext (hcomp x)]
+    exact (hstalk x).surjective.comp (hf.surjective_stalkMap _)
+  · have hker : RingHom.ker ((e.hom ≫ i).stalkMap x).hom =
+        RingHom.ker (i.stalkMap (e.hom.base x)).hom := by
+      ext a
+      simp only [RingHom.mem_ker, hcomp x a]
+      exact ⟨fun h ↦ (hstalk x).injective (h.trans (map_zero _).symm),
+        fun h ↦ by rw [h, map_zero]⟩
+    rw [hker]
+    exact hf.ker_stalkMap _
+
+/-- Being a local model is invariant under isomorphism of locally ringed spaces. -/
+theorem IsLocalModel.of_iso {M N : LocallyRingedSpace.{u}} (e : N ≅ M) (hM : IsLocalModel M) :
+    IsLocalModel N := by
+  obtain ⟨n, k, U, i, f, hcut⟩ := hM
+  exact ⟨n, k, U, e.hom ≫ i, f, hcut.comp_iso e⟩
+
 /-- A **complex analytic space** is a locally ringed space `X` such that every point of `X` has
 an open neighbourhood `U` for which the restriction of `X` to `U` is isomorphic, as a locally
 ringed space, to a local model.
