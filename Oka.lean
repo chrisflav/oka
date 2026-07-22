@@ -9,6 +9,7 @@ import Oka.Algebra.Category.ModuleCat.Sheaf.Generators
 import Oka.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous
 import Oka.Algebra.Category.ModuleCat.Sheaf.Submodule
 import Oka.AnalyticSpace.Basic
+import Oka.AnalyticSpace.Relations
 import Oka.AnalyticSpace.Coherent
 import Oka.CategoryTheory.Sites.CoversTop.Over
 import Oka.CategoryTheory.Sites.Over

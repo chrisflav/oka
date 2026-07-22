@@ -5,7 +5,7 @@ Authors: Christian Merten
 -/
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Locality
 import Oka.AnalyticSpace.Basic
-import Oka.Coherent
+import Oka.AnalyticSpace.Relations
 
 /-!
 # Coherence of the structure sheaf of a complex analytic space
@@ -68,52 +68,9 @@ file is proved from them.
 - [Jean-Pierre Serre, *Faisceaux algébriques cohérents*][serre1955], §2
 -/
 
-open CategoryTheory TopologicalSpace Opposite Limits SheafOfModules
+open CategoryTheory TopologicalSpace Opposite Limits SheafOfModules AlgebraicGeometry
 
 universe u
-
-namespace AlgebraicGeometry
-
-namespace LocallyRingedSpace
-
-variable (X : LocallyRingedSpace.{u})
-
-/-- The structure sheaf of a locally ringed space, viewed as a sheaf of rings rather than of
-commutative rings. This is the form in which the theory of `SheafOfModules` and coherence
-applies. -/
-noncomputable def ringSheaf : Sheaf (Opens.grothendieckTopology X) RingCat.{u} :=
-  ⟨X.presheaf ⋙ forget₂ CommRingCat.{u} RingCat.{u},
-    (TopCat.Presheaf.isSheaf_iff_isSheaf_comp
-      (forget₂ CommRingCat.{u} RingCat.{u}) X.presheaf).1 X.IsSheaf⟩
-
-/-- A locally ringed space has **coherent structure sheaf** if `𝒪_X` is coherent as a sheaf of
-modules over itself. -/
-def IsCoherentStructureSheaf : Prop :=
-  (SheafOfModules.unit X.ringSheaf).IsCoherent
-
-end LocallyRingedSpace
-
-end AlgebraicGeometry
-
-open AlgebraicGeometry
-
-/-- The structure sheaf of `ℂ^ι` as a locally ringed space is the sheaf of rings `okaSheaf ι`. -/
-lemma complexSpace_ringSheaf (ι : Type u) [Fintype ι] :
-    (complexSpace ι).ringSheaf = okaSheaf ι :=
-  rfl
-
-/-- **Oka's coherence theorem**, for `ℂ^ι` as a locally ringed space: the structure sheaf of
-`ℂ^ι` is coherent over itself. -/
-theorem isCoherentStructureSheaf_complexSpace (ι : Type u) [Fintype ι] :
-    (complexSpace ι).IsCoherentStructureSheaf := by
-  show (SheafOfModules.unit (complexSpace ι).ringSheaf).IsCoherent
-  rw [complexSpace_ringSheaf]
-  exact isCoherent_unit_okaSheaf ι
-
-/-- Complex affine `n`-space has coherent structure sheaf. -/
-theorem isCoherentStructureSheaf_complexAffineSpace (n : ℕ) :
-    (complexAffineSpace.{u} n).IsCoherentStructureSheaf :=
-  isCoherentStructureSheaf_complexSpace _
 
 namespace AlgebraicGeometry.LocallyRingedSpace
 
