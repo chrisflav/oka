@@ -8,10 +8,12 @@ import Oka.Algebra.Category.ModuleCat.Sheaf.Free
 import Oka.Algebra.Category.ModuleCat.Sheaf.Generators
 import Oka.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous
 import Oka.Algebra.Category.ModuleCat.Sheaf.Submodule
+import Oka.AnalyticSpace.Basic
 import Oka.CategoryTheory.Sites.CoversTop.Over
 import Oka.CategoryTheory.Sites.Over
 import Oka.CategoryTheory.Sites.Whiskering
 import Oka.Coherent
+import Oka.ComplexSpace
 import Oka.LocalOkaRing
 import Oka.OkaRing
 import Oka.Statement
