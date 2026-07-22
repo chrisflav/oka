@@ -164,7 +164,7 @@ theorem IsLocalModel.hasLocalRelations {M : LocallyRingedSpace.{u}} (hM : IsLoca
           ((complexAffineSpace.{u} n).restrict V.isOpenEmbedding).presheaf.Γgerm
             (i.base y) (f j)) := by
       rw [← hcut.ker_stalkMap y]
-      show (i.stalkMap y) _ = 0
+      change (i.stalkMap y) _ = 0
       rw [LocallyRingedSpace.stalkMap_germ_apply i A₃ y hyA₃ w,
         ← germ_res hB₂A₃ y hyB₂ (i.c.app (op A₃) w)]
       rw [show M.res hB₂A₃ (i.c.app (op A₃) w) = π₂ w from rfl, hw0, map_zero]

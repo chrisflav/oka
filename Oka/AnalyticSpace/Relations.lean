@@ -382,14 +382,14 @@ theorem HasLocalRelations.restrict (h : X.HasLocalRelations) :
     hxW, fun l ↦ ?_, fun W2 hW2 a ha y hy ↦ ?_⟩
   · have h1 := congrArg (X.res hW.le) (hrel l)
     simp only [res_sum, res_mul, res_res, res_zero] at h1
-    simp only [restrict_res, res_res]
+    simp only [restrict_res]
     exact h1
   · have him : imOpen U W2 ≤ W := (Set.image_mono hW2).trans hW.le
     obtain ⟨a', ha'⟩ : ∃ a' : Fin m → X.presheaf.obj (op (imOpen U W2)), ∀ i, a' i = a i :=
       ⟨fun i ↦ a i, fun _ ↦ rfl⟩
     have ha2 : ∑ i, a' i * X.res (him.trans hWV) (f i) = 0 := by
       simp only [ha']
-      simp only [restrict_res, res_res] at ha
+      simp only [restrict_res] at ha
       exact ha
     obtain ⟨W3, hW3, hyW3, c, hc⟩ := hgen (imOpen U W2) him a' ha2 y.1 ⟨y, hy, rfl⟩
     have hW3U : W3 ≤ U := hW3.trans (imOpen_le U W2)
@@ -434,7 +434,7 @@ lemma exists_localCombination {A : Opens Y} (t : Y.presheaf.obj (op A)) {k : ℕ
       intro j
       rw [map_mul, germ_res, germ_res, hc₀ j]
       rfl
-    simp only [hterm, ← hc, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [hterm, ← hc, smul_eq_mul]
   obtain ⟨W, hyW, iU, iV, hW⟩ := Y.presheaf.germ_eq y hyA' hyA' _ _ key
   refine ⟨W, (leOfHom iU).trans hA'A, hyW,
     fun j ↦ Y.res (leOfHom iV) (Y.res (hA'j j) (c₀ j)), ?_⟩
