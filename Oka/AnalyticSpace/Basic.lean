@@ -114,6 +114,19 @@ theorem IsCutOutBy.comp_iso {X' : LocallyRingedSpace.{u}} {i : X ⟶ Y} {k : ℕ
     rw [hker]
     exact hf.ker_stalkMap _
 
+/-- The sections cutting out `X` inside `Y` pull back to zero on `X`. -/
+lemma IsCutOutBy.c_app_eq_zero {i : X ⟶ Y} {k : ℕ} {f : Fin k → Y.presheaf.obj (op ⊤)}
+    (hcut : IsCutOutBy i f) (j : Fin k) :
+    i.c.app (op ⊤) (f j) = 0 := by
+  refine TopCat.Presheaf.section_ext X.sheaf _ _ _ fun x _ ↦ ?_
+  have hker : Y.presheaf.Γgerm (i.base x) (f j) ∈ RingHom.ker (i.stalkMap x).hom := by
+    rw [hcut.ker_stalkMap x]
+    exact Submodule.subset_span ⟨j, rfl⟩
+  have h0 : (i.stalkMap x) (Y.presheaf.Γgerm (i.base x) (f j)) = 0 := hker
+  exact ((LocallyRingedSpace.stalkMap_germ_apply i ⊤ x trivial (f j)).symm.trans h0).trans
+    (map_zero _).symm
+
+
 /-- Being a local model is invariant under isomorphism of locally ringed spaces. -/
 theorem IsLocalModel.of_iso {M N : LocallyRingedSpace.{u}} (e : N ≅ M) (hM : IsLocalModel M) :
     IsLocalModel N := by
