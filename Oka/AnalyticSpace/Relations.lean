@@ -464,6 +464,38 @@ lemma exists_localLift (hsurj : ∀ x, Function.Surjective (i.stalkMap x).hom)
     M.presheaf.germ_eq x hA hx (i.c.app (op A) u) t hgerm
   exact ⟨A, hA, u, W, leOfHom iV, leOfHom iU, hxW, hW⟩
 
+/-- Pulling back along `i` commutes with restriction. -/
+lemma c_app_res {A A' : Opens Y} (h : A' ≤ A) (u : Y.presheaf.obj (op A)) :
+    i.c.app (op A') (Y.res h u) =
+      M.res (show (Opens.map i.base).obj A' ≤ (Opens.map i.base).obj A from fun _ hz ↦ h hz)
+        (i.c.app (op A) u) := by
+  have h1 := ConcreteCategory.congr_hom (i.c.naturality (homOfLE h).op) u
+  simp only [ConcreteCategory.comp_apply] at h1
+  exact h1
+
+/-- Simultaneous local lifting of finitely many sections along a morphism which is surjective
+on stalks. -/
+lemma exists_localLift_family (hsurj : ∀ x, Function.Surjective (i.stalkMap x).hom)
+    {B₀ : Opens M} {m : ℕ} (s : Fin m → M.presheaf.obj (op B₀)) (x : M) (hx : x ∈ B₀) :
+    ∃ (A : Opens Y) (_ : i.base x ∈ A) (t : Fin m → Y.presheaf.obj (op A))
+      (B : Opens M) (hBB₀ : B ≤ B₀) (hBA : B ≤ (Opens.map i.base).obj A),
+      x ∈ B ∧ ∀ j, M.res hBA (i.c.app (op A) (t j)) = M.res hBB₀ (s j) := by
+  classical
+  choose A hA u B hBB₀ hBA hxB hres using fun j ↦ exists_localLift i hsurj (s j) x hx
+  set A' : Opens Y := ⟨⋂ j, {z : Y | z ∈ A j}, isOpen_iInter_of_finite fun j ↦ (A j).isOpen⟩
+    with hA'def
+  set B' : Opens M := ⟨(B₀ : Set M) ∩ ⋂ j, {z : M | z ∈ B j},
+    B₀.isOpen.inter (isOpen_iInter_of_finite fun j ↦ (B j).isOpen)⟩ with hB'def
+  have hA'j : ∀ j, A' ≤ A j := fun j z hz ↦ Set.mem_iInter.1 hz j
+  have hB'j : ∀ j, B' ≤ B j := fun j z hz ↦ Set.mem_iInter.1 hz.2 j
+  refine ⟨A', Set.mem_iInter.2 hA, fun j ↦ Y.res (hA'j j) (u j), B', fun z hz ↦ hz.1,
+    fun z hz ↦ Set.mem_iInter.2 fun j ↦ hBA j (Set.mem_iInter.1 hz.2 j),
+    ⟨hx, Set.mem_iInter.2 hxB⟩, fun j ↦ ?_⟩
+  rw [c_app_res]
+  have h1 := congrArg (M.res (hB'j j)) (hres j)
+  simp only [res_res] at h1 ⊢
+  exact h1
+
 end LocalModel
 
 end AlgebraicGeometry.LocallyRingedSpace
