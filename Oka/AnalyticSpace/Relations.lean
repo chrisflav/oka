@@ -58,19 +58,11 @@ def IsCoherentStructureSheaf : Prop :=
 abbrev res {U V : Opens Y} (h : U ≤ V) (s : Y.presheaf.obj (op V)) : Y.presheaf.obj (op U) :=
   Y.presheaf.map (homOfLE h).op s
 
-/-- The structure sheaf of `Y` has **locally finitely generated relations**: every finite family
-of sections has, near every point, finitely many relations generating all the others.
-
-This is the concrete form of coherence, in the shape of `oka`. Unlike coherence stated via
-`SheafOfModules.IsCoherent`, it refers only to open subsets, sections and restriction maps, so
-it is manifestly local and transports along isomorphisms without any transport of sites. -/
-def HasLocalRelations : Prop :=
-  ∀ (V : Opens Y) (m : ℕ) (f : Fin m → Y.presheaf.obj (op V)) (x : Y), x ∈ V →
-    ∃ (W : Opens Y) (hWV : W ≤ V) (k : ℕ) (g : Fin k → (Fin m → Y.presheaf.obj (op W))),
-      x ∈ W ∧ ∀ (W' : Opens Y) (hW' : W' ≤ W),
-        LinearMap.ker (linOfFun fun i ↦ Y.res (hW'.trans hWV) (f i)) =
-          Submodule.span (Y.presheaf.obj (op W'))
-            (Set.range fun l ↦ (fun i ↦ Y.res hW' (g l i)))
+@[simp]
+lemma res_self {U : Opens Y} (s : Y.presheaf.obj (op U)) : Y.res le_rfl s = s := by
+  rw [res, show (homOfLE (le_refl U)).op = 𝟙 (op U) from Subsingleton.elim _ _,
+    show Y.presheaf.map (𝟙 (op U)) = 𝟙 _ from Y.presheaf.map_id _]
+  rfl
 
 @[simp]
 lemma res_res {U V W : Opens Y} (h₁ : U ≤ V) (h₂ : V ≤ W) (s : Y.presheaf.obj (op W)) :
@@ -78,16 +70,51 @@ lemma res_res {U V W : Opens Y} (h₁ : U ≤ V) (h₂ : V ≤ W) (s : Y.preshea
   rw [res, res, res, ← ConcreteCategory.comp_apply, ← Functor.map_comp]
   rfl
 
+/-- The structure sheaf of `Y` has **locally finitely generated relations**: every finite
+family `f₁, …, f_m` of sections of `𝒪_Y` over `V` admits, near every point of `V`, finitely
+many relations `g₁, …, g_k` which generate all relations locally.
+
+"Locally" is essential: a relation between the `fᵢ` over an open set `W'` is required only to
+be a combination of the `gₗ` on a neighbourhood of each point of `W'`, not on all of `W'`. The
+sectionwise variant would amount to a vanishing statement for `H¹` on arbitrary open sets and
+is not available.
+
+Unlike coherence stated via `SheafOfModules.IsCoherent`, this refers only to open subsets,
+sections and restriction maps, so it is manifestly local and needs no transport of sites. -/
+def HasLocalRelations : Prop :=
+  ∀ (V : Opens Y) (m : ℕ) (f : Fin m → Y.presheaf.obj (op V)) (x : Y), x ∈ V →
+    ∃ (W : Opens Y) (hWV : W ≤ V) (k : ℕ) (g : Fin k → (Fin m → Y.presheaf.obj (op W))),
+      x ∈ W ∧ (∀ l, ∑ i, g l i * Y.res hWV (f i) = 0) ∧
+      ∀ (W' : Opens Y) (hW' : W' ≤ W) (a : Fin m → Y.presheaf.obj (op W')),
+        (∑ i, a i * Y.res (hW'.trans hWV) (f i) = 0) → ∀ y ∈ W',
+          ∃ (W'' : Opens Y) (hW'' : W'' ≤ W'), y ∈ W'' ∧
+            ∃ c : Fin k → Y.presheaf.obj (op W''),
+              ∀ i, Y.res hW'' (a i) = ∑ l, c l * Y.res (hW''.trans hW') (g l i)
+
+lemma res_sum {U V : Opens Y} (h : U ≤ V) {κ : Type*} (t : Finset κ)
+    (u : κ → Y.presheaf.obj (op V)) : Y.res h (∑ i ∈ t, u i) = ∑ i ∈ t, Y.res h (u i) :=
+  map_sum (Y.presheaf.map (homOfLE h).op).hom u t
+
+lemma res_mul {U V : Opens Y} (h : U ≤ V) (s t : Y.presheaf.obj (op V)) :
+    Y.res h (s * t) = Y.res h s * Y.res h t :=
+  map_mul (Y.presheaf.map (homOfLE h).op).hom s t
+
+lemma res_zero {U V : Opens Y} (h : U ≤ V) : Y.res h (0 : Y.presheaf.obj (op V)) = 0 :=
+  map_zero (Y.presheaf.map (homOfLE h).op).hom
+
+
 /-- The structure sheaf of `Y` has locally finitely generated relations **over the open set
 `U`**: the condition of `HasLocalRelations` for families of sections defined on open subsets
 of `U`. -/
 def HasLocalRelationsOn (U : Opens Y) : Prop :=
   ∀ (V : Opens Y), V ≤ U → ∀ (m : ℕ) (f : Fin m → Y.presheaf.obj (op V)) (x : Y), x ∈ V →
     ∃ (W : Opens Y) (hWV : W ≤ V) (k : ℕ) (g : Fin k → (Fin m → Y.presheaf.obj (op W))),
-      x ∈ W ∧ ∀ (W' : Opens Y) (hW' : W' ≤ W),
-        LinearMap.ker (linOfFun fun i ↦ Y.res (hW'.trans hWV) (f i)) =
-          Submodule.span (Y.presheaf.obj (op W'))
-            (Set.range fun l ↦ (fun i ↦ Y.res hW' (g l i)))
+      x ∈ W ∧ (∀ l, ∑ i, g l i * Y.res hWV (f i) = 0) ∧
+      ∀ (W' : Opens Y) (hW' : W' ≤ W) (a : Fin m → Y.presheaf.obj (op W')),
+        (∑ i, a i * Y.res (hW'.trans hWV) (f i) = 0) → ∀ y ∈ W',
+          ∃ (W'' : Opens Y) (hW'' : W'' ≤ W'), y ∈ W'' ∧
+            ∃ c : Fin k → Y.presheaf.obj (op W''),
+              ∀ i, Y.res hW'' (a i) = ∑ l, c l * Y.res (hW''.trans hW') (g l i)
 
 variable {Y}
 
@@ -96,36 +123,40 @@ lemma HasLocalRelationsOn.hasLocalRelations (h : Y.HasLocalRelationsOn ⊤) :
     Y.HasLocalRelations :=
   fun V m f x hx ↦ h V le_top m f x hx
 
-/-- Having locally finitely generated relations may be checked on an open cover: it is a local
-condition on `Y`, since the open set `W` produced may always be shrunk. -/
+/-- Having locally finitely generated relations may be checked on an open cover. -/
 theorem hasLocalRelations_of_openCover {A : Type*} (U : A → Opens Y)
     (hU : ∀ x : Y, ∃ a, x ∈ U a) (h : ∀ a, Y.HasLocalRelationsOn (U a)) :
     Y.HasLocalRelations := by
   intro V m f x hx
   obtain ⟨a, ha⟩ := hU x
-  obtain ⟨W, hWV, k, g, hxW, hgen⟩ :=
+  obtain ⟨W, hWV, k, g, hxW, hrel, hgen⟩ :=
     h a (V ⊓ U a) inf_le_right m (fun i ↦ Y.res inf_le_left (f i)) x ⟨hx, ha⟩
-  refine ⟨W, hWV.trans inf_le_left, k, g, hxW, fun W' hW' ↦ ?_⟩
-  have hg := hgen W' hW'
-  simpa only [res_res] using hg
+  refine ⟨W, hWV.trans inf_le_left, k, g, hxW, ?_, ?_⟩
+  · simpa only [res_res] using hrel
+  · intro W' hW' aa haa y hy
+    exact hgen W' hW' aa (by simpa only [res_res] using haa) y hy
 
 variable (Y)
 
+variable {Y}
+
 set_option maxHeartbeats 1000000 in
+-- the proof repeatedly identifies sections of the (iterated) restrictions of the sheaves of
+-- modules involved with sections of the structure sheaf, which is definitionally expensive
 /-- A locally ringed space whose structure sheaf has locally finitely generated relations has
 coherent structure sheaf. -/
 theorem isCoherentStructureSheaf_of_hasLocalRelations (h : Y.HasLocalRelations) :
     Y.IsCoherentStructureSheaf := by
   classical
   haveI : (unit Y.ringSheaf).IsFiniteType := by apply SheafOfModules.isFiniteType_unit
-  refine isCoherent_of_forall_kernel (M := unit Y.ringSheaf) ?_
+  refine isCoherent_of_forall_kernel_of_locally (M := unit Y.ringSheaf) ?_
   intro X I hI φ
   haveI := hI
   haveI : Fintype I := Fintype.ofFinite I
   obtain ⟨m, ⟨e⟩⟩ := Finite.exists_equiv_fin I
   set f : Fin m → Y.presheaf.obj (op X) := fun i ↦
     PresheafOfModules.sections.eval (freeHomEquiv _ φ (e.symm i)) (op (Over.mk (𝟙 X))) with hf
-  choose V hVX k g hxV hgen using fun (x : X) ↦ h X m f x.1 x.2
+  choose V hVX k g hxV hrel hgen using fun (x : X) ↦ h X m f x.1 x.2
   refine ⟨↥X, fun a ↦ Over.mk (homOfLE (hVX a)),
     coversTop_over X V hVX (fun x hx ↦ ⟨⟨x, hx⟩, hxV ⟨x, hx⟩⟩), fun a ↦ ?_⟩
   set Ya : Over X := Over.mk (homOfLE (hVX a))
@@ -195,12 +226,9 @@ theorem isCoherentStructureSheaf_of_hasLocalRelations (h : Y.HasLocalRelations) 
   have hgker : ∀ (W' : Opens Y) (hh : W' ≤ V a) (l : Fin (k a)),
       ∑ j : Fin m, Y.res hh (g a l j) * Y.res (hh.trans (hVX a)) (f j) = 0 := by
     intro W' hh l
-    have hmem : (fun j ↦ Y.res hh (g a l j)) ∈
-        LinearMap.ker (linOfFun fun j : Fin m ↦ Y.res (le_trans hh (hVX a)) (f j)) := by
-      rw [hgen a W' hh]
-      exact Submodule.subset_span ⟨l, rfl⟩
-    rw [LinearMap.mem_ker, linOfFun_apply] at hmem
-    exact hmem
+    have h0 := congrArg (Y.res hh) (hrel a l)
+    simp only [res_sum, res_mul, res_res, res_zero] at h0
+    exact h0
   refine ⟨L, inferInstance, ψ, ?_, ?_⟩
   · ext W c
     obtain ⟨cc, hcc⟩ : ∃ cc : L → Y.presheaf.obj (op W.unop.left.left),
@@ -224,37 +252,57 @@ theorem isCoherentStructureSheaf_of_hasLocalRelations (h : Y.HasLocalRelations) 
         Y.res (hWV W) (g a l.down j) * Y.res (hWX W) (f j)),
         hgker _ (hWV W) l.down, mul_zero]
     exact hv.symm.trans h0
-  · intro W b hb
-    obtain ⟨bc, hbc⟩ : ∃ bc : I → Y.presheaf.obj (op W.unop.left.left),
-        ∀ i, bc i = freeEval (op W.unop.left) b i :=
-      ⟨fun i ↦ freeEval (op W.unop.left) b i, fun _ ↦ rfl⟩
-    have hcker : (fun j ↦ bc (e.symm j)) ∈ LinearMap.ker
-        (linOfFun fun j : Fin m ↦ Y.res (hWX W) (f j)) := by
-      rw [LinearMap.mem_ker, linOfFun_apply,
-        ← Equiv.sum_comp e (fun j : Fin m ↦ bc (e.symm j) * Y.res (hWX W) (f j))]
-      obtain ⟨v, hv⟩ : ∃ v : Y.presheaf.obj (op W.unop.left.left),
-          v = (φ.over Ya).val.app W b := ⟨_, rfl⟩
+  · intro Z b hb
+    obtain ⟨bc, hbc⟩ : ∃ bc : I → Y.presheaf.obj (op Z.left.left),
+        ∀ i, bc i = freeEval (op Z.left) b i :=
+      ⟨fun i ↦ freeEval (op Z.left) b i, fun _ ↦ rfl⟩
+    have hrelb : ∑ j : Fin m, bc (e.symm j) * Y.res (hWX (op Z)) (f j) = 0 := by
+      rw [← Equiv.sum_comp e (fun j : Fin m ↦ bc (e.symm j) * Y.res (hWX (op Z)) (f j))]
+      obtain ⟨v, hv⟩ : ∃ v : Y.presheaf.obj (op Z.left.left),
+          v = (φ.over Ya).val.app (op Z) b := ⟨_, rfl⟩
       have h0 : v = 0 := hv.trans hb
-      rw [key_φ W b bc hbc v hv] at h0
+      rw [key_φ (op Z) b bc hbc v hv] at h0
       simpa only [Equiv.symm_apply_apply] using h0
-    rw [hgen a W.unop.left.left (hWV W)] at hcker
-    obtain ⟨r, hr⟩ :=
-      (Submodule.mem_span_range_iff_exists_fun (Y.presheaf.obj (op W.unop.left.left))).1 hcker
-    refine ⟨freeEvalSymm W (fun l : L ↦ (r l.down : Y.presheaf.obj (op W.unop.left.left))), ?_⟩
-    refine freeEval_injective (op W.unop.left) (funext fun i ↦ ?_)
-    have h1 := key_ψ W
-      (freeEvalSymm W (fun l : L ↦ (r l.down : Y.presheaf.obj (op W.unop.left.left))))
-      (fun l ↦ r l.down)
-      (fun l ↦ (congrFun (freeEval_freeEvalSymm (R := (Y.ringSheaf.over X).over Ya) (I := L) W
-        (fun l : L ↦ (r l.down : Y.presheaf.obj (op W.unop.left.left)))) l).symm) i _ rfl
-    have hsum : (∑ l : L, (r l.down : Y.presheaf.obj (op W.unop.left.left)) *
-        Y.res (hWV W) (g a l.down (e i))) =
-        ∑ j : Fin (k a), r j * Y.res (hWV W) (g a j (e i)) :=
-      Fintype.sum_equiv Equiv.ulift _ _ (fun _ ↦ rfl)
-    have h2 : (∑ j : Fin (k a), r j * Y.res (hWV W) (g a j (e i))) = bc i := by
-      simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Equiv.symm_apply_apply]
-        using congrFun hr (e i)
-    exact h1.trans (hsum.trans (h2.trans (hbc i)))
+    choose Wy hWyle hyWy cy hcy using fun (y : Z.left.left) ↦
+      hgen a Z.left.left (hWV (op Z)) (fun j ↦ bc (e.symm j)) hrelb y.1 y.2
+    set S₀ : Sieve (Z.left.left : Opens Y) :=
+      ⟨fun Wo _ ↦ ∃ y : Z.left.left, Wo ≤ Wy y, by
+        rintro W₁ W₂ f₁ ⟨y, hy⟩ gg; exact ⟨y, (leOfHom gg).trans hy⟩⟩ with hS₀def
+    have hS₀mem : S₀ ∈ Opens.grothendieckTopology Y Z.left.left := by
+      intro x hx
+      exact ⟨Wy ⟨x, hx⟩, homOfLE (hWyle ⟨x, hx⟩), ⟨⟨x, hx⟩, le_rfl⟩, hyWy ⟨x, hx⟩⟩
+    refine ⟨(Sieve.overEquiv Z).symm ((Sieve.overEquiv Z.left).symm S₀), ?_, ?_⟩
+    · rw [GrothendieckTopology.mem_over_iff, OrderIso.apply_symm_apply,
+        GrothendieckTopology.mem_over_iff, OrderIso.apply_symm_apply]
+      exact hS₀mem
+    · intro Z' ff hff
+      rw [Sieve.overEquiv_symm_iff, Sieve.overEquiv_symm_iff] at hff
+      obtain ⟨y, hy⟩ := hff
+      have hle : Z'.left.left ≤ Wy y := hy
+      refine ⟨freeEvalSymm (op Z') (fun l : L ↦ Y.res hle (cy y l.down)), ?_⟩
+      refine freeEval_injective (op Z'.left) (funext fun i ↦ ?_)
+      have h1 := key_ψ (op Z')
+        (freeEvalSymm (op Z') (fun l : L ↦ Y.res hle (cy y l.down)))
+        (fun l ↦ Y.res hle (cy y l.down))
+        (fun l ↦ (congrFun (freeEval_freeEvalSymm (R := (Y.ringSheaf.over X).over Ya) (I := L)
+          (op Z') (fun l : L ↦ Y.res hle (cy y l.down))) l).symm) i _ rfl
+      have hsum : (∑ l : L, Y.res hle (cy y l.down) *
+          Y.res (hWV (op Z')) (g a l.down (e i))) =
+          ∑ l : Fin (k a), Y.res hle (cy y l) * Y.res (hWV (op Z')) (g a l (e i)) :=
+        Fintype.sum_equiv Equiv.ulift _ _ (fun _ ↦ rfl)
+      have h3 : freeEval (op Z'.left) (((free I).over Ya).val.map ff.op b) i =
+          Y.res (leOfHom ff.left.left) (bc i) := by
+        rw [show (((free I).over Ya).val.map ff.op) b =
+          (free I).val.map (ff.left).op b from rfl, freeEval_naturality, hbc i]
+        rfl
+      have h4 : (∑ l : Fin (k a), Y.res hle (cy y l) *
+          Y.res (hWV (op Z')) (g a l (e i))) = Y.res (leOfHom ff.left.left) (bc i) := by
+        have h5 := hcy y (e i)
+        simp only [Equiv.symm_apply_apply] at h5
+        have h6 := congrArg (Y.res hle) h5
+        simp only [res_sum, res_mul, res_res] at h6
+        exact h6.symm
+      rw [h3, h1, hsum, h4]
 
 end AlgebraicGeometry.LocallyRingedSpace
 
@@ -265,19 +313,45 @@ lemma complexSpace_ringSheaf (ι : Type u) [Fintype ι] :
     (complexSpace ι).ringSheaf = okaSheaf ι :=
   rfl
 
-/-- **Oka's coherence lemma** is exactly the statement that the structure sheaf of `ℂ^ι` has
-locally finitely generated relations. -/
+/-- **Oka's coherence lemma** gives that the structure sheaf of `ℂ^ι` has locally finitely
+generated relations. `oka` is stated in the stronger sectionwise form, which in particular
+implies the local one. -/
 theorem hasLocalRelations_complexSpace (ι : Type u) [Fintype ι] :
     (complexSpace ι).HasLocalRelations := by
   classical
   intro V m f x hx
   obtain ⟨W, hWV, k, g, hxW, hgen⟩ := oka (U := V) f x hx
-  exact ⟨W, hWV, k, g, hxW, fun W' hW' ↦ hgen W' hW' hW'⟩
+  -- membership in the span of the `g j`, over an arbitrary smaller open set
+  have hspan : ∀ (W' : Opens (ι → ℂ)) (hW' : W' ≤ W) (b : Fin m → OkaRing W'),
+      (∑ i, b i * OkaRing.restrict (le_trans hW' hWV) (f i) = 0) →
+      ∃ c : Fin k → OkaRing W',
+        ∀ i, b i = ∑ l, c l * OkaRing.restrict hW' (g l i) := by
+    intro W' hW' b hb
+    have hm : b ∈ LinearMap.ker
+        (linOfFun fun i : Fin m ↦ OkaRing.restrict (le_trans hW' hWV) (f i)) :=
+      LinearMap.mem_ker.2 (by rw [linOfFun_apply]; exact hb)
+    rw [hgen W' hW' hW'] at hm
+    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun (OkaRing W')).1 hm
+    refine ⟨c, fun i ↦ ?_⟩
+    have h3 := congrFun hc i
+    simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using h3.symm
+  refine ⟨W, hWV, k, g, hxW, fun l ↦ ?_, fun W' hW' a ha y hy ↦ ?_⟩
+  · have hm : (fun i ↦ OkaRing.restrict le_rfl (g l i)) ∈ LinearMap.ker
+        (linOfFun fun i : Fin m ↦ OkaRing.restrict (le_trans le_rfl hWV) (f i)) := by
+      rw [hgen W le_rfl le_rfl]
+      exact Submodule.subset_span ⟨l, rfl⟩
+    have h2 := LinearMap.mem_ker.1 hm
+    rw [linOfFun_apply] at h2
+    exact h2
+  · obtain ⟨c, hc⟩ := hspan W' hW' a ha
+    refine ⟨W', le_rfl, hy, c, fun i ↦ ?_⟩
+    rw [LocallyRingedSpace.res_self]
+    exact hc i
 
 /-- **Oka's coherence theorem**, for `ℂ^ι` as a locally ringed space. -/
 theorem isCoherentStructureSheaf_complexSpace (ι : Type u) [Fintype ι] :
     (complexSpace ι).IsCoherentStructureSheaf :=
-  LocallyRingedSpace.isCoherentStructureSheaf_of_hasLocalRelations _
+  LocallyRingedSpace.isCoherentStructureSheaf_of_hasLocalRelations
     (hasLocalRelations_complexSpace ι)
 
 /-- Complex affine `n`-space has coherent structure sheaf. -/

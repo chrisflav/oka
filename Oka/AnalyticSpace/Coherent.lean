@@ -63,15 +63,12 @@ subset `Y` of `ℂ^n` cutting out `X|_U` by `f₁, …, f_k`:
 3. discarding the last `k` coordinates of those generators gives generators for the relations
    between the `sᵢ`, since a relation `∑ aᵢ sᵢ = 0` lifts to `∑ aᵢ tᵢ ∈ (f₁, …, f_k)`.
 
-Note on the strength of the statement. `HasLocalRelationsOn` asks, following `oka`, that the
-generators generate *sectionwise* over every smaller open set. Step 1 above only lifts sections
-locally, because `𝒪_Y ↠ i_*𝒪_M` is surjective on stalks and not on sections, so the argument
-delivers generation only locally and this statement is probably too strong to be provable as
-it stands — as is `oka` itself, for the same kind of reason. The fix is to weaken
-`HasLocalRelations` to local generation and reprove
-`isCoherentStructureSheaf_of_hasLocalRelations` using
-`SheafOfModules.isCoherent_of_forall_kernel_of_locally` in place of
-`SheafOfModules.isCoherent_of_forall_kernel`; the former was added for exactly this purpose. -/
+Note that `HasLocalRelationsOn` asks only for *local* generation: a relation between the `sᵢ`
+over an open set need be a combination of the generators only near each of its points. This is
+what step 1 delivers, since `𝒪_Y ↠ i_*𝒪_M` is surjective on stalks and not on sections, and it
+is the reason `SheafOfModules.isCoherent_of_forall_kernel_of_locally` was proved: the
+sectionwise variant of this statement would be a vanishing statement for `H¹` on arbitrary open
+sets and is not available. -/
 theorem IsLocalModel.hasLocalRelationsOn {X : LocallyRingedSpace.{u}} (U : Opens X)
     (h : IsLocalModel (X.restrict U.isOpenEmbedding)) :
     X.HasLocalRelationsOn U :=
@@ -85,7 +82,7 @@ holds on all of `X`, and hence `𝒪_X` is coherent. -/
 theorem AnalyticSpace.isCoherentStructureSheaf (X : AnalyticSpace.{u}) :
     X.toLocallyRingedSpace.IsCoherentStructureSheaf := by
   choose U M hM he using X.local_model
-  refine LocallyRingedSpace.isCoherentStructureSheaf_of_hasLocalRelations _
+  refine LocallyRingedSpace.isCoherentStructureSheaf_of_hasLocalRelations
     (LocallyRingedSpace.hasLocalRelations_of_openCover
       (fun x : X.toLocallyRingedSpace ↦ (U x).1) (fun x ↦ ⟨x, (U x).2⟩) fun x ↦ ?_)
   exact IsLocalModel.hasLocalRelationsOn _ (IsLocalModel.of_iso (he x).some (hM x))
