@@ -989,13 +989,70 @@ end Germ
 
 variable {n : ℕ}
 
-def MvPowerSeries.IsPolynomialIn (P : MvPowerSeries ι ℂ) (i : ι) :
-    Prop :=
+#check MvPowerSeries
+
+section
+
+open Polynomial
+
+variable {σ : Type*} {R : Type*} [CommRing R]
+
+def MvPowerSeries.fromPolynomial (i : σ) :
+    (MvPowerSeries { j : σ // j ≠ i } R)[X] →ₐ[R] MvPowerSeries σ R :=
+  -- TODO: define this
   sorry
 
-theorem oka_lemma (n : ℕ) (p : ℕ)
-    (F : Fin p → LocalOkaRing (Fin (n + 1)))
-    (hF : ∀ j, (F j).val.IsPolynomialIn (Fin.last n)) :
-    -- (L : (Fin p → LocalOkaRing ι) →ₗ[LocalOkaRing ι] LocalOkaRing ι) : :
-    True :=
+def MvPowerSeries.fromPolynomial' :
+    (MvPowerSeries (Fin n) R)[X] →ₐ[R] MvPowerSeries (Fin (n + 1)) R :=
+  -- TODO: define this
+  sorry
+
+def MvPowerSeries.IsPolynomialIn (P : MvPowerSeries ι R) (i : ι) :
+    Prop :=
+  ∃ (Q : (MvPowerSeries { j : ι //  j ≠ i } R)[X]),
+    MvPowerSeries.fromPolynomial i Q = P
+
+noncomputable
+def MvPowerSeries.IsPolyonmialIn.polynomial {P : MvPowerSeries ι R}
+    {i : ι}
+    (h : P.IsPolynomialIn i) :
+    (MvPowerSeries { j : ι //   j ≠ i } R)[X] :=
+  h.choose
+
+-- TODO: the map P ↦ P(0, ...., z_i, 0, ..., 0)
+def MvPowerSeries.partialEval (i : ι) :
+    MvPowerSeries ι R →ₐ[R] PowerSeries R :=
+  sorry
+
+noncomputable
+def MvPowerSeries.orderIn (P : MvPowerSeries ι R) (i : ι) : ℕ∞ :=
+  (MvPowerSeries.partialEval i P).order
+
+def MvPowerSeries.IsGeneralIn (P : MvPowerSeries ι R) (i : ι) :
+    Prop :=
+  MvPowerSeries.partialEval i P ≠ 0
+
+lemma MvPowerSeries.isGeneralIn_iff_orderIn_ne_top
+    (P : MvPowerSeries ι R) (i : ι) :
+    P.IsGeneralIn i ↔ P.orderIn i < ⊤ :=
+  sorry
+
+end
+
+open Polynomial
+
+theorem oka_lemma (n : ℕ) (p : ℕ) (d : ℕ)
+    (F : Fin p → (MvPowerSeries (Fin n) ℂ)[X])
+    (hF : ∀ j, (F j).degree < d)
+    (hF' : ∀ j, (F j).Monic) :
+    letI F' (j : Fin p) : MvPowerSeries (Fin (n + 1)) ℂ :=
+      MvPowerSeries.fromPolynomial' (F j)
+    letI f : (Fin p → (MvPowerSeries (Fin n) ℂ)[X]_d) →ₗ[ℂ]
+        (Fin p → (MvPowerSeries (Fin (n + 1)) ℂ)) :=
+      LinearMap.piMap
+        (fun i ↦ MvPowerSeries.fromPolynomial'.toLinearMap ∘ₗ (Submodule.subtype _).restrictScalars ℂ)
+    letI K_m : Submodule _ (Fin p → (MvPowerSeries (Fin n) ℂ)[X]_d) :=
+      LinearMap.ker ((linOfFun F').restrictScalars ℂ ∘ₗ f)
+    LinearMap.ker (linOfFun F') =
+      Submodule.span _ (Submodule.map f K_m).carrier :=
   sorry
