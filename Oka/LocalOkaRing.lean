@@ -450,9 +450,11 @@ theorem LocallyConvergent.hasFPowerSeriesOnBall (hP : P.LocallyConvergent) :
     have := hasSum_degree (P := P) (x := y) (hsum.mono hle).hasSum
     simpa only [toFPS_apply_diag, zero_add] using this
 
+omit [DecidableEq ι] in
 /-- The sum of a locally convergent power series is holomorphic near the origin. -/
 theorem LocallyConvergent.analyticAt_aux (hP : P.LocallyConvergent) :
     AnalyticAt ℂ P.eval 0 := by
+  classical
   obtain ⟨ρ, hρ, h⟩ := hP.hasFPowerSeriesOnBall
   exact h.analyticAt
 
@@ -558,9 +560,11 @@ lemma summable_of_summable_degFinset {g : (ι →₀ ℕ) → ℝ} (hg : ∀ d, 
   rw [tsum_fintype]
   exact (Finset.sum_coe_sort _ g).symm
 
+omit [DecidableEq ι] in
 /-- Every function holomorphic at the origin is the sum of a locally convergent power series. -/
 theorem exists_represents_aux {f : (ι → ℂ) → ℂ} (hf : AnalyticAt ℂ f 0) :
     ∃ P : MvPowerSeries ι ℂ, P.LocallyConvergent ∧ P.Represents f := by
+  classical
   obtain ⟨p, r, hp⟩ := hf
   obtain ⟨u, hu0, hur⟩ := exists_between hp.r_pos
   have hutop : u ≠ ⊤ := (hur.trans_le le_top).ne
@@ -617,7 +621,7 @@ theorem exists_represents_aux {f : (ι → ℂ) → ℂ} (hf : AnalyticAt ℂ f 
     rw [mem_ball_zero_iff] at hy
     -- the multilinear series sums to `f y`
     have hball : y ∈ Metric.eball (0 : ι → ℂ) r := by
-      show edist y (0 : ι → ℂ) < r
+      change edist y (0 : ι → ℂ) < r
       have h1 : edist y (0 : ι → ℂ) < ENNReal.ofReal v := by
         rw [edist_zero_right, ← ofReal_norm]
         exact (ENNReal.ofReal_lt_ofReal_iff hv0).mpr (hy.trans hρv)
