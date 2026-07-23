@@ -5,6 +5,7 @@ Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
 import Mathlib.Algebra.Polynomial.AlgebraMap
 import Mathlib.Analysis.Analytic.Basic
+import Mathlib.Analysis.Analytic.Constructions
 import Mathlib.Analysis.Complex.Basic
 
 /-!
@@ -17,8 +18,9 @@ import Mathlib.Analysis.Complex.Basic
 - `okaSubring` and `OkaRing`: the `ℂ`-algebra of holomorphic functions on `U`.
 - `OkaRing.restrict`: restriction of holomorphic functions along an inclusion of opens.
 - `TopologicalSpace.Opens.extend'`: the cylinder `U × ℂ` over an open set `U` of `ℂ^n`.
-- `Polynomial.toOkaRing`: a polynomial over `OkaRing U` viewed as a holomorphic function on the
-  cylinder over `U`.
+
+The interpretation `Polynomial.toOkaRing` of a polynomial over `OkaRing U` as a holomorphic
+function on the cylinder over `U` is defined in `Oka.Weierstrass`.
 -/
 
 /-- The `R`-linear form `x ↦ ∑ i, x i • f i` attached to a family `f` of elements of `R`. -/
@@ -39,15 +41,48 @@ def OkaAnalytic {U : Opens (ι → ℂ)} (f : U → ℂ) :
     Prop :=
   AnalyticOn ℂ (Function.extend Subtype.val f 0) U
 
+omit [Fintype ι] [DecidableEq ι] in
+private lemma extend_mul_extend {U : Opens (ι → ℂ)} (f g : U → ℂ) :
+    Function.extend Subtype.val (f * g) 0 =
+      Function.extend Subtype.val f 0 * Function.extend Subtype.val g 0 := by
+  funext x
+  by_cases hx : ∃ a : U, (a : ι → ℂ) = x
+  · obtain ⟨a, rfl⟩ := hx
+    simp only [Pi.mul_apply, Subtype.val_injective.extend_apply]
+  · simp [Function.extend_apply' _ _ _ hx]
+
+omit [Fintype ι] [DecidableEq ι] in
+private lemma extend_add_extend {U : Opens (ι → ℂ)} (f g : U → ℂ) :
+    Function.extend Subtype.val (f + g) 0 =
+      Function.extend Subtype.val f 0 + Function.extend Subtype.val g 0 := by
+  funext x
+  by_cases hx : ∃ a : U, (a : ι → ℂ) = x
+  · obtain ⟨a, rfl⟩ := hx
+    simp only [Pi.add_apply, Subtype.val_injective.extend_apply]
+  · simp [Function.extend_apply' _ _ _ hx]
+
+omit [Fintype ι] [DecidableEq ι] in
+private lemma extend_const_eqOn {U : Opens (ι → ℂ)} (c : ℂ) :
+    Set.EqOn (Function.extend Subtype.val (Function.const U c) 0)
+      (Function.const (ι → ℂ) c) (U : Set (ι → ℂ)) := fun x hx ↦
+  Subtype.val_injective.extend_apply (f := (Subtype.val : U → ι → ℂ)) _ _ ⟨x, hx⟩
+
 /-- The `ℂ`-subalgebra of holomorphic functions inside all functions on `U`. -/
 def okaSubring (U : Opens (ι → ℂ)) :
     Subalgebra ℂ (U → ℂ) where
   carrier := { f | OkaAnalytic f }
-  mul_mem' := sorry
-  one_mem' := sorry
-  add_mem' := sorry
-  zero_mem' := sorry
-  algebraMap_mem' := sorry
+  mul_mem' {f g} hf hg := by
+    rw [Set.mem_setOf_eq, OkaAnalytic, extend_mul_extend]
+    exact AnalyticOn.mul hf hg
+  one_mem' :=
+    AnalyticOn.congr analyticOn_const (extend_const_eqOn 1)
+  add_mem' {f g} hf hg := by
+    rw [Set.mem_setOf_eq, OkaAnalytic, extend_add_extend]
+    exact AnalyticOn.add hf hg
+  zero_mem' :=
+    AnalyticOn.congr analyticOn_const (extend_const_eqOn 0)
+  algebraMap_mem' c :=
+    AnalyticOn.congr analyticOn_const (extend_const_eqOn c)
 
 /-- The `ℂ`-algebra of holomorphic functions on an open set `U` of `ℂ^ι`. -/
 def OkaRing (U : Opens (ι → ℂ)) : Type _ :=
@@ -79,17 +114,29 @@ instance : CommRing (OkaRing U) :=
 instance : Algebra ℂ (OkaRing U) :=
   inferInstanceAs <| Algebra ℂ (okaSubring U)
 
+omit [DecidableEq ι] in
+/-- The restriction of a holomorphic function along an inclusion of opens is holomorphic. -/
+lemma OkaAnalytic.comp_inclusion {U V : Opens (ι → ℂ)} (h : U ≤ V) {f : V → ℂ}
+    (hf : OkaAnalytic f) :
+    OkaAnalytic (f ∘ U.inclusion h) := by
+  refine (hf.mono h).congr fun x hx ↦ ?_
+  have h₁ : Function.extend Subtype.val (f ∘ Opens.inclusion h) 0 x = f ⟨x, h hx⟩ :=
+    Subtype.val_injective.extend_apply (f := (Subtype.val : U → ι → ℂ)) _ _ ⟨x, hx⟩
+  have h₂ : Function.extend Subtype.val f 0 x = f ⟨x, h hx⟩ :=
+    Subtype.val_injective.extend_apply (f := (Subtype.val : V → ι → ℂ)) _ _ ⟨x, h hx⟩
+  rw [h₁, h₂]
+
 /-- Restriction of holomorphic functions along an inclusion `U ≤ V` of open sets. -/
 noncomputable
 def OkaRing.restrict {U V : Opens (ι → ℂ)}
     (h : U ≤ V) :
     OkaRing V →ₐ[ℂ] OkaRing U where
-  toFun f := .mk (f.toFun ∘ U.inclusion h) sorry
-  map_one' := sorry
-  map_mul' := sorry
-  map_zero' := sorry
-  map_add' := sorry
-  commutes' := sorry
+  toFun f := .mk (f.toFun ∘ U.inclusion h) (OkaAnalytic.comp_inclusion h f.2)
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+  commutes' _ := rfl
 
 /-- The product of an open set of `X` and an open set of `Y`, as an open set of `X × Y`. -/
 def TopologicalSpace.Opens.prod {X Y : Type*}
@@ -109,17 +156,21 @@ def TopologicalSpace.Opens.extend' (U : Opens (Fin n → ℂ)) :
       (Fin.appendHomeomorph n 1)
   Homeomorph.opensCongr homeo (Opens.prod U ⊤)
 
-open Polynomial
+/-- A point of `ℂ^{n+1}` lies in the cylinder over `U` if and only if its first `n` coordinates
+give a point of `U`. -/
+@[simp]
+lemma TopologicalSpace.Opens.mem_extend' {U : Opens (Fin n → ℂ)} {x : Fin (n + 1) → ℂ} :
+    x ∈ U.extend' ↔ Fin.init x ∈ U :=
+  ⟨fun h ↦ h.1, fun h ↦ ⟨h, trivial⟩⟩
 
-/-- A polynomial with coefficients holomorphic functions on `U`, viewed as the holomorphic
-function `(z, w) ↦ ∑ i, (P.coeff i) z * w ^ i` on the cylinder over `U`. -/
-noncomputable
-def Polynomial.toOkaRing (U : Opens (Fin n → ℂ)) :
-    (OkaRing U)[X] →ₐ[ℂ] OkaRing U.extend' where
-  toFun P :=
-    OkaRing.mk sorry sorry
-  map_one' := sorry
-  map_mul' := sorry
-  map_add' := sorry
-  map_zero' := sorry
-  commutes' := sorry
+lemma TopologicalSpace.Opens.extend'_mono {U V : Opens (Fin n → ℂ)} (h : U ≤ V) :
+    U.extend' ≤ V.extend' := by
+  intro x hx
+  rw [mem_extend'] at hx ⊢
+  exact h hx
+
+@[simp]
+lemma TopologicalSpace.Opens.zero_mem_extend' {U : Opens (Fin n → ℂ)} :
+    (0 : Fin (n + 1) → ℂ) ∈ U.extend' ↔ (0 : Fin n → ℂ) ∈ U := by
+  rw [mem_extend']
+  exact Iff.of_eq (congrArg (· ∈ U) (funext fun i ↦ rfl))
