@@ -36,6 +36,16 @@ noncomputable def KK_deg {p : ℕ} (d : ℕ) (F : Fin p → LocalOkaRing (Fin (n
   Submodule.span (LocalOkaRing (Fin (n + 1)))
     (Submodule.map polyInclPi (K_deg d F)).carrier
 
+theorem oka_lemma (p : ℕ) (d : ℕ)
+    (F : Fin p → (LocalOkaRing (Fin n))[X]_d)
+    (hF' : ∀ j, (F j).val.Monic) :
+    letI F' (j : Fin p) : LocalOkaRing (Fin (n + 1)) :=
+      polyIncl (F j)
+    LinearMap.ker (linOfFun F') =
+      Submodule.span (LocalOkaRing (Fin (n + 1)))
+        (Submodule.map polyInclPi (K_deg d F')).carrier :=
+  sorry
+
 theorem oka_lemma_weierstrass_rhs_containedIn_lhs (p : ℕ) (d : ℕ)
     (F : Fin p → (LocalOkaRing (Fin n))[X]) :
     letI F' (j : Fin p) : LocalOkaRing (Fin (n + 1)) :=
