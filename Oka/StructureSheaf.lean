@@ -194,6 +194,98 @@ lemma OkaRing.congr_symm_restrict {U V : Opens (ι → ℂ)}
 
 end Reindex
 
+section Translate
+
+/-- Precomposing a holomorphic function on `U` with an entire map sending `V` into `U` gives a
+holomorphic function on `V`. -/
+lemma OkaAnalytic.comp_analytic {κ : Type u} [Fintype κ] {U : Opens (ι → ℂ)} {V : Opens (κ → ℂ)}
+    (ψ : (κ → ℂ) → (ι → ℂ)) (hψ : ∀ y, AnalyticAt ℂ ψ y) (h : ∀ y ∈ V, ψ y ∈ U)
+    {f : U → ℂ} (hf : OkaAnalytic f) :
+    OkaAnalytic (fun y : V ↦ f ⟨ψ y, h y y.2⟩) := by
+  have key : ∀ y ∈ V, AnalyticAt ℂ (Function.extend Subtype.val f 0 ∘ ψ) y := fun y hy ↦
+    ((okaAnalytic_iff f).1 hf _ (h y hy)).comp (hψ y)
+  refine (funext fun z ↦ ?_ : (fun y : V ↦ f ⟨ψ y, h y y.2⟩) =
+    fun y : V ↦ (Function.extend Subtype.val f 0 ∘ ψ) y) ▸ okaAnalytic_restrict key
+  exact (Subtype.val_injective.extend_apply _ _ ⟨ψ z, h z z.2⟩).symm
+
+namespace TopologicalSpace.Opens
+
+omit [Fintype ι]
+
+variable (U : Opens (ι → ℂ)) (v : ι → ℂ)
+
+/-- The translate of an open set `U` of `ℂ^ι` by `-v`, i.e. the preimage of `U` under the
+translation `y ↦ y + v`. Its points are the `y` with `y + v ∈ U`. -/
+def shift : Opens (ι → ℂ) :=
+  ⟨(fun y ↦ y + v) ⁻¹' U, U.isOpen.preimage (continuous_id.add continuous_const)⟩
+
+@[simp]
+lemma mem_shift {y : ι → ℂ} : y ∈ U.shift v ↔ y + v ∈ U :=
+  Iff.rfl
+
+@[simp]
+lemma shift_zero : U.shift 0 = U := by
+  ext y
+  simp
+
+variable {U v} in
+lemma shift_mono {V : Opens (ι → ℂ)} (h : U ≤ V) : U.shift v ≤ V.shift v :=
+  fun _ hy ↦ h hy
+
+lemma shift_shift (w : ι → ℂ) : (U.shift v).shift w = U.shift (v + w) := by
+  ext y
+  simp [add_comm, add_left_comm]
+
+@[simp]
+lemma shift_shift_neg : (U.shift v).shift (-v) = U := by
+  rw [shift_shift]
+  simp
+
+variable {U v} in
+lemma shift_le_shift_iff {V : Opens (ι → ℂ)} : U.shift v ≤ V.shift v ↔ U ≤ V := by
+  refine ⟨fun h y hy ↦ ?_, fun h ↦ shift_mono h⟩
+  have hy' : y - v ∈ U.shift v := by simpa using hy
+  simpa using h hy'
+
+end TopologicalSpace.Opens
+
+variable (U : Opens (ι → ℂ)) (v : ι → ℂ)
+
+/-- Translation by `v` identifies the holomorphic functions on `U` with the holomorphic
+functions on the translate `U.shift v` of `U`. -/
+noncomputable def OkaRing.shift : OkaRing U ≃ₐ[ℂ] OkaRing (U.shift v) where
+  toFun f := OkaRing.mk (fun y ↦ f.toFun _ ⟨(y : ι → ℂ) + v, y.2⟩)
+    (f.2.comp_analytic (fun y ↦ y + v) (fun _ ↦ analyticAt_id.add analyticAt_const) fun _ hy ↦ hy)
+  invFun g := OkaRing.mk (fun z ↦ g.toFun _ ⟨(z : ι → ℂ) - v, by simp⟩)
+    (g.2.comp_analytic (fun z ↦ z - v) (fun _ ↦ analyticAt_id.sub analyticAt_const)
+      fun _ hz ↦ by simpa using hz)
+  left_inv f := by
+    ext z
+    exact congrArg (f.toFun _) (Subtype.ext (by simp))
+  right_inv g := by
+    ext z
+    exact congrArg (g.toFun _) (Subtype.ext (by simp))
+  map_mul' _ _ := rfl
+  map_add' _ _ := rfl
+  commutes' _ := rfl
+
+variable {U v}
+
+/-- Translating commutes with restriction. -/
+lemma OkaRing.shift_restrict {V : Opens (ι → ℂ)} (h : V ≤ U) (f : OkaRing U) :
+    OkaRing.shift V v (OkaRing.restrict h f) =
+      OkaRing.restrict (Opens.shift_mono h) (OkaRing.shift U v f) :=
+  rfl
+
+/-- Translating back commutes with restriction. -/
+lemma OkaRing.shift_symm_restrict {V : Opens (ι → ℂ)} (h : V.shift v ≤ U.shift v)
+    (g : OkaRing (U.shift v)) :
+    (OkaRing.shift V v).symm (OkaRing.restrict h g) =
+      OkaRing.restrict (Opens.shift_le_shift_iff.mp h) ((OkaRing.shift U v).symm g) :=
+  rfl
+
+end Translate
+
 /-- The presheaf of rings of holomorphic functions on `ℂ^ι`. -/
 noncomputable def okaPresheaf (ι : Type u) [Fintype ι] : (Opens (ι → ℂ))ᵒᵖ ⥤ RingCat.{u} where
   obj U := RingCat.of (OkaRing U.unop)

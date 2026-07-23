@@ -11,7 +11,7 @@ noncomputable instance : Algebra (LocalOkaRing (Fin n))
     (Polynomial.C : LocalOkaRing (Fin n) →+*
       (LocalOkaRing (Fin n))[X])).toAlgebra
 
-def LocalOkaRing.fromPolynomialAlg :
+noncomputable def LocalOkaRing.fromPolynomialAlg :
     (LocalOkaRing (Fin n))[X] →ₐ[LocalOkaRing (Fin n)] LocalOkaRing (Fin (n + 1)) where
   toRingHom := LocalOkaRing.fromPolynomial.toRingHom
   commutes' _ := rfl
