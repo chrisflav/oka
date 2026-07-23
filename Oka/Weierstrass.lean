@@ -5,6 +5,7 @@ Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
 import Oka.OkaRing
 import Oka.LocalOkaRing
+import Mathlib.MeasureTheory.Integral.CircleIntegral
 
 /-!
 # The Weierstrass preparation theorem
@@ -45,6 +46,173 @@ dictionary between functions and germs used to reduce Oka's coherence lemma to t
   general in the last variable.
 -/
 
+namespace MvPowerSeries
+
+lemma summableAt_X {ι : Type*} (i : ι) (x : ι → ℂ) :
+    (X i : MvPowerSeries ι ℂ).SummableAt x := by
+  classical
+  refine summable_of_ne_finset_zero (s := {Finsupp.single i 1}) fun d hd ↦ ?_
+  rw [Finset.mem_singleton] at hd
+  rw [term, coeff_X, if_neg hd, zero_mul, norm_zero]
+
+lemma locallyConvergent_X {ι : Type*} (i : ι) :
+    (X i : MvPowerSeries ι ℂ).LocallyConvergent :=
+  .of_forall fun x ↦ summableAt_X i x
+
+lemma eval_X {ι : Type*} (i : ι) (x : ι → ℂ) :
+    (X i : MvPowerSeries ι ℂ).eval x = x i := by
+  classical
+  rw [eval, tsum_eq_single (Finsupp.single i 1) ?_]
+  · rw [term, coeff_X, if_pos rfl, one_mul, evalMonomial, Finsupp.prod_single_index] <;> simp
+  · intro d hd
+    rw [term, coeff_X, if_neg hd, zero_mul]
+
+lemma eval_add_of_summableAt {ι : Type*} {P Q : MvPowerSeries ι ℂ} {x : ι → ℂ}
+    (hP : P.SummableAt x) (hQ : Q.SummableAt x) :
+    (P + Q).eval x = P.eval x + Q.eval x := by
+  have hfun : (P + Q).term x = fun d ↦ P.term x d + Q.term x d :=
+    funext fun d ↦ term_add P Q x d
+  refine (hP.add hQ).hasSum.unique ?_
+  rw [hfun]
+  exact hP.hasSum.add hQ.hasSum
+
+lemma eval_mul_of_summableAt {ι : Type*} {P Q : MvPowerSeries ι ℂ} {x : ι → ℂ}
+    (hP : P.SummableAt x) (hQ : Q.SummableAt x) :
+    (P * Q).eval x = P.eval x * Q.eval x := by
+  classical
+  have hFsum : Summable fun p : (ι →₀ ℕ) × (ι →₀ ℕ) ↦ P.term x p.1 * Q.term x p.2 := by
+    refine Summable.of_norm ?_
+    simpa [norm_mul] using
+      Summable.mul_of_nonneg hP hQ (fun _ ↦ norm_nonneg _) (fun _ ↦ norm_nonneg _)
+  have hF : HasSum (fun p : (ι →₀ ℕ) × (ι →₀ ℕ) ↦ P.term x p.1 * Q.term x p.2)
+      (P.eval x * Q.eval x) := hP.hasSum.mul hQ.hasSum hFsum
+  have hσ := (antidiagonalSigmaEquiv ι).hasSum_iff.mpr hF
+  have hfib : ∀ d : ι →₀ ℕ,
+      HasSum (fun c : {p : (ι →₀ ℕ) × (ι →₀ ℕ) //
+          p ∈ Finset.HasAntidiagonal.antidiagonal d} ↦ P.term x c.1.1 * Q.term x c.1.2)
+        ((P * Q).term x d) := by
+    intro d
+    rw [term_mul, ← Finset.sum_attach (Finset.HasAntidiagonal.antidiagonal d)
+      (fun p ↦ P.term x p.1 * Q.term x p.2)]
+    exact hasSum_fintype _
+  exact ((hσ.sigma hfib).unique (hP.mul hQ).hasSum).symm
+
+lemma summableAt_zero {ι : Type*} (x : ι → ℂ) : (0 : MvPowerSeries ι ℂ).SummableAt x := by
+  simpa using summableAt_algebraMap 0 x
+
+lemma summableAt_one {ι : Type*} (x : ι → ℂ) : (1 : MvPowerSeries ι ℂ).SummableAt x := by
+  simpa using summableAt_algebraMap 1 x
+
+lemma eval_algebraMap {ι : Type*} (c : ℂ) (x : ι → ℂ) :
+    (algebraMap ℂ (MvPowerSeries ι ℂ) c).eval x = c := by
+  classical
+  rw [eval, tsum_eq_single 0 (fun d hd ↦ term_algebraMap_of_ne_zero c x hd),
+    term_algebraMap_zero]
+
+lemma eval_of_zero {ι : Type*} (x : ι → ℂ) : (0 : MvPowerSeries ι ℂ).eval x = 0 := by
+  simpa using eval_algebraMap 0 x
+
+lemma eval_one {ι : Type*} (x : ι → ℂ) : (1 : MvPowerSeries ι ℂ).eval x = 1 := by
+  simpa using eval_algebraMap 1 x
+
+lemma SummableAt.sum {ι κ : Type*} {x : ι → ℂ} {s : Finset κ} {P : κ → MvPowerSeries ι ℂ} :
+    (∀ k ∈ s, (P k).SummableAt x) → (∑ k ∈ s, P k).SummableAt x := by
+  classical
+  induction s using Finset.induction with
+  | empty => intro _; simpa using summableAt_zero x
+  | insert k s hk ih =>
+      intro h
+      rw [Finset.sum_insert hk]
+      exact (h k (by simp)).add (ih fun j hj ↦ h j (Finset.mem_insert_of_mem hj))
+
+lemma eval_sum_of_summableAt {ι κ : Type*} {x : ι → ℂ} {s : Finset κ}
+    {P : κ → MvPowerSeries ι ℂ} :
+    (∀ k ∈ s, (P k).SummableAt x) → (∑ k ∈ s, P k).eval x = ∑ k ∈ s, (P k).eval x := by
+  classical
+  induction s using Finset.induction with
+  | empty => intro _; simp [eval_of_zero]
+  | insert k s hk ih =>
+      intro h
+      have hs : ∀ j ∈ s, (P j).SummableAt x := fun j hj ↦ h j (Finset.mem_insert_of_mem hj)
+      rw [Finset.sum_insert hk, Finset.sum_insert hk,
+        eval_add_of_summableAt (h k (by simp)) (SummableAt.sum hs), ih hs]
+
+lemma SummableAt.pow {ι : Type*} {P : MvPowerSeries ι ℂ} {x : ι → ℂ} (h : P.SummableAt x) :
+    ∀ m : ℕ, (P ^ m).SummableAt x
+  | 0 => by simpa using summableAt_one x
+  | m + 1 => by rw [pow_succ]; exact (SummableAt.pow h m).mul h
+
+lemma eval_pow_of_summableAt {ι : Type*} {P : MvPowerSeries ι ℂ} {x : ι → ℂ}
+    (h : P.SummableAt x) :
+    ∀ m : ℕ, (P ^ m).eval x = P.eval x ^ m
+  | 0 => by simpa using eval_one x
+  | m + 1 => by
+      rw [pow_succ, pow_succ, eval_mul_of_summableAt (h.pow m) h, eval_pow_of_summableAt h m]
+
+end MvPowerSeries
+
+variable {n : ℕ}
+
+noncomputable def LocalOkaRing.lastVar : LocalOkaRing (Fin (n + 1)) :=
+  ⟨MvPowerSeries.X (Fin.last n), MvPowerSeries.locallyConvergent_X _⟩
+
+namespace MvPowerSeries
+open Filter Topology
+
+variable {σ τ : Type*}
+
+lemma evalMonomial_mapDomain (e : σ ↪ τ) (d : σ →₀ ℕ) (x : τ → ℂ) :
+    evalMonomial (Finsupp.mapDomain e d) x = evalMonomial d (x ∘ e) :=
+  Finsupp.prod_mapDomain_index_inj e.injective
+
+lemma term_rename (e : σ ↪ τ) [TendstoCofinite (e : σ → τ)]
+    (P : MvPowerSeries σ ℂ) (x : τ → ℂ) (d : σ →₀ ℕ) :
+    (rename (e : σ → τ) P).term x (Finsupp.mapDomain e d) = P.term (x ∘ e) d := by
+  rw [term, term, ← Finsupp.embDomain_eq_mapDomain, coeff_embDomain_rename,
+    Finsupp.embDomain_eq_mapDomain, evalMonomial_mapDomain]
+
+lemma eval_rename (e : σ ↪ τ) [TendstoCofinite (e : σ → τ)]
+    (P : MvPowerSeries σ ℂ) (x : τ → ℂ) :
+    (rename (e : σ → τ) P).eval x = P.eval (x ∘ e) := by
+  have hzero : Function.support (fun d' ↦ (rename (e : σ → τ) P).term x d') ⊆
+      Set.range (Finsupp.mapDomain (e : σ → τ)) := by
+    intro d' hd'
+    by_contra h
+    apply hd'
+    change (rename (e : σ → τ) P).term x d' = 0
+    rw [term, coeff_rename_eq_zero _ _ h, zero_mul]
+  rw [eval, eval, ← Function.Injective.tsum_eq
+    (Finsupp.mapDomain_injective e.injective) hzero]
+  exact tsum_congr fun d ↦ term_rename e P x d
+
+lemma SummableAt.rename (e : σ ↪ τ) [TendstoCofinite (e : σ → τ)]
+    {P : MvPowerSeries σ ℂ} {x : τ → ℂ} (h : P.SummableAt (x ∘ e)) :
+    (rename (e : σ → τ) P).SummableAt x := by
+  refine (Function.Injective.summable_iff
+    (g := fun d : σ →₀ ℕ ↦ Finsupp.mapDomain (e : σ → τ) d)
+    (Finsupp.mapDomain_injective e.injective) ?_).mp ?_
+  · intro d' hd'
+    rw [term, coeff_rename_eq_zero _ _ hd', zero_mul, norm_zero]
+  · simpa [SummableAt, Function.comp_def, term_rename] using h
+
+lemma LocallyConvergent.rename (e : σ ↪ τ) [TendstoCofinite (e : σ → τ)]
+    {P : MvPowerSeries σ ℂ} (hP : P.LocallyConvergent) :
+    (rename (e : σ → τ) P).LocallyConvergent := by
+  have hc : Tendsto (fun x : τ → ℂ ↦ x ∘ (e : σ → τ)) (𝓝 0) (𝓝 0) :=
+    (continuous_pi fun i ↦ continuous_apply (e i)).tendsto' 0 0 rfl
+  filter_upwards [hc.eventually hP] with x hx using SummableAt.rename e hx
+
+end MvPowerSeries
+
+instance : Filter.TendstoCofinite (Fin.castSuccEmb : Fin n → Fin (n + 1)) :=
+  Filter.tendstoCofinite_of_finite _
+
+noncomputable def LocalOkaRing.incl :
+    LocalOkaRing (Fin n) →ₐ[ℂ] LocalOkaRing (Fin (n + 1)) :=
+  ((MvPowerSeries.rename (Fin.castSuccEmb : Fin n → Fin (n + 1))).comp
+      (localOkaSubring (Fin n)).val).codRestrict _
+    (fun P ↦ MvPowerSeries.LocallyConvergent.rename _ P.2)
+
 open Polynomial TopologicalSpace
 
 variable {n : ℕ}
@@ -61,43 +229,26 @@ section FromPolynomial
 
 namespace MvPowerSeries
 
-/-- Evaluating a monomial in the first `n` of `n + 1` variables only sees the first `n`
-coordinates. -/
-lemma evalMonomial_mapDomain (e : Fin n →₀ ℕ) (x : Fin (n + 1) → ℂ) :
-    evalMonomial (Finsupp.mapDomain Fin.castSucc e) x = evalMonomial e (Fin.init x) := by
-  rw [evalMonomial_eq_prod, evalMonomial_eq_prod, Fin.prod_univ_castSucc]
-  have hlast : Finsupp.mapDomain Fin.castSucc e (Fin.last n) = 0 :=
-    Finsupp.mapDomain_notin_range e (Fin.last n) (by simp)
-  rw [hlast, pow_zero, mul_one]
-  refine Finset.prod_congr rfl fun i _ ↦ ?_
-  rw [Finsupp.mapDomain_apply (Fin.castSucc_injective n)]
-  rfl
-
 /-- A power series in `n` variables representing `F` represents, as a power series in `n + 1`
 variables, the pullback of `F` along the projection to the first `n` coordinates. -/
 lemma Represents.rename_castSucc {P : MvPowerSeries (Fin n) ℂ} {F : (Fin n → ℂ) → ℂ}
     (hP : P.Represents F) :
-    (rename Fin.castSucc P).Represents (fun x ↦ F (Fin.init x)) := by
+    (rename (Fin.castSuccEmb : Fin n → Fin (n + 1)) P).Represents
+      (fun x ↦ F (Fin.init x)) := by
   have hcont : Continuous (Fin.init : (Fin (n + 1) → ℂ) → (Fin n → ℂ)) :=
     continuous_pi fun i ↦ continuous_apply i.castSucc
   filter_upwards [(hcont.tendsto 0).eventually hP] with x hx
   have hinj : Function.Injective
-      (Finsupp.mapDomain (M := ℕ) (Fin.castSucc : Fin n → Fin (n + 1))) :=
-    Finsupp.mapDomain_injective (Fin.castSucc_injective n)
-  have hvanish : ∀ d ∉ Set.range (Finsupp.mapDomain (M := ℕ) (Fin.castSucc : Fin n → Fin (n + 1))),
-      (rename Fin.castSucc P).term x d = 0 := fun d hd ↦ by
+      (Finsupp.mapDomain (M := ℕ) (Fin.castSuccEmb : Fin n → Fin (n + 1))) :=
+    Finsupp.mapDomain_injective Fin.castSuccEmb.injective
+  have hvanish : ∀ d ∉ Set.range
+      (Finsupp.mapDomain (M := ℕ) (Fin.castSuccEmb : Fin n → Fin (n + 1))),
+      (rename (Fin.castSuccEmb : Fin n → Fin (n + 1)) P).term x d = 0 := fun d hd ↦ by
     rw [term, coeff_rename_eq_zero _ _ hd, zero_mul]
   refine (Function.Injective.hasSum_iff hinj hvanish).mp ?_
-  have hfun : (rename Fin.castSucc P).term x ∘ Finsupp.mapDomain Fin.castSucc =
-      P.term (Fin.init x) := by
-    funext e
-    rw [Function.comp_apply, term, term, evalMonomial_mapDomain]
-    congr 1
-    have hemb : Finsupp.mapDomain (M := ℕ) Fin.castSucc e =
-        Finsupp.embDomain ⟨Fin.castSucc, Fin.castSucc_injective n⟩ e := by
-      simp only [Finsupp.embDomain_eq_mapDomain, Function.Embedding.coeFn_mk]
-    rw [hemb]
-    exact coeff_embDomain_rename ⟨Fin.castSucc, Fin.castSucc_injective n⟩ P e
+  have hfun : (rename (Fin.castSuccEmb : Fin n → Fin (n + 1)) P).term x ∘
+      Finsupp.mapDomain (Fin.castSuccEmb : Fin n → Fin (n + 1)) = P.term (Fin.init x) :=
+    funext fun d ↦ term_rename Fin.castSuccEmb P x d
   rw [hfun]
   exact hx
 
@@ -121,25 +272,17 @@ namespace LocalOkaRing
 
 open MvPowerSeries
 
-/-- The inclusion of germs in `n` variables into germs in `n + 1` variables. -/
-noncomputable def renameSucc : LocalOkaRing (Fin n) →ₐ[ℂ] LocalOkaRing (Fin (n + 1)) :=
-  ((MvPowerSeries.rename Fin.castSucc).comp (localOkaSubring (Fin n)).val).codRestrict
-    (localOkaSubring (Fin (n + 1))) fun P ↦
-      (Represents.rename_castSucc P.2.represents_eval).locallyConvergent
-
 @[simp]
-lemma coe_renameSucc (P : LocalOkaRing (Fin n)) :
-    (renameSucc P : MvPowerSeries (Fin (n + 1)) ℂ) =
-      MvPowerSeries.rename Fin.castSucc (P : MvPowerSeries (Fin n) ℂ) :=
+lemma coe_incl (P : LocalOkaRing (Fin n)) :
+    (incl P : MvPowerSeries (Fin (n + 1)) ℂ) =
+      MvPowerSeries.rename (Fin.castSuccEmb : Fin n → Fin (n + 1))
+        (P : MvPowerSeries (Fin n) ℂ) :=
   rfl
 
-/-- The last coordinate, as a germ in `n + 1` variables. -/
-noncomputable def lastX : LocalOkaRing (Fin (n + 1)) :=
-  ⟨MvPowerSeries.X (Fin.last n), (represents_X _).locallyConvergent⟩
-
 @[simp]
-lemma coe_lastX : ((lastX : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ) =
-    MvPowerSeries.X (Fin.last n) :=
+lemma coe_lastVar :
+    ((lastVar : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ) =
+      MvPowerSeries.X (Fin.last n) :=
   rfl
 
 end LocalOkaRing
@@ -149,19 +292,19 @@ end FromPolynomial
 /-- A polynomial over the germs in `n` variables, viewed as a germ in `n + 1` variables. -/
 noncomputable def LocalOkaRing.fromPolynomial :
     (LocalOkaRing (Fin n))[X] →ₐ[ℂ] LocalOkaRing (Fin (n + 1)) :=
-  Polynomial.eval₂AlgHom LocalOkaRing.renameSucc LocalOkaRing.lastX fun _ ↦ Commute.all _ _
+  Polynomial.aevalTower LocalOkaRing.incl LocalOkaRing.lastVar
 
 namespace LocalOkaRing
 
 @[simp]
 lemma fromPolynomial_C (P : LocalOkaRing (Fin n)) :
-    fromPolynomial (Polynomial.C P) = renameSucc P :=
-  Polynomial.eval₂_C _ _
+    fromPolynomial (Polynomial.C P) = incl P :=
+  Polynomial.aevalTower_C _ _ _
 
 @[simp]
 lemma fromPolynomial_X :
-    fromPolynomial (Polynomial.X : (LocalOkaRing (Fin n))[X]) = lastX :=
-  Polynomial.eval₂_X _ _
+    fromPolynomial (Polynomial.X : (LocalOkaRing (Fin n))[X]) = lastVar :=
+  Polynomial.aevalTower_X _ _
 
 /-- The underlying power series of `LocalOkaRing.fromPolynomial Q` is
 `MvPowerSeries.fromPolynomial'` applied to the underlying polynomial of power series. -/
@@ -173,11 +316,11 @@ lemma coe_fromPolynomial (Q : (LocalOkaRing (Fin n))[X]) :
   | add p q hp hq =>
     rw [map_add, AddMemClass.coe_add, hp, hq, Polynomial.map_add, map_add]
   | monomial k a =>
-    rw [fromPolynomial, Polynomial.eval₂AlgHom_apply, Polynomial.eval₂_monomial,
-      Polynomial.map_monomial, MvPowerSeries.fromPolynomial',
-      Polynomial.eval₂AlgHom_apply, Polynomial.eval₂_monomial]
-    simp only [RingHom.coe_coe, MulMemClass.coe_mul, SubmonoidClass.coe_pow, coe_renameSucc,
-      coe_lastX]
+    rw [← Polynomial.C_mul_X_pow_eq_monomial]
+    rw [map_mul, map_pow, fromPolynomial_C, fromPolynomial_X]
+    rw [Polynomial.map_mul, Polynomial.map_pow, Polynomial.map_C, Polynomial.map_X]
+    rw [map_mul, map_pow, MvPowerSeries.fromPolynomial'_C, MvPowerSeries.fromPolynomial'_X]
+    simp only [MulMemClass.coe_mul, SubmonoidClass.coe_pow, coe_incl, coe_lastVar]
     rfl
 
 lemma fromPolynomial_injective :
@@ -191,6 +334,134 @@ lemma fromPolynomial_injective :
 
 end LocalOkaRing
 
+lemma LocalOkaRing.eval_incl (a : LocalOkaRing (Fin n)) (z : Fin (n + 1) → ℂ) :
+    ((incl a : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ).eval z
+      = (a : MvPowerSeries (Fin n) ℂ).eval (fun j ↦ z j.castSucc) := by
+  change (MvPowerSeries.rename (Fin.castSuccEmb : Fin n → Fin (n + 1))
+      (a : MvPowerSeries (Fin n) ℂ)).eval z = _
+  rw [MvPowerSeries.eval_rename]
+  rfl
+
+lemma LocalOkaRing.eval_lastVar (z : Fin (n + 1) → ℂ) :
+    ((lastVar : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ).eval z
+      = z (Fin.last n) :=
+  MvPowerSeries.eval_X _ _
+
+lemma LocalOkaRing.fromPolynomial_eq_sum (q : (LocalOkaRing (Fin n))[X]) :
+    fromPolynomial q
+      = ∑ i ∈ Finset.range (q.natDegree + 1), incl (q.coeff i) * lastVar ^ i := by
+  rw [fromPolynomial]
+  exact Polynomial.eval₂_eq_sum_range _ _
+
+lemma LocalOkaRing.summableAt_incl (a : LocalOkaRing (Fin n)) (z : Fin (n + 1) → ℂ)
+    (ha : (a : MvPowerSeries (Fin n) ℂ).SummableAt (fun j ↦ z j.castSucc)) :
+    ((incl a : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ).SummableAt z := by
+  change (MvPowerSeries.rename (Fin.castSuccEmb : Fin n → Fin (n + 1))
+      (a : MvPowerSeries (Fin n) ℂ)).SummableAt z
+  exact MvPowerSeries.SummableAt.rename _ ha
+
+lemma LocalOkaRing.eval_fromPolynomial (q : (LocalOkaRing (Fin n))[X]) (z : Fin (n + 1) → ℂ)
+    (hz : ∀ i, ((q.coeff i : LocalOkaRing (Fin n)) : MvPowerSeries (Fin n) ℂ).SummableAt
+      (fun j ↦ z j.castSucc)) :
+    ((fromPolynomial q : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ).eval z
+      = ∑ i ∈ Finset.range (q.natDegree + 1),
+          ((q.coeff i : MvPowerSeries (Fin n) ℂ).eval (fun j ↦ z j.castSucc))
+            * z (Fin.last n) ^ i := by
+  classical
+  have hX : (MvPowerSeries.X (Fin.last n) : MvPowerSeries (Fin (n + 1)) ℂ).SummableAt z :=
+    MvPowerSeries.summableAt_X _ z
+  have hcast : ((∑ i ∈ Finset.range (q.natDegree + 1),
+        incl (q.coeff i) * lastVar ^ i : LocalOkaRing (Fin (n + 1))) :
+        MvPowerSeries (Fin (n + 1)) ℂ)
+      = ∑ i ∈ Finset.range (q.natDegree + 1),
+          ((incl (q.coeff i) : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ)
+            * (MvPowerSeries.X (Fin.last n) : MvPowerSeries (Fin (n + 1)) ℂ) ^ i := by
+    push_cast
+    rfl
+  have hsum : ∀ i ∈ Finset.range (q.natDegree + 1),
+      (((incl (q.coeff i) : LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ)
+        * (MvPowerSeries.X (Fin.last n) : MvPowerSeries (Fin (n + 1)) ℂ) ^ i).SummableAt z :=
+    fun i _ ↦ (summableAt_incl _ z (hz i)).mul (hX.pow i)
+  rw [fromPolynomial_eq_sum, hcast, MvPowerSeries.eval_sum_of_summableAt hsum]
+  refine Finset.sum_congr rfl fun i _ ↦ ?_
+  rw [MvPowerSeries.eval_mul_of_summableAt (summableAt_incl _ z (hz i)) (hX.pow i),
+    MvPowerSeries.eval_pow_of_summableAt hX, eval_incl, MvPowerSeries.eval_X]
+
+lemma localweierstrass_division_lemma_one
+      (q : (LocalOkaRing (Fin n))[X])
+      (hq : IsLocalWeierstrassPolynomial (Polynomial.map (localOkaSubring _).val.toRingHom q))
+      (f : LocalOkaRing (Fin (n + 1))) :
+      ∃ (δ : ℝ) (hd : δ > 0) (ε : ℝ) (he : ε > 0),
+      ∀ (z : Fin (n+1) → ℂ)
+          (hz₁ : ∀ i : Fin n, ‖z i.castSucc‖ ≤ δ)
+          (hz₂ : ‖z (Fin.last n)‖ = ε),
+          ((f : MvPowerSeries (Fin (n+1)) ℂ)).SummableAt z ∧
+          ((LocalOkaRing.fromPolynomial q : LocalOkaRing (Fin (n+1))) :
+            MvPowerSeries (Fin (n+1)) ℂ).eval z ≠ 0
+       := by
+  obtain ⟨ρ, hρ, hsum⟩ := (f.locallyConvergent).exists_summableAt_const
+  refine ⟨ρ, hρ, ρ, hρ, ?_⟩
+  intro z hz₁ hz₂
+  constructor
+  · refine hsum.mono ?_
+    intro i
+    induction i using Fin.lastCases with
+    | last => simp [hz₂, Complex.norm_real, abs_of_nonneg hρ.le]
+    | cast j => simpa [Complex.norm_real, abs_of_nonneg hρ.le] using hz₁ j
+  · sorry
+
+lemma localweierstrass_division_lemma_two
+    (q : (LocalOkaRing (Fin n))[X])
+    (hq : IsLocalWeierstrassPolynomial (Polynomial.map (localOkaSubring _).val.toRingHom q))
+    (f : LocalOkaRing (Fin (n + 1)))
+    (δ : ℝ) (hd : δ > 0) (ε : ℝ) (he : ε > 0)
+    (hf : ∀ z : Fin (n+1) → ℂ, (∀ i : Fin n, ‖z i.castSucc‖ ≤ δ) → ‖z (Fin.last n)‖ = ε →
+      (f : MvPowerSeries (Fin (n+1)) ℂ).SummableAt z)
+    (hq0 : ∀ z : Fin (n+1) → ℂ, (∀ i : Fin n, ‖z i.castSucc‖ ≤ δ) → ‖z (Fin.last n)‖ = ε →
+      ((LocalOkaRing.fromPolynomial q : LocalOkaRing (Fin (n+1))) :
+        MvPowerSeries (Fin (n+1)) ℂ).eval z ≠ 0) :
+      ∃ a : LocalOkaRing (Fin (n+1)),
+       (a : MvPowerSeries (Fin (n+1)) ℂ).Represents (fun x =>
+            (2 * Real.pi * Complex.I : ℂ)⁻¹ *
+              ∮ ζ in C(0, ε),
+                (f : MvPowerSeries (Fin (n+1)) ℂ).eval (Fin.snoc (Fin.init x) ζ) /
+                  (((LocalOkaRing.fromPolynomial q : LocalOkaRing (Fin (n+1))) :
+                      MvPowerSeries (Fin (n+1)) ℂ).eval (Fin.snoc (Fin.init x) ζ)
+                    * (ζ - x (Fin.last n)))) := by
+  have hF : AnalyticAt ℂ (fun (x : Fin (n+1) → ℂ) =>
+      (2 * Real.pi * Complex.I : ℂ)⁻¹ *
+        ∮ ζ in C(0, ε),
+          (f : MvPowerSeries (Fin (n+1)) ℂ).eval (Fin.snoc (Fin.init x) ζ) /
+            (((LocalOkaRing.fromPolynomial q : LocalOkaRing (Fin (n+1))) :
+                MvPowerSeries (Fin (n+1)) ℂ).eval (Fin.snoc (Fin.init x) ζ)
+              * (ζ - x (Fin.last n)))) 0 := by
+    sorry
+  obtain ⟨P, hconv, hrep⟩ := MvPowerSeries.exists_represents hF
+  exact ⟨⟨P, hconv⟩, hrep⟩
+
+open Polynomial in
+theorem exists_diffQuotient {R : Type*} [CommRing R] [Nontrivial R]
+    (q : R[X]) (hq : q ≠ 0) (c : R) :
+    ∃ Q : R[X], Q.degree < q.degree ∧ q - C (q.eval c) = (X - C c) * Q := by
+  refine ⟨q /ₘ (X - C c), ?_, ?_⟩
+  · refine degree_divByMonic_lt q (X - C c) hq ?_
+    rw [degree_X_sub_C]
+    exact_mod_cast Nat.zero_lt_one
+  · have h := modByMonic_add_div q (X - C c)
+    rw [modByMonic_X_sub_C_eq_C_eval] at h
+    exact (eq_sub_of_add_eq' h).symm
+
+/-- The Weierstrass division theorem for germs; uniqueness is omitted. -/
+theorem localweierstrass_division
+      (q : (LocalOkaRing (Fin n))[X])
+      (hq : IsLocalWeierstrassPolynomial
+           (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) q))
+      (f : LocalOkaRing (Fin (n + 1))) :
+      ∃ (a : LocalOkaRing (Fin (n + 1)))
+        (b : (LocalOkaRing (Fin (n)))[X]) (hd : b.degree < q.degree),
+      f = a * (LocalOkaRing.fromPolynomial q) + (LocalOkaRing.fromPolynomial b) :=
+  sorry
+
 /-- The Weierstrass preparation theorem for germs; uniqueness is omitted. -/
 theorem localweierstrass_preparation
     (f : LocalOkaRing (Fin (n + 1)))
@@ -200,23 +471,6 @@ theorem localweierstrass_preparation
       (hg : IsLocalWeierstrassPolynomial
            (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) g)),
       f = LocalOkaRing.fromPolynomial g * u :=
-  sorry
-
-
-
-
-
-
-
-/-- The Weierstrass division theorem for germs; uniqueness is omitted. -/
-theorem localweierstrass_division
-      (q : (LocalOkaRing (Fin (n)))[X])
-      (hq : IsLocalWeierstrassPolynomial
-           (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) q))
-      (f : LocalOkaRing (Fin (n + 1))) :
-      ∃ (a : LocalOkaRing (Fin (n + 1)))
-        (b : (LocalOkaRing (Fin (n)))[X]) (hd : b.degree < q.degree),
-      f = a * (LocalOkaRing.fromPolynomial q) + (LocalOkaRing.fromPolynomial b) :=
   sorry
 
 section ToOkaRing
@@ -609,12 +863,12 @@ lemma natDegree_germPoly_le (hy' : y' ∈ V) (w : ℂ) (Q : (OkaRing V)[X]) :
 germ rings. -/
 lemma germ_pullbackInit {y : Fin (n + 1) → ℂ} (hy : y ∈ V.extend') (f : OkaRing V) :
     germ hy (pullbackInit V f) =
-      LocalOkaRing.renameSucc (germ (Opens.mem_extend'.mp hy) f) := by
+      LocalOkaRing.incl (germ (Opens.mem_extend'.mp hy) f) := by
   refine germ_eq_of_represents hy ?_
-  have h1 : ((LocalOkaRing.renameSucc (germ (Opens.mem_extend'.mp hy) f) :
+  have h1 : ((LocalOkaRing.incl (germ (Opens.mem_extend'.mp hy) f) :
       LocalOkaRing (Fin (n + 1))) : MvPowerSeries (Fin (n + 1)) ℂ).Represents
       (fun x ↦ f.toGlobalFun _ (Fin.init x + Fin.init y)) := by
-    rw [LocalOkaRing.coe_renameSucc]
+    rw [LocalOkaRing.coe_incl]
     exact Represents.rename_castSucc (germ_represents (Opens.mem_extend'.mp hy) f)
   refine h1.congr ?_
   have hcont : Continuous (fun x : Fin (n + 1) → ℂ ↦ x + y) :=
@@ -629,15 +883,15 @@ lemma germ_pullbackInit {y : Fin (n + 1) → ℂ} (hy : y ∈ V.extend') (f : Ok
 /-- The germ of the last coordinate function at `y` is `X_last + y_last`. -/
 lemma germ_lastVar {y : Fin (n + 1) → ℂ} (hy : y ∈ V.extend') :
     germ hy (lastVar V) =
-      LocalOkaRing.lastX + algebraMap ℂ (LocalOkaRing (Fin (n + 1))) (y (Fin.last n)) := by
+      LocalOkaRing.lastVar + algebraMap ℂ (LocalOkaRing (Fin (n + 1))) (y (Fin.last n)) := by
   refine germ_eq_of_represents hy ?_
-  have h1 : ((LocalOkaRing.lastX +
+  have h1 : ((LocalOkaRing.lastVar +
       algebraMap ℂ (LocalOkaRing (Fin (n + 1))) (y (Fin.last n)) : LocalOkaRing (Fin (n + 1))) :
       MvPowerSeries (Fin (n + 1)) ℂ).Represents
       ((fun z ↦ z (Fin.last n)) + Function.const _ (y (Fin.last n))) := by
     have h2 := (represents_X (ι := Fin (n + 1)) (Fin.last n)).add
       (represents_algebraMap (ι := Fin (n + 1)) (y (Fin.last n)))
-    rw [AddMemClass.coe_add, LocalOkaRing.coe_lastX]
+    rw [AddMemClass.coe_add, LocalOkaRing.coe_lastVar]
     exact h2
   refine h1.congr ?_
   have hcont : Continuous (fun x : Fin (n + 1) → ℂ ↦ x + y) :=
@@ -659,24 +913,24 @@ theorem germ_toOkaRing {y : Fin (n + 1) → ℂ} (hy : y ∈ V.extend') (Q : (Ok
         (germPoly (Opens.mem_extend'.mp hy) (y (Fin.last n))).toRingHom := by
     refine Polynomial.ringHom_ext (fun a ↦ ?_) ?_
     · have hL : germ hy (Polynomial.toOkaRing V (Polynomial.C a)) =
-          LocalOkaRing.renameSucc (germ (Opens.mem_extend'.mp hy) a) := by
+          LocalOkaRing.incl (germ (Opens.mem_extend'.mp hy) a) := by
         rw [Polynomial.toOkaRing_C]
         exact germ_pullbackInit hy a
       have hR : LocalOkaRing.fromPolynomial
           (germPoly (Opens.mem_extend'.mp hy) (y (Fin.last n)) (Polynomial.C a)) =
-          LocalOkaRing.renameSucc (germ (Opens.mem_extend'.mp hy) a) := by
+          LocalOkaRing.incl (germ (Opens.mem_extend'.mp hy) a) := by
         rw [germPoly_apply, Polynomial.map_C, Polynomial.C_comp,
           LocalOkaRing.fromPolynomial_C]
         rfl
       simpa using hL.trans hR.symm
     · have hL : germ hy (Polynomial.toOkaRing V Polynomial.X) =
-          LocalOkaRing.lastX +
+          LocalOkaRing.lastVar +
             algebraMap ℂ (LocalOkaRing (Fin (n + 1))) (y (Fin.last n)) := by
         rw [Polynomial.toOkaRing_X]
         exact germ_lastVar hy
       have hR : LocalOkaRing.fromPolynomial
           (germPoly (Opens.mem_extend'.mp hy) (y (Fin.last n)) Polynomial.X) =
-          LocalOkaRing.lastX +
+          LocalOkaRing.lastVar +
             algebraMap ℂ (LocalOkaRing (Fin (n + 1))) (y (Fin.last n)) := by
         rw [germPoly_apply, Polynomial.map_X, Polynomial.X_comp, map_add,
           LocalOkaRing.fromPolynomial_X, LocalOkaRing.fromPolynomial_C]
