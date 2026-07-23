@@ -6,6 +6,7 @@ Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 import Oka.OkaRing
 import Oka.LocalOkaRing
 import Mathlib.MeasureTheory.Integral.CircleIntegral
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Analytic
 
 /-!
 # The Weierstrass preparation theorem
@@ -27,9 +28,11 @@ the origin, as a unit times a Weierstrass polynomial.
 
 ## Main results
 
-Besides the statements of the local Weierstrass preparation and division theorems
-(`localweierstrass_preparation` and `localweierstrass_division`), this file develops the
-dictionary between functions and germs used to reduce Oka's coherence lemma to them:
+Besides the statement of the local Weierstrass division theorem
+(`localweierstrass_division`) and the proof of the local Weierstrass preparation theorem
+from it (`localweierstrass_preparation`, via division by the generic Weierstrass polynomial
+and the analytic implicit function theorem `exists_analyticAt_implicit`), this file develops
+the dictionary between functions and germs used to reduce Oka's coherence lemma to them:
 
 - `OkaRing.germ_toOkaRing`: the germ of the function attached to a polynomial is the germ
   polynomial, viewed as a germ via `LocalOkaRing.fromPolynomial`.
@@ -462,7 +465,641 @@ theorem localweierstrass_division
       f = a * (LocalOkaRing.fromPolynomial q) + (LocalOkaRing.fromPolynomial b) :=
   sorry
 
-/-- The Weierstrass preparation theorem for germs; uniqueness is omitted. -/
+/-! ### Represents and eval helpers -/
+
+namespace MvPowerSeries
+
+variable {ι : Type*}
+
+/-- The sum of a power series representing `F` agrees with `F` near the origin. -/
+lemma Represents.eval_eq {P : MvPowerSeries ι ℂ} {F : (ι → ℂ) → ℂ} (hP : P.Represents F) :
+    ∀ᶠ x in nhds (0 : ι → ℂ), P.eval x = F x := by
+  filter_upwards [hP] with x hx
+  rw [eval]
+  exact hx.tsum_eq
+
+/-- The value at the origin of a function represented by `P` is the constant term of `P`. -/
+lemma Represents.apply_zero {P : MvPowerSeries ι ℂ} {F : (ι → ℂ) → ℂ} (hP : P.Represents F) :
+    F 0 = constantCoeff P := by
+  rw [← eval_zero P, hP.eval_eq.self_of_nhds]
+
+variable [Fintype ι] [DecidableEq ι]
+
+/-- The sum of a locally convergent power series has the associated formal multilinear series
+as a power series expansion at the origin. -/
+lemma LocallyConvergent.hasFPowerSeriesAt_eval {P : MvPowerSeries ι ℂ}
+    (hP : P.LocallyConvergent) : HasFPowerSeriesAt P.eval (toFPS P) 0 := by
+  obtain ⟨ρ, hρ, h⟩ := hP.hasFPowerSeriesOnBall
+  exact h.hasFPowerSeriesAt
+
+set_option linter.unusedFintypeInType false in
+/-- The partial derivatives at the origin of the sum of a locally convergent power series are
+the linear coefficients of the series. -/
+lemma LocallyConvergent.fderiv_eval_zero {P : MvPowerSeries ι ℂ}
+    (hP : P.LocallyConvergent) (j : ι) :
+    fderiv ℂ P.eval 0 (Pi.single j 1) = coeff (Finsupp.single j 1) P := by
+  rw [hP.hasFPowerSeriesAt_eval.fderiv_eq]
+  have h1 : (continuousMultilinearCurryFin1 ℂ (ι → ℂ) ℂ) (toFPS P 1) (Pi.single j 1) =
+      toFPS P 1 (fun _ ↦ Pi.single j 1) := rfl
+  rw [h1, toFPS_apply_diag]
+  have hmem : Finsupp.single j 1 ∈ degFinset ι 1 :=
+    mem_degFinset.mpr (by simp [Finsupp.single_apply])
+  rw [Finset.sum_eq_single (Finsupp.single j 1)]
+  · rw [term]
+    have hone : evalMonomial (Finsupp.single j 1) (Pi.single j (1 : ℂ)) = 1 := by
+      rw [evalMonomial_eq_prod]
+      refine Finset.prod_eq_one fun i _ ↦ ?_
+      rcases eq_or_ne i j with rfl | hij
+      · simp
+      · simp [Ne.symm hij]
+    rw [hone, mul_one]
+  · intro e he hne
+    rw [term]
+    have hzero : evalMonomial e (Pi.single j (1 : ℂ)) = 0 := by
+      have hsum : ∑ i, e i = 1 := mem_degFinset.mp he
+      have hex : ∃ i, i ≠ j ∧ e i ≠ 0 := by
+        by_contra hc
+        push Not at hc
+        refine hne (Finsupp.ext fun i ↦ ?_)
+        rcases eq_or_ne i j with rfl | hij
+        · have h2 : ∑ i, e i = e i := Finset.sum_eq_single i
+            (fun b _ hb ↦ hc b hb) (fun h ↦ absurd (Finset.mem_univ i) h)
+          rw [Finsupp.single_eq_same, ← hsum, h2]
+        · rw [hc i hij]
+          simp [Ne.symm hij]
+      obtain ⟨i, hij, hei⟩ := hex
+      rw [evalMonomial_eq_prod]
+      refine Finset.prod_eq_zero (Finset.mem_univ i) ?_
+      rw [Pi.single_eq_of_ne hij, zero_pow hei]
+    rw [hzero, mul_zero]
+  · intro h
+    exact absurd hmem h
+
+end MvPowerSeries
+
+/-! ### Monic polynomials with prescribed lower coefficients -/
+
+section WeierstrassOfCoeffs
+
+variable {R S : Type*} [CommRing R] [CommRing S]
+
+/-- The monic polynomial `X ^ d + ∑ j < d, c j * X ^ j` with prescribed lower coefficients. -/
+noncomputable def weierstrassOfCoeffs {d : ℕ} (c : Fin d → R) : R[X] :=
+  Polynomial.X ^ d + ∑ j : Fin d, Polynomial.C (c j) * Polynomial.X ^ (j : ℕ)
+
+lemma degree_sum_C_mul_X_pow_lt {d : ℕ} (c : Fin d → R) :
+    (∑ j : Fin d, Polynomial.C (c j) * Polynomial.X ^ (j : ℕ)).degree < (d : WithBot ℕ) := by
+  refine lt_of_le_of_lt (Polynomial.degree_sum_le _ _) ?_
+  rw [Finset.sup_lt_iff (by exact_mod_cast WithBot.bot_lt_coe d)]
+  intro j _
+  exact lt_of_le_of_lt (Polynomial.degree_C_mul_X_pow_le _ _) (by exact_mod_cast j.isLt)
+
+lemma weierstrassOfCoeffs_monic {d : ℕ} (c : Fin d → R) :
+    (weierstrassOfCoeffs c).Monic :=
+  Polynomial.monic_X_pow_add (degree_sum_C_mul_X_pow_lt c)
+
+lemma weierstrassOfCoeffs_coeff_of_lt {d : ℕ} (c : Fin d → R) {k : ℕ} (hk : k < d) :
+    (weierstrassOfCoeffs c).coeff k = c ⟨k, hk⟩ := by
+  rw [weierstrassOfCoeffs, Polynomial.coeff_add, Polynomial.coeff_X_pow,
+    if_neg (Nat.ne_of_lt hk), zero_add, Polynomial.finsetSum_coeff]
+  rw [Finset.sum_eq_single (⟨k, hk⟩ : Fin d)]
+  · rw [Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, if_pos rfl, mul_one]
+  · intro j _ hj
+    rw [Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
+      if_neg (fun h ↦ hj (Fin.ext h.symm)), mul_zero]
+  · intro h
+    exact absurd (Finset.mem_univ _) h
+
+lemma weierstrassOfCoeffs_coeff_self {d : ℕ} (c : Fin d → R) :
+    (weierstrassOfCoeffs c).coeff d = 1 := by
+  rw [weierstrassOfCoeffs, Polynomial.coeff_add, Polynomial.coeff_X_pow, if_pos rfl,
+    Polynomial.finsetSum_coeff, Finset.sum_eq_zero, add_zero]
+  intro j _
+  rw [Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
+    if_neg (fun h ↦ absurd h.symm (Nat.ne_of_lt j.isLt)), mul_zero]
+
+lemma weierstrassOfCoeffs_coeff_of_gt {d : ℕ} (c : Fin d → R) {k : ℕ} (hk : d < k) :
+    (weierstrassOfCoeffs c).coeff k = 0 := by
+  rw [weierstrassOfCoeffs, Polynomial.coeff_add, Polynomial.coeff_X_pow,
+    if_neg (by omega), zero_add, Polynomial.finsetSum_coeff, Finset.sum_eq_zero]
+  intro j _
+  rw [Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
+    if_neg (by have := j.isLt; omega), mul_zero]
+
+lemma weierstrassOfCoeffs_degree [Nontrivial R] {d : ℕ} (c : Fin d → R) :
+    (weierstrassOfCoeffs c).degree = d := by
+  rw [weierstrassOfCoeffs, Polynomial.degree_add_eq_left_of_degree_lt
+    (by rw [Polynomial.degree_X_pow]; exact degree_sum_C_mul_X_pow_lt c),
+    Polynomial.degree_X_pow]
+
+lemma weierstrassOfCoeffs_natDegree [Nontrivial R] {d : ℕ} (c : Fin d → R) :
+    (weierstrassOfCoeffs c).natDegree = d :=
+  Polynomial.natDegree_eq_of_degree_eq_some (weierstrassOfCoeffs_degree c)
+
+lemma weierstrassOfCoeffs_map {d : ℕ} (c : Fin d → R) (φ : R →+* S) :
+    (weierstrassOfCoeffs c).map φ = weierstrassOfCoeffs (fun j ↦ φ (c j)) := by
+  rw [weierstrassOfCoeffs, weierstrassOfCoeffs, Polynomial.map_add, Polynomial.map_pow,
+    Polynomial.map_X, Polynomial.map_sum]
+  refine congrArg _ (Finset.sum_congr rfl fun j _ ↦ ?_)
+  rw [Polynomial.map_mul, Polynomial.map_C, Polynomial.map_pow, Polynomial.map_X]
+
+end WeierstrassOfCoeffs
+
+/-! ### An analytic implicit function theorem -/
+
+section ImplicitFunction
+
+open ContinuousLinearMap
+
+/-- The equivalence between `Fin d` and the last `d` coordinates of `Fin (n + d)`. -/
+def finNatAddEquiv (n d : ℕ) : Fin d ≃ {i : Fin (n + d) // ¬ ((i : ℕ) < n)} where
+  toFun j := ⟨Fin.natAdd n j, by simp⟩
+  invFun i := ⟨((i : Fin (n + d)) : ℕ) - n, by
+    have h1 := (i : Fin (n + d)).isLt
+    have h2 := i.2
+    omega⟩
+  left_inv j := by
+    ext
+    simp
+  right_inv i := by
+    have h2 := i.2
+    ext
+    simp
+    omega
+
+/-- The analytic implicit function theorem, in the form needed for the Weierstrass
+preparation theorem: if `Φ : ℂ^{n+d} → ℂ^d` is analytic at the origin, vanishes there, and
+its Jacobian with respect to the last `d` coordinates is invertible, then near the origin
+the zero locus of `Φ` contains the graph of an analytic function `s` of the first `n`
+coordinates vanishing at the origin. -/
+theorem exists_analyticAt_implicit {n d : ℕ} (Φ : (Fin (n + d) → ℂ) → (Fin d → ℂ))
+    (hΦ : AnalyticAt ℂ Φ 0) (hΦ0 : Φ 0 = 0)
+    (hdet : (Matrix.of fun k j : Fin d ↦
+      fderiv ℂ (fun w ↦ Φ w k) 0 (Pi.single (Fin.natAdd n j) 1)).det ≠ 0) :
+    ∃ s : (Fin n → ℂ) → (Fin d → ℂ), AnalyticAt ℂ s 0 ∧ s 0 = 0 ∧
+      ∀ᶠ y in nhds (0 : Fin n → ℂ), Φ (Fin.append y (s y)) = 0 := by
+  classical
+  -- the block continuous linear maps
+  set πy : (Fin (n + d) → ℂ) →L[ℂ] (Fin n → ℂ) :=
+    ContinuousLinearMap.pi (fun j ↦ ContinuousLinearMap.proj (Fin.castAdd d j)) with hπydef
+  set eY : (Fin n → ℂ) →L[ℂ] (Fin (n + d) → ℂ) :=
+    ContinuousLinearMap.pi
+      (Fin.addCases (fun j ↦ ContinuousLinearMap.proj j) (fun _ ↦ 0)) with heYdef
+  set eL : (Fin d → ℂ) →L[ℂ] (Fin (n + d) → ℂ) :=
+    ContinuousLinearMap.pi
+      (Fin.addCases (fun _ ↦ 0) (fun j ↦ ContinuousLinearMap.proj j)) with heLdef
+  have heYc : ∀ (u : Fin n → ℂ) (i : Fin n), eY u (Fin.castAdd d i) = u i := by
+    intro u i
+    simp [heYdef]
+  have heYn : ∀ (u : Fin n → ℂ) (j : Fin d), eY u (Fin.natAdd n j) = 0 := by
+    intro u j
+    simp [heYdef]
+  have heLc : ∀ (v : Fin d → ℂ) (i : Fin n), eL v (Fin.castAdd d i) = 0 := by
+    intro v i
+    simp [heLdef]
+  have heLn : ∀ (v : Fin d → ℂ) (j : Fin d), eL v (Fin.natAdd n j) = v j := by
+    intro v j
+    simp [heLdef]
+  have hπyc : ∀ (x : Fin (n + d) → ℂ) (i : Fin n), πy x i = x (Fin.castAdd d i) := by
+    intro x i
+    simp [hπydef]
+  -- the auxiliary map `H (y, λ) = (y, Φ (y, λ))` and its derivative
+  set H : (Fin (n + d) → ℂ) → (Fin (n + d) → ℂ) := fun x ↦ eY (πy x) + eL (Φ x) with hHdef
+  have hHc : ∀ (x : Fin (n + d) → ℂ) (i : Fin n),
+      H x (Fin.castAdd d i) = x (Fin.castAdd d i) := by
+    intro x i
+    rw [hHdef]
+    simp only [Pi.add_apply, heYc, heLc, hπyc, add_zero]
+  have hHn : ∀ (x : Fin (n + d) → ℂ) (j : Fin d), H x (Fin.natAdd n j) = Φ x j := by
+    intro x j
+    rw [hHdef]
+    simp only [Pi.add_apply, heYn, heLn, zero_add]
+  have hHan : AnalyticAt ℂ H 0 := by
+    have h1 : AnalyticAt ℂ (fun x ↦ eY (πy x)) 0 := (eY.comp πy).analyticAt 0
+    have h2 : AnalyticAt ℂ (fun x ↦ eL (Φ x)) 0 := (eL.analyticAt _).comp hΦ
+    exact h1.add h2
+  have hΦdiff : DifferentiableAt ℂ Φ 0 := hΦ.differentiableAt
+  set J : (Fin (n + d) → ℂ) →L[ℂ] (Fin d → ℂ) := fderiv ℂ Φ 0 with hJdef
+  have hNJ : ∀ k j : Fin d,
+      fderiv ℂ (fun w ↦ Φ w k) 0 (Pi.single (Fin.natAdd n j) 1) =
+        J (Pi.single (Fin.natAdd n j) 1) k := by
+    intro k j
+    rw [fderiv_apply hΦdiff k]
+    rfl
+  set L : (Fin (n + d) → ℂ) →L[ℂ] (Fin (n + d) → ℂ) := eY.comp πy + eL.comp J with hLdef
+  have hHd : HasFDerivAt H L 0 := by
+    have h1 : HasFDerivAt (fun x ↦ eY (πy x)) (eY.comp πy) 0 := (eY.comp πy).hasFDerivAt
+    have h2 : HasFDerivAt (fun x ↦ eL (Φ x)) (eL.comp J) 0 :=
+      eL.hasFDerivAt.comp 0 hΦdiff.hasFDerivAt
+    exact h1.add h2
+  have hLapp : ∀ (v : Fin (n + d) → ℂ), L v = eY (πy v) + eL (J v) := fun v ↦ rfl
+  -- the determinant of the derivative
+  have hLdetne : L.det ≠ 0 := by
+    set A' := LinearMap.toMatrix' (L : (Fin (n + d) → ℂ) →ₗ[ℂ] (Fin (n + d) → ℂ)) with hA'def
+    have hA'app : ∀ i j, A' i j = L (Pi.single j 1) i := by
+      intro i j
+      rw [hA'def, LinearMap.toMatrix'_apply]
+      rfl
+    have hzero : ∀ i : Fin (n + d), (i : ℕ) < n → ∀ j : Fin (n + d), ¬ ((j : ℕ) < n) →
+        A' i j = 0 := by
+      intro i hi j hj
+      have hieq : Fin.castAdd d ⟨(i : ℕ), hi⟩ = i := Fin.ext rfl
+      rw [hA'app, hLapp, Pi.add_apply, ← hieq, heYc, heLc, hπyc, hieq, add_zero]
+      refine Pi.single_eq_of_ne (fun h ↦ hj ?_) 1
+      rw [← h]
+      exact hi
+    have hdet2 : A'.det = (Matrix.of fun k j : Fin d ↦
+        fderiv ℂ (fun w ↦ Φ w k) 0 (Pi.single (Fin.natAdd n j) 1)).det := by
+      rw [Matrix.twoBlockTriangular_det' A' (fun i ↦ (i : ℕ) < n) hzero]
+      have hyblock : A'.toSquareBlockProp (fun i ↦ (i : ℕ) < n) = 1 := by
+        ext i j
+        have hieq : Fin.castAdd d ⟨((i : Fin (n + d)) : ℕ), i.2⟩ = (i : Fin (n + d)) :=
+          Fin.ext rfl
+        rw [Matrix.toSquareBlockProp_def, Matrix.of_apply]
+        rw [hA'app, hLapp, Pi.add_apply, ← hieq, heYc, heLc, hπyc, hieq, add_zero]
+        rw [Matrix.one_apply, Pi.single_apply]
+        by_cases h : (i : Fin (n + d)) = (j : Fin (n + d))
+        · rw [if_pos h, if_pos (Subtype.ext h)]
+        · rw [if_neg h, if_neg (fun hc ↦ h (congrArg _ hc))]
+      rw [hyblock, Matrix.det_one, one_mul]
+      rw [← Matrix.det_submatrix_equiv_self (finNatAddEquiv n d)]
+      congr 1
+      ext k j
+      rw [Matrix.submatrix_apply]
+      change A' (Fin.natAdd n k) (Fin.natAdd n j) = _
+      rw [hA'app, hLapp, Pi.add_apply, heYn, heLn, zero_add, Matrix.of_apply, hNJ]
+    have hLdeteq : L.det = A'.det := by
+      rw [hA'def, LinearMap.det_toMatrix']
+    rw [hLdeteq, hdet2]
+    exact hdet
+  -- the local inverse of `H` and its analyticity
+  set eqv := L.toContinuousLinearEquivOfDetNeZero hLdetne with heqvdef
+  have heqvcoe : (eqv : (Fin (n + d) → ℂ) →L[ℂ] (Fin (n + d) → ℂ)) = L :=
+    L.coe_toContinuousLinearEquivOfDetNeZero hLdetne
+  have hfd' : fderiv ℂ H 0 = (eqv : (Fin (n + d) → ℂ) →L[ℂ] (Fin (n + d) → ℂ)) := by
+    rw [hHd.fderiv, heqvcoe]
+  have hstrict : HasStrictFDerivAt H
+      (eqv : (Fin (n + d) → ℂ) →L[ℂ] (Fin (n + d) → ℂ)) 0 := by
+    have h := hHan.hasStrictFDerivAt
+    rwa [hfd'] at h
+  set R := HasStrictFDerivAt.toOpenPartialHomeomorph H hstrict with hRdef
+  have hRcoe : (R : (Fin (n + d) → ℂ) → (Fin (n + d) → ℂ)) = H :=
+    HasStrictFDerivAt.toOpenPartialHomeomorph_coe hstrict
+  have hmemsrc : (0 : Fin (n + d) → ℂ) ∈ R.source :=
+    HasStrictFDerivAt.mem_toOpenPartialHomeomorph_source hstrict
+  have hH0 : H 0 = 0 := by
+    rw [hHdef]
+    simp [hΦ0]
+  have hR0 : R 0 = 0 := by
+    rw [show R (0 : Fin (n + d) → ℂ) = H 0 from congrFun hRcoe 0, hH0]
+  have hsymm0 : R.symm 0 = 0 := by
+    have h1 := R.left_inv hmemsrc
+    rwa [hR0] at h1
+  obtain ⟨p, hp⟩ := hHan
+  have hp1 : p 1 = (continuousMultilinearCurryFin1 ℂ (Fin (n + d) → ℂ)
+      (Fin (n + d) → ℂ)).symm (eqv : (Fin (n + d) → ℂ) →L[ℂ] (Fin (n + d) → ℂ)) := by
+    have h2 := hp.fderiv_eq
+    rw [hfd'] at h2
+    have h3 := congrArg (continuousMultilinearCurryFin1 ℂ (Fin (n + d) → ℂ)
+      (Fin (n + d) → ℂ)).symm h2
+    rw [LinearIsometryEquiv.symm_apply_apply] at h3
+    exact h3.symm
+  have hψan : AnalyticAt ℂ (R.symm : (Fin (n + d) → ℂ) → (Fin (n + d) → ℂ)) 0 := by
+    have hpR : HasFPowerSeriesAt (R : (Fin (n + d) → ℂ) → (Fin (n + d) → ℂ)) p 0 := by
+      rwa [hRcoe]
+    have h := R.hasFPowerSeriesAt_symm hmemsrc hpR hp1
+    rw [hR0] at h
+    exact h.analyticAt
+  -- the implicit function
+  set s : (Fin n → ℂ) → Fin d → ℂ := fun y j ↦ R.symm (eY y) (Fin.natAdd n j) with hsdef
+  have hsan : AnalyticAt ℂ s 0 := by
+    refine analyticAt_pi_iff.mpr fun j ↦ ?_
+    have h1 : AnalyticAt ℂ (fun y ↦ R.symm (eY y)) 0 := by
+      refine AnalyticAt.comp ?_ (eY.analyticAt 0)
+      rw [map_zero]
+      exact hψan
+    exact ((ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin (n + d) ↦ ℂ)
+      (Fin.natAdd n j)).analyticAt _).comp h1
+  have hs0 : s 0 = 0 := by
+    funext j
+    rw [hsdef]
+    simp only [map_zero, hsymm0, Pi.zero_apply]
+  refine ⟨s, hsan, hs0, ?_⟩
+  have hRtgt : R.target ∈ nhds (0 : Fin (n + d) → ℂ) := by
+    refine R.open_target.mem_nhds ?_
+    have h1 := R.map_source hmemsrc
+    rwa [hR0] at h1
+  have htend : Filter.Tendsto eY (nhds (0 : Fin n → ℂ)) (nhds (0 : Fin (n + d) → ℂ)) := by
+    have h := eY.continuous.tendsto 0
+    rwa [map_zero] at h
+  filter_upwards [htend.eventually hRtgt] with y hy
+  have hri : H (R.symm (eY y)) = eY y := by
+    have h1 := R.right_inv hy
+    rwa [show R (R.symm (eY y)) = H (R.symm (eY y)) from congrFun hRcoe _] at h1
+  have hx : ∀ i : Fin n, R.symm (eY y) (Fin.castAdd d i) = y i := by
+    intro i
+    have h1 := congrFun hri (Fin.castAdd d i)
+    rw [hHc, heYc] at h1
+    exact h1
+  have hΦx : ∀ j : Fin d, Φ (R.symm (eY y)) j = 0 := by
+    intro j
+    have h1 := congrFun hri (Fin.natAdd n j)
+    rw [hHn, heYn] at h1
+    exact h1
+  have happ : Fin.append y (s y) = R.symm (eY y) := by
+    funext i
+    induction i using Fin.addCases with
+    | left i => rw [Fin.append_left]; exact (hx i).symm
+    | right j => rw [Fin.append_right]
+  rw [happ]
+  funext j
+  exact hΦx j
+
+end ImplicitFunction
+
+/-! ### Weierstrass polynomials with germ coefficients vanishing at the origin -/
+
+variable {n : ℕ}
+
+/-- The embedding of `ℂ^{n+1}` into `ℂ^{(n+d)+1}` sending the first `n` coordinates to the
+first `n` coordinates and the last coordinate to the last coordinate. -/
+def prepEmb (n d : ℕ) : Fin (n + 1) ↪ Fin (n + d + 1) :=
+  ⟨Fin.lastCases (Fin.last (n + d)) (fun j ↦ (j.castAdd d).castSucc), by
+    intro a b hab
+    induction a using Fin.lastCases with
+    | last =>
+      induction b using Fin.lastCases with
+      | last => rfl
+      | cast j =>
+        simp only [Fin.lastCases_last, Fin.lastCases_castSucc] at hab
+        have hval := congrArg Fin.val hab
+        simp only [Fin.val_last, Fin.val_castSucc, Fin.val_castAdd] at hval
+        exact absurd hval (by have := j.isLt; omega)
+    | cast i =>
+      induction b using Fin.lastCases with
+      | last =>
+        simp only [Fin.lastCases_last, Fin.lastCases_castSucc] at hab
+        have hval := congrArg Fin.val hab
+        simp only [Fin.val_last, Fin.val_castSucc, Fin.val_castAdd] at hval
+        exact absurd hval (by have := i.isLt; omega)
+      | cast j =>
+        simp only [Fin.lastCases_castSucc] at hab
+        have hval := congrArg Fin.val hab
+        simp only [Fin.val_castSucc, Fin.val_castAdd] at hval
+        exact congrArg Fin.castSucc (Fin.ext hval)⟩
+
+instance (n d : ℕ) : Filter.TendstoCofinite (⇑(prepEmb n d)) :=
+  Filter.tendstoCofinite_of_finite _
+
+@[simp]
+lemma prepEmb_last (n d : ℕ) : prepEmb n d (Fin.last n) = Fin.last (n + d) := by
+  simp [prepEmb]
+
+@[simp]
+lemma prepEmb_castSucc (n d : ℕ) (j : Fin n) :
+    prepEmb n d j.castSucc = (j.castAdd d).castSucc := by
+  simp [prepEmb]
+
+/-- The germ of the coordinate function `λ_j` on `ℂ^{n+d}`. -/
+noncomputable def lambdaVar (n : ℕ) {d : ℕ} (j : Fin d) : LocalOkaRing (Fin (n + d)) :=
+  ⟨MvPowerSeries.X (Fin.natAdd n j), MvPowerSeries.locallyConvergent_X _⟩
+
+@[simp]
+lemma coe_lambdaVar (n : ℕ) {d : ℕ} (j : Fin d) :
+    ((lambdaVar n j : LocalOkaRing (Fin (n + d))) : MvPowerSeries (Fin (n + d)) ℂ) =
+      MvPowerSeries.X (Fin.natAdd n j) :=
+  rfl
+
+lemma constantCoeff_lambdaVar (n : ℕ) {d : ℕ} (j : Fin d) :
+    LocalOkaRing.constantCoeff (lambdaVar n j) = 0 := by
+  rw [LocalOkaRing.constantCoeff_apply, coe_lambdaVar]
+  exact MvPowerSeries.constantCoeff_X _
+
+/-- A monic polynomial whose lower coefficients are germs vanishing at the origin is a local
+Weierstrass polynomial. -/
+lemma isLocalWeierstrassPolynomial_weierstrassOfCoeffs {m d : ℕ}
+    (c : Fin d → LocalOkaRing (Fin m)) (hc : ∀ j, LocalOkaRing.constantCoeff (c j) = 0) :
+    IsLocalWeierstrassPolynomial ((weierstrassOfCoeffs c).map
+      (Subring.subtype (localOkaSubring (Fin m)).toSubring)) := by
+  set φ := Subring.subtype (localOkaSubring (Fin m)).toSubring with hφ
+  rw [weierstrassOfCoeffs_map]
+  refine ⟨weierstrassOfCoeffs_monic _, fun i hi ↦ ?_⟩
+  have hi' : i < d := by
+    rw [weierstrassOfCoeffs_degree] at hi
+    exact_mod_cast hi
+  rw [weierstrassOfCoeffs_coeff_of_lt _ hi']
+  exact hc ⟨i, hi'⟩
+
+/-! ### Coefficient extraction along the last axis and the `λ`-directions -/
+
+section CoeffExtraction
+
+variable {n d : ℕ}
+
+/-- Restricting the pullback of `P` along `prepEmb` to the last axis restricts `P` to the
+last axis. -/
+lemma partialEval_rename_prepEmb (P : MvPowerSeries (Fin (n + 1)) ℂ) :
+    MvPowerSeries.partialEval (Fin.last (n + d)) (MvPowerSeries.rename (⇑(prepEmb n d)) P) =
+      MvPowerSeries.partialEval (Fin.last n) P := by
+  refine PowerSeries.ext fun k ↦ ?_
+  rw [MvPowerSeries.coeff_partialEval, MvPowerSeries.coeff_partialEval]
+  have h1 : Finsupp.single (Fin.last (n + d)) k =
+      Finsupp.embDomain (prepEmb n d) (Finsupp.single (Fin.last n) k) := by
+    rw [Finsupp.embDomain_single, prepEmb_last]
+  rw [h1, MvPowerSeries.coeff_embDomain_rename]
+
+/-- Restricting the function attached to a polynomial over the germ ring to the last axis
+evaluates the coefficients at the origin. -/
+lemma partialEval_coe_fromPolynomial {m : ℕ} (Q : (LocalOkaRing (Fin m))[X]) :
+    MvPowerSeries.partialEval (Fin.last m)
+      ((LocalOkaRing.fromPolynomial Q : LocalOkaRing (Fin (m + 1))) :
+        MvPowerSeries (Fin (m + 1)) ℂ) =
+      ((Q.map (LocalOkaRing.constantCoeff : LocalOkaRing (Fin m) →+* ℂ) : ℂ[X]) :
+        PowerSeries ℂ) := by
+  refine PowerSeries.ext fun k ↦ ?_
+  rw [MvPowerSeries.coeff_partialEval, LocalOkaRing.coe_fromPolynomial]
+  have h0 : Finsupp.single (Fin.last m) k =
+      Finsupp.mapDomain (Fin.castSucc : Fin m → Fin (m + 1)) 0 +
+        Finsupp.single (Fin.last m) k := by
+    rw [Finsupp.mapDomain_zero, zero_add]
+  rw [h0, MvPowerSeries.coeff_fromPolynomial', Polynomial.coeff_coe, Polynomial.coeff_map,
+    Polynomial.coeff_map]
+  rw [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, LocalOkaRing.constantCoeff_apply]
+  rfl
+
+/-- The pullback of a power series along `prepEmb` has no `λ`-linear coefficients. -/
+lemma coeff_lambda_rename_prepEmb (P : MvPowerSeries (Fin (n + 1)) ℂ) (j : Fin d) (k : ℕ) :
+    MvPowerSeries.coeff (Finsupp.single ((Fin.natAdd n j).castSucc) 1 +
+      Finsupp.single (Fin.last (n + d)) k) (MvPowerSeries.rename (⇑(prepEmb n d)) P) = 0 := by
+  refine MvPowerSeries.coeff_rename_eq_zero _ _ ?_
+  rintro ⟨e, he⟩
+  have hnotmem : (Fin.natAdd n j).castSucc ∉ Set.range (⇑(prepEmb n d)) := by
+    rintro ⟨a, ha⟩
+    induction a using Fin.lastCases with
+    | last =>
+      rw [prepEmb_last] at ha
+      have hval := congrArg Fin.val ha
+      simp only [Fin.val_last, Fin.val_castSucc, Fin.val_natAdd] at hval
+      exact absurd hval (by have := j.isLt; omega)
+    | cast i =>
+      rw [prepEmb_castSucc] at ha
+      have hval := congrArg Fin.val ha
+      simp only [Fin.val_castSucc, Fin.val_castAdd, Fin.val_natAdd] at hval
+      exact absurd hval (by have := i.isLt; omega)
+  have hval := DFunLike.congr_fun he ((Fin.natAdd n j).castSucc)
+  rw [Finsupp.mapDomain_notin_range _ _ hnotmem, Finsupp.add_apply,
+    Finsupp.single_eq_same] at hval
+  omega
+
+lemma castSucc_natAdd_ne_last (j : Fin d) : (Fin.natAdd n j).castSucc ≠ Fin.last (n + d) := by
+  intro h
+  have hval := congrArg Fin.val h
+  simp only [Fin.val_castSucc, Fin.val_natAdd, Fin.val_last] at hval
+  exact absurd hval (by have := j.isLt; omega)
+
+/-- The `λ`-linear coefficients of the function attached to a polynomial over the germs in
+`(y, λ)` are the `λ`-linear coefficients of its coefficients. -/
+lemma coeff_lambda_coe_fromPolynomial (Q : (LocalOkaRing (Fin (n + d)))[X]) (j : Fin d)
+    (k : ℕ) :
+    MvPowerSeries.coeff (Finsupp.single ((Fin.natAdd n j).castSucc) 1 +
+        Finsupp.single (Fin.last (n + d)) k)
+      ((LocalOkaRing.fromPolynomial Q : LocalOkaRing (Fin (n + d + 1))) :
+        MvPowerSeries (Fin (n + d + 1)) ℂ) =
+      MvPowerSeries.coeff (Finsupp.single (Fin.natAdd n j) 1)
+        ((Q.coeff k : LocalOkaRing (Fin (n + d))) : MvPowerSeries (Fin (n + d)) ℂ) := by
+  rw [LocalOkaRing.coe_fromPolynomial]
+  have h1 : Finsupp.single ((Fin.natAdd n j).castSucc) 1 +
+      Finsupp.single (Fin.last (n + d)) k =
+      Finsupp.mapDomain (Fin.castSucc : Fin (n + d) → Fin (n + d + 1))
+        (Finsupp.single (Fin.natAdd n j) 1) + Finsupp.single (Fin.last (n + d)) k := by
+    rw [Finsupp.mapDomain_single]
+  rw [h1, MvPowerSeries.coeff_fromPolynomial', Polynomial.coeff_map]
+  rfl
+
+/-- The function attached to the generic Weierstrass polynomial, explicitly. -/
+lemma coe_fromPolynomial_weierstrassOfCoeffs {m e : ℕ} (c : Fin e → LocalOkaRing (Fin m)) :
+    ((LocalOkaRing.fromPolynomial (weierstrassOfCoeffs c) : LocalOkaRing (Fin (m + 1))) :
+        MvPowerSeries (Fin (m + 1)) ℂ) =
+      MvPowerSeries.X (Fin.last m) ^ e +
+        ∑ j : Fin e, MvPowerSeries.rename (Fin.castSuccEmb : Fin m → Fin (m + 1))
+          ((c j : LocalOkaRing (Fin m)) : MvPowerSeries (Fin m) ℂ) *
+            MvPowerSeries.X (Fin.last m) ^ (j : ℕ) := by
+  rw [weierstrassOfCoeffs, map_add, map_pow, map_sum, LocalOkaRing.fromPolynomial_X,
+    AddMemClass.coe_add, SubmonoidClass.coe_pow, LocalOkaRing.coe_lastVar,
+    AddSubmonoidClass.coe_finsetSum]
+  congr 1
+  refine Finset.sum_congr rfl fun j _ ↦ ?_
+  rw [map_mul, map_pow, LocalOkaRing.fromPolynomial_C, LocalOkaRing.fromPolynomial_X,
+    MulMemClass.coe_mul, SubmonoidClass.coe_pow, LocalOkaRing.coe_incl,
+    LocalOkaRing.coe_lastVar]
+
+/-- The `λ`-linear coefficients of `A` times the generic Weierstrass polynomial. -/
+lemma coeff_lambda_mul_genericWeierstrass (A : MvPowerSeries (Fin (n + d + 1)) ℂ)
+    (j : Fin d) (k : ℕ) (hk : k < d) :
+    MvPowerSeries.coeff (Finsupp.single ((Fin.natAdd n j).castSucc) 1 +
+        Finsupp.single (Fin.last (n + d)) k)
+      (A * ((LocalOkaRing.fromPolynomial (weierstrassOfCoeffs (lambdaVar n (d := d))) :
+        LocalOkaRing (Fin (n + d + 1))) : MvPowerSeries (Fin (n + d + 1)) ℂ)) =
+      if (j : ℕ) ≤ k then
+        MvPowerSeries.coeff (Finsupp.single (Fin.last (n + d)) (k - (j : ℕ))) A
+      else 0 := by
+  classical
+  set z : Fin (n + d + 1) := Fin.last (n + d) with hzdef
+  set lam : Fin d → Fin (n + d + 1) := fun j' ↦ (Fin.natAdd n j').castSucc with hlamdef
+  rw [show Finsupp.single ((Fin.natAdd n j).castSucc) (1 : ℕ) = Finsupp.single (lam j) 1
+    from rfl]
+  have hlz : ∀ j' : Fin d, lam j' ≠ z := fun j' ↦ castSucc_natAdd_ne_last j'
+  have hlam_inj : ∀ j' j'' : Fin d, lam j' = lam j'' → j' = j'' := by
+    intro j' j'' h
+    have hval := congrArg Fin.val h
+    simp only [hlamdef, Fin.val_castSucc, Fin.val_natAdd] at hval
+    exact Fin.ext (by omega)
+  -- pointwise values of the relevant `Finsupp`s
+  have hne : ∀ p q : Fin (n + d + 1), p ≠ q → ∀ b : ℕ, Finsupp.single p b q = 0 := by
+    intro p q hpq b
+    rw [Finsupp.single_apply, if_neg hpq]
+  rw [coe_fromPolynomial_weierstrassOfCoeffs]
+  have hren : ∀ j' : Fin d, MvPowerSeries.rename
+      (Fin.castSuccEmb : Fin (n + d) → Fin (n + d + 1))
+      ((lambdaVar n j' : LocalOkaRing (Fin (n + d))) : MvPowerSeries (Fin (n + d)) ℂ) =
+      MvPowerSeries.X (lam j') := by
+    intro j'
+    rw [coe_lambdaVar, MvPowerSeries.rename_X]
+    rfl
+  simp only [hren]
+  rw [mul_add, Finset.mul_sum, map_add, map_sum]
+  have hterm1 : MvPowerSeries.coeff (Finsupp.single (lam j) 1 + Finsupp.single z k)
+      (A * MvPowerSeries.X z ^ d) = 0 := by
+    rw [MvPowerSeries.X_pow_eq, MvPowerSeries.coeff_mul_monomial, if_neg]
+    intro hle
+    rw [Finsupp.single_le_iff, Finsupp.add_apply, hne _ _ (hlz j),
+      Finsupp.single_eq_same, zero_add] at hle
+    omega
+  rw [hterm1, zero_add]
+  have hmono : ∀ j' : Fin d, MvPowerSeries.X (lam j') * MvPowerSeries.X z ^ (j' : ℕ) =
+      MvPowerSeries.monomial (Finsupp.single (lam j') 1 +
+        Finsupp.single z (j' : ℕ)) (1 : ℂ) := by
+    intro j'
+    rw [MvPowerSeries.X_pow_eq, ← pow_one (MvPowerSeries.X (lam j')),
+      MvPowerSeries.X_pow_eq, MvPowerSeries.monomial_mul_monomial, one_mul]
+  rw [Finset.sum_eq_single j]
+  · rw [hmono, MvPowerSeries.coeff_mul_monomial]
+    by_cases hjk : (j : ℕ) ≤ k
+    · have hle : Finsupp.single (lam j) 1 + Finsupp.single z (j : ℕ) ≤
+          Finsupp.single (lam j) 1 + Finsupp.single z k := by
+        rw [Finsupp.le_def]
+        intro a
+        rcases eq_or_ne a z with rfl | haz
+        · simp only [Finsupp.add_apply, Finsupp.single_eq_same, hne _ _ (hlz j)]
+          omega
+        · simp only [Finsupp.add_apply, hne _ _ (fun h ↦ haz h.symm)]
+          omega
+      have hsub : (Finsupp.single (lam j) 1 + Finsupp.single z k) -
+          (Finsupp.single (lam j) 1 + Finsupp.single z (j : ℕ)) =
+          Finsupp.single z (k - (j : ℕ)) := by
+        refine Finsupp.ext fun a ↦ ?_
+        rw [Finsupp.tsub_apply]
+        rcases eq_or_ne a (lam j) with rfl | hap
+        · simp only [Finsupp.add_apply, Finsupp.single_eq_same,
+            hne _ _ (Ne.symm (hlz j))]
+          omega
+        · rcases eq_or_ne a z with rfl | haz
+          · simp only [Finsupp.add_apply, Finsupp.single_eq_same, hne _ _ (hlz j)]
+            omega
+          · simp only [Finsupp.add_apply, hne _ _ (fun h ↦ hap h.symm),
+              hne _ _ (fun h ↦ haz h.symm)]
+            omega
+      rw [if_pos hle, if_pos hjk, hsub, mul_one]
+    · rw [if_neg, if_neg hjk]
+      intro hle
+      rw [Finsupp.le_def] at hle
+      have h2 := hle z
+      simp only [Finsupp.add_apply, Finsupp.single_eq_same, hne _ _ (hlz j)] at h2
+      omega
+  · intro j' _ hj'
+    rw [hmono, MvPowerSeries.coeff_mul_monomial, if_neg]
+    intro hle
+    rw [Finsupp.le_def] at hle
+    have h2 := hle (lam j')
+    simp only [Finsupp.add_apply, Finsupp.single_eq_same, hne _ _ (Ne.symm (hlz j')),
+      hne _ _ (fun h ↦ hj' (hlam_inj j j' h).symm)] at h2
+    omega
+  · intro h
+    exact absurd (Finset.mem_univ _) h
+
+end CoeffExtraction
+
+/-! ### The preparation theorem from the division theorem -/
+
+section Preparation
+
+variable {n : ℕ}
+
+/-- The Weierstrass preparation theorem for germs; uniqueness is omitted. It is derived
+from the Weierstrass division theorem `localweierstrass_division` by dividing the pullback
+of `f` to `ℂ^{(n+d)+1}` by the generic Weierstrass polynomial `X^d + ∑ λ_j X^j` over
+`ℂ^{n+d}` and eliminating the generic coefficients `λ` with the analytic implicit function
+theorem. -/
 theorem localweierstrass_preparation
     (f : LocalOkaRing (Fin (n + 1)))
     (hf : (f : MvPowerSeries (Fin (n + 1)) ℂ).IsGeneralIn (.last _)) :
@@ -470,8 +1107,416 @@ theorem localweierstrass_preparation
       (g : (LocalOkaRing (Fin (n)))[X])
       (hg : IsLocalWeierstrassPolynomial
            (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) g)),
-      f = LocalOkaRing.fromPolynomial g * u :=
-  sorry
+      f = LocalOkaRing.fromPolynomial g * u := by
+  classical
+  -- the order of generality
+  set F₀ : PowerSeries ℂ := MvPowerSeries.partialEval (Fin.last n)
+    (f : MvPowerSeries (Fin (n + 1)) ℂ) with hF₀def
+  have hF₀ne : F₀ ≠ 0 := hf
+  set d : ℕ := F₀.order.toNat with hddef
+  have horder : F₀.order = (d : ℕ∞) :=
+    (ENat.coe_toNat (fun hc ↦ hF₀ne (PowerSeries.order_eq_top.mp hc))).symm
+  -- division by the generic Weierstrass polynomial
+  set q : (LocalOkaRing (Fin (n + d)))[X] := weierstrassOfCoeffs (lambdaVar n (d := d))
+    with hqdef
+  have hq : IsLocalWeierstrassPolynomial
+      (q.map (Subring.subtype (localOkaSubring (Fin (n + d))).toSubring)) :=
+    isLocalWeierstrassPolynomial_weierstrassOfCoeffs _ (fun j ↦ constantCoeff_lambdaVar n j)
+  obtain ⟨A, B, hBdeg, hdiv⟩ := localweierstrass_division q hq
+    (⟨MvPowerSeries.rename (⇑(prepEmb n d)) ↑f,
+      MvPowerSeries.LocallyConvergent.rename (prepEmb n d) f.locallyConvergent⟩ :
+      LocalOkaRing (Fin (n + d + 1)))
+  have hdivc : (MvPowerSeries.rename (⇑(prepEmb n d)) ↑f :
+      MvPowerSeries (Fin (n + d + 1)) ℂ) =
+      ↑A * ↑(LocalOkaRing.fromPolynomial q) + ↑(LocalOkaRing.fromPolynomial B) := by
+    have h1 := congrArg (fun P : LocalOkaRing (Fin (n + d + 1)) ↦
+      (P : MvPowerSeries (Fin (n + d + 1)) ℂ)) hdiv
+    simp only at h1
+    rw [AddMemClass.coe_add, MulMemClass.coe_mul] at h1
+    exact h1
+  -- restriction to the last axis
+  have hq0 : MvPowerSeries.partialEval (Fin.last (n + d))
+      (↑(LocalOkaRing.fromPolynomial q) : MvPowerSeries (Fin (n + d + 1)) ℂ) =
+      PowerSeries.X ^ d := by
+    rw [partialEval_coe_fromPolynomial, hqdef, weierstrassOfCoeffs_map]
+    rw [show (fun j : Fin d ↦ LocalOkaRing.constantCoeff (lambdaVar n j)) =
+      fun _ ↦ (0 : ℂ) from funext fun j ↦ constantCoeff_lambdaVar n j]
+    rw [show weierstrassOfCoeffs (fun _ : Fin d ↦ (0 : ℂ)) = Polynomial.X ^ d by
+      rw [weierstrassOfCoeffs]
+      simp]
+    rw [Polynomial.coe_pow, Polynomial.coe_X]
+  have hpe : F₀ = MvPowerSeries.partialEval (Fin.last (n + d))
+      (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ) * PowerSeries.X ^ d +
+      ((B.map (LocalOkaRing.constantCoeff :
+        LocalOkaRing (Fin (n + d)) →+* ℂ) : ℂ[X]) : PowerSeries ℂ) := by
+    have h1 := congrArg (MvPowerSeries.partialEval (Fin.last (n + d))) hdivc
+    rw [partialEval_rename_prepEmb, map_add, map_mul, hq0,
+      partialEval_coe_fromPolynomial] at h1
+    exact h1
+  set Bbar : ℂ[X] := B.map (LocalOkaRing.constantCoeff :
+    LocalOkaRing (Fin (n + d)) →+* ℂ) with hBbardef
+  have hqd : q.degree = (d : WithBot ℕ) := weierstrassOfCoeffs_degree _
+  have hBd : Bbar.degree < (d : WithBot ℕ) :=
+    lt_of_le_of_lt (Polynomial.degree_map_le) (hqd ▸ hBdeg)
+  have hBcoeff0 : ∀ i : ℕ, d ≤ i → B.coeff i = 0 := fun i hi ↦
+    Polynomial.coeff_eq_zero_of_degree_lt
+      (lt_of_lt_of_le (hqd ▸ hBdeg) (by exact_mod_cast hi))
+  have hBbar0 : Bbar = 0 := by
+    refine Polynomial.ext fun k ↦ ?_
+    rw [Polynomial.coeff_zero]
+    by_cases hkd : k < d
+    · have h2 := congrArg (PowerSeries.coeff k) hpe
+      rw [PowerSeries.coeff_of_lt_order k (by rw [horder]; exact_mod_cast hkd)] at h2
+      rw [map_add, PowerSeries.coeff_mul_X_pow', if_neg (by omega), zero_add,
+        Polynomial.coeff_coe] at h2
+      exact h2.symm
+    · rw [hBbardef, Polynomial.coeff_map, hBcoeff0 k (by omega), map_zero]
+  have hβ : ∀ i : ℕ, LocalOkaRing.constantCoeff (B.coeff i) = 0 := by
+    intro i
+    have h2 := congrArg (fun p : ℂ[X] ↦ p.coeff i) hBbar0
+    simpa [hBbardef, Polynomial.coeff_map] using h2
+  -- the constant term of `A` is nonzero
+  rw [hBbar0, Polynomial.coe_zero, add_zero] at hpe
+  set α : PowerSeries ℂ := MvPowerSeries.partialEval (Fin.last (n + d))
+    (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ) with hαdef
+  have hα : MvPowerSeries.constantCoeff (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ) =
+      PowerSeries.coeff d F₀ := by
+    have h2 := congrArg (PowerSeries.coeff d) hpe
+    rw [PowerSeries.coeff_mul_X_pow', if_pos (le_refl d), Nat.sub_self] at h2
+    rw [← MvPowerSeries.constantCoeff_partialEval, ← hαdef,
+      ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
+    exact h2.symm
+  have hαne : MvPowerSeries.constantCoeff (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ) ≠ 0 := by
+    rw [hα, hddef]
+    exact PowerSeries.coeff_order hF₀ne
+  -- the matrix of `λ`-linear coefficients of the remainder
+  have hMeq : ∀ k j : Fin d,
+      MvPowerSeries.coeff (Finsupp.single (Fin.natAdd n j) 1)
+        ((B.coeff (k : ℕ) : LocalOkaRing (Fin (n + d))) : MvPowerSeries (Fin (n + d)) ℂ) =
+      -(if (j : ℕ) ≤ (k : ℕ) then PowerSeries.coeff ((k : ℕ) - (j : ℕ)) α else 0) := by
+    intro k j
+    have h2 := congrArg (MvPowerSeries.coeff
+      (Finsupp.single ((Fin.natAdd n j).castSucc) 1 +
+        Finsupp.single (Fin.last (n + d)) (k : ℕ))) hdivc
+    rw [coeff_lambda_rename_prepEmb, map_add,
+      coeff_lambda_mul_genericWeierstrass _ _ _ k.isLt,
+      coeff_lambda_coe_fromPolynomial] at h2
+    have h3 : MvPowerSeries.coeff
+        (Finsupp.single (Fin.last (n + d)) ((k : ℕ) - (j : ℕ)))
+        (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ) =
+        PowerSeries.coeff ((k : ℕ) - (j : ℕ)) α := by
+      rw [hαdef, MvPowerSeries.coeff_partialEval]
+    rw [h3] at h2
+    linear_combination -h2
+  -- the analytic implicit function theorem
+  set Φ : (Fin (n + d) → ℂ) → (Fin d → ℂ) := fun w k ↦
+    ((B.coeff (k : ℕ) : LocalOkaRing (Fin (n + d))) : MvPowerSeries (Fin (n + d)) ℂ).eval w
+    with hΦdef
+  have hΦan : AnalyticAt ℂ Φ 0 :=
+    analyticAt_pi_iff.mpr fun k ↦ (B.coeff (k : ℕ)).locallyConvergent.analyticAt
+  have hΦ0 : Φ 0 = 0 := by
+    funext k
+    rw [hΦdef]
+    change ((B.coeff (k : ℕ) : LocalOkaRing (Fin (n + d))) :
+      MvPowerSeries (Fin (n + d)) ℂ).eval 0 = (0 : Fin d → ℂ) k
+    rw [MvPowerSeries.eval_zero, Pi.zero_apply]
+    have h2 := hβ (k : ℕ)
+    rwa [LocalOkaRing.constantCoeff_apply] at h2
+  have hdet : (Matrix.of fun k j : Fin d ↦
+      fderiv ℂ (fun w ↦ Φ w k) 0 (Pi.single (Fin.natAdd n j) 1)).det ≠ 0 := by
+    have hM : (Matrix.of fun k j : Fin d ↦
+        fderiv ℂ (fun w ↦ Φ w k) 0 (Pi.single (Fin.natAdd n j) 1)) =
+        Matrix.of fun k j : Fin d ↦
+          -(if (j : ℕ) ≤ (k : ℕ) then PowerSeries.coeff ((k : ℕ) - (j : ℕ)) α else 0) := by
+      ext k j
+      rw [Matrix.of_apply, Matrix.of_apply, ← hMeq k j]
+      exact (B.coeff (k : ℕ)).locallyConvergent.fderiv_eval_zero _
+    rw [hM]
+    have htri : Matrix.BlockTriangular (Matrix.of fun k j : Fin d ↦
+        -(if (j : ℕ) ≤ (k : ℕ) then PowerSeries.coeff ((k : ℕ) - (j : ℕ)) α else 0))
+        OrderDual.toDual := by
+      intro k j hkj
+      have hkj' : k < j := hkj
+      rw [Matrix.of_apply, if_neg (by rw [Fin.lt_def] at hkj'; omega), neg_zero]
+    rw [Matrix.det_of_lowerTriangular _ htri]
+    have hdiag : ∀ k : Fin d, (Matrix.of fun k j : Fin d ↦
+        -(if (j : ℕ) ≤ (k : ℕ) then PowerSeries.coeff ((k : ℕ) - (j : ℕ)) α else 0)) k k =
+        -(PowerSeries.coeff 0 α) := by
+      intro k
+      rw [Matrix.of_apply, if_pos (le_refl _), Nat.sub_self]
+    rw [Finset.prod_congr rfl (fun k _ ↦ hdiag k), Finset.prod_const]
+    refine pow_ne_zero _ (neg_ne_zero.mpr ?_)
+    rw [hαdef, PowerSeries.coeff_zero_eq_constantCoeff_apply,
+      MvPowerSeries.constantCoeff_partialEval]
+    exact hαne
+  obtain ⟨s, hsan, hs0, hsz⟩ := exists_analyticAt_implicit Φ hΦan hΦ0 hdet
+  -- the coefficients of the Weierstrass polynomial
+  have hs_coord : ∀ j : Fin d, AnalyticAt ℂ (fun y ↦ s y j) 0 := fun j ↦
+    ((ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin d ↦ ℂ) j).analyticAt _).comp hsan
+  choose S hSconv hSrep using fun j : Fin d ↦ MvPowerSeries.exists_represents (hs_coord j)
+  set sg : Fin d → LocalOkaRing (Fin n) := fun j ↦ ⟨S j, hSconv j⟩ with hsgdef
+  have hsg0 : ∀ j, LocalOkaRing.constantCoeff (sg j) = 0 := by
+    intro j
+    rw [LocalOkaRing.constantCoeff_apply]
+    change MvPowerSeries.constantCoeff (S j) = 0
+    have h2 : s 0 j = MvPowerSeries.constantCoeff (S j) := (hSrep j).apply_zero
+    rw [← h2, hs0, Pi.zero_apply]
+  set g : (LocalOkaRing (Fin n))[X] := weierstrassOfCoeffs sg with hgdef
+  -- the substitution `τ (y, z) = (y, s y, z)`
+  set τ : (Fin (n + 1) → ℂ) → (Fin (n + d + 1) → ℂ) := fun x ↦
+    Fin.snoc (Fin.append (Fin.init x) (s (Fin.init x))) (x (Fin.last n)) with hτdef
+  have hτ0 : τ 0 = 0 := by
+    funext i
+    simp only [hτdef]
+    have hinit : Fin.init (0 : Fin (n + 1) → ℂ) = 0 := funext fun j ↦ rfl
+    induction i using Fin.lastCases with
+    | last =>
+      rw [Fin.snoc_last]
+      rfl
+    | cast i =>
+      rw [Fin.snoc_castSucc]
+      induction i using Fin.addCases with
+      | left i =>
+        rw [Fin.append_left, hinit]
+        rfl
+      | right j =>
+        rw [Fin.append_right, hinit, hs0]
+        rfl
+  have hτan : AnalyticAt ℂ τ 0 := by
+    refine (analyticAt_pi_iff
+      (f := fun (i : Fin (n + d + 1)) (x : Fin (n + 1) → ℂ) ↦ τ x i)).mpr fun i ↦ ?_
+    induction i using Fin.lastCases with
+    | last =>
+      have heq : (fun x : Fin (n + 1) → ℂ ↦ τ x (Fin.last (n + d))) =
+          fun x : Fin (n + 1) → ℂ ↦ x (Fin.last n) := by
+        funext x
+        simp only [hτdef]
+        rw [Fin.snoc_last]
+      rw [heq]
+      exact (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin (n + 1) ↦ ℂ)
+        (Fin.last n)).analyticAt 0
+    | cast i =>
+      induction i using Fin.addCases with
+      | left i =>
+        have heq2 : (fun x : Fin (n + 1) → ℂ ↦ τ x (Fin.castAdd d i).castSucc) =
+            fun x : Fin (n + 1) → ℂ ↦ x i.castSucc := by
+          funext x
+          simp only [hτdef]
+          rw [Fin.snoc_castSucc, Fin.append_left]
+          rfl
+        rw [heq2]
+        exact (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin (n + 1) ↦ ℂ)
+          i.castSucc).analyticAt 0
+      | right j =>
+        set πinit : (Fin (n + 1) → ℂ) →L[ℂ] (Fin n → ℂ) :=
+          ContinuousLinearMap.pi
+            (fun i ↦ ContinuousLinearMap.proj i.castSucc) with hπinitdef
+        have heq2 : (fun x : Fin (n + 1) → ℂ ↦ τ x (Fin.natAdd n j).castSucc) =
+            fun x : Fin (n + 1) → ℂ ↦ (fun y ↦ s y j) (πinit x) := by
+          funext x
+          simp only [hτdef]
+          rw [Fin.snoc_castSucc, Fin.append_right]
+          rfl
+        rw [heq2]
+        have h3 : AnalyticAt ℂ ((fun y ↦ s y j) ∘ ⇑πinit) 0 := by
+          refine AnalyticAt.comp ?_ (πinit.analyticAt 0)
+          rw [map_zero]
+          exact hs_coord j
+        exact h3
+  -- the unit
+  have hAan : AnalyticAt ℂ (fun x ↦
+      (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ).eval (τ x)) 0 := by
+    have h : AnalyticAt ℂ
+        ((↑A : MvPowerSeries (Fin (n + d + 1)) ℂ).eval ∘ τ) 0 := by
+      refine AnalyticAt.comp ?_ hτan
+      rw [hτ0]
+      exact A.locallyConvergent.analyticAt
+    exact h
+  obtain ⟨U, hUconv, hUrep⟩ := MvPowerSeries.exists_represents hAan
+  set u : LocalOkaRing (Fin (n + 1)) := ⟨U, hUconv⟩ with hudef
+  have huunit : IsUnit u := by
+    rw [LocalOkaRing.isUnit_iff, LocalOkaRing.constantCoeff_apply]
+    change MvPowerSeries.constantCoeff U ≠ 0
+    rw [← hUrep.apply_zero]
+    show (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ).eval (τ 0) ≠ 0
+    rw [hτ0, MvPowerSeries.eval_zero]
+    exact hαne
+  refine ⟨u, huunit, g, isLocalWeierstrassPolynomial_weierstrassOfCoeffs sg hsg0, ?_⟩
+  -- continuity facts
+  have htend_τ : Filter.Tendsto τ (nhds 0) (nhds (0 : Fin (n + d + 1) → ℂ)) := by
+    have h := hτan.continuousAt
+    rwa [ContinuousAt, hτ0] at h
+  have htend_init : Filter.Tendsto (fun x : Fin (n + 1) → ℂ ↦ Fin.init x)
+      (nhds 0) (nhds (0 : Fin n → ℂ)) := by
+    have hcont : Continuous (fun x : Fin (n + 1) → ℂ ↦ Fin.init x) :=
+      continuous_pi fun j ↦ continuous_apply j.castSucc
+    have h := hcont.tendsto 0
+    rwa [show Fin.init (0 : Fin (n + 1) → ℂ) = 0 from funext fun j ↦ rfl] at h
+  have hw' : ∀ x : Fin (n + 1) → ℂ, (fun j : Fin (n + d) ↦ τ x j.castSucc) =
+      Fin.append (Fin.init x) (s (Fin.init x)) := by
+    intro x
+    funext j
+    simp only [hτdef]
+    exact Fin.snoc_castSucc _ _ j
+  have htend_w' : Filter.Tendsto (fun x : Fin (n + 1) → ℂ ↦
+      (fun j : Fin (n + d) ↦ τ x j.castSucc)) (nhds 0) (nhds (0 : Fin (n + d) → ℂ)) := by
+    have hcont : Continuous (fun w : Fin (n + d + 1) → ℂ ↦
+        (fun j : Fin (n + d) ↦ w j.castSucc)) :=
+      continuous_pi fun j ↦ continuous_apply j.castSucc
+    have h := (hcont.tendsto 0).comp htend_τ
+    rwa [show (fun j : Fin (n + d) ↦ (0 : Fin (n + d + 1) → ℂ) j.castSucc) = 0
+      from funext fun j ↦ rfl] at h
+  -- evaluation of the generic Weierstrass polynomial along `τ`
+  have hqeval : ∀ x : Fin (n + 1) → ℂ,
+      (↑(LocalOkaRing.fromPolynomial q) : MvPowerSeries (Fin (n + d + 1)) ℂ).eval (τ x) =
+        x (Fin.last n) ^ d + ∑ j : Fin d, s (Fin.init x) j * x (Fin.last n) ^ (j : ℕ) := by
+    intro x
+    have hz : ∀ i : ℕ,
+        ((q.coeff i : LocalOkaRing (Fin (n + d))) :
+          MvPowerSeries (Fin (n + d)) ℂ).SummableAt (fun j ↦ τ x j.castSucc) := by
+      intro i
+      rcases lt_trichotomy i d with h | h | h
+      · rw [hqdef, weierstrassOfCoeffs_coeff_of_lt _ h, coe_lambdaVar]
+        exact MvPowerSeries.summableAt_X _ _
+      · rw [hqdef, h, weierstrassOfCoeffs_coeff_self, OneMemClass.coe_one]
+        exact MvPowerSeries.summableAt_one _
+      · rw [hqdef, weierstrassOfCoeffs_coeff_of_gt _ h, ZeroMemClass.coe_zero]
+        exact MvPowerSeries.summableAt_zero _
+    rw [LocalOkaRing.eval_fromPolynomial q (τ x) hz]
+    have hτlast : τ x (Fin.last (n + d)) = x (Fin.last n) := by
+      simp only [hτdef]
+      exact Fin.snoc_last _ _
+    have hnatdeg : q.natDegree = d := weierstrassOfCoeffs_natDegree _
+    rw [hnatdeg, Finset.sum_range_succ, hτlast]
+    rw [hqdef, weierstrassOfCoeffs_coeff_self, OneMemClass.coe_one,
+      MvPowerSeries.eval_one, one_mul]
+    rw [add_comm]
+    congr 1
+    rw [← Fin.sum_univ_eq_sum_range]
+    refine Finset.sum_congr rfl fun j _ ↦ ?_
+    rw [weierstrassOfCoeffs_coeff_of_lt _ j.isLt]
+    congr 1
+    rw [show (⟨(j : ℕ), j.isLt⟩ : Fin d) = j from Fin.ext rfl, coe_lambdaVar,
+      MvPowerSeries.eval_X]
+    rw [show τ x (Fin.natAdd n j).castSucc =
+        Fin.append (Fin.init x) (s (Fin.init x)) (Fin.natAdd n j) from
+      congrFun (hw' x) (Fin.natAdd n j), Fin.append_right]
+  -- the remainder vanishes along the graph of `s`
+  have hBeval : ∀ᶠ x in nhds (0 : Fin (n + 1) → ℂ),
+      (↑(LocalOkaRing.fromPolynomial B) : MvPowerSeries (Fin (n + d + 1)) ℂ).eval (τ x) =
+        0 := by
+    have hBsum : ∀ᶠ x in nhds (0 : Fin (n + 1) → ℂ), ∀ i ∈ Finset.range (B.natDegree + 1),
+        ((B.coeff i : LocalOkaRing (Fin (n + d))) :
+          MvPowerSeries (Fin (n + d)) ℂ).SummableAt (fun j ↦ τ x j.castSucc) := by
+      rw [Filter.eventually_all_finset]
+      intro i _
+      exact htend_w'.eventually (B.coeff i).locallyConvergent
+    filter_upwards [hBsum, htend_init.eventually hsz] with x hx hzero
+    have hz : ∀ i : ℕ,
+        ((B.coeff i : LocalOkaRing (Fin (n + d))) :
+          MvPowerSeries (Fin (n + d)) ℂ).SummableAt (fun j ↦ τ x j.castSucc) := by
+      intro i
+      by_cases hi : i ∈ Finset.range (B.natDegree + 1)
+      · exact hx i hi
+      · rw [Polynomial.coeff_eq_zero_of_natDegree_lt (by
+          simp only [Finset.mem_range] at hi
+          omega), ZeroMemClass.coe_zero]
+        exact MvPowerSeries.summableAt_zero _
+    rw [LocalOkaRing.eval_fromPolynomial B (τ x) hz]
+    refine Finset.sum_eq_zero fun i hi ↦ ?_
+    rcases lt_or_ge i d with hid | hid
+    · have h2 : ((B.coeff i : LocalOkaRing (Fin (n + d))) :
+          MvPowerSeries (Fin (n + d)) ℂ).eval (fun j ↦ τ x j.castSucc) = 0 := by
+        rw [hw' x]
+        have h3 := congrFun hzero (⟨i, hid⟩ : Fin d)
+        rw [Pi.zero_apply] at h3
+        exact h3
+      rw [h2, zero_mul]
+    · rw [hBcoeff0 i hid, ZeroMemClass.coe_zero, MvPowerSeries.eval_of_zero, zero_mul]
+  -- evaluation of the Weierstrass polynomial `g`
+  have hgeval : ∀ᶠ x in nhds (0 : Fin (n + 1) → ℂ),
+      (↑(LocalOkaRing.fromPolynomial g) : MvPowerSeries (Fin (n + 1)) ℂ).eval x =
+        x (Fin.last n) ^ d + ∑ j : Fin d, s (Fin.init x) j * x (Fin.last n) ^ (j : ℕ) := by
+    have hgsum : ∀ᶠ x in nhds (0 : Fin (n + 1) → ℂ), ∀ j : Fin d,
+        (S j).SummableAt (Fin.init x) := by
+      rw [Filter.eventually_all]
+      intro j
+      exact htend_init.eventually (hSconv j)
+    have hgrep : ∀ᶠ x in nhds (0 : Fin (n + 1) → ℂ), ∀ j : Fin d,
+        (S j).eval (Fin.init x) = s (Fin.init x) j := by
+      rw [Filter.eventually_all]
+      intro j
+      exact htend_init.eventually (hSrep j).eval_eq
+    filter_upwards [hgsum, hgrep] with x hx hrep
+    have hz : ∀ i : ℕ,
+        ((g.coeff i : LocalOkaRing (Fin n)) :
+          MvPowerSeries (Fin n) ℂ).SummableAt (fun j ↦ x j.castSucc) := by
+      intro i
+      rcases lt_trichotomy i d with h | h | h
+      · rw [hgdef, weierstrassOfCoeffs_coeff_of_lt _ h]
+        exact hx _
+      · rw [hgdef, h, weierstrassOfCoeffs_coeff_self, OneMemClass.coe_one]
+        exact MvPowerSeries.summableAt_one _
+      · rw [hgdef, weierstrassOfCoeffs_coeff_of_gt _ h, ZeroMemClass.coe_zero]
+        exact MvPowerSeries.summableAt_zero _
+    rw [LocalOkaRing.eval_fromPolynomial g x hz]
+    have hnatdeg : g.natDegree = d := weierstrassOfCoeffs_natDegree _
+    rw [hnatdeg, Finset.sum_range_succ]
+    rw [hgdef, weierstrassOfCoeffs_coeff_self, OneMemClass.coe_one,
+      MvPowerSeries.eval_one, one_mul]
+    rw [add_comm]
+    congr 1
+    rw [← Fin.sum_univ_eq_sum_range]
+    refine Finset.sum_congr rfl fun j _ ↦ ?_
+    rw [weierstrassOfCoeffs_coeff_of_lt _ j.isLt]
+    congr 1
+    rw [show (⟨(j : ℕ), j.isLt⟩ : Fin d) = j from Fin.ext rfl]
+    change (S j).eval (fun j' ↦ x j'.castSucc) = s (Fin.init x) j
+    exact hrep j
+  -- the division identity, evaluated
+  have hev1 : ∀ᶠ w in nhds (0 : Fin (n + d + 1) → ℂ),
+      (↑f : MvPowerSeries (Fin (n + 1)) ℂ).eval (w ∘ ⇑(prepEmb n d)) =
+        (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ).eval w *
+          (↑(LocalOkaRing.fromPolynomial q) :
+            MvPowerSeries (Fin (n + d + 1)) ℂ).eval w +
+          (↑(LocalOkaRing.fromPolynomial B) :
+            MvPowerSeries (Fin (n + d + 1)) ℂ).eval w := by
+    filter_upwards [A.locallyConvergent, (LocalOkaRing.fromPolynomial q).locallyConvergent,
+      (LocalOkaRing.fromPolynomial B).locallyConvergent] with w hwA hwq hwB
+    rw [← MvPowerSeries.eval_rename (prepEmb n d), hdivc,
+      MvPowerSeries.eval_add_of_summableAt (hwA.mul hwq) hwB,
+      MvPowerSeries.eval_mul_of_summableAt hwA hwq]
+  -- `τ` composed with the embedding is the identity
+  have hτe : ∀ x : Fin (n + 1) → ℂ, (τ x) ∘ ⇑(prepEmb n d) = x := by
+    intro x
+    funext i
+    rw [Function.comp_apply]
+    induction i using Fin.lastCases with
+    | last =>
+      rw [prepEmb_last]
+      simp only [hτdef]
+      exact Fin.snoc_last _ _
+    | cast i =>
+      rw [prepEmb_castSucc]
+      simp only [hτdef]
+      rw [Fin.snoc_castSucc, Fin.append_left]
+      rfl
+  -- conclusion via uniqueness of representing power series
+  refine LocalOkaRing.ext ?_
+  refine MvPowerSeries.Represents.unique f.locallyConvergent.represents_eval ?_
+  refine ((LocalOkaRing.fromPolynomial g * u).locallyConvergent.represents_eval).congr ?_
+  have hueval : ∀ᶠ x in nhds (0 : Fin (n + 1) → ℂ),
+      (↑u : MvPowerSeries (Fin (n + 1)) ℂ).eval x =
+        (↑A : MvPowerSeries (Fin (n + d + 1)) ℂ).eval (τ x) :=
+    hUrep.eval_eq
+  filter_upwards [(LocalOkaRing.fromPolynomial g).locallyConvergent, u.locallyConvergent,
+    htend_τ.eventually hev1, hBeval, hgeval, hueval] with x hxg hxu h1 hB0 hg1 hu1
+  rw [MulMemClass.coe_mul, MvPowerSeries.eval_mul_of_summableAt hxg hxu]
+  rw [hτe x] at h1
+  rw [h1, hB0, add_zero, hqeval x, hg1, hu1]
+  ring
+
+end Preparation
 
 section ToOkaRing
 
