@@ -62,8 +62,9 @@ theorem oka_lemma_weierstrass_rhs_containedIn_lhs (p : ℕ) (d : ℕ)
     Pi.basisFun_equivFun, LinearEquiv.refl_apply, smul_eq_mul] at hg
   exact hg
 
-theorem oka_lemma_weierstrass_lhs_containedIn_rhs (p : ℕ) (d : ℕ)
+theorem oka_lemma_weierstrass_lhs_containedIn_rhs (p : ℕ) (d : ℕ) (m : ℕ)
     (hp : 0 < p)
+    (hm : m ≥ 2 * d)
     (F : Fin p → (LocalOkaRing (Fin n))[X])
     (hF : ∀ j, (F j).degree < d)
     (hF' : ∀ j, (F j).Monic)
@@ -71,7 +72,7 @@ theorem oka_lemma_weierstrass_lhs_containedIn_rhs (p : ℕ) (d : ℕ)
       (Subring.subtype (localOkaSubring _).toSubring) (F ⟨0, hp⟩))) :
     letI F' (j : Fin p) : LocalOkaRing (Fin (n + 1)) :=
       LocalOkaRing.fromPolynomial (F j)
-    LinearMap.ker (linOfFun F') ≤ KK_deg (2 * d) F' := by
+    LinearMap.ker (linOfFun F') ≤ KK_deg m F' := by
   let F' (j : Fin p) : LocalOkaRing (Fin (n + 1)) :=
       LocalOkaRing.fromPolynomial (F j)
   let zero : Fin p := ⟨0, hp⟩
@@ -124,14 +125,14 @@ theorem oka_lemma_weierstrass_lhs_containedIn_rhs (p : ℕ) (d : ℕ)
       · intro x hx
         rw [Pi.single_eq_of_ne (Ne.symm hx)]
         simp only [ZeroMemClass.coe_zero, map_zero, mul_zero]
-  have hH : (H ∈ KK_deg (2 * d) F') := by
+  have hH : (H ∈ KK_deg m F') := by
     sorry
-  have hE' : ∀ (j : Fin p), (E' j ∈ KK_deg (2 * d) F') := by
+  have hE' : ∀ (j : Fin p), (E' j ∈ KK_deg m F') := by
     intro j
     simp only [KK_deg, E']
     refine Submodule.subset_span (R := LocalOkaRing (Fin (n + 1))) ?_
     simp only [Submodule.carrier_eq_coe, Submodule.map_coe, Set.mem_image, SetLike.mem_coe]
-    let Ej : Fin p → (LocalOkaRing (Fin n))[X]_(2 * d) :=
+    let Ej : Fin p → (LocalOkaRing (Fin n))[X]_m :=
       fun i ↦
         ⟨(E j i: (LocalOkaRing (Fin n))[X]),
         Polynomial.degreeLT_mono (R := LocalOkaRing (Fin n)) (by omega) (E j i).property⟩
@@ -182,15 +183,16 @@ theorem oka_lemma_weierstrass_lhs_containedIn_rhs (p : ℕ) (d : ℕ)
         Pi.map_apply, Function.comp_apply]
       rfl
   rw [hG']
-  refine Submodule.add_mem (KK_deg (2 * d) F') hH ?_
-  apply Submodule.sum_mem (KK_deg (2 * d) F')
+  refine Submodule.add_mem (KK_deg m F') hH ?_
+  apply Submodule.sum_mem (KK_deg m F')
   intro i hi
   exact Submodule.smul_mem _ _ (hE' i)
 
 
 
-theorem oka_lemma_weierstrass (p : ℕ) (d : ℕ)
+theorem oka_lemma_weierstrass (p : ℕ) (d : ℕ) (m : ℕ)
     (hp : 0 < p)
+    (hm : m ≥ 2 * d)
     (F : Fin p → (LocalOkaRing (Fin n))[X])
     (hF : ∀ j, (F j).degree < d)
     (hF' : ∀ j, (F j).Monic)
@@ -198,7 +200,7 @@ theorem oka_lemma_weierstrass (p : ℕ) (d : ℕ)
       (Subring.subtype (localOkaSubring _).toSubring) (F ⟨0, hp⟩))) :
     letI F' (j : Fin p) : LocalOkaRing (Fin (n + 1)) :=
       LocalOkaRing.fromPolynomial (F j)
-    LinearMap.ker (linOfFun F') = KK_deg (2 * d) F' := by
+    LinearMap.ker (linOfFun F') = KK_deg m F' := by
   apply le_antisymm
-  · exact oka_lemma_weierstrass_lhs_containedIn_rhs p d hp F hF hF' hF₁
+  · exact oka_lemma_weierstrass_lhs_containedIn_rhs p d m hp hm F hF hF' hF₁
   · exact oka_lemma_weierstrass_rhs_containedIn_lhs _ _ _
