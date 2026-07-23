@@ -20,9 +20,9 @@ which implies coherence and, unlike `SheafOfModules.IsCoherent`, mentions only o
 sections and restriction maps. It is therefore a local condition
 (`hasLocalRelations_of_openCover`), and no transport of sites is needed anywhere.
 
-Since an analytic space is locally isomorphic to a local model, and being a local model is
-invariant under isomorphism (`ComplexAnalytic.IsLocalModel.of_iso`), it remains to see that
-the structure sheaf of a local model has locally finitely generated relations. This is
+Since every point of an analytic space has a neighbourhood which is a local model, it
+remains to see that the structure sheaf of a local model has locally finitely generated
+relations. This is
 `ComplexAnalytic.IsLocalModel.hasLocalRelationsOn`, the one ingredient still open, and it is
 where Oka's theorem for `ℂ^n` enters: a local model is cut out by finitely many holomorphic
 functions `f₁, …, f_k` inside an open subset `Y` of some `ℂ^n`, and near a point of it a
@@ -226,16 +226,17 @@ theorem IsLocalModel.hasLocalRelations {M : LocallyRingedSpace.{u}} (hM : IsLoca
 
 /-- **Coherence of the structure sheaf of a complex analytic space.**
 
-Every point of an analytic space has a neighbourhood isomorphic to a local model, whose
+Every point of an analytic space has a neighbourhood which is a local model, whose
 structure sheaf has locally finitely generated relations; since that condition is local it
-holds on all of `X`, and hence `𝒪_X` is coherent. -/
+holds on all of `X`, and hence `𝒪_X` is coherent. The `ℂ`-algebra structure plays no role
+here: coherence is a statement about the underlying locally ringed space. -/
 theorem AnalyticSpace.isCoherentStructureSheaf (X : AnalyticSpace.{u}) :
     X.toLocallyRingedSpace.IsCoherentStructureSheaf := by
-  choose U M hM he using X.local_model
+  choose U n k V i f h using X.local_model
   refine LocallyRingedSpace.isCoherentStructureSheaf_of_hasLocalRelations
     (LocallyRingedSpace.hasLocalRelations_of_openCover
       (fun x : X.toLocallyRingedSpace ↦ (U x).1) (fun x ↦ ⟨x, (U x).2⟩) fun x ↦ ?_)
   exact LocallyRingedSpace.HasLocalRelations.hasLocalRelationsOn _
-    (IsLocalModel.of_iso (he x).some (hM x)).hasLocalRelations
+    (IsLocalModel.hasLocalRelations ⟨n x, k x, V x, i x, f x, (h x).1⟩)
 
 end ComplexAnalytic

@@ -28,8 +28,10 @@ coherence statement for arbitrary complex analytic spaces:
   with supporting material on sites (`Oka/CategoryTheory/Sites/`). This part is written in
   Mathlib style and is largely independent of the analytic content.
 * **Complex analytic spaces.** Local models as analytic subspaces cut out by finitely many
-  holomorphic functions, and analytic spaces as locally ringed spaces locally isomorphic to local
-  models (`Oka/AnalyticSpace/Basic.lean`).
+  holomorphic functions, and analytic spaces as locally ringed spaces carrying a `ℂ`-algebra
+  structure on the structure sheaf which are locally — compatibly with that structure — cut out
+  inside open subsets of `ℂ^n`; morphisms are the `ℂ`-linear morphisms of locally ringed spaces
+  (`Oka/AnalyticSpace/Basic.lean`).
 * **The main theorem.** `ComplexAnalytic.AnalyticSpace.isCoherentStructureSheaf` in
   `Oka/AnalyticSpace/Coherent.lean`: the structure sheaf of any complex analytic space is
   coherent. The deduction goes through the concrete, manifestly local condition
