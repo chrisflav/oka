@@ -1,7 +1,7 @@
 /-
-Copyright (c) 2026 Christian Merten. All rights reserved.
+Copyright (c) 2026 Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Christian Merten
+Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Analysis.Analytic.Uniqueness
@@ -290,26 +290,31 @@ lemma norm_evalMonomial (d : ι →₀ ℕ) (x : ι → ℂ) :
   rw [evalMonomial_eq_prod, norm_prod]
   exact Finset.prod_congr rfl fun i _ ↦ norm_pow _ _
 
+omit [Fintype ι] in
 lemma norm_evalMonomial_le (h : ∀ i, ‖x i‖ ≤ ‖y i‖) (d : ι →₀ ℕ) :
     ‖evalMonomial d x‖ ≤ ‖evalMonomial d y‖ := by
-  rw [norm_evalMonomial, norm_evalMonomial]
+  simp only [evalMonomial, Finsupp.prod, norm_prod, norm_pow]
   exact Finset.prod_le_prod (fun i _ ↦ by positivity)
     fun i _ ↦ pow_le_pow_left₀ (norm_nonneg _) (h i) _
 
+omit [Fintype ι] in
 lemma norm_term_le (h : ∀ i, ‖x i‖ ≤ ‖y i‖) (d : ι →₀ ℕ) :
     ‖P.term x d‖ ≤ ‖P.term y d‖ := by
   rw [term, term, norm_mul, norm_mul]
   exact mul_le_mul_of_nonneg_left (norm_evalMonomial_le h d) (norm_nonneg _)
 
+omit [Fintype ι] in
 /-- Absolute convergence at a point implies absolute convergence at every point which is
 smaller in each coordinate. -/
 lemma SummableAt.mono (hy : P.SummableAt y) (h : ∀ i, ‖x i‖ ≤ ‖y i‖) : P.SummableAt x :=
   Summable.of_nonneg_of_le (fun _ ↦ norm_nonneg _) (fun d ↦ norm_term_le h d) hy
 
+omit [Fintype ι] in
 /-- Absolute convergence on a neighbourhood of the origin gives absolute convergence on a
 polydisc around the origin. -/
-lemma LocallyConvergent.exists_summableAt_const (hP : P.LocallyConvergent) :
+lemma LocallyConvergent.exists_summableAt_const [Finite ι] (hP : P.LocallyConvergent) :
     ∃ ρ : ℝ, 0 < ρ ∧ P.SummableAt (fun _ ↦ (ρ : ℂ)) := by
+  have := Fintype.ofFinite ι
   obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.mp hP
   refine ⟨ε / 2, by positivity, hball ?_⟩
   rw [mem_ball_zero_iff]
@@ -503,8 +508,11 @@ lemma tupleDeg_mem_degFinset {n : ℕ} (s : Fin n → ι) : tupleDeg s ∈ degFi
   rw [← Finset.card_eq_sum_card_fiberwise (f := s) fun k _ ↦ Finset.mem_univ (s k)]
   simp
 
-lemma prod_eq_evalMonomial {n : ℕ} (s : Fin n → ι) (y : ι → ℂ) :
+omit [Fintype ι] [DecidableEq ι] in
+lemma prod_eq_evalMonomial [Finite ι] {n : ℕ} (s : Fin n → ι) (y : ι → ℂ) :
     ∏ k, y (s k) = evalMonomial (tupleDeg s) y := by
+  classical
+  have := Fintype.ofFinite ι
   rw [evalMonomial_eq_prod,
     ← Finset.prod_fiberwise_of_maps_to (fun k _ ↦ Finset.mem_univ (s k)) fun k ↦ y (s k)]
   refine Finset.prod_congr rfl fun i _ ↦ ?_
@@ -714,8 +722,12 @@ lemma eq_zero_of_hasSum_zero {a : ℕ → ℂ} {C : ℝ} (hbound : ∀ n, ‖a n
 
 variable [DecidableEq ι]
 
+omit [Fintype ι] [DecidableEq ι] in
 /-- A power series which sums to zero near the origin is zero. -/
-theorem eq_zero_of_represents_zero {R : MvPowerSeries ι ℂ} (hR : R.Represents 0) : R = 0 := by
+theorem eq_zero_of_represents_zero [Finite ι] {R : MvPowerSeries ι ℂ} (hR : R.Represents 0) :
+    R = 0 := by
+  classical
+  have := Fintype.ofFinite ι
   have hconv : R.LocallyConvergent := hR.locallyConvergent
   obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.mp (hR.and hconv)
   set ρ := ε / 2 with hρdef
@@ -787,9 +799,11 @@ theorem eq_zero_of_represents_zero {R : MvPowerSeries ι ℂ} (hR : R.Represents
   rw [if_pos (self_mem_degFinset d)] at h3
   simpa using h3
 
-/-- A power series is determined by the germ at the origin of the function it represents. -/
-theorem Represents.unique_aux {f : (ι → ℂ) → ℂ} (hP : P.Represents f) (hQ : Q.Represents f) :
-    P = Q := by
+omit [Fintype ι] [DecidableEq ι] in
+/-- A power series is determined by the germ at the origin of the function it represents:
+the identity theorem for convergent power series. -/
+theorem Represents.unique [Finite ι] {f : (ι → ℂ) → ℂ} (hP : P.Represents f)
+    (hQ : Q.Represents f) : P = Q := by
   have h : (P - Q).Represents 0 := by
     have h1 := hP.sub hQ
     rwa [sub_self] at h1
@@ -798,13 +812,6 @@ theorem Represents.unique_aux {f : (ι → ℂ) → ℂ} (hP : P.Represents f) (
 end Unique
 
 end AnalyticDictionary
-
-/-- A power series is determined by the germ at the origin of the function it represents:
-the identity theorem for convergent power series. -/
-theorem Represents.unique [Fintype ι] {P Q : MvPowerSeries ι ℂ} {f : (ι → ℂ) → ℂ}
-    (hP : P.Represents f) (hQ : Q.Represents f) : P = Q := by
-  classical
-  exact hP.unique_aux hQ
 
 /-- Every function which is holomorphic near the origin is the sum of a locally convergent
 power series, namely of its Taylor series at the origin. -/
@@ -822,8 +829,9 @@ theorem LocallyConvergent.analyticAt [Fintype ι] {P : MvPowerSeries ι ℂ}
 /-- If the constant term of a locally convergent power series does not vanish, its formal
 inverse is again locally convergent: the inverse of a nonvanishing holomorphic function is
 holomorphic. -/
-theorem LocallyConvergent.inv [Fintype ι] {P : MvPowerSeries ι ℂ} (hP : P.LocallyConvergent)
+theorem LocallyConvergent.inv [Finite ι] {P : MvPowerSeries ι ℂ} (hP : P.LocallyConvergent)
     (h : constantCoeff P ≠ 0) : P⁻¹.LocallyConvergent := by
+  have := Fintype.ofFinite ι
   have hA : AnalyticAt ℂ P.eval 0 := hP.analyticAt
   have hne : P.eval 0 ≠ 0 := by rwa [eval_zero]
   -- the reciprocal of the sum of `P` is holomorphic, hence has a Taylor series `Q`
@@ -889,7 +897,7 @@ lemma constantCoeff_apply (P : LocalOkaRing ι) :
 instance : Nontrivial (LocalOkaRing ι) :=
   ⟨0, 1, fun h ↦ by simpa using congrArg constantCoeff h⟩
 
-variable [Fintype ι]
+variable [Finite ι]
 
 /-- A locally convergent power series is invertible if and only if its constant term does not
 vanish. -/
@@ -1153,11 +1161,14 @@ lemma fromPolynomial'_injective :
 
 end FromPolynomial'
 
+/-- A power series is polynomial in the variable `i` if it lies in the image of
+`MvPowerSeries.fromPolynomial i`. -/
 def IsPolynomialIn (P : MvPowerSeries ι R) (i : ι) :
     Prop :=
   ∃ (Q : (MvPowerSeries { j : ι //  j ≠ i } R)[X]),
     MvPowerSeries.fromPolynomial i Q = P
 
+/-- The polynomial in the variable `i` attached to a power series that is polynomial in `i`. -/
 noncomputable
 def IsPolyonmialIn.polynomial {P : MvPowerSeries ι R}
     {i : ι}
@@ -1212,10 +1223,14 @@ lemma partialEval_fromPolynomial (Q : (MvPowerSeries { j : σ // j ≠ i } R)[X]
 
 end PartialEval
 
+/-- The order of vanishing of `P` along the `i`-th coordinate axis, i.e. the order of the
+one variable power series `MvPowerSeries.partialEval i P`. -/
 noncomputable
 def orderIn (P : MvPowerSeries ι R) (i : ι) : ℕ∞ :=
   (MvPowerSeries.partialEval i P).order
 
+/-- A power series is general in the variable `i` if it does not vanish identically on the
+`i`-th coordinate axis. -/
 def IsGeneralIn (P : MvPowerSeries ι R) (i : ι) :
     Prop :=
   MvPowerSeries.partialEval i P ≠ 0
@@ -1228,21 +1243,3 @@ lemma isGeneralIn_iff_orderIn_ne_top
 end MvPowerSeries
 
 end
-
-open Polynomial
-
-theorem oka_lemma (n : ℕ) (p : ℕ) (d : ℕ)
-    (F : Fin p → (MvPowerSeries (Fin n) ℂ)[X])
-    (hF : ∀ j, (F j).degree < d)
-    (hF' : ∀ j, (F j).Monic) :
-    letI F' (j : Fin p) : MvPowerSeries (Fin (n + 1)) ℂ :=
-      MvPowerSeries.fromPolynomial' (F j)
-    letI f : (Fin p → (MvPowerSeries (Fin n) ℂ)[X]_d) →ₗ[ℂ]
-        (Fin p → (MvPowerSeries (Fin (n + 1)) ℂ)) :=
-      LinearMap.piMap
-        (fun i ↦ MvPowerSeries.fromPolynomial'.toLinearMap ∘ₗ (Submodule.subtype _).restrictScalars ℂ)
-    letI K_m : Submodule _ (Fin p → (MvPowerSeries (Fin n) ℂ)[X]_d) :=
-      LinearMap.ker ((linOfFun F').restrictScalars ℂ ∘ₗ f)
-    LinearMap.ker (linOfFun F') =
-      Submodule.span _ (Submodule.map f K_m).carrier :=
-  sorry
