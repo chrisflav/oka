@@ -1179,6 +1179,58 @@ no sentence about it anywhere** — which had already happened three times over:
 `check_docstring_names.py`, `DumpEnvNames.lean` and `docstring-names-ignore.txt` were added on
 2026-08-22 and are named here for the first time in the commit that added the check.
 
+### The `until <date>` record
+
+A clause that stops being true is **edited in place**, and a bolded paragraph beside it says what
+it read, until when, and what changed. At `91bbad8` there are **97** such records in **42** files
+under `Oka/` and `OkaTest/`. **The counts here leave `README.md` out**, and not because it has
+none — it has **5** — but because this section quotes the pattern it is about, so a tree-wide
+count reads its own prose as records and is not the figure to compare a branch against. Two rules
+govern these paragraphs; both had been settled by a review and written down nowhere until here.
+
+**The date is the UTC date of the push that retires the wording, and not the seat's local date.**
+At `22:41Z` it is already the next day at UTC+2 and east of it, so a date that is correct on a
+seat's own clock can be a day ahead of every commit and timestamp another seat can check it
+against. That has cost a pull request a round: `0c8cd0e` wrote 2026-09-08 into a record on
+2026-09-07, `5b0a14b` is the rework and says so in its subject line, and `49f0cc7` is what merged.
+
+**The scan is one command and only one direction of it is informative.** For each record, compare
+the date in the prose against `git blame`'s date for the line carrying it:
+
+```sh
+for f in $(git grep -l 'until 2026-' -- Oka/ OkaTest/); do
+  git blame --date=short -- "$f" | grep 'until 2026-'
+done
+```
+
+`git blame` reports the commit that **last touched** a line, which can only be at or after the one
+that introduced it, and a pull request lands squashed, so the date blame reports is the merge's
+and not the branch commit's. A prose date **behind** the blame date is therefore what a later
+reflow of the line, or a merge that crossed midnight, looks like, and is not a defect — there are
+**5** of those at `91bbad8`. A prose date **ahead** of it cannot be produced either way and is
+always wrong. At `91bbad8` the scan is **90 / 5 / 2** — matching, behind, ahead — and the two
+ahead are the records the commit that writes this section removes. **Run it by hand and do not
+wire it into `.orchestra/validation.sh`**: its green depends on `git blame` following reflows,
+which is the property the middle column measures, and `scripts/guard_coverage.py`'s docstring
+gives the standing reason against adding a check somebody will want to switch off.
+
+**A record retires prose that was on `master`.** Every pull request lands **squashed**: the 11
+merge commits in `91bbad8`'s history are `git pull` merges dated 2026-07-22 and 2026-07-23, from
+before this workflow, and no commit since has two parents. So the head of a rejected round is an
+ancestor of nothing — `git merge-base --is-ancestor <head> master` fails at `0c8cd0e`, the round
+the rule above came out of, at `83cd124` and `ea836b3`, superseded rounds of another pull request,
+and at `b777241`, the round on which the two sentences quoted by the records this section's commit
+removes stood as live prose. A record saying a file read some `X` until some date, for an `X` that
+lived only on such a head, asserts a history that no search over `master` can reach. The review
+thread is that sentence's record, and the pull request body is where it is argued.
+
+**What a rejected round produced can still go into the tree, as a rule rather than as a history.**
+The two paragraphs the commit that writes this section rewrote in `OkaTest/Axioms/Morphisms.lean`
+each carried one — that a guard-file sentence enumerating where a name occurs must count the guard
+file, and that only the outermost link of a chain discharging a class is discharged by the
+instance that starts it — and both are kept there, stated as rules and attributed to nothing. It
+is the framing that asserts the history and not the lesson.
+
 ### Re-deriving a branch's measured absences after a re-cut
 
 Prose here makes **measured-absence claims** — that some name occurs in the comment-stripped

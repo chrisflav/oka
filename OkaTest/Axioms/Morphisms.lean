@@ -6149,16 +6149,22 @@ returns **16** lines in **three** files at that commit — **four** in
 this file**, of which **two are not prose**: the `/-- info: … -/` expectation of its own guard and
 the `#print axioms` command under it.
 
-**That sentence read *Its other occurrences are prose, in its own module's docstrings and in the
-new module's*, until 2026-09-13**, and it was false in the file it was written in: a guard file's
-occurrences of a guarded name include the expectation and the command, and neither is prose.
-**The retired wording is kept because the contrast is the lesson.** The clause of this same section
-opening *`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isClopen_fixedLocus` has no
-consumer in this repository* does the same job in the careful form — *`git grep` over `Oka/` and
-`OkaTest/` finds it in its own module and in this section and nowhere else* — naming the
-instrument, naming the scope, and counting the guard section as a location. **When one sentence of
-a paragraph has that form and its neighbour does not, the loose one is an oversight and not a
-scoping choice.**
+**The rule the sentence above follows, and it is worth stating because its own first draft did
+not.** A sentence in a guard file that enumerates where a name occurs **must count the guard
+file**: *its other occurrences are prose* is false in a guard file almost by construction, since
+the `/-- info: … -/` expectation and the `#print axioms` command are occurrences of the guarded
+name and neither is prose. The clause of this same section opening
+*`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isClopen_fixedLocus` has no consumer in
+this repository* is the careful form — *`git grep` over `Oka/` and `OkaTest/` finds it in its own
+module and in this section and nowhere else* — naming the instrument, naming the scope, and
+counting the guard section as a location. **When one sentence of a paragraph has that form and its
+neighbour does not, the loose one is an oversight and not a scoping choice.**
+
+**This paragraph and the one opening *What is in the context at a call site* were `until <date>`
+records until 2026-09-13**, each quoting a sentence that had been written and repaired inside one
+pull request and had never stood on `master`. `README.md`'s *The `until <date>` record* is the
+rule that removed them and it was written in the same push. What the exchange produced is the two
+rules, which are kept; the review thread is the record of the two sentences they replaced.
 
 **Which kind each guard is, against the description at the head of this file.** **Four** are of
 the kind the head's clause opens with *And a kind that is the separated-map one's dual, and is not
@@ -6217,12 +6223,11 @@ applied inside `ComplexAnalytic.AnalyticSpace.isClopen_eqLocus_base_of_isLocalIs
 `ComplexAnalytic.AnalyticSpace.IsLocalIso` in scope is that theorem's own binder and no
 `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` is in the context at all.
 
-**This read *Both are discharged at the call sites by instance search out of
-`ComplexAnalytic.AnalyticSpace.IsFiniteEtale.isLocalIso`* until 2026-09-13.** The operative claim,
-*and by no instance of this push*, was true and is kept; the attribution was true of one binder and
-not of the other. **The general shape, which is why the retired wording is kept: when a chain of
-declarations discharges the same class, only the outermost link is discharged by the instance that
-starts the chain and the inner links are discharged by binders.**
+**What is in the context at a call site is the general shape the two binders above are an
+instance of**: when a chain of declarations discharges the same class, only the outermost link is
+discharged by the instance that starts the chain, and the inner links are discharged by binders.
+So an attribution naming one instance for every link of such a chain is true of the outermost and
+false of the rest.
 
 **What consumes each of them, said at the strength it has.**
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isClopen_fixedLocus` has no consumer in
