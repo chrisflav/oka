@@ -147,6 +147,15 @@ this file is about them.
   measurement and not an impression: the name `CategoryTheory.SingleObj` occurs in the
   comment-stripped code of no module of this repository at `077f6d5`.
 
+  **At the commit that adds `Oka/CategoryTheory/Limits/Shapes/SingleObj.lean` that count is one,
+  and the one is that module**, which is not the field: it says a category with
+  `CategoryTheory.Limits.HasFiniteColimits` has colimits of that shape for every finite group at
+  every universe, and this category is not known to have finite colimits — coequalisers and
+  pushouts are stated nowhere for it, which is what the bullet opening *No
+  `CategoryTheory.Limits.HasFiniteColimits`* measures. That
+  module is in the mirror tree and **imports nothing of this repository**, and this one does not
+  import it, so nothing here consumes it and nothing here is changed by it.
+
   **This bullet said *two* and *three* and put pullbacks among the remaining two, naming taxis
   #1918 as a pull request in review, until that request merged** as `4d40d05` while this branch was
   in review. Both figures were exact at `26dc715`, the commit the first delivery of this module was

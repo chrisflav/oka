@@ -402,6 +402,34 @@ figures at the commit that adds this section**, all four runs mine.
 **This clause was added by the push that added that section**, 2026-09-13, for the reason the
 clause naming `### The terminal object and the product of two complex affine spaces` gives.
 
+And one section more, of the **seventh** kind and of no other — the mirror tree — and it is the
+first section of this file whose single guard has no consumer in this repository at all.
+`### Colimits of shape SingleObj in a category with finite colimits` guards the one declaration of
+`Oka/CategoryTheory/Limits/Shapes/SingleObj.lean`,
+`CategoryTheory.Limits.hasColimitsOfShape_singleObj`: a category with
+`CategoryTheory.Limits.HasFiniteColimits` has colimits of shape `CategoryTheory.SingleObj G` for
+every finite group `G`, at every universe. **No analytic space occurs in it and no object of this
+repository does**, which is what puts it in the seventh kind; the routing rule that kind records
+sends a mirror-tree module whose subject no row of `OkaTest/Axioms.lean`'s topic table names to the
+file of the analytic result that motivated it, and **that result does not exist yet**, so the guard
+takes a section of its own rather than sharing one. That section's docstring argues both halves of
+that and says what it would take for the statement to read at a category of this repository. **By
+subject it would be of the sixth kind** — a statement that a category has colimits of a shape —
+**and it is counted here and not there for the reason the clause opening *And a kind that is the
+separated-map one's dual* gives of its own mirror-tree guard**: the seventh kind is a kind of
+routing rather than a kind of subject, and the sixth kind's enumeration is over
+`ComplexAnalytic.AnalyticSpace` and the one subcategory the clause opening *The sixth kind has a
+second category* names, while this statement is about a category variable. **The two claims the
+clause opening *And one section more, at the second category* says are untouched are untouched by
+this push too**, and that is a run and not an assumption: its *Five of that section's twenty-one
+guards*, which counts over `### The category of separated covers, and separatedness as a morphism
+property`, and the published check on the statements of a pullback square in both of its halves —
+**no name of this section carries** *isPullback* **or** *hasPullback*, there being one name, and
+`git diff` against the commit this section is cut from touches no line of that section. **This
+clause was added by the push that added
+`### Colimits of shape SingleObj in a category with finite colimits`**, 2026-09-13, for the reason
+the clause naming `### The terminal object and the product of two complex affine spaces` gives.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -6340,3 +6368,88 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasFiniteCoproduct
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasFiniteCoproducts
+
+/-! ### Colimits of shape SingleObj in a category with finite colimits
+
+`Oka/CategoryTheory/Limits/Shapes/SingleObj.lean`, the whole of it. **One name**: that a category
+with `CategoryTheory.Limits.HasFiniteColimits` has colimits of shape `CategoryTheory.SingleObj G`
+for every finite group `G`, at every universe.
+
+**The routing, argued rather than assumed, because the module is new and no row of the topic table
+names its subject.** `OkaTest/Axioms.lean` says what to do with exactly that case — *Guard one in
+the file of the analytic result that motivated it*, under that result's heading — and the account
+it gives of the rule names the six modules of that tail and says which of them sit apart from their
+consumers' guards under a heading of their own. **This one has no consumer to sit with**, and that
+is a measurement: at the commit that adds this section no declaration of this repository names
+`CategoryTheory.Limits.hasColimitsOfShape_singleObj` in its statement or in its proof term, and a
+grep over `Oka/` and `OkaTest/` finds the name in its own module, in this file's head description,
+and in this section, and nowhere else. So the guard takes a section of its own, as
+`Oka/FieldTheory/IsAlgClosed/Basic.lean`'s one does in `OkaTest/Axioms/RingTheory.lean`, where the
+heading it sits under carries that guard and no other. **Of the members that account names as
+sitting apart, that is the one whose reason is this one**: the account reaches it by measuring
+that no module under `Oka/` imports `Oka/FieldTheory/IsAlgClosed/Basic.lean`, so that there is no
+analytic result to place its guard beside. **The same instrument answers the same way here**, at
+the commit that adds this section: no module under `Oka/` imports
+`Oka/CategoryTheory/Limits/Shapes/SingleObj.lean`, the `Oka.lean` aggregator line that account
+excludes in terms aside.
+
+**Why this file and not another, with the competitors named.** What motivated the statement is the
+`PreGaloisCategory` ladder at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` — the class
+is in `Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's
+import closure and so cannot be cited by name here — and **every guard of that ladder is in this
+file**, under the four headings that the clauses of the head description naming them give: the
+category itself with its terminal object, the direct summand at a monomorphism, the fibre products,
+and the finite coproducts. The one field of that class left unstated at that category is quotients
+by finite group actions, which is the shape the statement below is about. **The competing row is
+*general presheaf and sheaf theory, and ringed spaces*, `OkaTest/Axioms/Sheaves.lean`**, which the
+account `OkaTest/Axioms.lean` gives of that rule records as 87 of 87 mirror-tree and is where
+general category theory would go if the table routed by source directory; it loses because that
+table routes by topic, no presheaf, sheaf or ringed space occurs below, and the only thing in this
+development that the statement is about is in this file.
+
+**What it would take for the statement to read at a category of this repository, said because an
+unconsumed guard invites the question.** It asks `CategoryTheory.Limits.HasFiniteColimits`, and
+**nothing in this repository has that class at either category of covers**: `#synth` on it at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` **fails** at the commit that adds this
+section, as `Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean` says in terms, and the two
+converters that file names ask for coequalisers beside the finite coproducts that category now has,
+or for an initial object and pushouts. **So what the statement buys is a price and not a field**:
+it makes the whole remaining cost of a quotients-by-finite-groups field at that category one
+colimit, and that is a compiled consequence rather than a claim. `#synth` on colimits of shape
+`CategoryTheory.SingleObj G` at that category therefore still **fails** at this commit, which is
+the control a reader of this section should expect to come back negative and not positive.
+
+**`CategoryTheory.SingleObj` occurs in the comment-stripped code of one module of this repository
+at the commit that adds this section, and of none before it.** That is why
+`Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean`'s measurement of the same name is written
+*at* a commit and is still exact there: a pinned figure survives a push that moves it, and the same
+bullet now gives the new count beside the old one. **The field that bullet says remains outstanding
+is still outstanding** — the statement below is about a category variable and says nothing about
+that one.
+
+**Which kind the one guard is, against the description at the head of this file.** It is of the
+**seventh**, the mirror tree, and of no other kind; the clause of the head description opening *And
+one section more, of the seventh kind and of no other* assigns it and argues why the sixth kind's
+criterion, which would reach it by subject, does not route it. **One is the whole of the section**,
+which is the module's row count in `scripts/DumpOkaDecls.lean`'s output: no `_assoc` lemma, no
+`.eq_1` equation lemma, no match lemma and no congruence lemma, the declaration being an instance
+whose body is two tactic steps.
+
+**`Classical.choice` is in the guard below and no step of the proof introduces it.** All three
+Mathlib declarations that proof names carry it already —
+`Finite.exists_type_univ_nonempty_mulEquiv`, `MulEquiv.toSingleObjEquiv` and
+`CategoryTheory.Limits.hasColimitsOfShape_of_equivalence` each depend on propositional
+extensionality, choice and quotient soundness on their own, which is three `#print axioms` runs and
+not a reading of their proofs. **What is unusual is where it does not come from**: the other
+sections of this file inherit the axiom through a rung of this repository, and this module has
+none, its imports being three Mathlib modules and nothing under `Oka/`.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'CategoryTheory.Limits.hasColimitsOfShape_singleObj' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CategoryTheory.Limits.hasColimitsOfShape_singleObj
