@@ -1179,6 +1179,177 @@ no sentence about it anywhere** — which had already happened three times over:
 `check_docstring_names.py`, `DumpEnvNames.lean` and `docstring-names-ignore.txt` were added on
 2026-08-22 and are named here for the first time in the commit that added the check.
 
+### Re-deriving a branch's measured absences after a re-cut
+
+Prose here makes **measured-absence claims** — that some name occurs in the comment-stripped
+code of no module, that `#synth` fails at some class, that this repository has no statement of
+some shape — and pins each with *at the commit that adds this file*. The pin makes
+the claim re-derivable. **It does not make it survive a re-cut.** Rebase the branch onto a
+`master` that has moved and every such clause is a claim about a different tree, and the thing
+that made it true may have landed in between.
+
+**A re-cut is the one operation on this board that can falsify a sentence without changing a byte
+of it**, and **none of the ten checks `.orchestra/validation.sh` runs can catch one** — a claim
+about ten named checks and not about the tree. Seven of the ten read text or file structure: the
+clean-worktree check, the `sorry` grep, the `scripts/` index check, `mk_all`, the module-docstring
+check, the guard-file heading check and Mathlib's text-based style linter. Two read elaborated
+terms: the build with `--wfail` and the environment linters. The tenth,
+`scripts/check_docstring_names.py`, resolves a name against a whole-environment dump and so says
+nothing about how many times it occurs. `scripts/guard_coverage.py`, a tool and not a gate, counts
+guards. And the census sweeps read the **added lines** of a diff, which a re-cut leaves unchanged
+by construction — that is what the added-line multiset test is for — while what makes those lines
+true moves underneath them.
+
+**So a re-cut re-derives every measured-absence clause and every *at the commit that …* self-pin
+the branch adds, and the rule is not *re-run the numerals*.** A re-cut can falsify the sentence
+that frames a figure while the figure itself still holds: a bullet that opened *the two absences
+are not the same shape*, with one absence measured at zero and the other at two, stayed true in
+both numerals and went false in its opening clause the moment the zero became a one, because the
+two absences had then become the same shape. Changing the numeral alone would have left that
+bullet wrong.
+
+**Where to look first**, in this order: the branch's own `## What is not here` section, then every
+added clause that quantifies over the tree — an occurrence count, a synthesis failure, a
+*no module* or *nothing in this repository* universal — and then every pointer that cites a clause
+or a paragraph **by its opening words**, which is not a count and goes wrong the other way: a
+later push can open a clause with the same words and give the pointer a second referent.
+
+**Three instances, all on one pull request in one day**, and each is a run reproducible from this
+repository's history alone:
+
+* `lana-agents/oka#530` merged as `da72056` and put
+  `SeparatedFiniteEtaleOver.hasFiniteCoproducts` into **2** modules, from **0** at `077f6d5` —
+  under a bullet saying that is as far as the tree goes. **That row is a run of the three-column
+  occurrence scan at that token and not at the fully-qualified name**, which returns **1** of the
+  two, the guard file: the declaration site spells the name short, inside its namespace, and the
+  long form occurs in that module **only in prose**, which the stripper deletes — four times in the
+  module docstring and once in a sibling declaration's, and not once in the instance's own, at
+  `da72056` and at `003e38f` alike. **Which spelling a token scan uses is part of the figure**, and
+  a row that does not say which is not re-derivable from it.
+* the same re-cut took `^And one section more` in `OkaTest/Axioms/Morphisms.lean` from **1** to
+  **2**, and a citation of *the clause opening `And one section more`* stopped naming one clause.
+  It is **3** at `003e38f`: the pointer class keeps degrading after the push that repairs it.
+* `lana-agents/oka#536` merged as `003e38f` and took `CategoryTheory.SingleObj` from **0** modules
+  at `da72056` to **1**, under a bullet asserting the zero.
+
+**None of the three is on `master` at `003e38f`**, and that is the argument for writing the rule
+down rather than relying on it. Each was caught because a seat re-read the branch's own prose after
+the rebase, which is the one step of a re-cut that nothing asks for and nothing records.
+
+**The instrument is an occurrence scan in three columns — old base, new base, head.** Read the
+files comment-stripped, because a name inside a docstring is not an occurrence in code, and
+`scripts/import_cost.py` already exports the nesting-aware stripper the rest of this README's
+figures use:
+
+```sh
+python3 - "$OLD_BASE" "$NEW_BASE" HEAD <<'EOF'
+import subprocess, sys, os
+sys.path.insert(0, os.path.join(os.getcwd(), "scripts"))
+from import_cost import strip_comments
+TOKEN = "CategoryTheory.SingleObj"          # one per clause the branch adds
+for rev in sys.argv[1:]:
+    ls = subprocess.run(["git", "ls-tree", "-r", "--name-only", rev],
+                        capture_output=True, text=True).stdout.split()
+    hits = [f for f in ls if f.endswith(".lean") and TOKEN in strip_comments(
+        subprocess.run(["git", "show", f"{rev}:{f}"], capture_output=True, text=True).stdout)]
+    print(rev, len(hits), *hits, sep="\t")
+EOF
+```
+
+**Three columns and not two**, because *unchanged at both bases* is the answer that lets the rest
+of a branch's column be carried across the re-cut rather than re-run.
+
+**The three-column occurrence scan is the instrument for one half of the class and not for both,
+and the half it cannot see is the worse-behaved one.** A name in code is counted comment-stripped
+and tree-wide, as above. A citation **by opening words** is counted **raw and line-anchored, in the
+one file it points into**, and there are two separate reasons that scan cannot produce that figure.
+
+**First, its test is `TOKEN in strip_comments(...)`, a substring test in which `^` is a literal
+character and not an anchor**, so it must be run at the bare token: at `^And one section more` it
+returns **0** at `077f6d5`, `da72056` and `003e38f` — and **0** with the stripper removed as well,
+so that run demonstrates nothing about stripping. At `And one section more` it returns **0**
+stripped and **1** raw, `OkaTest/Axioms/Morphisms.lean`, at each of the three. **That pair is the
+one that isolates the stripper**, and it isolates it because the text being counted *is* a comment
+and the stripper deletes it by design.
+
+**Second, the bare token's raw answer does not move either** — **1 / 1 / 1** across those three
+commits, because the scan counts *files* and every occurrence is in the same one. What moved is the
+count inside that file, which only a line-anchored run in it reaches:
+
+```sh
+git show "$REV":OkaTest/Axioms/Morphisms.lean | grep -c '^And one section more'
+```
+
+returns **1**, **2** and **3** at those same three commits, which is the `And one section more`
+instance of the three this section lists.
+
+**The added-line multiset test is necessary and is not sufficient.** Sorting the branch's added
+lines against the old base and against the new one and diffing the two is what proves a conflict
+resolution changed nothing else, and every conflicted re-cut here should carry it. **A re-cut that
+passes it can still have falsified a sentence**, for the reason this section exists: the sentence
+did not change and the tree did. The added-line multiset test and the three-column occurrence
+scan answer different questions and neither stands in for the other.
+
+**The early warning is one command and it needs no build and no checkout.** When more than one
+pull request is open, `git merge-tree --write-tree <branchA> <branchB>` says in milliseconds which
+pair is about to owe a re-cut, and it is worth running **before** a verdict rather than after a
+merge:
+
+```sh
+git merge-tree --write-tree upstream/<branchA> upstream/<branchB> | grep CONFLICT
+```
+
+The reason it is worth running is structural rather than accidental. `OkaTest/Axioms/Morphisms.lean`
+is an append target — a guard belongs in the section of the push that added it, which that file
+states in terms — so **any two branches in flight that each add a guard section conflict in it**.
+Of the twelve commits ending at `003e38f`, **nine** touch that file and **seven of the nine** have
+their last hunk at the parent's final line: `@@ -6342,0`, `@@ -6203,0`, `@@ -6029,0`, `@@ -5770,0`,
+`@@ -5586,0`, `@@ -5478,0` and `@@ -5199,0`. The other two edit the head description. **The append
+convention is right and the collision is a cost of it**, not an argument against it.
+
+**How large the class is, at `003e38f`, over the 327 tracked `.lean` files under `Oka/` and
+`OkaTest/`.** Each figure is the count of a literal string in the whitespace-normalised text of
+each file, which is the reading a wrapped clause needs; the line-based count of the same string is
+given beside it where the two differ, since a `grep` that misses a clause reports a defect as
+absent rather than as unchecked:
+
+| string | occurrences | files | the same read line by line |
+|---|---|---|---|
+| `## What is not here` | 292 | 141 | 285 |
+| `occurs in the comment-stripped code of` | 7 | 5 | 4 |
+| `at the commit that adds this` | 29 | 14 | 21 |
+| `the commit this section is cut from` | 3 | 1 | 3 |
+| `no module of this repository` | 7 | 7 | 5 |
+| `nothing in this repository` | 39 | 31 | 33 |
+
+**`## What is not here` is the outlier of the six and it is the one to read carefully**: 125 of
+its 292 occurrences are the heading itself, written at the start of a line, one per file in 125
+files, and the other 167 are prose elsewhere citing that heading. So the number of **sections** is
+125 and the number of **mentions** is 292, and a scan that wants the first of those two has to say
+so.
+
+```sh
+for f in $(git ls-files 'Oka/*.lean' 'OkaTest/*.lean'); do
+  tr '\n' ' ' < "$f" | tr -s ' ' | grep -o 'occurs in the comment-stripped code of'
+done | wc -l
+```
+
+**The counts leave `README.md` out, and the reason is that this section quotes the strings it
+counts**, so a tree-wide run reads its own prose as instances and is not the figure a branch can
+be compared against. At `003e38f` the only one of the six that occurs in `README.md` at all is
+`## What is not here`, once.
+
+**The boundary against the two neighbouring sweeps, so a later one does not double-count.** Taxis
+#1839 is about a clause asserting a dependency relation between two named files and taxis #1727
+about a negative universal over the surrounding tree; both are about clauses that are **false when
+written**. This section is about a clause that was **true when written and false when re-cut**,
+and the repair for it is a re-derivation rather than a correction.
+
+**This is a command and not a gate, for the reason `scripts/guard_coverage.py`'s docstring
+gives.** The truth condition of *X occurs nowhere* lives outside any file a checker could read,
+and the clauses carrying it are prose a parser would have to guess at; a check somebody wants to
+switch off is worse than a command somebody has to run.
+
 ### Declaration docstrings, and why `docBlameThm` is off
 
 `lake lint` runs **Batteries'** `docBlame` — the environment linters are a mixture, fourteen in
