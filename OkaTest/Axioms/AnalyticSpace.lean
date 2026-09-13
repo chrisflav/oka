@@ -2272,14 +2272,24 @@ morphism, which is that file's subject, and this module's headline declaration i
 
 **One `info:` line below is 101 characters and cannot be wrapped**, which is
 `ComplexAnalytic.AnalyticSpace.Pullback.range_base_ofRestrict_comp_subset_ι`'s: `#guard_msgs`
-compares the message and the name is most of the message. **Thirteen such lines already stand
-under `OkaTest/`** — two in this file's neighbours' `OkaTest/Axioms/SheafOfModules.lean`, three in
-`OkaTest/Axioms/Sheaves.lean`, six in `OkaTest/Axioms/Morphisms.lean`, one in
-`OkaTest/Axioms/Analytification.lean` and one already in this file — and every one of them is an
-`info:` line of a long name. This is the fourteenth and there are no others: **its own
+compares the message and the name is most of the message. **Lines like it stood under `OkaTest/`
+before this one, and how many is not written down here, because the next guard on a long name
+moves it**: they are in `OkaTest/Axioms/SheafOfModules.lean`, `OkaTest/Axioms/Sheaves.lean`,
+`OkaTest/Axioms/Morphisms.lean`, `OkaTest/Axioms/Analytification.lean` and this file, each an
+`info:` line of a long name, and a scan for lines over a hundred **characters** lists whichever
+stand on the day it is run — in codepoints and not in bytes, since `awk 'length > 100'` counts
+bytes, and an em dash is three of them, so it reports lines here that are not long. **Its own
 `#print axioms` line is *not* wrapped**, the name fitting after the command, so the line-based
 `#print axioms\s+(\S+)` scan `OkaTest/Axioms.lean` warns about reads all nine of this section's
 guards and not eight.
+
+**This paragraph read *Thirteen such lines already stand under `OkaTest/`*, split that figure
+across the files by name, and closed *This is the fourteenth and there are no others*,
+until 2026-09-13.** It was exact at `7a99bfc`, the commit that wrote it; `2d376d5` and
+`7b7ce5a` each appended a long `info:` line to `OkaTest/Axioms/Morphisms.lean` and swept
+nothing, which falsified the total, that file's share of it and the closing clause together.
+**The files it named are still the files that carry such lines**, which is why naming them is
+what survives an append and counting them was not.
 
 **Nothing generated is guarded and here there is nothing generated.** The module's tab-anchored
 row count in `scripts/DumpOkaDecls.lean`'s output is **nine** against nine guards: no `_assoc`
