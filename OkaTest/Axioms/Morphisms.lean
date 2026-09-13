@@ -1520,10 +1520,23 @@ info: 'ComplexAnalytic.isIso_stalkMap_comp_projRestrict_of_pderiv' depends on ax
 
 `Oka/AnalyticSpace/CoveringSpace.lean`. The converse of *the third rung* above, at the level of
 the spaces and not only of the maps: a local homeomorphism into an analytic space makes its source
-one, and a covering map with finite fibres makes it finite étale. `IsCoveringMap.isClosedMap`,
-guarded under that heading, is what supplies the second half — the closed base map that finite
-fibres do not give. It is not the only mirror-tree topology the construction consumes: the cover
-by sheets the first half is checked on is `IsLocalHomeomorph.sSup_sheetOpens`, guarded in
+one, and a **closed** local homeomorphism with finite fibres makes it finite étale.
+
+**The covering map is one rung further out and this section guards both rungs.**
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` and
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap` take closedness as a
+hypothesis and prove neither field; `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom` are those two at
+`IsCoveringMap.isClosedMap`, guarded under that heading, which is what supplies the closed base
+map that finite fibres do not give. **That the closedness cannot in turn be dropped is
+`ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom`** in `OkaTest/CoveringSpace.lean`,
+which is a counterexample: no `#print axioms` under `OkaTest/Axioms/` names it, this sentence
+being its only occurrence there, and what decides that is the module the declaration lives in and
+not what kind of statement it is — every name this directory guards is declared by a module of
+`Oka/`, counterexamples among them, and no declaration of an `OkaTest/` module is guarded there.
+
+It is not the only mirror-tree topology the construction consumes: the cover by sheets the first
+half is checked on is `IsLocalHomeomorph.sSup_sheetOpens`, guarded in
 `OkaTest/Axioms/Sheaves.lean`. -/
 
 /--
@@ -1569,11 +1582,25 @@ info: 'ComplexAnalytic.AnalyticSpace.isLocalIso_coveringSpaceHom' depends on axi
 #print axioms ComplexAnalytic.AnalyticSpace.isLocalIso_coveringSpaceHom
 
 /--
+info: 'ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap
+
+/--
 info: 'ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom' depends on axioms:
   [propext, Classical.choice, Quot.sound]
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap
 
 /--
 info: 'ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom' depends on axioms:

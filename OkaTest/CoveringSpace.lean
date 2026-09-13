@@ -11,9 +11,9 @@ import OkaTest.FiniteMorphism
 
 `Oka/AnalyticSpace/CoveringSpace.lean` builds a complex analytic structure on the source of a
 local homeomorphism into a complex analytic space, and says the resulting morphism is finite étale
-when the map is a covering map with finite fibres. Neither statement says the hypotheses can hold
-at anything, and the second could be the first in disguise if finiteness were free. This file
-measures both.
+when the map is closed with finite fibres — a covering map with finite fibres being one such.
+Neither statement says the hypotheses can hold at anything, and the second could be the first in
+disguise if finiteness were free. This file measures both.
 
 ## The three things checked
 
@@ -27,14 +27,16 @@ measures both.
   line is finite étale here, which is the convention `Oka/AnalyticSpace/SigmaFiniteEtale.lean`
   argues for and this development is already committed to. It is checked rather than assumed
   because it is the case a reader expecting a surjectivity hypothesis will look for.
-* **`ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom`** — **the covering hypothesis
-  cannot be weakened to a local homeomorphism with finite fibres.** The inclusion `ℂ ∖ {0} ↪ ℂ` is
-  an open embedding, hence a local homeomorphism, and its fibres have at most one point; the
-  construction applies to it and
-  `ComplexAnalytic.isLocalIso_puncturedInclCoveringSpaceHom` holds — but the morphism is not
-  finite, because the inclusion is not a closed map. Without this the covering hypothesis of
-  `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` could be redundant and nothing would
-  say so.
+* **`ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom`** — **the hypothesis cannot be
+  weakened to a local homeomorphism with finite fibres.** The inclusion `ℂ ∖ {0} ↪ ℂ` is an open
+  embedding, hence a local homeomorphism, and its fibres have at most one point; the construction
+  applies to it and `ComplexAnalytic.isLocalIso_puncturedInclCoveringSpaceHom` holds — but the
+  morphism is not finite, because the inclusion is not a closed map. Without this the closedness
+  hypothesis of `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` could be
+  redundant and nothing would say so. **The witness fails at closedness and at nothing else**, so
+  it also says what the covering hypothesis of
+  `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` was buying: that one field, and no
+  other.
 
 ## One question that used to be asked three ways, and is now answered three ways
 
@@ -231,11 +233,15 @@ theorem not_isClosedMap_puncturedIncl : ¬ IsClosedMap ⇑puncturedIncl.{u} := b
 /-- **The construction's morphism at the inclusion is not finite**, though it is a local
 isomorphism with finite fibres.
 
-So the covering hypothesis of `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` is not
-redundant: `IsLocalHomeomorph` together with finite fibres does **not** give
-`ComplexAnalytic.AnalyticSpace.IsFinite`, and `IsCoveringMap.isClosedMap` is really needed. The
-underlying map of `ComplexAnalytic.AnalyticSpace.coveringSpaceHom` is the inclusion on the nose,
-so the closed half fails for the reason above. -/
+So the closedness hypothesis of
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` is not redundant:
+`IsLocalHomeomorph` together with finite fibres does **not** give
+`ComplexAnalytic.AnalyticSpace.IsFinite`. The underlying map of
+`ComplexAnalytic.AnalyticSpace.coveringSpaceHom` is the inclusion on the nose, so the closed half
+fails for the reason above — **and that is the only half that fails**, which is the same fact read
+as a statement about the covering-map form: what `IsCoveringMap.isClosedMap` supplies to
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` is closedness, and closedness is what
+this space does not have. -/
 theorem not_isFinite_puncturedInclCoveringSpaceHom :
     ¬ AnalyticSpace.IsFinite
       (AnalyticSpace.coveringSpaceHom (AnalyticSpace.complexAffineSpace.{u} 1)

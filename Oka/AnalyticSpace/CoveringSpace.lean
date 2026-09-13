@@ -14,7 +14,8 @@ import Oka.Topology.IsLocalHomeomorph
 Let `X` be a complex analytic space and `p : E → X` a local homeomorphism of topological spaces.
 Then `E` carries a complex analytic structure — the inverse image `p⁻¹𝒪_X` of the structure sheaf
 — for which `p` is a morphism of analytic spaces, and that morphism is a local isomorphism. If `p`
-is moreover a covering map with finite fibres it is **finite étale**.
+is moreover **closed** and has finite fibres it is **finite étale**, and a covering map with
+finite fibres is such a `p`.
 
 This is the Riemann existence theorem's topological input: it is what turns a topological covering
 of an analytic space into an object of the category the theorem compares with finite étale
@@ -65,15 +66,30 @@ So the member obligation is `ComplexAnalytic.HasLocalModels.restrict` on `X` and
 
 ## Finiteness is the only thing that is not already here
 
-`ComplexAnalytic.AnalyticSpace.IsLocalIso` costs nothing: its topological field is
-`IsCoveringMap.isLocalHomeomorph`, or the hypothesis itself, and its stalk field is the instance
+`ComplexAnalytic.AnalyticSpace.IsLocalIso` costs nothing: its topological field is the hypothesis
+itself, and its stalk field is the instance
 `AlgebraicGeometry.LocallyRingedSpace.isIso_stalkMap_inverseImageHom` — *every* stalk map of the
 inverse image is an isomorphism, for an arbitrary continuous map.
 
-`ComplexAnalytic.AnalyticSpace.IsFinite` is *closed base map* and *finite fibres*. The second is a
-hypothesis; the first is not implied by it and is `IsCoveringMap.isClosedMap` in
+`ComplexAnalytic.AnalyticSpace.IsFinite` is *closed base map* and *finite fibres*, and
+`ComplexAnalytic.AnalyticSpace.base_coveringSpaceHom` says the base map is `p` on the nose, so
+**both fields are hypotheses of
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` and neither is proved**:
+the closed field is the hypothesis, and the fibre field is the hypothesis at
+`Set.Finite.to_subtype`, which changes a spelling and not the content. Closedness is not implied
+by finite fibres —
+`ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom` in `OkaTest/CoveringSpace.lean` is
+the witness, at an open embedding whose fibres have at most one point — so it has to be asked for,
+and asking for it is the whole of what the general form spends on finiteness.
+
+**Where a covering map enters is the corollary and not the statement.**
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` is the covering-map form, and the one
+lemma it adds on top of the general one is `IsCoveringMap.isClosedMap` in
 `Oka/Topology/Covering/Basic.lean`, added for this file. It is the one new piece of mathematics
-in this line and it is topology, not analysis.
+in this line and it is topology, not analysis; the finite-étale corollary
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom` is the same statement at the same
+lemma. **The token `IsCoveringMap` occurs in exactly two statements of this file — those two
+corollaries — and in no proof of it.**
 
 `Oka/AnalyticSpace/CoveringMap.lean` goes the other way — finite étale implies covering map — and
 needs `[T2Space]`, because Mathlib's criterion separates the points of a fibre. **This direction
@@ -137,9 +153,15 @@ from a point, which is the entire question.
 - `ComplexAnalytic.AnalyticSpace.base_coveringSpaceHom`: the underlying map is `p` on the nose.
 - `ComplexAnalytic.AnalyticSpace.isLocalIso_coveringSpaceHom`: **a local homeomorphism into a
   complex analytic space is a local isomorphism** for this structure.
+- `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` and
+  `ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap`: **a closed local
+  homeomorphism with finite fibres is finite étale** for this structure.
 - `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and
   `ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom`: **a covering map with finite
-  fibres is finite étale** for this structure.
+  fibres is finite étale** for this structure —
+  `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` and
+  `ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap` at a covering
+  map's closedness, with their statements unchanged.
 - `ComplexAnalytic.AnalyticSpace.toCoveringSpace_comp`: the comparison morphism is a morphism
   over `X`.
 - `ComplexAnalytic.AnalyticSpace.isIso_toCoveringSpace`: **it is an isomorphism of complex
@@ -318,30 +340,53 @@ instance AnalyticSpace.isLocalIso_coveringSpaceHom (hp : IsLocalHomeomorph ⇑p)
   isLocalHomeomorph := hp
   isIso_stalkMap _ := LocallyRingedSpace.isIso_stalkMap_inverseImageHom _ _ _
 
+/-- **A closed local homeomorphism with finite fibres into a complex analytic space is finite**
+for this structure.
+
+Both fields are handed over: `ComplexAnalytic.AnalyticSpace.IsFinite` is *closed base map* and
+*finite fibres*, the base map is `p` on the nose, and the fibre hypothesis is transported to the
+class `Finite` by `Set.Finite.to_subtype`. **Nothing is proved here.** -/
+theorem AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap (hp : IsLocalHomeomorph ⇑p)
+    (hcl : IsClosedMap ⇑p) (hfin : ∀ x : X, (⇑p ⁻¹' {x}).Finite) :
+    IsFinite (AnalyticSpace.coveringSpaceHom X p hp) where
+  isClosedMap := hcl
+  finite_fiber y := (hfin y).to_subtype
+
 /-- **A covering map with finite fibres into a complex analytic space is finite** for this
 structure.
 
-The fibre field is the hypothesis, transported to the class `Finite` by `Set.Finite.to_subtype`;
-the closed field is `IsCoveringMap.isClosedMap`, which is where the covering hypothesis is used
-and is the only place in this file that it is. -/
+`IsCoveringMap.isClosedMap` is the whole of the difference from
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap`, and this declaration
+together with `ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom` are the only two in
+this file whose statement mentions a covering map. -/
 theorem AnalyticSpace.isFinite_coveringSpaceHom (hcov : IsCoveringMap ⇑p)
     (hfin : ∀ x : X, (⇑p ⁻¹' {x}).Finite) :
-    IsFinite (AnalyticSpace.coveringSpaceHom X p hcov.isLocalHomeomorph) where
-  isClosedMap := hcov.isClosedMap hfin
-  finite_fiber y := (hfin y).to_subtype
+    IsFinite (AnalyticSpace.coveringSpaceHom X p hcov.isLocalHomeomorph) :=
+  AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap X p _ (hcov.isClosedMap hfin) hfin
+
+/-- **A closed local homeomorphism with finite fibres into a complex analytic space is finite
+étale** for the structure `ComplexAnalytic.AnalyticSpace.coveringSpace` puts on its source.
+
+Neither field needs the map to be a covering map: the local-isomorphism half is
+`ComplexAnalytic.AnalyticSpace.isLocalIso_coveringSpaceHom`, which reads the hypothesis and an
+instance holding for an arbitrary continuous map, and the finite half is the closedness
+hypothesis together with the fibres. `Oka/AnalyticSpace/CoveringMap.lean` is the converse at the
+level of the underlying map, and needs a separation axiom that this direction does not. -/
+theorem AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap (hp : IsLocalHomeomorph ⇑p)
+    (hcl : IsClosedMap ⇑p) (hfin : ∀ x : X, (⇑p ⁻¹' {x}).Finite) :
+    IsFiniteEtale (AnalyticSpace.coveringSpaceHom X p hp) where
+  isFinite := AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap X p hp hcl hfin
+  isLocalIso := inferInstance
 
 /-- **A covering map with finite fibres into a complex analytic space is finite étale** for the
 structure `ComplexAnalytic.AnalyticSpace.coveringSpace` puts on its source.
 
 This is the statement the Riemann existence theorem's analytic side needs: a topological covering
-of an analytic space, with finite fibres, *is* an object of the category of finite étale covers.
-`Oka/AnalyticSpace/CoveringMap.lean` is the converse at the level of the underlying map, and needs
-a separation axiom that this direction does not. -/
+of an analytic space, with finite fibres, *is* an object of the category of finite étale covers. -/
 theorem AnalyticSpace.isFiniteEtale_coveringSpaceHom (hcov : IsCoveringMap ⇑p)
     (hfin : ∀ x : X, (⇑p ⁻¹' {x}).Finite) :
-    IsFiniteEtale (AnalyticSpace.coveringSpaceHom X p hcov.isLocalHomeomorph) where
-  isFinite := AnalyticSpace.isFinite_coveringSpaceHom X p hcov hfin
-  isLocalIso := inferInstance
+    IsFiniteEtale (AnalyticSpace.coveringSpaceHom X p hcov.isLocalHomeomorph) :=
+  AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap X p _ (hcov.isClosedMap hfin) hfin
 
 /-! ### Uniqueness: a local isomorphism is this construction at its own base map -/
 
