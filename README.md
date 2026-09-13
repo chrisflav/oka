@@ -1182,11 +1182,22 @@ no sentence about it anywhere** — which had already happened three times over:
 ### The `until <date>` record
 
 A clause that stops being true is **edited in place**, and a bolded paragraph beside it says what
-it read, until when, and what changed. At `91bbad8` there are **97** such records in **42** files
-under `Oka/` and `OkaTest/`. **The counts here leave `README.md` out**, and not because it has
-none — it has **5** — but because this section quotes the pattern it is about, so a tree-wide
-count reads its own prose as records and is not the figure to compare a branch against. Two rules
-govern these paragraphs; both had been settled by a review and written down nowhere until here.
+it read, until when, and what changed. At the commit that writes this there are **96** such
+records in **42** files under `Oka/` and `OkaTest/`, against **97** in the same 42 files at
+`91bbad8`: the push that added this section retired two records and wrote one, all three in
+`OkaTest/Axioms/Morphisms.lean`. **The counts here leave `README.md` out, and the two instruments
+have to be told apart before they can be.** This file holds **4** dated records — two in
+`## Scope`'s `Finite morphisms` bullet, two in its `Local isomorphisms and finite étale morphisms`
+one — while the tree-wide `git grep` the board runs matches **6** of its lines at the commit that
+writes this. The other two are not records. One is the pattern **quoted**, and it is this section's
+doing: the `git grep -l` line of this section's own scan, which the census matches because a
+wildcard takes an apostrophe, a space or a hyphen as readily as a digit. The other is the phrase
+**used** — ordinary narrative, older than this section and owing nothing to it: `### Checking`'s
+sentence saying what the figure script could not be pointed at, which carries a real date and
+retires no wording. **So the tree-wide count over-reads this file by two**, which is why no single
+number here is the one to subtract from it, and why a branch comparing itself against the library
+should run the census over `Oka/` and `OkaTest/` alone. Two rules govern these paragraphs; both had
+been settled by a review and written down nowhere until here.
 
 **The date is the UTC date of the push that retires the wording, and not the seat's local date.**
 At `22:41Z` it is already the next day at UTC+2 and east of it, so a date that is correct on a
