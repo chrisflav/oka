@@ -160,6 +160,25 @@ a record, quoted and dated where it stood; the other two sentences were rewritte
 figure at all. **Do not answer this with a checker** — it would have to guess which numbers in a
 docstring are censuses, and `scripts/` has no way to tell.
 
+**A proportion can be spelled as an adverb, and `most`, `bulk` and `largest` are the three tokens
+that spelling does not carry.** *Mostly*, *largely*, *chiefly* attach to the thing selected rather
+than to the population, so they carry no *of them* and no determiner either; a pattern written from
+*Most of them*, *the bulk of* and *the largest member* anchors on one or the other, and `\bmost\b`
+does not match `mostly` at all. *For the most part* is the mixed case and is worth naming: it does
+carry the token, so a `most` pattern returns it, and it has no determiner and no population, so a
+pattern built on either of those does not. **The adverbial spelling was live in this file when this
+paragraph was written** — the clause of the paragraph opening *Most mirror-tree material is routed
+by a row* that describes `OkaTest/Axioms/Sheaves.lean`'s guards said **mostly
+`Oka/Geometry/RingedSpace/`**, the same proportion that file's own docstring had been repaired out
+of by lana-agents/oka#478 and in a different spelling: what that push removed there is *Almost all
+of it is the mirror-tree material of* `Oka/Geometry/RingedSpace/`. **The claim was shared and the
+spelling was not**, which is this paragraph's own thesis holding at the site that motivated it; and
+the clause is repaired here to the naming form that push installed there. **A pin does not exempt a
+proportion the way it exempts a figure**, and that is the second thing this widening settles: a
+reader can re-run a figure at the commit it is pinned to and cannot re-run *nearly all of them* at
+any commit, because the population has to be classified by hand first, which is the objection
+above.
+
 **A numeral that totals a naming the same passage gives is exempt too, and by a mechanism
 different from the ones above.** Those work by being about the past. This one works by being
 redundant: *the four results of such-and-such a module*, with the four then named or described in
@@ -205,18 +224,23 @@ was reworded. **A quotation is in the class for the same reason a count is**: it
 about a structure the clause does not own, and the owner changes it without looking.
 
 **Swept at `c8e77d0`, and what the sweep found is a shape rather than a list.** The class has two
-populations. Clauses about the table above are few, and each is exempt on its face — by naming
-the rows it counts, or by pinning the figure to the commit it was taken at. Clauses about
-`scripts/DumpOkaDecls.lean`'s rows are many, and nearly all of them are one shape: the `Δdump`
-note recording what a draft the file did not take would have cost. **Such a note is exempt under
-the pinning spelling and not the naming one**, and reading it under the naming one is the mistake
-the first draft of this paragraph made. Whether it names every row it counts varies, and that is
-the question the naming exemption would turn on; here it does not arise, because a figure about
-an abandoned draft is falsified by rewriting history rather than by an append. The `Δdump` notes
-written in the present tense are the ones the rule reaches, and where such a note gives its figure
-against the same file's declaration count, the declaration-count object already reached it;
-`Oka/Analytification/CrossMemberDatumGlue.lean`'s gives it against that count *and* the planted
-rows the file keeps deliberately, says so in the same breath, and is reached by this object alone.
+populations. A clause about the table above is exempt on its face — by naming the rows it counts,
+or by pinning the figure to the commit it was taken at. A clause about
+`scripts/DumpOkaDecls.lean`'s rows is the case the sweep had to classify, and the shape it found is
+the `Δdump` note recording what a draft the file did not take would have cost. **Those two
+sentences read *Clauses about the table above are few … Clauses about `scripts/DumpOkaDecls.lean`'s
+rows are many, and nearly all of them are one shape*, until 2026-09-13** — three proportions over
+two populations neither sentence owns, which is the class this same docstring's *A proportion is
+therefore not exempt* rules on, under a pin that exempts a figure and cannot exempt a proportion.
+**Such a note is exempt under the pinning spelling and not the naming one**, and reading it under
+the naming one is the mistake the first draft of this paragraph made. Whether it names every row it
+counts varies, and that is the question the naming exemption would turn on; here it does not arise,
+because a figure about an abandoned draft is falsified by rewriting history rather than by an
+append. The `Δdump` notes written in the present tense are the ones the rule reaches, and where
+such a note gives its figure against the same file's declaration count, the declaration-count
+object already reached it; `Oka/Analytification/CrossMemberDatumGlue.lean`'s gives it against that
+count *and* the planted rows the file keeps deliberately, says so in the same breath, and is
+reached by this object alone.
 
 **The widening is not free, and at `c8e77d0` it cost two repairs.** At that commit
 `Oka/Analytification/CrossMemberGlue.lean` said its module adds its own declarations to the dump
@@ -756,11 +780,13 @@ re-derive its own figure at its own head and should expect to have raised it aga
 **Most mirror-tree material is routed by a row, and a small tail of it is deliberately routed by
 none.** `README.md`'s *Layout: the Mathlib mirror tree* defines a mirror-tree file by its path — a
 file under `Oka/` mirroring a path under `Mathlib/`, holding no complex-analytic mathematics and
-staged for upstreaming. **That is 221 of the 645 guards at `27c185a`**, and two rows exist to
-route almost nothing else: `OkaTest/Axioms/Sheaves.lean` is **87 of 87** mirror-tree, mostly
-`Oka/Geometry/RingedSpace/`, and `OkaTest/Axioms/RingTheory.lean` is **19 of 19**. So being
-mirror-tree is not what decides whether a row names a module, and the criterion above applies to
-mirror-tree modules exactly as to any other.
+staged for upstreaming. **That is 221 of the 645 guards at `27c185a`**, and two rows exist to route
+almost nothing else: `OkaTest/Axioms/Sheaves.lean` is **87 of 87** mirror-tree, of
+`Oka/Geometry/RingedSpace/` together with `Oka/Topology/` and `Oka/AlgebraicGeometry/`, in the
+naming form its own docstring puts the same fact in; the three directories still exhaust that file
+under a `moduleData` join at the commit that writes this. `OkaTest/Axioms/RingTheory.lean` is **19
+of 19**. So being mirror-tree is not what decides whether a row names a module, and the criterion
+above applies to mirror-tree modules exactly as to any other.
 
 **What gets no row is a mirror-tree module whose subject no existing row names.** Such a module
 has no subject *in this development*, so the only row that could name it would name a source

@@ -5137,11 +5137,14 @@ The guard is unchanged and is still a check that nothing was introduced, since t
 have the same axiom list and this guard is what says so.
 
 **Named and not located**: a section appended at the end of this file cannot say which section is
-above it and stay true, since the next branch appends between them. That is a weaker claim than
-most guards here make, and it is the honest reason this section carries one `#print axioms` rather
-than a reason to leave it out: the declaration is advertised under a `## Main results`, and the
-rule this directory enforces is about placement rather than about how much a guard can
-surprise. -/
+above it and stay true, since the next branch appends between them. That is a weaker claim than a
+locating one, and it is the honest reason this section carries one `#print axioms` rather than a
+reason to leave it out: the declaration is advertised under a `## Main results`, and the rule this
+directory enforces is about placement rather than about how much a guard can surprise. **That
+clause read *a weaker claim than most guards here make* until 2026-09-13**, which is
+`OkaTest/Axioms.lean`'s proportion class: it selects a share of this file's guards without naming
+one of them or giving a total, and the comparison it is making is between kinds of claim and not
+between this section and a population. -/
 
 /--
 info: 'ComplexAnalytic.opensRange_refinedIota_eq_basicOpen' depends on axioms:
