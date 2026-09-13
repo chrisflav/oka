@@ -436,9 +436,25 @@ and states one declaration using both. If it elaborates, neither is downstream o
 any clause saying otherwise is false. **Use it when the clause is load-bearing**, because a graph
 walk is a script and a script is a claim.
 
-**Exclude `Oka.lean` and say that you did.** It is the aggregator `mk_all` generates and it imports
-every module of the library, so it is a hit for every question of this shape — the same carve-out
-the mirror-tree paragraph below makes for the same reason.
+**Exclude both aggregators and say that you did.** `Oka.lean` is the one `mk_all` generates and it
+imports every module of the library; `OkaTest.lean` is its test-side twin, with **94** import lines
+at the commit that writes this, one for each module under `OkaTest/`. Each of the two is therefore
+a hit for every question of this shape — the same carve-out the mirror-tree paragraph below makes
+for the same reason. **Every *N modules downstream* figure this file states of its own is taken
+under both exclusions**, which is a claim about the file and not about the figures preceding any
+one sentence of it. There are six, one of them stated twice, and at the commit that writes this
+they are **10** for `OkaTest/HolomorphicMapOpen.lean`, **9** for
+`OkaTest/FiniteMorphism.lean`, **3** for `OkaTest/CoherentFree.lean`, **124** for
+`Oka/Analytification/AffineCover.lean`, **147** for
+`Oka/Analytification/UniversalProperty.lean` and **95** for
+`Oka/Algebra/Category/ModuleCat/Sheaf/Quasicoherent.lean`. Over the same population with neither
+aggregator excluded they are **11**, **10**, **4**, **126**, **149** and **97**; with `Oka.lean`
+alone excluded, **11**, **10**, **4**, **125**, **148** and **96**. **So the one-module carve-out
+gets every one of the six wrong**, and on the three whose subject is under `OkaTest/` it changes
+nothing at all, that root not being downstream of a test module. **The one exception is a subject
+this file does not own** — the **210** and **95** of `Oka/Analytification/CoverGlueTop.lean`, and
+the **175** and **86** they retired — and the paragraph repairing that file's population
+enumeration records them as downstream counts with `Oka` excluded from the tally.
 
 **Swept at `5a525bc`, and unlike the fifth object's sweep this one found live defects.** Reading
 every one of the **307** tracked `.lean` files under `Oka/` and `OkaTest/`, together with the two
