@@ -731,7 +731,7 @@ consumers. On `ComplexAnalytic.AnalyticSpace.isFiniteEtale`'s four that is `lake
 4153 jobs at `7a99bfc` and over 4154 at `2cf6efa`, the push that added a module to that same file's
 neighbourhood.
 
-**This paragraph prescribed `attribute [local instance]` until 2026-09-08, and that is not this
+**This paragraph prescribed `attribute [local instance]` until 2026-09-12, and that is not this
 instrument**: the attribute *promotes* a declaration that is not an instance, which is what
 `Oka/Analytification/SpecDistinguishedOpen.lean` uses it for and says so; applied to one that is
 already a global `instance` it adds a local one and **removes nothing**, so importers still
@@ -743,6 +743,20 @@ plain `instance`, `B` resolves it; with **`local instance`**, `B` reports *faile
 with a plain `instance` and the attribute beside it, `B` resolves it again. **Only the middle row
 is the instrument**, and the retired wording is kept here as a dated record because two review
 rounds re-ran the middle row while this file prescribed the third.
+
+**That numeral read 2026-09-08 from the commit that wrote this record, which is the day the
+retired wording was *written* and not the day it was retired.** `0c370e5` put
+`attribute [local instance]` into this paragraph at `2026-09-08T17:20:17Z`; `0eed5cd` replaced it
+and wrote this record at `2026-09-12T16:45:34Z`, so the paragraph prescribed it **from** the first
+of those days **until** the second and the record named the day its wording began. **This is a
+correction and not one of this repository's dated records**, a dated record presupposing that what
+it quotes read true until the day it names, which the numeral this repair replaces never did.
+**The instrument is `git log -G` or the removed side of `git show 0eed5cd`, and not `git log -S`**:
+`-S` reports a commit only when the count of a string changes, and this retirement quotes what it
+retires into the record replacing it, so the count does not move and the pickaxe returns `0c370e5`
+alone — the commit whose date the wrong numeral was. `Oka/AnalyticSpace/FiniteEtaleOver.lean`'s
+paragraph on the same experiment took the same numeral from the same push and is corrected with
+this one.
 
 **Deleting them outright is the weaker run and it is worth saying why**: the build stops at the
 first module that fails, which is the declaring one, so a deletion answers *who at all* and then

@@ -83,9 +83,24 @@ removed outright they leave exactly **two** synthesis failures, both at
 `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_restrictHom_top`'s two `comp_mem` applications.
 Each run alters nothing but those four declarations, and the instrument is recorded as the sixth
 object of `OkaTest/Axioms.lean`. **This paragraph said `attribute [local instance]` until
-2026-09-08**, which is a different command and not this instrument: on a declaration that is
+2026-09-12**, which is a different command and not this instrument: on a declaration that is
 already a global `instance` it adds a local attribute and removes nothing, so the build stays green
 whatever consumes it. The retired wording is kept here as a dated record.
+
+**That numeral read 2026-09-08 from the commit that wrote this record, which is the day the
+retired wording was *written* and not the day it was retired.** `0c370e5` put
+`attribute [local instance]` into this paragraph at `2026-09-08T17:20:17Z`; `0eed5cd` replaced it
+with `local instance` and wrote this record at `2026-09-12T16:45:34Z`. The paragraph said it
+**from** the first of those days **until** the second, so the record named the day its wording
+began. **This is a correction and not one of this repository's dated records**: a dated record
+says what a clause read until some day, which presupposes it read true before that day, and the
+numeral this repair replaces never did. **The instrument is `git log -G` or the removed side of
+`git show 0eed5cd`, and not `git log -S`** — `-S` reports a commit only when the count of a string
+changes, and a retirement quotes the wording it retires into the record that replaces it, so the
+count does not move; run here it returns `0c370e5` alone, which is the commit whose date the wrong
+numeral was, and so reads as though the record were dated correctly.
+`OkaTest/Axioms.lean`'s paragraph on the same experiment took the same numeral from the same push
+and is corrected in the same way and for the same reason.
 
 Each is a quotation of a declaration that was already on `master`; nothing is proved here. (Those
 three are named in the instances' own vicinity rather than in this docstring, because

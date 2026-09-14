@@ -1209,10 +1209,11 @@ commands returned **97** in **42** — the same total in one file fewer, and a c
 only two pushes between them that moved either figure: the push that added this section retired two
 records and wrote one, all three in `OkaTest/Axioms/Morphisms.lean`, and `6442a4c` wrote one in a
 file whose only other record wraps. **The counts here leave `README.md` out, and a record count and
-a hit count have to be told apart before they can be.** This file holds **4** dated records — two
+a hit count have to be told apart before they can be.** This file holds **6** dated records — two
 in `## Scope`'s `Finite morphisms` bullet, two in its
-`Local isomorphisms and finite étale morphisms` one — while the wildcard spelling these commands
-replace, run tree-wide, matches **6** of its lines at `6442a4c`. The other two are not records. One
+`Local isomorphisms and finite étale morphisms` one, and two in this section — while the wildcard
+spelling these commands replace, run tree-wide, matched **6** of its lines at `6442a4c`. The other
+two are not records. One
 is the pattern **quoted**, and it is this section's doing: the `git grep -l` line of its blame
 scan, which the census matches because a wildcard takes an apostrophe, a space or a hyphen as
 readily as a digit. The other is the phrase **used** — ordinary narrative, older than this section
@@ -1220,6 +1221,13 @@ and owing nothing to it: `### Checking`'s sentence saying what the figure script
 pointed at, which carries a real date and retires no wording. **So the tree-wide count over-reads
 this file by two**, which is why no single number here is the one to subtract from it, and why a
 branch comparing itself against the library should run the census over `Oka/` and `OkaTest/` alone.
+**This sentence said this file holds *four* dated records and named two bullets of `## Scope`,
+until 2026-09-14**, when the push repairing `Oka/AnalyticSpace/FiniteEtaleOver.lean:85`–`:86`
+wrote the two in this section; it was exact from the commit that wrote it, and the over-read of
+**two** is what is unmoved by them, both being records and neither the pattern quoted or used.
+**The tense of the `6442a4c` figure is the same push's doing** and retires nothing: it is the
+figure that clause always published, put in the past so that two different sixes standing a line
+apart cannot be read as one measurement.
 Two rules govern these paragraphs; both had been settled by a review and written down nowhere
 until here.
 
@@ -1304,9 +1312,18 @@ does and the line-wise one cannot.
 two-cause enumeration were both false when `96b2557` wrote them, on 2026-09-13, rather than
 falsified after. At `96b2557` the two census registers were **96** and **111**, so fifteen records
 already wrapped out of that scan's reach on the day it was published; and the row at
-`Oka/AnalyticSpace/FiniteEtaleOver.lean:85`–`:86` was already what it is, `0eed5cd` having landed
-the day before. A dated record says what a clause read *until* some day, which presupposes it read
-true before that day, and neither of these two ever did.
+`Oka/AnalyticSpace/FiniteEtaleOver.lean:85`–`:86` already read prose 2026-09-08 against blame
+2026-09-12, `0eed5cd` having landed the day before. A dated record says what a clause read *until*
+some day, which presupposes it read true before that day, and neither of these two ever did.
+
+**That sentence said the row *was already what it is*, until 2026-09-14**, when the numeral in
+that record was repaired to 2026-09-12 and the present tense stopped denoting the state the
+sentence describes. What the clause is evidence for is unchanged and is now said without
+pointing: on the day this section was published the row was already the third-cause row the
+two-cause enumeration could not account for. **A repaired record's row stays in the `behind`
+bucket and moves cause rather than column**, because the repair re-touches the line carrying the
+date and `git blame` then reports the repair — so the bucket counts cannot show this kind of
+landing and the per-row run above is what does.
 
 **A record retires prose that was on `master`.** Every pull request lands **squashed**: the 11
 merge commits in `91bbad8`'s history are `git pull` merges dated 2026-07-22 and 2026-07-23, from
