@@ -6577,15 +6577,36 @@ statements by one pair of maps.
 question, and read off the declarations rather than argued.**
 `ComplexAnalytic.AnalyticSpace.coveringSpace` and
 `ComplexAnalytic.AnalyticSpace.isLocalIso_coveringSpaceHom` ask only `IsLocalHomeomorph` of the base
-map, while `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` asks `IsCoveringMap` and spends
-it in one place — `IsCoveringMap.isClosedMap`, as its own docstring says in terms. So the two
-statements below are the two halves that a base change of
-`ComplexAnalytic.AnalyticSpace.isFiniteEtale` over a cospan with no separation hypothesis would have
-to carry across: the local-isomorphism half directly, and the finiteness half through
-`ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite`, which assumes no separation axiom,
-together with `Function.Pullback.finite_fiber_snd`, which assumes no topology at all. **That base
+map, and each of the two classes below them — `ComplexAnalytic.AnalyticSpace.IsFinite` and
+`ComplexAnalytic.AnalyticSpace.IsFiniteEtale` — is concluded twice in
+`Oka/AnalyticSpace/CoveringSpace.lean`.
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` and
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap` ask
+`IsLocalHomeomorph`, `IsClosedMap` and finite fibres of the base map and nothing else;
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom` ask `IsCoveringMap` and spend it in
+one place — `IsCoveringMap.isClosedMap`, as the first of those says in terms — each being its own
+`…_of_isClosedMap` form applied to `hcov.isClosedMap hfin` and nothing more.
+**So the statement a base change of `ComplexAnalytic.AnalyticSpace.isFiniteEtale` over a cospan
+with no separation hypothesis would land in is
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap`, and no covering map
+enters the route**: the two statements below carry the local-homeomorphism half and the properness
+half across, `IsProperMap.isClosedMap` turns the second into the closedness that statement asks
+for, `ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite` — which assumes no separation
+axiom — is what makes the map being base-changed proper, and `Function.Pullback.finite_fiber_snd`,
+which assumes no topology at all, gives the fibres. **That base
 change is not in the tree, nothing below claims it, and the hypothesis it would remove —
 `[T2Space E]` in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` — is not removed here.**
+
+**That paragraph named three declarations of `Oka/AnalyticSpace/CoveringSpace.lean` and routed the
+finiteness half through `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and its
+`IsCoveringMap`, until 2026-09-14.** No clause of it was false when it was written: `7b7ce5a`
+(lana-agents/oka#544) added the two `…_of_isClosedMap` forms to that file on 2026-09-13, after this
+section's text was written and after both of its graders' columns were taken, and they are the two
+rows the read-off's own argument needs. **What they change is that the route gets shorter rather
+than longer**: `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and the covering map it
+asks for drop out of it, and the contrast with `IsCoveringMap` survives above because it is still
+true of the two declarations that ask for one.
 
 **This section splits one module's guards across two guard files, and the split is the routing rule
 and not an oversight.** `Oka/Topology/IsLocalHomeomorph.lean`'s other three guards are in
@@ -6593,10 +6614,18 @@ and not an oversight.** `Oka/Topology/IsLocalHomeomorph.lean`'s other three guar
 material was written for; the statement guarded here was written for a base change of a morphism of
 analytic spaces, and the analytic results it would serve —
 `ComplexAnalytic.AnalyticSpace.coveringSpace`,
-`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and
-`ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite` — are all guarded in this file. **That
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap` and the
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` that supplies its
+finiteness field, and `ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite` — are all
+guarded in this file. **That
 section is not touched and nothing in it is false**: its heading is `### The sheets of a map` and
 its description is of the sheet material, so it claims nothing about the rest of the module.
+
+**That list named `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` where it now names the
+two `…_of_isClosedMap` forms, until 2026-09-14**, which is what the paragraph above routed through
+before `7b7ce5a` put those two forms in that file. The covering-map form is no longer on the route;
+the two that are were guarded in this file already, so the *all guarded in this file* the clause
+turns on is unmoved.
 
 **Neither name carries either token of this file's published check on its statements of a pullback
 square**, so all four of that check's figures are what they were: **nine and eight unfiltered, eight
