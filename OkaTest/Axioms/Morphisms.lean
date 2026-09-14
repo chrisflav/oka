@@ -129,6 +129,32 @@ what lets it go stale in silence** — the check is to list this file's `#print 
 declaration name contains *isPullback* and compare that list against the clause, **dropping the
 ones over `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`**.
 
+**The second half of that check has a token of its own, and it is *hasPullback*.**
+`CategoryTheory.Limits.HasPullback` is the class those six guards **discharge** — all six name an
+instance of it — and this paragraph names the class that way, backticked and capitalised, wherever
+it is describing them rather than reaching them. **No `#print axioms` line of this file carries the
+class's own spelling**, because such a line names a declaration, and a declaration is named for that
+class in the lower-case form this repository's convention gives a theorem or an instance —
+`ComplexAnalytic.AnalyticSpace.hasPullback_ofRestrict` and the seven others. At the commit that adds
+this paragraph, listing this file's `#print axioms` names and counting the ones that contain the
+class's spelling gives **0**; counting the ones that contain *hasPullback* gives **8**, and **6**
+dropping the ones over `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` — the six this
+clause names, and the eight the same list carries before the exclusion. **The rule this paragraph
+follows, in both halves: an italicised token is a string to grep, and a backticked one is a Lean
+name — the class, or the prefix the guards are named with.**
+
+**The sentence opening *The clause names rather than counts* gave the first half a token and left
+the second half without one, which was false as an instrument when written rather than falsified
+later**, as the correction whose sentence begins `It said *three* and left` was: a reader running
+the second half at the spelling the prose offered reaches **none** of the eight where the clause
+says six. **So this is a correction and not one of this repository's dated records**, and no figure
+it is a check on moves — nine and eight unfiltered, eight and six with the exclusion, at the commit
+this paragraph is cut from and at the one that adds it alike. **Four clauses of this file cite that
+half.** Three wrote it at the class spelling and are brought level in the same push, with no record
+of their own, a citation brought level with its source being one retirement and not four; the
+fourth, added by the push that added `### Colimits of shape SingleObj in a category with finite
+colimits`, already wrote *hasPullback* as a token and is the model this paragraph follows.
+
 **That exclusion is a boundary the published check never carried, added 2026-09-12, and it is not
 a recount.** Until then the check needed none, and **not because the guards it reached were all
 over one category — they were not.**
@@ -388,7 +414,7 @@ adds no guard to that one, which `git diff` against `077f6d5` shows by touching 
 the check published by the clause about statements of a pullback square — *list this file's
 `#print axioms` names whose declaration name contains* isPullback *and compare that list against
 the clause, dropping the ones over `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`* —
-returns what it returned, and so does the same list taken at `HasPullback`, of which that clause
+returns what it returned, and so does the same list taken at *hasPullback*, of which that clause
 names six: **no name of the new section carries either token**, the six being a disjoint union, an
 inclusion, a cofan, a colimit, a colimit-of-shape and a coproducts instance. **The check is quoted
 here as it is published, exclusion included**, that exclusion having been added to it on
@@ -6026,8 +6052,8 @@ and this module states no analogue of either.
 **The boundary against the clause enumerating this file's pullback guards, said here and repaired
 there.** The clause opening *Two of those five hold statements of the first kind as well* names
 eight `isPullback_` guards and six `HasPullback` guards and publishes a check — list this file's
-`#print axioms` names containing *isPullback* and compare. **That check now needs the exclusion
-the clause has been given**, because this section adds
+`#print axioms` names containing *isPullback*, and the same at *hasPullback*, and compare. **That
+check now needs the exclusion the clause has been given**, because this section adds
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPullback_fibreProd` to the first list and
 `…SeparatedFiniteEtaleOver.hasPullback` and `…SeparatedFiniteEtaleOver.hasPullbacks` to the
 second. At `26dc715`, the commit this section is cut from, the unfiltered lists are **eight** and
@@ -6258,9 +6284,10 @@ pair, and neither occurs in any conclusion.
 **The published check on this file's pullback guards is unmoved and no clause of it needs a
 boundary for this push.** The clause opening *Two of those five hold statements of the first kind
 as well* names eight `isPullback_` guards and six `HasPullback` guards, and the check it publishes
-is to list this file's `#print axioms` names whose declaration name contains *isPullback*, dropping
-the ones over `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`. **No name of this section
-carries either token**: the five are `isClopen_eqLocus`, `isLocallyInjective_base_of_isLocalIso`,
+is to list this file's `#print axioms` names whose declaration name contains *isPullback*, and the
+same at *hasPullback*, dropping the ones over
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`. **No name of this section carries either
+token**: the five are `isClopen_eqLocus`, `isLocallyInjective_base_of_isLocalIso`,
 `isClopen_eqLocus_base_of_isLocalIso`, `isClopen_eqLocus` and `isClopen_fixedLocus`, and the
 lists are **eight** and **six** at the commit this section is cut from and **eight** and **six**
 at the commit that adds it. That clause is not restated, not filtered and not touched.
