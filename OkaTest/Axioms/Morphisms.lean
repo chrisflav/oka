@@ -430,6 +430,40 @@ clause was added by the push that added
 `### Colimits of shape SingleObj in a category with finite colimits`**, 2026-09-13, for the reason
 the clause naming `### The terminal object and the product of two complex affine spaces` gives.
 
+And one section more, both of whose guards are of the **seventh** kind and of no other.
+`### Base change of a local homeomorphism, and of a proper map` guards
+`IsLocalHomeomorph.pullback_snd` of `Oka/Topology/IsLocalHomeomorph.lean` and
+`IsProperMap.pullback_snd` of `Oka/Topology/Maps/Proper/Basic.lean`: a local homeomorphism and a
+proper map each stay what they are under base change along an arbitrary continuous map, at Mathlib's
+set-level fibre product `Function.Pullback`. **No analytic space occurs in either and no object of
+this repository does**, which is what puts them in the seventh kind, and the routing rule that kind
+records sends them to a section of their own for the reason it sends the guard of
+`### Colimits of shape SingleObj in a category with finite colimits` to one: the analytic result
+that would motivate them does not exist yet. That section's docstring argues the routing, names what
+it would take for either to have a consumer, and publishes the run behind its claim that neither is
+consumed.
+
+**The clause opening *And a seventh kind is of the mirror tree* is untouched, and its numeral is
+scoped rather than tree-wide**: its *two statements of pure topology* counts the guards of the
+section it names, `### Base change of a covering map, and of its finite fibres`, and not the members
+of the kind — which is what the clause opening *And one section more, of the seventh kind and of no
+other* already relied on when it put a further guard in that kind without moving that numeral.
+**And the clause opening *And one section more, of the seventh kind and of no other* is untouched in
+the other direction too**: it calls its section the first of this file whose *single* guard has no
+consumer in this repository at all, and the section named here has two.
+
+**The published check on this file's statements of a pullback square is unmoved in both halves, and
+that is a run and not an assumption.** Neither name carries *isPullback* or *hasPullback*, so the
+four figures are what they were — **nine and eight unfiltered and eight and six with the exclusion,
+at the commit this section is cut from and at the one that adds it alike**. And the two claims the
+clause opening *And one section more, at the second category* says are untouched are untouched by
+this push too: its *Five of that section's twenty-one guards*, which counts over `### The category
+of separated covers, and separatedness as a morphism property`, and that same check — `git diff`
+against the commit this section is cut from touches no line of that section. **This clause was added
+by the push that added `### Base change of a local homeomorphism, and of a proper map`**,
+2026-09-13, for the reason the clause naming `### The terminal object and the product of two complex
+affine spaces` gives.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -6485,3 +6519,79 @@ info: 'CategoryTheory.Limits.hasColimitsOfShape_singleObj' depends on axioms:
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CategoryTheory.Limits.hasColimitsOfShape_singleObj
+
+/-! ### Base change of a local homeomorphism, and of a proper map
+
+`IsLocalHomeomorph.pullback_snd` (`Oka/Topology/IsLocalHomeomorph.lean`) and
+`IsProperMap.pullback_snd` (`Oka/Topology/Maps/Proper/Basic.lean`), both at Mathlib's set-level
+fibre product `Function.Pullback`: a local homeomorphism and a proper map each stay what they are
+under base change along an arbitrary continuous map, with **no separation axiom and no compactness
+assumed of any of the three spaces**.
+
+**They are mirror-tree topology and no analytic space occurs in either**, which puts both in the
+**seventh** kind by the clause of the head description opening *And a seventh kind is of the mirror
+tree* — the routing kind — and the clause of that description naming this section argues the
+assignment and says which neighbouring numerals it leaves alone. The routing rule is the one
+`OkaTest/Axioms.lean` prescribes: a mirror-tree module whose subject no row of its topic table names
+is guarded with the analytic result that motivated it, and where that result does not exist the
+guard takes a section of its own, as `### Colimits of shape SingleObj in a category with finite
+colimits` does.
+
+**Neither statement is consumed by anything, and that is a run rather than an impression.** Under
+`scripts/import_cost.py`'s nesting-aware `strip_comments`, each of the two names occurs in the code
+of exactly **two** tracked `.lean` files at the commit that adds this section: the module that
+declares it, and this one. `OkaTest/CoveringBaseChange.lean` names both in prose and consumes
+neither — what its three witnesses consume is `IsLocalHomeomorph.isOpenMap`,
+`IsProperMap.isClosedMap` and the two set-level failures of the projection at that witness, which is
+why the continuity hypothesis they are about is exhibited as not droppable for all three base-change
+statements by one pair of maps.
+
+**What it would take for either to have a consumer, said because an unconsumed guard invites the
+question, and read off the declarations rather than argued.**
+`ComplexAnalytic.AnalyticSpace.coveringSpace` and
+`ComplexAnalytic.AnalyticSpace.isLocalIso_coveringSpaceHom` ask only `IsLocalHomeomorph` of the base
+map, while `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` asks `IsCoveringMap` and spends
+it in one place — `IsCoveringMap.isClosedMap`, as its own docstring says in terms. So the two
+statements below are the two halves that a base change of
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale` over a cospan with no separation hypothesis would have
+to carry across: the local-isomorphism half directly, and the finiteness half through
+`ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite`, which assumes no separation axiom,
+together with `Function.Pullback.finite_fiber_snd`, which assumes no topology at all. **That base
+change is not in the tree, nothing below claims it, and the hypothesis it would remove —
+`[T2Space E]` in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` — is not removed here.**
+
+**This section splits one module's guards across two guard files, and the split is the routing rule
+and not an oversight.** `Oka/Topology/IsLocalHomeomorph.lean`'s other three guards are in
+`OkaTest/Axioms/Sheaves.lean` under `### The sheets of a map`, placed there beside what the sheet
+material was written for; the statement guarded here was written for a base change of a morphism of
+analytic spaces, and the analytic results it would serve —
+`ComplexAnalytic.AnalyticSpace.coveringSpace`,
+`ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and
+`ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite` — are all guarded in this file. **That
+section is not touched and nothing in it is false**: its heading is `### The sheets of a map` and
+its description is of the sheet material, so it claims nothing about the rest of the module.
+
+**Neither name carries either token of this file's published check on its statements of a pullback
+square**, so all four of that check's figures are what they were: **nine and eight unfiltered, eight
+and six with the exclusion, at the commit this section is cut from and at the one that adds it
+alike**.
+
+**Two guards and one section, because they are two halves of one base change**, and appended rather
+than folded into `### Base change of a covering map, and of its finite fibres`, whose subject it
+continues, because a section moved is a conflict for somebody else — which is the reason that
+section gives for having been appended itself.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'IsLocalHomeomorph.pullback_snd' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms IsLocalHomeomorph.pullback_snd
+
+/--
+info: 'IsProperMap.pullback_snd' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms IsProperMap.pullback_snd

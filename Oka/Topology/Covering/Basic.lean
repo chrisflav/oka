@@ -433,11 +433,15 @@ neighbourhood of `y`, and the part of the pullback lying over it goes to `(g ⁻
 `(e, y') ↦ (y', (H e).2)`. **The index type is the same `I`**, so
 `IsEvenlyCovered.to_isEvenlyCovered_preimage` is all that is left to do.
 
-**`Continuous g` cannot be dropped.** It is used once, for `g ⁻¹' U` to be open, and that one use
-is not removable: `TwoIndiscrete.not_isCoveringMap_pullback_snd` (`OkaTest/CoveringBaseChange.lean`)
-compiles a witness with `f` the identity of a two-element discrete space and `g` the identity out of
-the same two points carrying the indiscrete topology, where `Function.Pullback.snd` is a continuous
-bijection and not an open map. -/
+**`Continuous g` cannot be dropped.** It is used on two facts — for `g ⁻¹' U` to be open, and for
+the continuity of `z ↦ (g z.1 : U)`, which is what `continuous_invFun` composes with `H.symm` — and
+it is not removable: `TwoIndiscrete.not_isCoveringMap_pullback_snd`
+(`OkaTest/CoveringBaseChange.lean`) compiles a witness with `f` the identity of a two-element
+discrete space and `g` the identity out of the same two points carrying the indiscrete topology,
+where `Function.Pullback.snd` is a continuous bijection and not an open map. **The clause read *It
+is used once, for `g ⁻¹' U` to be open, and that one use is not removable* until 2026-09-13**, when
+the second fact was read off `IsCoveringMap.pullback_snd`'s own proof; the same numeral was in
+`OkaTest/CoveringBaseChange.lean`'s module docstring and is repaired there by the same push. -/
 theorem IsCoveringMap.pullback_snd (hf : IsCoveringMap f) (hg : Continuous g) :
     IsCoveringMap (Function.Pullback.snd : f.Pullback g → Y) := by
   intro y

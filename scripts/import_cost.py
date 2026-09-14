@@ -295,9 +295,16 @@ def unknown_modules(ml: Mathlib, modules: list[str]) -> list[str]:
     `Aesop.*` and `Init.*` names that are not Mathlib files — and it is also what makes a typo
     invisible: a module that does not exist contributes no imports and is filtered out of *both*
     sides of the subtraction, so it prices as `cost 0`.  **0 is by far the commonest correct
-    answer here** — of the 40 files under `Oka/` with a Mathlib file at their mirror path, **31**
-    cost 0 — so a typo's answer is indistinguishable from a right one.  Callers reject instead of
-    reporting.
+    answer here** — of the **55** files under `Oka/` with a Mathlib file at their mirror path,
+    **41** cost 0 at the commit that adds `Oka/Topology/Maps/Proper/Basic.lean` — so a typo's
+    answer is indistinguishable from a right one.  Callers reject instead of reporting.
+
+    **This read *of the 40 files under `Oka/` with a Mathlib file at their mirror path, 31 cost 0*,
+    with no commit beside it, until 2026-09-13.**  Both numerals were exact when written and both
+    went stale as the mirror tree grew: at `003e38f`, the commit before the one that retires this
+    wording, the population is **54** and the cost-0 count is **40**.  So the published population
+    had come to equal the current cost-0 count, which is the staleness that reads as a right
+    answer, and the pair is pinned here rather than left to drift again.
     """
     return [m for m in modules if not ml.exists(m)]
 
