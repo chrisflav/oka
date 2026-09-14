@@ -1212,8 +1212,8 @@ file whose only other record wraps. **The counts here leave `README.md` out, and
 a hit count have to be told apart before they can be.** This file holds **6** dated records — two
 in `## Scope`'s `Finite morphisms` bullet, two in its
 `Local isomorphisms and finite étale morphisms` one, and two in this section — while the wildcard
-spelling these commands replace, run tree-wide, matched **6** of its lines at `6442a4c`. The other
-two are not records. One
+spelling these commands replace, run tree-wide, matched **6** of its lines at `6442a4c`, against
+**four** records there. **The other two are not records**, and they are the same two here. One
 is the pattern **quoted**, and it is this section's doing: the `git grep -l` line of its blame
 scan, which the census matches because a wildcard takes an apostrophe, a space or a hyphen as
 readily as a digit. The other is the phrase **used** — ordinary narrative, older than this section
@@ -1227,7 +1227,17 @@ wrote the two in this section; it was exact from the commit that wrote it, and t
 **two** is what is unmoved by them, both being records and neither the pattern quoted or used.
 **The tense of the `6442a4c` figure is the same push's doing** and retires nothing: it is the
 figure that clause always published, put in the past so that two different sixes standing a line
-apart cannot be read as one measurement.
+apart cannot be read as one measurement. **What it left standing was *The other two*, whose
+subtrahend it had removed**: `89adcb5` wrote that phrase on 2026-09-13, where six matched lines
+against four records made the difference two, and `defff6e` left six against six with the
+subtraction gone. **The *against four records there* it now reads is that subtrahend put back, and
+retires nothing either** — the clause never stopped being true, so no dated record is owed, which
+says what a clause read *until* some day and presupposes it stopped; and it was exact when
+`89adcb5` wrote it, so it is not a correction of the kind the paragraph opening *The wording this
+section repairs here is corrected and not dated* makes. **A referent
+taken out from under a true sentence is neither of this section's two instruments**, and the two
+lines it is about have been `### Checking`'s sentence and this section's own `git grep -l` line at
+`6442a4c`, at `89adcb5` and here alike.
 Two rules govern these paragraphs; both had been settled by a review and written down nowhere
 until here.
 
@@ -1341,6 +1351,130 @@ each carried one — that a guard-file sentence enumerating where a name occurs 
 file, and that only the outermost link of a chain discharging a class is discharged by the
 instance that starts it — and both are kept there, stated as rules and attributed to nothing. It
 is the framing that asserts the history and not the lesson.
+
+### How far a fronted commit pin reaches
+
+A paragraph here often opens *At `<commit>`* and then measures something — a count, an absence, a
+set of rows — and naming the commit is what makes the measurement re-derivable. **How far the pin
+reaches has been settled by review for a clause inside the sentence carrying it and never for the
+sentence after it**, and the tree has seven such paragraphs where the difference is the difference
+between a live claim and a historical one. This section is the rule, the sweep that applies it to
+all seven, and the one sentence the rule decides.
+
+**What was already settled is the sentence.** `OkaTest/Axioms.lean:844`'s bullet on
+`Oka/CategoryTheory/GlueData.lean` reads *At `c48bf8a` the one module under `Oka/` that imports it
+is `Oka/Analytification/AffineCover.lean`, whose guards are all in
+`OkaTest/Axioms/Analytification.lean`*. The clause after the comma is an affirmative universal over
+a population it does not own, which is the shape a census clause is filed on; it was graded and
+held **not** to be a defect, on the reading that a fronted temporal adverbial scopes **the sentence
+it heads** and not merely the clause it touches — in *At `C`, `X` is `Y`, whose guards are all in
+`Z`*, the pin runs to the full stop. That verdict is lana-agents/oka#484 and the wording above is
+what landed with it. **It settles a clause inside the pinned sentence and says nothing about the
+next one.**
+
+**The rule for the sentences after it: the pin reaches exactly as far as the subject the opener
+quantified.** A later sentence of the same paragraph is read **at the commit** when its subject is
+one the opener measured and it predicates something of that measurement — *that tail*, *the three*,
+*those two rows*, *there is nothing there to take*. It is read **live** when it introduces a
+subject the opener never bound — *This file holds …*, *This file is the first consumer of both* —
+and is then a claim about the tree now, whatever it is standing next to.
+
+**Tense does not decide it and neither does position.** Of the 26 sentences that follow a fronted
+pin in this tree, **22 carry a present-tense verb and 7 are live**: the pinned ones are written in
+the present tense too, because *`OkaTest/Axioms/Morphisms.lean:122`–`:123` … **is** the midnight
+one* predicates in the present of a row of a register taken at a named commit. **A sentence is
+pinned by what it is about and not by how it is conjugated.**
+
+**What a pinned sentence is, and what it therefore costs.** It is a historical record: it says what
+was so at the commit, it stays true as the tree moves, and **a push that would falsify it read live
+owes it nothing** — no repair, no dated record, no re-run. What may not happen is for another
+sentence to cite it as a statement about the tree now; that obligation is on the citing sentence
+and not on this one.
+
+**What a live sentence owes.** A pin of its own, or being true at every commit it stands on — so a
+push that falsifies one repairs it under *The `until <date>` record*'s two tests. **And a sentence
+whose subject is computed from one pinned figure and one live figure is neither of these**, which
+is the failure that makes this rule worth writing down: it reads as an arithmetic the text has
+stopped supplying, while every numeral in it is exact. There was one in that section and it is
+repaired there.
+
+**The sweep.** Paragraphs whose first sentence is fronted by *At `<7–40 hex>`*, `*` stripped and
+whitespace collapsed, over `git ls-files Oka OkaTest README.md`:
+
+```sh
+python3 - <<'PY'
+import re, subprocess
+pat = re.compile(r'^At `[0-9a-f]{7,40}`')
+for f in subprocess.check_output(['git','ls-files','Oka','OkaTest','README.md']).decode().split():
+    n = 1
+    for para in open(f, encoding='utf-8').read().split('\n\n'):
+        norm = re.sub(r'\s+', ' ', para.replace('*', '')).strip()
+        if pat.match(norm):
+            print(f, n, len(re.split(r'(?<=[.!?]) +', norm)))
+        n += para.count('\n') + 2
+PY
+```
+
+At the commit that adds this section it returns **7** paragraphs, every one of them
+multi-sentence, carrying **26** sentences after the pin between them:
+
+| site | sentences | after the pin | pinned | live | neither |
+|---|---|---|---|---|---|
+| `Oka/AnalyticSpace/PullbackOpen.lean:39` | 2 | 1 | 1 | 0 | 0 |
+| `Oka/Analytification/RefineDatumTransition.lean:33` | 3 | 2 | 1 | **1** | 0 |
+| `OkaTest/Axioms.lean:833` | 3 | 2 | 2 | 0 | 0 |
+| `OkaTest/Axioms/AnalyticSpace.lean:84` | 2 | 1 | 1 | 0 | 0 |
+| `OkaTest/Axioms/Morphisms.lean:168` | 4 | 3 | 3 | 0 | 0 |
+| `README.md:1206` | 14 | 13 | 1 | **6** | 6 |
+| `README.md:1307` | 5 | 4 | 3 | 0 | 1 |
+| **7 paragraphs** | **33** | **26** | **12** | **7** | **7** |
+
+*neither* is a sentence that states a rule or describes the paragraph's own text rather than the
+tree: *a record count and a hit count have to be told apart*, the dated record of that paragraph
+and the three notes standing with it, the sentence handing over to the two rules below it, and
+*Only a blame of the push that retired the wording separates the three*.
+
+**Every live sentence in that table is true at the commit that adds this section, and one of them
+was checked rather than read.** `Oka/Analytification/RefineDatumTransition.lean:34` says *This file
+is the first consumer of both* and names no commit; `git grep -l` for
+`ComplexAnalytic.refineDatumGlueNe_analytification_comp` and for
+`ComplexAnalytic.refineDatumCrossProj_analytification_localisationProj` each returns the file that
+proves it, that file, and one axiom guard, and nothing else.
+
+**One sentence is decided by this rule rather than by reading it, and it is why the rule earns its
+place.** `OkaTest/Axioms.lean:841`–`:842` says *Of the six modules that record enumerates, these
+sit apart from their consumers' guards*, of a tail measured at `27c185a`. Read at the pin it is
+exact. **Read live it is false at the commit that adds this section**, at the second of its three
+bullets: `Oka/Topology/IsLocalHomeomorph.lean` had **three** guards, all in
+`OkaTest/Axioms/Sheaves.lean`, and one importer under `Oka/` at `27c185a`; it now has **seven in
+two files** — those three and four in `OkaTest/Axioms/Morphisms.lean` — and **two** importers, the
+second being `Oka/AnalyticSpace/LocalAtTarget.lean`, whose guards are in that same
+`OkaTest/Axioms/Morphisms.lean`. So four of its seven now sit *with* a consumer's guards.
+**Nothing is owed**, the sentence being pinned, and the paragraph closing that list already says so
+in terms: *none of the three had been moved when this paragraph was pinned at `c48bf8a`*.
+
+**A paragraph's bullets are not inside its paragraph**, which the scan above cannot see: a blank
+line ends the paragraph, so a list introduced by a trailing colon is scanned as paragraphs of its
+own, and the pin at the head of the paragraph the colon ends reaches the list only by this rule.
+The three bullets under `OkaTest/Axioms.lean:842` are the tree's own answer and the practice to
+copy — **each carries a pin of its own**, *At `c48bf8a`*, *at that same commit*, *at that commit*,
+rather than relying on the one above them.
+
+**A membership test, and it is a filter and not a verdict.** Flagging a later sentence as live when
+it carries a present-tense verb catches **all 7** of the live ones and **22** sentences in all, so
+on this population it is **7 of 22** precise and **7 of 7** complete. Use it to shorten a read and
+never to conclude one: the fifteen false positives are pinned or rule-stating sentences written in
+the present tense, and telling those from a live claim is what the subject test is for. The four it
+does not flag are two sentences carrying pins of their own, one saying what a push did to this
+paragraph, and one handing over to the rules below.
+
+**The two paragraphs of *The `until <date>` record* under this rule.** The one opening *At
+`b79ab9b` the two behind rows only the unwrapped register sees* is **pinned throughout**: its
+subject is a pair of rows of a register taken there, so its two row descriptions say what those
+rows read at that commit, and a later repair of either record moves the row without touching the
+sentence — which is what the paragraph opening *A repaired record's row stays in the `behind`
+bucket* describes such a repair doing. The one opening *At `6442a4c` the line-wise commands
+return* has both kinds in it and is where the mixed sentence was.
 
 ### Re-deriving a branch's measured absences after a re-cut
 
