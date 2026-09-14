@@ -490,6 +490,33 @@ by the push that added `### Base change of a local homeomorphism, and of a prope
 2026-09-13, for the reason the clause naming `### The terminal object and the product of two complex
 affine spaces` gives.
 
+And one section more, adding **no kind at all** and named here because the convention this file's
+other clauses record is that a push appending a section owes the description one.
+`### The three classes are local on the target, and the topology half of it` guards **six**
+declarations of `Oka/AnalyticSpace/LocalAtTarget.lean` — that each of
+`ComplexAnalytic.AnalyticSpace.IsFinite`, `ComplexAnalytic.AnalyticSpace.IsLocalIso` and
+`ComplexAnalytic.AnalyticSpace.IsFiniteEtale` descends along an open cover of the target, and the
+three `iff` forms those make with the restriction statements this file already guards. **Those six
+are of the first kind**: they are the three classes of morphisms, and a criterion each is read off
+by. **And three are of the seventh, the mirror tree**:
+`IsLocalHomeomorph.restrictPreimage_of_isOpen`,
+`TopologicalSpace.IsOpenCover.isLocalHomeomorph_of_restrictPreimage` and
+`TopologicalSpace.IsOpenCover.isLocalHomeomorph_iff_restrictPreimage`, pure topology in which no
+analytic space occurs, arriving by the routing the seventh kind records — the analytic result that
+motivated them is `ComplexAnalytic.AnalyticSpace.isLocalIso_of_isOpenCover`, whose topological
+field is the second of the three and which shares their section.
+
+**The section nearest it in subject is
+`### A property of the restriction over `⊤` is a property of the morphism`, and the two are not
+merged.** That heading names one open and its docstring enumerates what sits under it, so a third
+statement appended there would make it false — the failure this file's section docstrings are most
+exposed to, and the reason its other sections give for being appended rather than joined.
+**How this development says the new criteria generalise that section's two statements is by
+deriving them**, in `OkaTest/LocalAtTarget.lean` and not in a sentence; neither statement of that
+section is replaced, deprecated or reproved, and no guard of it moved.
+**This clause was added by the push that added that section**, 2026-09-14, for the reason the
+clause naming `### The terminal object and the product of two complex affine spaces` gives.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -2070,9 +2097,17 @@ make the header false — which is the failure this file's section docstrings ar
 since they assert the state of the repository and a sweep over `Oka/` does not reach them.
 
 **Read it against `ComplexAnalytic.AnalyticSpace.isFinite_restrictHom_of_subset_range` directly
-above**: that one needs `V` inside the image because finiteness is not local on the target, and
-this one needs nothing at all because both fields of
-`ComplexAnalytic.AnalyticSpace.IsLocalIso` are conditions at a point. It is the second field of
+above**: that one needs `V` inside the image because the morphism it is about is not itself
+finite, and this one needs nothing at all because both fields of
+`ComplexAnalytic.AnalyticSpace.IsLocalIso` are conditions at a point.
+
+**That clause gave the reason as *finiteness is not local on the target*, until 2026-09-14**, when
+`ComplexAnalytic.AnalyticSpace.isFinite_iff_restrictHom` said that it is, over an open cover of
+the target and with no hypothesis on the morphism; its guard is under
+`### The three classes are local on the target, and the topology half of it`. The same
+wording stood in `Oka/AnalyticSpace/OpenSubspace.lean`'s docstring for this declaration and
+carries its own record there. **The contrast is unchanged** and the recount is of nothing: no
+guard of this section moved. It is the second field of
 `Oka/Analytification/StandardEtaleFiniteEtale.lean`'s `IsFiniteEtale`, whose guards are in
 `OkaTest/Axioms/Analytification.lean`.
 
@@ -6651,3 +6686,124 @@ info: 'IsProperMap.pullback_snd' depends on axioms: [propext, Classical.choice, 
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms IsProperMap.pullback_snd
+/-! ### The three classes are local on the target, and the topology half of it
+
+`Oka/AnalyticSpace/LocalAtTarget.lean`, and three statements of
+`Oka/Topology/IsLocalHomeomorph.lean`. A property of morphisms is **local on the target** when it
+holds of a morphism exactly if it holds of the morphism restricted over each member of an open
+cover of the target. The restriction
+direction was already here — `ComplexAnalytic.AnalyticSpace.isFinite_restrictHom`,
+`ComplexAnalytic.AnalyticSpace.isLocalIso_restrictHom` and
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_restrictHom`, none of which asks anything of the open
+subset — and what these six add is the descent, of which this repository had two statements at the
+single open `⊤` and, for `ComplexAnalytic.AnalyticSpace.IsLocalIso`, none at all.
+
+**The three mirror-tree guards are here rather than in `OkaTest/Axioms/Sheaves.lean`, where that
+file's other guards are, and the routing is the one `OkaTest/Axioms.lean` prescribes.** That rule
+sends *a mirror-tree module whose subject no existing row names* to *the file of the analytic
+result that motivated it, under that result's heading*, and the result that motivated these is
+`ComplexAnalytic.AnalyticSpace.isLocalIso_of_isOpenCover`, guarded in this section, whose
+topological field is `TopologicalSpace.IsOpenCover.isLocalHomeomorph_of_restrictPreimage` and
+nothing else. **The same
+routing put this file's guards from `Oka/Topology/Covering/Basic.lean` here**, and
+`OkaTest/Axioms/Sheaves.lean` keeps the guards it already had from
+`Oka/Topology/IsLocalHomeomorph.lean` under `### The sheets of a map`: that heading names the sheet
+material and reaches none of these, so nothing there is made false by this section and nothing
+there moved. **And this section is not what splits that module between two guard files**: it was
+already split when this section was written, by
+`### Base change of a local homeomorphism, and of a proper map`, which put
+`IsLocalHomeomorph.pullback_snd` here one commit earlier by the same routing. **A module in two of
+these files is not unusual either**: at the commit that adds this section **fifteen** modules of
+this repository are, and three of them — `Oka/AnalyticSpace/Basic.lean`,
+`Oka/Geometry/RingedSpace/LocallyRingedSpace.lean` and
+`Oka/Geometry/RingedSpace/OpenImmersion.lean` — are guarded in three. The routing rule is per
+module and not per file, which is why it can split one.
+
+**Being a local homeomorphism is not among the seven properties
+`Mathlib/Topology/LocalAtTarget.lean`'s module docstring enumerates as local at the target**, and
+it is not among the nine `…_iff_restrictPreimage` theorems that file states either — **two
+different counts of the same file, told apart in `Oka/Topology/IsLocalHomeomorph.lean`'s own
+docstring, and this class is outside both.** That is why its statement is in this repository at
+all; the other three conditions the two classes unfold to are quoted, one of them from that Mathlib
+file. `Oka/Topology/IsLocalHomeomorph.lean`'s module docstring prices the
+two Mathlib files the statement could be upstreamed to and says why it is written where it is.
+
+**The `iff` forms carry no proof of their own** — each pairs a descent theorem below with a
+restriction statement this file already guards under
+`### That restriction is a pullback square, and the base change it gives` and
+`### And a local isomorphism restricted over an open of the target is one` — and they are guarded
+because a `#print axioms` of a theorem does not reach a theorem stated from it.
+
+**No `CategoryTheory.MorphismProperty` is claimed and the published check on this file's pullback
+guards is unmoved**: no name in this section carries *isPullback* or *hasPullback*, and no line of
+either half of that check's clause is touched by the push that adds this section. These
+statements are along the inclusion of an open subspace, which
+`ComplexAnalytic.AnalyticSpace.isPullback_ofRestrict` makes a pullback square, so each is a base
+change along one shape of leg and not the class over a general cospan;
+`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s bullet recording that absence is untouched.
+
+**Appended as its own section**, for the reason the sections above give: a section moved is a
+conflict for somebody else. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFinite_of_isOpenCover' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFinite_of_isOpenCover
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFinite_iff_restrictHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFinite_iff_restrictHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isLocalIso_of_isOpenCover' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isLocalIso_of_isOpenCover
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isLocalIso_iff_restrictHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isLocalIso_iff_restrictHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_isOpenCover' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_isOpenCover
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFiniteEtale_iff_restrictHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFiniteEtale_iff_restrictHom
+
+/--
+info: 'IsLocalHomeomorph.restrictPreimage_of_isOpen' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms IsLocalHomeomorph.restrictPreimage_of_isOpen
+
+/--
+info: 'TopologicalSpace.IsOpenCover.isLocalHomeomorph_of_restrictPreimage' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms TopologicalSpace.IsOpenCover.isLocalHomeomorph_of_restrictPreimage
+
+/--
+info: 'TopologicalSpace.IsOpenCover.isLocalHomeomorph_iff_restrictPreimage' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms TopologicalSpace.IsOpenCover.isLocalHomeomorph_iff_restrictPreimage

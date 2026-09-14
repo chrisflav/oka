@@ -60,6 +60,7 @@ import OkaTest.HomToComplex
 import OkaTest.HypersurfaceFinite
 import OkaTest.InverseImage
 import OkaTest.InverseImageSheet
+import OkaTest.LocalAtTarget
 import OkaTest.LocalisationChain
 import OkaTest.LocalisationComposite
 import OkaTest.LocalisationFunctor

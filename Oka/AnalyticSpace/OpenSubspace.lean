@@ -480,8 +480,17 @@ Nothing about the morphism is asked and nothing about the open subset is: both f
 `ComplexAnalytic.AnalyticSpace.IsLocalIso` are conditions at a point, and a restriction changes
 the point's neighbourhoods on neither side. **That is what separates this from
 `ComplexAnalytic.AnalyticSpace.isFinite_restrictHom_of_subset_range` above**, whose hypothesis is
-there because finiteness is not local on the target: the inclusion of an open subspace restricts
-to a finite morphism only over a `V` inside its image, and is a local isomorphism over every `V`.
+there because the morphism that statement is about is not itself finite: the inclusion of an open
+subspace restricts to a finite morphism only over a `V` inside its image, and is a local
+isomorphism over every `V`.
+
+**That sentence gave the reason as *finiteness is not local on the target*, until 2026-09-14**,
+when `Oka/AnalyticSpace/LocalAtTarget.lean` proved that finiteness **is** local on the target:
+`ComplexAnalytic.AnalyticSpace.isFinite_iff_restrictHom`, over an open cover of the target with no
+hypothesis on the morphism. The forward half of that had been unconditional since
+`ComplexAnalytic.AnalyticSpace.isFinite_restrictHom`, which asks nothing of `V` either. **The
+contrast the sentence draws is unchanged**, and it is a contrast about one morphism at one open:
+what was wrong was the property named as the reason for it.
 
 **The topological field is the commuting square and not a lemma about restrictions.**
 `ComplexAnalytic.base_restrictHom` says `ofRestrict V ∘ restrictHom f V = f ∘ ofRestrict (f⁻¹ V)`

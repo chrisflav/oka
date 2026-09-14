@@ -69,6 +69,7 @@ import Oka.AnalyticSpace.HomToComplex
 import Oka.AnalyticSpace.IdealSheaf
 import Oka.AnalyticSpace.InverseImageSheet
 import Oka.AnalyticSpace.Local
+import Oka.AnalyticSpace.LocalAtTarget
 import Oka.AnalyticSpace.LocalIso
 import Oka.AnalyticSpace.LocalModel
 import Oka.AnalyticSpace.MonicProjection
