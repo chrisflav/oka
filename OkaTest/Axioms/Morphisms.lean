@@ -599,6 +599,36 @@ that added `### The quotient of a covering map by a finite group over the base`*
 the reason the clause naming `### The terminal object and the product of two complex affine
 spaces` gives.
 
+**And a section more, at the second category named by the clause opening
+*The sixth kind has a second category*, and at two functors out of it.**
+`### The fibre functor at the separated covers, and the two axioms of it that are reachable` guards
+`Oka/AnalyticSpace/SeparatedFiberFunctor.lean`, which builds the fibre at a point of the base as a
+functor out of `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`, into `Type u` and into
+`FintypeCat`, and proves of it the two Galois-category obligations on a fibre functor that this
+repository can reach: preservation of the terminal object, and conservativity. **Seventeen guards,
+and they partition fourteen and three.** **Fourteen are of the sixth kind at that second category**,
+by the clause opening *The sixth kind has a second category* — the two functors, the terminality of
+one of their values, the three preservation instances, the full subcategory of objects with
+preconnected total space together with its object and its terminal object in two forms, and the two
+`CategoryTheory.Functor.Faithful` and two `CategoryTheory.Functor.ReflectsIsomorphisms` instances —
+each of them a claim about that category, about a subcategory of it or about a functor out of it,
+and none of them binding a morphism of it. **That a functor out of a category counts as being about
+it is that clause's own reading**, which assigns
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toFiniteEtaleOver`, a functor, to this kind
+by name. **Three are of the first kind**, by the opening description's clause naming *the category
+the finite étale ones form over a fixed base* — the same clause that section's five first-kind
+guards answer to: the two injectivity statements at two named objects, and the criterion
+`…SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap`, whose `f : A ⟶ B` is a hypothesis and
+whose conclusion is `CategoryTheory.IsIso` of that `f`. **That section assigns all seventeen by
+name, states the criterion the line between the two is drawn by, and names the other reading it does
+not take**, which would move the two injectivity guards and make the partition sixteen and one.
+**The count *Five of that section's twenty-one guards*, in the clause opening *The sixth kind has a
+second category*, is unaffected**: it counts over
+`### The category of separated covers, and separatedness as a morphism property`, and this push adds
+no guard to that section and removes none. **This clause was added by the push that added that
+section**, 2026-09-14, for the reason the clause naming
+`### The terminal object and the product of two complex affine spaces` gives.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -7053,3 +7083,273 @@ info: 'IsEvenlyCovered.of_smul_parametrisation' depends on axioms:
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms IsEvenlyCovered.of_smul_parametrisation
+
+/-! ### The fibre functor at the separated covers, and the two axioms of it that are reachable
+
+`Oka/AnalyticSpace/SeparatedFiberFunctor.lean`, the whole of it. **Seventeen names and the module
+has seventeen declarations**: the fibre at a point of the base as a functor out of
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` in the two targets `Type u` and
+`FintypeCat`, the terminality of the second one's value at the base over itself and the
+preservation of the terminal object by both, the full subcategory of objects with preconnected
+total space together with the base over itself as an object and as the terminal object of it, the
+class form of that and the preservation of it by the subcategory inclusion, the two injectivity
+statements on a hom-set and the two `CategoryTheory.Functor.Faithful` instances they give, the
+criterion that makes a morphism with a bijective fibre map an isomorphism, and the two
+`CategoryTheory.Functor.ReflectsIsomorphisms` instances that are conservativity.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row — the same
+row `### The category of separated covers, and separatedness as a morphism property` and
+`### Fibre products in the category of separated covers, and its finite limits` argued for the two
+modules they guard, of which the module below imports one: its single `import` is
+`Oka.AnalyticSpace.SeparatedFiniteEtale`, and `Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean`
+is in neither that line nor the transitive `Oka`-prefixed import closure below it, which is
+**seventy-five** modules at the tree this push makes on `ddcc4c6`, the commit this section is cut
+from, counting the module itself — the walk cannot be run at `ddcc4c6` alone, its root being the
+module below. **A closure size cannot be checked from the sentence publishing it unless the walk is
+beside it, so the walk is here**: start at `Oka.AnalyticSpace.SeparatedFiberFunctor`, follow every
+`import Oka…` line transitively, and count the distinct modules reached, the root included.
+**Seventy-four of the seventy-five are the closure of its single import**, and that seventy-four is
+a figure of the base and not only of the tree this push makes: the same walk started at
+`Oka.AnalyticSpace.SeparatedFiniteEtale`, whose module this push does not add, gives seventy-four at
+`ddcc4c6`. It is pinned rather than permanent. It was **seventy-three** at `da72056`, at `26dc715`
+and at `003e38f`; `280bb67` raised it by one, by giving
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` an `import Oka.Topology.Maps.Proper.Basic`; and
+`ddcc4c6` left it there, the module it adds being imported by nothing in the closure.
+**A closure size is a fact about the import lines of every module in it and moves when any one of
+them does**, which is why it is pinned here and why what the
+routing rests on is the membership and not the size — that
+`Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` is outside the closure, which is what a reader
+should re-run rather than the arithmetic. **The two readings of *an `import` line* agree on the
+figure**: every line inside a comment in that closure that begins with `import` — with or without
+leading whitespace, which is the whole of what the two readings differ about — is prose that wraps
+and names no module at all, so nothing there is of the form `import Oka…` and reading the files raw
+and reading them through the nesting-aware comment stripper of `scripts/import_cost.py` both give
+seventy-five. The argument transfers to this one without change:
+every guard below is about a morphism of the category the finite étale ones form over a fixed
+base, or about that category, one of its subcategories or a functor out of it, named so that those
+morphisms can be stated.
+**The competing row is *analytic spaces, local models, the node*,
+`OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for the reason
+`### Fibre products in the category of separated covers, and its finite limits` gives: what is
+routed there is a claim about the category `ComplexAnalytic.AnalyticSpace` itself, whose objects
+are analytic spaces, and no guard below is about that category. **A second competitor, and it is
+the closer one**: `### The fibre functor is faithful, as a class, on the connected Hausdorff covers`
+and `### The fibre functor is conservative, on the same covers it is faithful on` are in this file
+and hold the ambient counterparts of **nine** of the seventeen — six and three, out of the sixteen
+guards those two sections hold between them. **The other eight sit in two further sections**:
+**six** in
+`### The terminal object of the category of covers, and the two fibre functors preserve it`, which
+holds the ambient counterparts of all three preservation instances below, and **two** in
+`### The fibre functor`; 9 + 6 + 2 is the seventeen, and the partition is a run over those four
+sections' `#print axioms` names, wrap-aware, at the commit that adds this section. That is an
+argument for this file and not against it; what it is not an argument for is *merging* into any of
+the three, and this file's own rule — a guard goes in the section of the push that added it, which
+`### The fibre functor is faithful, as a class, on the connected Hausdorff covers` states in terms —
+is why this is appended as its own section instead.
+
+**Which kind each guard is, against the description at the head of this file. Seventeen guards, and
+they partition fourteen and three.** **Fourteen are of the sixth kind at that second category**, by
+the clause opening *The sixth kind has a second category* — about the category rather than about
+any morphism in it — and they are the two functors
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor` and
+`…SeparatedFiniteEtaleOver.fintypeFiberFunctor`, the terminality of the second's value at the base
+over itself `…SeparatedFiniteEtaleOver.isTerminalFintypeFiberId`, the two preservation instances
+`…SeparatedFiniteEtaleOver.preservesTerminal_fiberFunctor` and
+`…SeparatedFiniteEtaleOver.preservesTerminal_fintypeFiberFunctor`, the subcategory
+`…SeparatedFiniteEtaleOver.isPreconnected` with its object
+`…SeparatedFiniteEtaleOver.isPreconnected_id`, its terminal object in the two forms
+`…SeparatedFiniteEtaleOver.isTerminalIdSubcategory` and
+`…SeparatedFiniteEtaleOver.hasTerminalSubcategory`, the preservation by its inclusion
+`…SeparatedFiniteEtaleOver.preservesTerminal_ι`, the two
+`…SeparatedFiniteEtaleOver.faithful_fiberFunctor` and
+`…SeparatedFiniteEtaleOver.faithful_fintypeFiberFunctor`, and the two
+`…SeparatedFiniteEtaleOver.reflectsIsomorphisms_fiberFunctor` and
+`…SeparatedFiniteEtaleOver.reflectsIsomorphisms_fintypeFiberFunctor`. **That the inclusion of a
+category counts as being about it and not about a morphism in it is that clause's own reading**: it
+assigns `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toFiniteEtaleOver`, a functor, to
+this kind by name, and the two functors above and the two subcategory statements are read the same
+way.
+
+**Three are of the first kind**, by the opening description's clause naming *the category the
+finite étale ones form over a fixed base*, which is the clause
+`### The category of separated covers, and separatedness as a morphism property` uses for five of
+its own: `…SeparatedFiniteEtaleOver.fiberFunctor_map_injective`,
+`…SeparatedFiniteEtaleOver.fintypeFiberFunctor_map_injective` and
+`…SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap`.
+
+**The criterion that draws the line, stated because two of the three are the marginal ones.** A
+guard is counted of the sixth kind here when its statement binds no morphism of the category, and
+of the first when it does. `…SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap` binds one
+explicitly — its `f : A ⟶ B` is a hypothesis and its conclusion is `CategoryTheory.IsIso` of that
+`f`. The two `_map_injective` guards bind the hom-set `A ⟶ B` as the domain of the injection, at
+two named objects, where the two `Faithful` instances quantify over every pair and name the functor
+instead. **The other reading is available and is not taken**: someone could count the two
+`_map_injective` guards as being about the functor too, which would make the partition sixteen and
+one, `…SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap` being the only one of the seventeen
+that binds a morphism as a hypothesis. **Those two are named here so that a later seat can take
+that reading by moving two names between two sentences and without recounting anything**; what it
+cannot do is move the third, which names its `f` and concludes of it.
+
+**Nothing above is moved by this section and three counts are worth saying so of.** The clause
+opening *The sixth kind has a second category* counts *Five of that section's twenty-one guards*
+over `### The category of separated covers, and separatedness as a morphism property`, and this
+push adds no guard to that section and removes none. The clause that names
+`### The direct summand with its witness named, and the summand inside the separated covers` says
+*Ten guards, and they partition eight and two* of it, and this push adds no guard to that section
+either. **And the published check on the statements of a
+pullback square is unmoved in both of its halves** — that check is to list this file's
+`#print axioms` names whose declaration name contains *isPullback* and compare that list against
+the clause, **dropping the ones over
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`**, and the same list taken at
+`HasPullback`: **no name of this section carries either token**, so the lists are **nine** and
+**eight** unfiltered and **eight** and **six** with the exclusion at the commit this section is cut
+from and the same four figures at the commit that adds it, both runs mine.
+
+**Four of the seventeen guards below wrap their name onto an indented line of its own**, which is
+the layout `scripts/guard_coverage.py` documents in terms — *`#print axioms` followed by an indented
+100-character name, because that is what fits* — and its `guarded_names` reads both layouts. They
+are `…SeparatedFiniteEtaleOver.preservesTerminal_fintypeFiberFunctor`,
+`…SeparatedFiniteEtaleOver.fintypeFiberFunctor_map_injective`,
+`…SeparatedFiniteEtaleOver.reflectsIsomorphisms_fiberFunctor` and
+`…SeparatedFiniteEtaleOver.reflectsIsomorphisms_fintypeFiberFunctor`. **The reason is the namespace
+and not the names**: `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.` is fifty-five
+characters, so `#print axioms` and a name of more than thirty-one leave the hundred-column limit
+behind. **A `#guard_msgs` whose command overruns does not merely warn, it fails**: the linter's
+warning becomes part of the generated message and the docstring stops matching it, which is how the
+limit was found here rather than by counting.
+
+**`Classical.choice` is in every guard below and none of them introduces it.** It arrives through
+the covering-map rung, exactly as
+`### The fibre functor is faithful, as a class, on the connected Hausdorff covers` records of the
+ambient statements, and it reaches even the `CategoryTheory.ObjectProperty` that names the
+subcategory — which is what that section records of
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2` too. **All seventeen are
+`[propext, Classical.choice, Quot.sound]` and none is on any shorter list.**
+
+**Named by file rather than counted**, for the reason this file's other sections give.
+
+**Named and not located.** No sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isTerminalFintypeFiberId' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isTerminalFintypeFiberId
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesTerminal_fiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesTerminal_fiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesTerminal_fintypeFiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesTerminal_fintypeFiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected_id' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected_id
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isTerminalIdSubcategory' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isTerminalIdSubcategory
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasTerminalSubcategory' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasTerminalSubcategory
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesTerminal_ι' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesTerminal_ι
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor_map_injective' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor_map_injective
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor_map_injective'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor_map_injective
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.faithful_fiberFunctor' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.faithful_fiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.faithful_fintypeFiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.faithful_fintypeFiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsomorphisms_fiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsomorphisms_fiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsomorphisms_fintypeFiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsomorphisms_fintypeFiberFunctor
