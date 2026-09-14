@@ -1229,8 +1229,9 @@ seat's own clock can be a day ahead of every commit and timestamp another seat c
 against. That has cost a pull request a round: `0c8cd0e` wrote 2026-09-08 into a record on
 2026-09-07, `5b0a14b` is the rework and says so in its subject line, and `49f0cc7` is what merged.
 
-**The scan is one command and only one direction of it is informative.** For each record, compare
-the date in the prose against `git blame`'s date for the line carrying it:
+**The scan is two commands, one per register, and only one direction of either is informative.**
+For each record **the line-wise register reaches**, compare the date in the prose against
+`git blame`'s date for the line carrying it:
 
 ```sh
 for f in $(git grep -l 'until 2026-' -- Oka/ OkaTest/); do
@@ -1238,16 +1239,74 @@ for f in $(git grep -l 'until 2026-' -- Oka/ OkaTest/); do
 done
 ```
 
+**That one is blind to exactly the records the line-wise census is blind to**, for the reason
+that census gives: `until` ends one line and the date opens the following one, so neither line
+matches. At `b79ab9b` it reaches **108** of the tree's **123**, and the fifteen it misses are the
+fifteen the two census registers differ by there. **`git blame` is line-oriented, so this register
+cannot be had by flattening the file** the way the unwrapped census commands do: the line carrying
+the date has to be located first and blamed second.
+
+```sh
+for f in $(git ls-files Oka OkaTest); do
+  awk -v f="$f" '
+    { if (match($0, /until 20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/))
+        print f, FNR, substr($0, RSTART + 6, 10)
+      else if (p ~ /until[ \t]*$/ &&
+               match($0, /^[ \t]*20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/))
+        print f, FNR, substr($0, RSTART + RLENGTH - 10, 10)
+      p = $0 }' "$f"
+done | while read -r f n d; do
+  h=$(git blame -L "$n,$n" --porcelain -- "$f" | head -1 | cut -d' ' -f1)
+  b=$(git show -s --date=short --format=%ad "$h")
+  [ "$d" = "$b" ] && s=matching || { [ "$d" \< "$b" ] && s=behind || s=ahead; }
+  echo "$s $f:$n prose $d blame $b"
+done                    # one row per record; bucket it with `awk '{print $1}' | sort | uniq -c`
+```
+
+**Its row count is its own reach test**, and that is the point of writing it this way: the rows
+have to number what the unwrapped census counts, and a shortfall says a record wrapped in a shape
+the `until`-at-end-of-line rule does not reach. At `b79ab9b` both are **123**. The second `git`
+call is there because `git blame`'s own date column cannot be cut out of a line whose text may
+itself carry a date, and `--porcelain` puts the commit first with nothing before it.
+
 `git blame` reports the commit that **last touched** a line, which can only be at or after the one
 that introduced it, and a pull request lands squashed, so the date blame reports is the merge's
-and not the branch commit's. A prose date **behind** the blame date is therefore what a later
-reflow of the line, or a merge that crossed midnight, looks like, and is not a defect — there are
-**5** of those at `91bbad8`. A prose date **ahead** of it cannot be produced either way and is
-always wrong. At `91bbad8` the scan is **90 / 5 / 2** — matching, behind, ahead — and the two
-ahead are the records the commit that writes this section removes. **Run it by hand and do not
-wire it into `.orchestra/validation.sh`**: its green depends on `git blame` following reflows,
-which is the property the middle column measures, and `scripts/guard_coverage.py`'s docstring
-gives the standing reason against adding a check somebody will want to switch off.
+and not the branch commit's. A prose date **behind** the blame date is what a later reflow of the
+line, a merge that crossed midnight, or **a record dated to the day its retired wording was
+written rather than to the day it was retired** looks like. **The first two are not defects and
+the third is the rule opening *The date is the UTC date of the push that retires the wording*
+broken**, and the three are separated by a run and not by reading. A prose date **ahead** of it
+cannot be produced either way and is always wrong. At `91bbad8` the line-wise scan is
+**90 / 5 / 2** — matching, behind, ahead — and the two ahead are
+the records the commit that writes this section removes. At `b79ab9b` the two registers are
+**99 / 9 / 0** over 108 and **112 / 11 / 0** over 123, and **`ahead` is 0 in both**: the
+always-wrong column is empty, and the fifteen the line-wise register cannot see hide none of it.
+**Run them by hand and do not wire them into `.orchestra/validation.sh`**: their green depends on
+`git blame` following reflows, which is the property the middle column measures, and
+`scripts/guard_coverage.py`'s docstring gives the standing reason against adding a check somebody
+will want to switch off.
+
+**At `b79ab9b` the two behind rows only the unwrapped register sees do not have the same cause,
+which is why that register is worth having and not only worth counting.**
+`OkaTest/Axioms/Morphisms.lean:122`–`:123`, prose 2026-09-07 against blame 2026-09-08, is the
+midnight one: `d2ae161` **introduced** those two lines, at `2026-09-08T00:10:27Z`, ten minutes
+past midnight UTC, so there is no earlier commit for blame to have named.
+`Oka/AnalyticSpace/FiniteEtaleOver.lean:85`–`:86`, prose 2026-09-08 against blame 2026-09-12, is
+**neither** cause: `0eed5cd` introduced those lines too, so nothing was reflowed, and it landed at
+`16:45:34Z`, so nothing crossed midnight. `0eed5cd` is also the push that retired the wording that
+record quotes, and `0c370e5` is the push that wrote that wording, on 2026-09-08 — so the date in
+the prose is the day the retired wording **began** and not the day it ended, which is the rule
+opening *The date is the UTC date of the push that retires the wording* read backwards. **Only a
+blame of the push that retired the wording separates the three**, and that is what this register
+does and the line-wise one cannot.
+
+**The wording this section repairs here is corrected and not dated.** *For each record* and the
+two-cause enumeration were both false when `96b2557` wrote them, on 2026-09-13, rather than
+falsified after. At `96b2557` the two census registers were **96** and **111**, so fifteen records
+already wrapped out of that scan's reach on the day it was published; and the row at
+`Oka/AnalyticSpace/FiniteEtaleOver.lean:85`–`:86` was already what it is, `0eed5cd` having landed
+the day before. A dated record says what a clause read *until* some day, which presupposes it read
+true before that day, and neither of these two ever did.
 
 **A record retires prose that was on `master`.** Every pull request lands **squashed**: the 11
 merge commits in `91bbad8`'s history are `git pull` merges dated 2026-07-22 and 2026-07-23, from
