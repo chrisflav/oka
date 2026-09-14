@@ -149,11 +149,43 @@ later**, as the correction whose sentence begins `It said *three* and left` was:
 the second half at the spelling the prose offered reaches **none** of the eight where the clause
 says six. **So this is a correction and not one of this repository's dated records**, and no figure
 it is a check on moves — nine and eight unfiltered, eight and six with the exclusion, at the commit
-this paragraph is cut from and at the one that adds it alike. **Four clauses of this file cite that
-half.** Three wrote it at the class spelling and are brought level in the same push, with no record
-of their own, a citation brought level with its source being one retirement and not four; the
-fourth, added by the push that added `### Colimits of shape SingleObj in a category with finite
-colimits`, already wrote *hasPullback* as a token and is the model this paragraph follows.
+this paragraph is cut from and at the one that adds it alike.
+
+**How many clauses of this file cite that half is a command and not a figure to carry here**,
+because it moves whenever a push audits the published check in both halves:
+
+```sh
+git grep -n '\*hasPullback\*' -- OkaTest/Axioms/Morphisms.lean
+```
+
+**What that over-reads is the two lines of the paragraph opening *The second half of that check
+has a token of its own*, which gives the token rather than citing it**; everything else it returns
+is a citation.
+
+**At `168ff30` there were five citations and the wording this push retires said four.** That push
+reached three of them, and not in one way: one had published this half of the check at the class
+spelling and was brought to the token; **two published no second half at all and were given one**,
+keeping the backticked `HasPullback` with which they name the six guards, that being the
+describing use the rule in the paragraph opening *The second half of that check has a token of its
+own* allows. None of the three carries a record of its own, a citation brought level with its
+source being one retirement and not four. **The other two already ran the check at the token**:
+the one added at `003e38f`, by the push that added `### Colimits of shape SingleObj in a category
+with finite colimits`, which is the model the paragraph opening *The second half of that check
+has a token of its own* follows; and the one opening *The published check on this file's
+statements of a pullback square is unmoved in both halves*, added at `954b116` — **eighteen
+minutes before `168ff30` landed, and after `659f148`, oka#541's own head, where there were four
+and the sentence was exact**.
+
+**The retired wording read *Four clauses of this file cite that half* and decomposed them three
+and one, until 2026-09-14**, when the command took the count's place. `954b116` landed the fifth
+citation eighteen minutes before `168ff30` landed the sentence, and `git merge-base 659f148
+168ff30` is `003e38f`, so **the branch could not see the clause that falsified it, and the merge
+is the first tree in which the sentence is false**: it was not outrun by growth it could have
+swept for. **The decomposition went with the count, and for a second reason** — it read all three
+of the clauses that push reached as having written this half at the class spelling, and two of
+them had written no second half at all. **The command is here rather than a recount** because this
+figure has already moved once between the head a sentence was measured at and the tree it landed
+on, and a recount buys one push.
 
 **That exclusion is a boundary the published check never carried, added 2026-09-12, and it is not
 a recount.** Until then the check needed none, and **not because the guards it reached were all
