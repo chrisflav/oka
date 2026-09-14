@@ -110,7 +110,17 @@ Every `@`-application below is that, and none of them is a mathematical step.
   `Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` gives the fibre product of separated covers
   over a Hausdorff base, so the limit whose image would have to be computed exists; what is missing
   is an identification of the **fibre** of that limit with the set-theoretic pullback of the two
-  fibres. **Measured rather than asserted**: `Function.Pullback`, which is how this repository
+  fibres. That file is **a sibling of this module which neither imports it nor is imported by it,
+  both importing `Oka/AnalyticSpace/SeparatedFiniteEtale.lean`**, so
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fibreProd` is not in scope below and
+  nothing here could consume it without a new import — the relation, and the consequence, that the
+  bullet opening *Not the preservation of finite coproducts* records for
+  `Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean`. **That relation is measured and not
+  asserted**: by a transitive walk of the `Oka`-prefixed `import` lines of the comment-stripped
+  code of every tracked `.lean`, each of the two modules has a closure of **75** modules counting
+  itself at the commit that adds this clause, neither closure holds the other module, and
+  `Oka/AnalyticSpace/SeparatedFiniteEtale.lean` is the only `import` line either file has.
+  **Measured rather than asserted**: `Function.Pullback`, which is how this repository
   spells such an identification, occurs in the comment-stripped code of **six** modules at the
   commit that adds this file — `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`,
   `Oka/Topology/Covering/Basic.lean`, `Oka/Topology/IsLocalHomeomorph.lean`,
@@ -118,9 +128,25 @@ Every `@`-application below is that, and none of them is a mathematical step.
   `OkaTest/CoveringBaseChange.lean` — the first two being the base change of a finite étale
   morphism over its own cospan and the topological statement it rests on, and the two after them
   the mirror-tree base change of a local homeomorphism and of a proper map at that same fibre
-  product. **None of the six is about
+  product. **`OkaTest/Axioms/Morphisms.lean` is in that list for its single occurrence, the guard
+  `#print axioms Function.Pullback.finite_fiber_snd`, and not for being about a fibre product of
+  covers**: at the commit that adds this clause that file guards **twelve** declarations of
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` whose names carry `fibreProd`,
+  `…fibreProd` itself among them. **None of the six's `Function.Pullback` occurrences is about
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fibreProd`**, and nothing carries
   the identification to it.
+  **That sentence read *None of the six is about* that name, until 2026-09-14, and under the
+  reading its own enumeration invites it was false when written rather than falsified later, so
+  this is a correction and not one of this repository's dated records**: taken as a claim about the
+  six modules, the guard file refutes it, and that file has carried those twelve guards since
+  `4d40d05` on 2026-09-12, two days before the push that wrote the sentence. Taken as a claim about
+  the occurrences the enumeration counts — which is the reading the bullet's argument needs — it is
+  true, and that is what it now says. `OkaTest/Axioms/Morphisms.lean` records the neighbouring
+  rule, *A sentence in a guard file that enumerates where a name occurs must count the guard
+  file*, and that one is scoped to sentences **in** a guard file, which this is not; what the two
+  share is a guard file inside the population being enumerated, and the cost of naming it without
+  saying what it is doing there. The bullet opening *Not the preservation of finite coproducts*
+  names that same file as the one *which guards it* and this one did not.
 * **Not the preservation of finite coproducts, and what is absent is the statement and not the
   colimit.** Finite coproducts of this category are in the tree —
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasFiniteCoproducts`, with no hypothesis
