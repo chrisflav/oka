@@ -153,8 +153,10 @@ no hypothesis on the open subset. **The words `and along the inclusion of an ope
 here` closed the sentence above until 2026-09-07**, when
 `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` gave a second shape:
 `ComplexAnalytic.AnalyticSpace.baseChangeSnd` is the projection of a fibre product over a cospan
-whose other leg is finite étale with Hausdorff source, and it is finite étale — hence finite —
-with no hypothesis on the leg it is a base change of. Neither shape is a general morphism and
+whose other leg is finite étale, and it is finite étale — hence finite — with no hypothesis on the
+leg it is a base change of. **That clause read *whose other leg is finite étale with Hausdorff
+source* until 2026-09-14**, when the separation axiom came out of that file; the shape is wider
+and the record it sits in is unmoved. Neither shape is a general morphism and
 neither is below.
 
 **This paragraph said flatly that there is no base change and that this repository has no fibre

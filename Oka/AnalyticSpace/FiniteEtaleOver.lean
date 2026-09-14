@@ -599,8 +599,10 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   `ComplexAnalytic.AnalyticSpace.hasPullbacks` a theorem of this repository. **The limit existing
   is not the class being carried**, which is what this bullet was always about and is why it is
   narrowed rather than struck: `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` carries
-  `isFiniteEtale` across the square it builds itself, at a finite étale leg with Hausdorff source,
-  and nothing carries it across the square
+  `isFiniteEtale` across the square it builds itself, at a finite étale leg — **that clause read
+  *at a finite étale leg with Hausdorff source* until 2026-09-14**, when the separation axiom came
+  out of that file, and what this bullet is about is unmoved by it — and nothing carries it across
+  the square
   `ComplexAnalytic.AnalyticSpace.hasPullback` now supplies at an arbitrary one. Every place that
   cites this bullet by its heading was rewritten in the same push — the ones in this file that the
   paragraph opening *The four sentences in this file that cite this bullet by its heading are
@@ -611,13 +613,18 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   morphism of the base, which is how a Galois category's fibre functor is usually built, is not
   available to it"` until 2026-09-07**, when `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`
   supplied exactly that: `ComplexAnalytic.AnalyticSpace.hasPullback_of_isFiniteEtale` is a
-  `CategoryTheory.Limits.HasPullback` instance at every cospan whose first leg is finite étale
-  with Hausdorff source, and
-  `ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale` carries the class
-  across it. **What that does not reach is this bullet's subject, and the heading is unchanged
-  because of it**: `IsStableUnderBaseChange` quantifies over cospans whose finite étale leg has an
-  arbitrary source, and a morphism of `FiniteEtaleOver X` is not known to be finite étale without
-  `[T2Space]` of its target — which is taxis #1772's remaining half and is not this bullet's.
+  `CategoryTheory.Limits.HasPullback` instance at every cospan whose first leg is finite étale,
+  and `ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale` carries the
+  class across it. **That sentence read *at every cospan whose first leg is finite étale with
+  Hausdorff source* until 2026-09-14**, when the separation axiom came out of that file. **What
+  that still does not reach is this bullet's subject, and the heading is unchanged because of
+  it**: this bullet is about a base change over a cospan of morphisms **of covers**, and a
+  morphism of `FiniteEtaleOver X` is not known to be finite étale without `[T2Space]` of its
+  target — which is taxis #1772's remaining half and is not this bullet's. **The sentence that
+  distinguished the two read *`IsStableUnderBaseChange` quantifies over cospans whose finite étale
+  leg has an arbitrary source*, until 2026-09-14**: that reading of the gap was exact while
+  `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` asked for a Hausdorff source, and it is not what
+  separates them now.
   **The four sentences in this file that cite this bullet by its heading are unaffected.** Two
   are elsewhere in this module docstring — the one opening *"What is absent is the Galois category
   itself"* and the one saying that what separates two connected covers is the monodromy *action* —

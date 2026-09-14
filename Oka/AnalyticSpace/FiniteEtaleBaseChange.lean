@@ -5,13 +5,30 @@ Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
 import Oka.AnalyticSpace.CoveringMap
 import Oka.AnalyticSpace.CoveringSpace
+import Oka.Topology.Maps.Proper.Basic
 
 /-!
 # Base change of a finite étale morphism of complex analytic spaces
 
-Let `q : E ⟶ B` be finite étale with `E` Hausdorff and let `f : B' ⟶ B` be **any** morphism of
-complex analytic spaces. Then the fibre product `E ×_B B'` exists, its projection to `B'` is
-finite étale again, and the square is a pullback in `ComplexAnalytic.AnalyticSpace`.
+Let `q : E ⟶ B` be finite étale and let `f : B' ⟶ B` be **any** morphism of complex analytic
+spaces. Then the fibre product `E ×_B B'` exists, its projection to `B'` is finite étale again,
+and the square is a pullback in `ComplexAnalytic.AnalyticSpace`. **No separation axiom is asked
+of any of the three spaces**, and `ComplexAnalytic.AnalyticSpace.doubledLineFold` is a finite
+étale morphism whose source is not one — `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean`
+applies four of this file's statements at that leg, one in each of four of its five `example`s,
+which is what checks that they apply at all.
+
+**The opening sentence read *Let `q : E ⟶ B` be finite étale with `E` Hausdorff* and the file
+carried `[T2Space E]` in its `variable` block, until 2026-09-14**, when the route through
+`ComplexAnalytic.AnalyticSpace.isCoveringMap_baseChangeSndBase` was replaced by the two
+statements named in `## Where each hypothesis is spent`. The hypothesis was never spent on the
+conclusion: it bought a covering map where a closed local homeomorphism is what
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap` asks for, and that
+statement was added to `Oka/AnalyticSpace/CoveringSpace.lean` on 2026-09-13 by `7b7ce5a`. **The
+constructions are unchanged**: `ComplexAnalytic.AnalyticSpace.baseChange` and
+`ComplexAnalytic.AnalyticSpace.baseChangeSnd` differ from what they were only in which proof of a
+`Prop` is passed to `ComplexAnalytic.AnalyticSpace.coveringSpace`, so by proof irrelevance the
+terms are the same and no consumer is transported.
 
 `Oka/AnalyticSpace/FiniteEtaleOver.lean` records the absence of this base change in its
 `## What is not here` bullet **No base change of the class over a general cospan**, and again in
@@ -56,18 +73,33 @@ this repository has a whole ladder of issues doing it that way.
 
 ## Where each hypothesis is spent
 
-**`[T2Space E]` is spent exactly once**, in
-`ComplexAnalytic.AnalyticSpace.isCoveringMap_baseChangeSndBase`, which is
-`ComplexAnalytic.AnalyticSpace.isCoveringMap_base_of_isFiniteEtale` and nothing else; that lemma's
-own docstring says why Mathlib's criterion separates the points of a fibre. **Nothing is assumed
-of `B` or of `B'`**, and `f` is an arbitrary morphism — not finite, not étale, not injective.
+**`[IsFiniteEtale q]` is the only hypothesis, and no separation axiom is spent anywhere.**
+Nothing is assumed of `E`, of `B` or of `B'`, and `f` is an arbitrary morphism — not finite, not
+étale, not injective.
 
-**`[IsFiniteEtale q]` is spent twice and in two different halves.** Its `IsFinite` field supplies
-the finite fibres, through `ComplexAnalytic.AnalyticSpace.finite_fiber_baseChangeSndBase`, which
-needs no topology at all; its `IsLocalIso` field supplies the stalk isomorphisms that make
-`ComplexAnalytic.AnalyticSpace.inverseImageIsoOfIsLocalIso` an isomorphism. **The first projection
-does not need `q` finite** and the second does not need `q` a local isomorphism; both are needed
-for the square to be a pullback, because the space is built out of the covering property.
+**That paragraph opened *`[T2Space E]` is spent exactly once*, in
+`ComplexAnalytic.AnalyticSpace.isCoveringMap_baseChangeSndBase`, until 2026-09-14.** That lemma
+is still here and still true, and it is still the one declaration of this file that carries
+`[T2Space E]`; what changed is that nothing consumes it. It is kept rather than deleted because it
+is guarded, and because the covering-map statement is the one a reader coming from
+`Oka/AnalyticSpace/CoveringMap.lean` will look for.
+
+**`[IsFiniteEtale q]` is spent in both of its halves, and each half is spent twice.** Its
+`IsFinite` field supplies the finite fibres, through
+`ComplexAnalytic.AnalyticSpace.finite_fiber_baseChangeSndBase`, which needs no topology at all,
+and the closedness of the second projection, through
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase`, which goes by properness; its
+`IsLocalIso` field supplies the local-homeomorphism half, through
+`ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase`, and the stalk isomorphisms
+that make `ComplexAnalytic.AnalyticSpace.inverseImageIsoOfIsLocalIso` an isomorphism. **The first
+projection does not need `q` finite** and the second does not need `q` a local isomorphism; both
+are needed for the square to be a pullback, because the space is built out of the covering
+property.
+
+**That paragraph opened *`[IsFiniteEtale q]` is spent twice and in two different halves* and named
+one statement per half, until 2026-09-14**, when the two statements that replace the covering-map
+route were added and each half acquired a second consumer. The sentence was exact when written;
+what moved is the route and not the accounting rule.
 
 ## Main definitions
 
@@ -106,12 +138,28 @@ for the square to be a pullback, because the space is built out of the covering 
   became a theorem on 2026-09-08, in `Oka/AnalyticSpace/PullbackReduction.lean`, by gluing and by
   nothing else. The `#synth` sentence above is pinned to the commit that adds *this* file and is
   not retired; what this bullet still says is that no statement below is that class.
-* **`[T2Space E]` is not removed and nothing here tries.** It is Mathlib's hypothesis in the
-  criterion that turns a proper local homeomorphism into a covering map, and
-  `Oka/AnalyticSpace/CoveringMap.lean` records why.
-* **No `CategoryTheory.MorphismProperty.IsStableUnderBaseChange` instance.** That class quantifies
-  over *all* cospans with a leg in the class, including those whose finite étale leg has a
-  non-Hausdorff source, and nothing below reaches one.
+* **No weakening of `[IsFiniteEtale q]`.** Both of its fields are spent, and
+  `## Where each hypothesis is spent` says which statement spends which; nothing below asks for
+  less than the class.
+
+  **This bullet read *`[T2Space E]` is not removed and nothing here tries*, and gave as its
+  reason that the hypothesis is Mathlib's in the criterion that turns a proper local
+  homeomorphism into a covering map, until 2026-09-14.** The reason was exact and is why the
+  hypothesis was there; what it did not say is that the criterion is not the only route to the
+  conclusion, which is what retired the bullet rather than a recount.
+* **No `CategoryTheory.MorphismProperty.IsStableUnderBaseChange` instance.** That class is a
+  statement about the *class* `ComplexAnalytic.AnalyticSpace.isFiniteEtale` as a
+  `CategoryTheory.MorphismProperty`, and nothing below is stated at that spelling;
+  `ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale` is the statement it
+  would be assembled from and the assembly is not here.
+
+  **This bullet gave as its reason that the class quantifies over *all* cospans with a leg in the
+  class, including those whose finite étale leg has a non-Hausdorff source, and that nothing
+  below reaches one, until 2026-09-14.** The second half stopped being true in the same push that
+  removed `[T2Space E]`: the statements below reach every cospan the class quantifies over, and
+  `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean` compiles them at one whose finite étale leg has
+  a non-Hausdorff source. What is still absent is the `CategoryTheory.MorphismProperty` spelling
+  and not the reach.
 * **Nothing about the degree.** `ComplexAnalytic.AnalyticSpace.degree_eq_card_fiber` would say the
   base change has the same number of sheets; the fibres do correspond, by
   `Function.Pullback.fst`, and no statement below says so.
@@ -155,19 +203,48 @@ theorem baseChange_base_square :
 
 /-- **The second projection is a covering map.** `IsCoveringMap.pullback_snd` at
 `ComplexAnalytic.AnalyticSpace.isCoveringMap_base_of_isFiniteEtale`, whose `Continuous` hypothesis
-is `f`'s. **This is the one place `[T2Space E]` is used in this file.** -/
+is `f`'s. **This is the one declaration of this file that carries `[T2Space E]`, and nothing else
+in the file uses it** — `ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase` and
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase` carry the same two halves of
+`[IsFiniteEtale q]` across the base change without it, and they are what the construction
+consumes.
+
+**This docstring closed *This is the one place `[T2Space E]` is used in this
+file*, until 2026-09-14**, when the construction stopped using this lemma; *place* is replaced by
+*declaration* because a grep for the token now returns this file's prose about it as well as its
+one binder. -/
 theorem isCoveringMap_baseChangeSndBase [IsFiniteEtale q] [T2Space E] :
     IsCoveringMap ⇑(baseChangeSndBase q f) :=
   (isCoveringMap_base_of_isFiniteEtale q).pullback_snd f.toLRSHom.base.hom.continuous
 
 /-- **And its fibres are finite.** `Function.Pullback.finite_fiber_snd` uses neither a topology
 nor the covering property, so this asks only for the `IsFinite` half of `IsFiniteEtale` and not
-for `[T2Space E]`. -/
+for `[T2Space E]`. **It is one of the three statements about `baseChangeSndBase` that ask no
+separation axiom** — the other two are
+`ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase` and
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase` — and the three together are
+everything the construction consumes. -/
 theorem finite_fiber_baseChangeSndBase [IsFiniteEtale q] (y : B') :
     (⇑(baseChangeSndBase q f) ⁻¹' {y}).Finite :=
   Function.Pullback.finite_fiber_snd (fun x ↦ IsFinite.finite_fiber (f := q) x) y
 
-variable [IsFiniteEtale q] [T2Space E]
+/-- **The second projection is a local homeomorphism**, which is the `IsLocalIso` half of
+`[IsFiniteEtale q]` and nothing else. `IsLocalHomeomorph.pullback_snd` is the base change of a
+local homeomorphism along an arbitrary continuous map, and no separation axiom enters it. -/
+theorem isLocalHomeomorph_baseChangeSndBase [IsFiniteEtale q] :
+    IsLocalHomeomorph ⇑(baseChangeSndBase q f) :=
+  (IsLocalIso.isLocalHomeomorph (f := q)).pullback_snd f.toLRSHom.base.hom.continuous
+
+/-- **The second projection is a closed map**, which is the `IsFinite` half. A finite morphism of
+analytic spaces has a proper base map, properness is stable under base change along an arbitrary
+continuous map by `IsProperMap.pullback_snd`, and a proper map is closed. **No separation axiom
+enters this either**, which is what makes it the route this file takes rather than
+`ComplexAnalytic.AnalyticSpace.isCoveringMap_baseChangeSndBase`. -/
+theorem isClosedMap_baseChangeSndBase [IsFiniteEtale q] :
+    IsClosedMap ⇑(baseChangeSndBase q f) :=
+  ((isProperMap_base_of_isFinite q).pullback_snd f.toLRSHom.base.hom.continuous).isClosedMap
+
+variable [IsFiniteEtale q]
 
 /-! ### The space and the projection to `B'` -/
 
@@ -176,12 +253,12 @@ along the second projection of the carrier. Its structure sheaf is `π₂⁻¹�
 glued. -/
 def baseChange : AnalyticSpace.{u} :=
   AnalyticSpace.coveringSpace B' (baseChangeSndBase q f)
-    (isCoveringMap_baseChangeSndBase q f).isLocalHomeomorph
+    (isLocalHomeomorph_baseChangeSndBase q f)
 
 /-- **The projection to `B'`.** -/
 def baseChangeSnd : baseChange q f ⟶ B' :=
   AnalyticSpace.coveringSpaceHom B' (baseChangeSndBase q f)
-    (isCoveringMap_baseChangeSndBase q f).isLocalHomeomorph
+    (isLocalHomeomorph_baseChangeSndBase q f)
 
 @[simp]
 theorem base_baseChangeSnd :
@@ -190,19 +267,18 @@ theorem base_baseChangeSnd :
 /-- **The projection to `B'` is finite étale**, which is the whole of the base-change statement
 for the class and needs none of the universal property below. -/
 theorem isFiniteEtale_baseChangeSnd : IsFiniteEtale (baseChangeSnd q f) :=
-  AnalyticSpace.isFiniteEtale_coveringSpaceHom B' (baseChangeSndBase q f)
-    (isCoveringMap_baseChangeSndBase q f) (finite_fiber_baseChangeSndBase q f)
+  AnalyticSpace.isFiniteEtale_coveringSpaceHom_of_isClosedMap B' (baseChangeSndBase q f)
+    (isLocalHomeomorph_baseChangeSndBase q f) (isClosedMap_baseChangeSndBase q f)
+    (finite_fiber_baseChangeSndBase q f)
 
 /-! ### The projection to `E` -/
 
-omit [T2Space E] in
 /-- **The comparison morphism of a local isomorphism is an isomorphism**, which is
 `AlgebraicGeometry.LocallyRingedSpace.isIso_toInverseImage` fed the stalk field of
 `ComplexAnalytic.AnalyticSpace.IsLocalIso`. -/
 theorem isIso_toInverseImage_of_isLocalIso : IsIso (LocallyRingedSpace.toInverseImage q.toLRSHom) :=
   LocallyRingedSpace.isIso_toInverseImage _ fun z ↦ IsLocalIso.isIso_stalkMap z
 
-omit [T2Space E] in
 /-- **The source of a local isomorphism is the inverse image of its target along its base map**,
 as an isomorphism of locally ringed spaces over the target.
 
@@ -275,7 +351,6 @@ def baseChangeFst : baseChange q f ⟶ E :=
 theorem baseChange_square : baseChangeFst q f ≫ q = baseChangeSnd q f ≫ f :=
   forgetToLocallyRingedSpace.map_injective (baseChangeFstLRS_comp q f)
 
-omit [T2Space E] in
 /-- **The inverse of `ComplexAnalytic.AnalyticSpace.inverseImageIsoOfIsLocalIso` is the identity
 on points**, since the comparison morphism's base map is the identity on the nose. -/
 theorem inverseImageIsoOfIsLocalIso_inv_base_apply
@@ -313,12 +388,12 @@ def baseChangeLiftBase : Z.toLocallyRingedSpace.toTopCat ⟶ baseChangeCarrier q
       Continuous.subtype_mk (Continuous.prodMk a.toLRSHom.base.hom.continuous
         b.toLRSHom.base.hom.continuous) _⟩
 
-omit [IsFiniteEtale q] [T2Space E] in
+omit [IsFiniteEtale q] in
 /-- **The lift is over `B'` on carriers**, by `rfl`. -/
 theorem baseChangeLiftBase_snd :
     b.toLRSHom.base = baseChangeLiftBase q f a b hab ≫ baseChangeSndBase q f := rfl
 
-omit [IsFiniteEtale q] [T2Space E] in
+omit [IsFiniteEtale q] in
 /-- **And over `E` on carriers**, by `rfl`. This is the half the universal property below cannot
 get from the inverse-image uniqueness and has to have on the nose. -/
 theorem baseChangeLiftBase_fst :
@@ -436,8 +511,11 @@ theorem isPullback_baseChange :
         (hm1.trans (baseChangeLift_fst q f s.fst s.snd s.condition).symm)
         (hm2.trans (baseChangeLift_snd q f s.fst s.snd s.condition).symm)))
 
-/-- **So the fibre product exists**, at every cospan one of whose legs is finite étale with
-Hausdorff source. An instance, so that `CategoryTheory.Limits.pullback q f` elaborates. -/
+/-- **So the fibre product exists**, at every cospan one of whose legs is finite étale. An
+instance, so that `CategoryTheory.Limits.pullback q f` elaborates.
+
+**This docstring said *at every cospan one of whose legs is finite étale with Hausdorff source*
+until 2026-09-14**, when the separation axiom came out of this file. -/
 instance hasPullback_of_isFiniteEtale : Limits.HasPullback q f :=
   (isPullback_baseChange q f).hasPullback
 

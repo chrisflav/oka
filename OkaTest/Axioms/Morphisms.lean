@@ -49,8 +49,11 @@ reason**: that the square a restriction over an open of the target sits in is a 
 that a pair of open subspaces of complex affine spaces has a product,
 `### The product of two open subspaces of complex affine spaces`; that a pair of local models has
 one, `### The binary product of two local models`; that a cospan one of whose legs is finite
-étale with Hausdorff source has a **fibre product**,
-`### Base change of a finite étale morphism, and the fibre product it is the projection of`; and
+étale has a **fibre product**,
+`### Base change of a finite étale morphism, and the fibre product it is the projection of` —
+**that clause read *finite étale with Hausdorff source* until 2026-09-14**, when the separation
+axiom came out of `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and the enumeration followed the
+statement down; and
 that a cospan of local models presented by cut-out data has one,
 `### The fibre product of two local models over a third`.
 
@@ -4544,6 +4547,20 @@ its `CategoryTheory.Limits.pullback` spelling
 `ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale` — is a base change of
 `isFiniteEtale` and is reached by this file's opening description.
 
+**Two guards were added to this section on 2026-09-14** —
+`ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase` and
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase`, the two statements that carry the
+two halves of `[IsFiniteEtale q]` across the base change and are what let that file drop
+`[T2Space E]`. They are guarded here and not in `OkaTest/Axioms/Sheaves.lean` for the same reason
+as everything else declared in that module: `OkaTest/Axioms.lean`'s rule routes a guard by the
+module that declares it. The statements they are built from are topological and are guarded under
+`### Base change of a local homeomorphism, and of a proper map`, whose guards this push does not
+move: `grep -E '^[+-]#print axioms'` over this push's diff returns two added lines and no removed
+one, and both are in `### Base change of a finite étale morphism, and the fibre product it is the
+projection of`. **The local-homeomorphism section's prose does move** — its read-off of
+`Oka/AnalyticSpace/CoveringSpace.lean` closed by saying the hypothesis it would remove is not
+removed, and this push is what removes it.
+
 **Three of the guards below are of the mirror tree's shape and are here rather than in
 `OkaTest/Axioms/Sheaves.lean`**: `ComplexAnalytic.AnalyticSpace.isIso_toInverseImage_of_isLocalIso`,
 `ComplexAnalytic.AnalyticSpace.inverseImageIsoOfIsLocalIso` and
@@ -4614,6 +4631,20 @@ info: 'ComplexAnalytic.AnalyticSpace.finite_fiber_baseChangeSndBase' depends on 
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.finite_fiber_baseChangeSndBase
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase
 
 /--
 info: 'ComplexAnalytic.AnalyticSpace.baseChange' depends on axioms:
@@ -5084,10 +5115,14 @@ info: 'ComplexAnalytic.AnalyticSpace.fibreProdCutOutIsoPullback' depends on axio
 
 /-! ### A monomorphism of covers is injective on points, and the summand that follows
 
-`Oka/AnalyticSpace/MonoDirectSummand.lean`: that a monomorphism which is finite étale with
-Hausdorff source is injective on points, in the two spellings — of a morphism of analytic spaces
-and of a morphism of covers — the fibre product of a morphism of covers with itself and its two
-projections, and the direct-summand statement with its injectivity hypothesis discharged.
+`Oka/AnalyticSpace/MonoDirectSummand.lean`: that a monomorphism which is finite étale is
+injective on points, in the two spellings — of a morphism of analytic spaces and of a morphism of
+covers — the fibre product of a morphism of covers with itself and its two projections, and the
+direct-summand statement with its injectivity hypothesis discharged. **This description read
+*finite étale with Hausdorff source*, until 2026-09-14**, when `[T2Space E]` came out of
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`, the separation axioms of that module became unused
+and this repository's `unusedArguments` linter refused them; the cover spelling still asks it of
+the **target**'s total space, for the reason taxis #1772 names.
 
 **Which clause of this file's description reaches which guard below**, said rather than left to a
 reader. **Three** of the four `Prop` guards below are of the **fourth** kind and are reached by
@@ -5097,8 +5132,9 @@ has a second class, and it is the monomorphisms* — and they are the three whos
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.injective_base_left_of_mono` and
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono`. **The fourth,
 `ComplexAnalytic.AnalyticSpace.injective_base_of_baseChangeFst_eq`, carries no monomorphism**: its
-hypotheses are `[ComplexAnalytic.AnalyticSpace.IsFiniteEtale i]`, `[T2Space A]` and an equation
-between the two projections of the fibre product of `i` with itself, and its own docstring says so
+hypotheses are `[ComplexAnalytic.AnalyticSpace.IsFiniteEtale i]` and an equation between the two
+projections of the fibre product of `i` with itself —
+**it carried `[T2Space A]` as well, until 2026-09-14** — and its own docstring says so
 — *The hypothesis is an equation between morphisms and the conclusion is about points*. It is
 reached by the opening description's naming of the finite étale class, which is one of the classes
 that description lists, and it needs no clause of its own for that reason.
@@ -6661,9 +6697,20 @@ enters the route**: the two statements below carry the local-homeomorphism half 
 half across, `IsProperMap.isClosedMap` turns the second into the closedness that statement asks
 for, `ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite` — which assumes no separation
 axiom — is what makes the map being base-changed proper, and `Function.Pullback.finite_fiber_snd`,
-which assumes no topology at all, gives the fibres. **That base
-change is not in the tree, nothing below claims it, and the hypothesis it would remove —
-`[T2Space E]` in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` — is not removed here.**
+which assumes no topology at all, gives the fibres. **That base change is what
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` now takes**, in the two statements this file guards
+under `### Base change of a finite étale morphism, and the fibre product it is the projection of`
+— `ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase` and
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase` — and `[T2Space E]` is gone from
+that file's `variable` block and from every `omit` that named it.
+
+**That sentence read *That base change is not in the tree, nothing below claims it, and the
+hypothesis it would remove — `[T2Space E]` in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` — is
+not removed here*, until 2026-09-14.** Every clause of it was exact when it was written: the
+read-off above is what the push that removed the hypothesis took, and it was written as a read-off
+precisely because nothing had taken it yet. **Nothing in the read-off itself moves** — the three
+declarations it names, the two halves it routes through and the statement it lands in are the same
+ones — and the guards of this section are unmoved.
 
 **That paragraph named three declarations of `Oka/AnalyticSpace/CoveringSpace.lean` and routed the
 finiteness half through `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` and its

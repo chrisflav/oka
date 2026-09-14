@@ -39,10 +39,18 @@ At `X = ℂ¹` and `V = ℂ ∖ {0}` the double is the line with two origins, it
 
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono` and
 `…inducesIsoOnDirectSummand_of_injective` (`Oka/AnalyticSpace/MonoDirectSummand.lean`,
-`Oka/AnalyticSpace/DirectSummand.lean`) carry `[T2Space A.left]` and `[T2Space B.left]` —
-separation of the **total spaces** — where the `PreGaloisCategory` field of
+`Oka/AnalyticSpace/DirectSummand.lean`) each carry `[T2Space B.left]` — separation of the
+**total space** of the target — where the `PreGaloisCategory` field of
 `Mathlib/CategoryTheory/Galois/Basic.lean` they are modelled on asks for nothing.
-`ComplexAnalytic.AnalyticSpace.exists_finiteEtaleOver_not_t2Space` below says those hypotheses
+
+**This paragraph said both carry `[T2Space A.left]` and `[T2Space B.left]`, until 2026-09-14.**
+It was exact of neither: `…inducesIsoOnDirectSummand_of_injective` has asked only for the
+target's since it was written, and `…inducesIsoOnDirectSummand_of_mono` lost the source's on
+2026-09-14 when `[T2Space E]` came out of `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and the
+`unusedArguments` linter refused it. **Neither half of the correction touches what this file
+settles**, which is about the target's and is stated at one object.
+
+`ComplexAnalytic.AnalyticSpace.exists_finiteEtaleOver_not_t2Space` below says that hypothesis
 cannot be discharged from a hypothesis on the base: **there is an
 object of `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver (ℂ¹)` whose total space is not
 Hausdorff**, and `ℂ¹` is Hausdorff by `ComplexAnalytic.t2Space_complexAffineSpace`.
@@ -243,9 +251,14 @@ theorem not_t2Space_left_doubledLineOver :
 space.**
 
 The base is `ℂ¹`, which is Hausdorff by `ComplexAnalytic.t2Space_complexAffineSpace`; the cover is
-the line with two origins. So `[T2Space A.left]` is not derivable from separation of the base,
-which is what `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono`
-and `…inducesIsoOnDirectSummand_of_injective` carry it for. -/
+the line with two origins. So a `[T2Space]` hypothesis on a cover's total space is not derivable
+from separation of the base, which is what
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono` and
+`…inducesIsoOnDirectSummand_of_injective` carry one for.
+
+**This read *So `[T2Space A.left]` is not derivable* until 2026-09-14**, when the source's
+hypothesis came out of the first of those two; the statement is at a single object and settles
+the target's as readily as the source's. -/
 theorem exists_finiteEtaleOver_not_t2Space :
     ∃ A : FiniteEtaleOver (complexAffineSpace.{u} 1), ¬ T2Space (A.left : Type u) :=
   ⟨doubledLineOver.{u}, not_t2Space_left_doubledLineOver.{u}⟩

@@ -117,12 +117,18 @@ are declared outside the file named; and one of those three is a cover's total s
 ## Main results
 
 - `ComplexAnalytic.AnalyticSpace.injective_base_of_baseChangeFst_eq`: **the two projections
-  agreeing is what injectivity is**, for a finite étale morphism of analytic spaces with Hausdorff
-  source. This is the step that reads points off the carrier and the only one that does.
+  agreeing is what injectivity is**, for a finite étale morphism of analytic spaces. This is the
+  step that reads points off the carrier and the only one that does.
 - `ComplexAnalytic.AnalyticSpace.injective_base_of_mono`: **a monomorphism of complex analytic
-  spaces which is finite étale with Hausdorff source is injective on points.**
+  spaces which is finite étale is injective on points.**
 - `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.injective_base_left_of_mono`: **a monomorphism of
-  covers is injective on points**, when both total spaces are Hausdorff.
+  covers is injective on points**, when the **target**'s total space is Hausdorff.
+
+  **The first two of these read *with Hausdorff source* and the third read *when both total spaces
+  are Hausdorff*, until 2026-09-14**, when `[T2Space E]` came out of
+  `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`: the base change of `i` with itself stopped
+  asking for it, the hypotheses became unused, and this repository's `unusedArguments` linter is
+  what said so. The source's separation was never spent on anything else.
 - `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono`: **a
   monomorphism of covers exhibits its source as a direct summand of its target**, which is
   `Oka/AnalyticSpace/DirectSummand.lean`'s statement with its injectivity hypothesis discharged.
@@ -132,8 +138,12 @@ are declared outside the file named; and one of those three is a cover's total s
 * **This is still not the `monoInducesIsoOnDirectSummand` field of
   `Mathlib/CategoryTheory/Galois/Basic.lean`'s `PreGaloisCategory`.** That field asks for the
   summand at every monomorphism and under **no** hypothesis whatever; the last result below asks
-  for `[T2Space A.left]` and `[T2Space B.left]`. What this file removes from the gap is the
-  injectivity hypothesis and nothing else, and the two separation hypotheses are what is left.
+  for `[T2Space B.left]`. What this file removes from the gap is the injectivity hypothesis and
+  nothing else, and that one separation hypothesis is what is left.
+
+  **This bullet named `[T2Space A.left]` and `[T2Space B.left]` and closed *the two separation
+  hypotheses are what is left*, until 2026-09-14**, when the source's became unused; the gap is
+  one hypothesis narrower and is still a gap.
 * **No `PreGaloisCategory` instance**, and nothing here bears on the other fields: base change
   over a general cospan of morphisms *of covers*, quotients by finite group actions, and the
   preservation of epimorphisms by a fibre functor are each untouched.
@@ -160,9 +170,15 @@ are declared outside the file named; and one of those three is a cover's total s
 * **No diagonal and no isomorphism `A ≅ A ×_B A`.** The classical argument's object is not built,
   so nothing below says the fibre product of a monomorphism with itself is its source.
 * **Nothing about a general mono of analytic spaces.**
-  `ComplexAnalytic.AnalyticSpace.injective_base_of_mono` asks its morphism to be finite étale with
-  Hausdorff source, because that is what makes the base change exist; a monomorphism of analytic
-  spaces with neither is not reached.
+  `ComplexAnalytic.AnalyticSpace.injective_base_of_mono` asks its morphism to be finite étale; a
+  monomorphism of analytic spaces which is not is not reached.
+
+  **That clause read *finite étale with Hausdorff source, because that is what makes the base
+  change exist*, until 2026-09-14**, when `[T2Space E]` came out of
+  `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`. The reason it gave was exact: the separation
+  axiom was there for the base change and for nothing else, so when the base change stopped
+  asking for it the hypothesis became unused and the tree's `unusedArguments` linter refused the
+  file until it was dropped.
 -/
 
 open CategoryTheory Opposite AlgebraicGeometry TopologicalSpace
@@ -180,7 +196,7 @@ its two components — `ComplexAnalytic.AnalyticSpace.base_baseChangeFst` and
 subtype and product projections. **The hypothesis is an equation between morphisms and the
 conclusion is about points**, which is the only place in this file where the two levels meet. -/
 theorem injective_base_of_baseChangeFst_eq {A B : AnalyticSpace.{u}} (i : A ⟶ B)
-    [IsFiniteEtale i] [T2Space A] (h : baseChangeFst i i = baseChangeSnd i i) :
+    [IsFiniteEtale i] (h : baseChangeFst i i = baseChangeSnd i i) :
     Function.Injective i.toLRSHom.base := by
   intro a₁ a₂ hEq
   set z : baseChange i i := ⟨(a₁, a₂), hEq⟩ with hz
@@ -188,14 +204,17 @@ theorem injective_base_of_baseChangeFst_eq {A B : AnalyticSpace.{u}} (i : A ⟶ 
   have h2 : (baseChangeSnd i i).toLRSHom.base z = a₂ := by rw [base_baseChangeSnd]; rfl
   rw [← h1, ← h2, h]
 
-/-- **A monomorphism of complex analytic spaces which is finite étale with Hausdorff source is
-injective on points.**
+/-- **A monomorphism of complex analytic spaces which is finite étale is injective on points.**
 
 `ComplexAnalytic.AnalyticSpace.baseChange_square` is the commuting square of the fibre product of
 `i` with itself, and `CategoryTheory.cancel_mono` turns it into an equality of the two
-projections. -/
+projections.
+
+**This statement asked `[T2Space A]` as well, until 2026-09-14**, when `[T2Space E]` came out of
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`: the fibre product of `i` with itself stopped
+asking for it and the hypothesis became unused. -/
 theorem injective_base_of_mono {A B : AnalyticSpace.{u}} (i : A ⟶ B)
-    [IsFiniteEtale i] [T2Space A] [Mono i] :
+    [IsFiniteEtale i] [Mono i] :
     Function.Injective i.toLRSHom.base :=
   injective_base_of_baseChangeFst_eq i ((cancel_mono i).1 (baseChange_square i i))
 
@@ -209,15 +228,15 @@ projection is finite étale too, by the symmetry of this particular base change,
 proved in this repository and is not needed. Composing with `A.hom` and
 `ComplexAnalytic.AnalyticSpace.isFiniteEtale_comp` is the whole of the object's proof
 obligation. -/
-noncomputable def FiniteEtaleOver.selfProd (i : A ⟶ B) [T2Space (B.left : Type u)]
-    [T2Space (A.left : Type u)] : FiniteEtaleOver.{u} X :=
+noncomputable def FiniteEtaleOver.selfProd (i : A ⟶ B) [T2Space (B.left : Type u)] :
+    FiniteEtaleOver.{u} X :=
   haveI : IsFiniteEtale i.left := FiniteEtaleOver.isFiniteEtale_left i
   haveI : IsFiniteEtale (X := A.left) A.hom := A.prop
   haveI : IsFiniteEtale (baseChangeSnd i.left i.left) := isFiniteEtale_baseChangeSnd i.left i.left
   MorphismProperty.Over.mk _ (baseChangeSnd i.left i.left ≫ A.hom)
     (isFiniteEtale_comp (baseChangeSnd i.left i.left) A.hom)
 
-variable (i : A ⟶ B) [T2Space (B.left : Type u)] [T2Space (A.left : Type u)]
+variable (i : A ⟶ B) [T2Space (B.left : Type u)]
 
 /-- **The second projection of `A ×_B A`, as a morphism of covers.** Its triangle over `X` is
 `rfl`, because that projection is what the object was structured by. -/
@@ -248,7 +267,13 @@ noncomputable def FiniteEtaleOver.selfProdFst : FiniteEtaleOver.selfProd i ⟶ A
         = (baseChangeSnd i.left i.left ≫ i.left) ≫ B.hom := by rw [Category.assoc, hw]; rfl
     rw [e1, e2, baseChange_square])
 
-/-- **A monomorphism of covers is injective on points**, when both total spaces are Hausdorff.
+/-- **A monomorphism of covers is injective on points**, when the target's total space is
+Hausdorff.
+
+**It asked both total spaces to be Hausdorff, until 2026-09-14**, when `[T2Space E]` came out of
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and the source's became unused. The target's is
+what makes the underlying morphism of a morphism of covers finite étale, which is taxis #1772's
+remaining half and is untouched.
 
 This is the obligation `Oka/AnalyticSpace/DirectSummand.lean`'s `## What is not here` names.
 `CategoryTheory.MorphismProperty.Over.Hom.ext` reduces the equality the monomorphism gives to the
@@ -271,7 +296,10 @@ cover `Z` and a morphism `Z ⟶ B` whose binary cofan with `i` is a colimit.
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_injective` with its
 injectivity hypothesis discharged by the theorem above. **This is the shape of the
 `monoInducesIsoOnDirectSummand` field and it is not that field**: the field asks the same under no
-hypothesis at all, and the two `T2Space` hypotheses here are what stands between them. -/
+hypothesis at all, and the one `T2Space` hypothesis here is what stands between them.
+
+**This read *the two `T2Space` hypotheses here*, until 2026-09-14**, when the source's became
+unused. -/
 theorem FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono [Mono i] :
     ∃ (Z : FiniteEtaleOver.{u} X) (u : Z ⟶ B),
       Nonempty (Limits.IsColimit (Limits.BinaryCofan.mk i u)) :=

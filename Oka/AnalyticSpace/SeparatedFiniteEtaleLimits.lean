@@ -89,8 +89,16 @@ reduces equality of morphisms of this category to equality of their underlying m
 `Oka/AnalyticSpace/SeparatedFiniteEtale.lean`:**
 
 * **`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left`**, which gives
-  `[T2Space A.left]`. `ComplexAnalytic.AnalyticSpace.baseChange` asks that of the source of its
-  finite étale leg and `Oka/AnalyticSpace/CoveringMap.lean` records why it is not removable there.
+  `[T2Space A.left]`. It is spent on the **objects** of this category being separated over their
+  base and not on the base change: `ComplexAnalytic.AnalyticSpace.baseChange` asks no separation
+  axiom of anything.
+
+  **That bullet closed *`ComplexAnalytic.AnalyticSpace.baseChange` asks that of the source of its
+  finite étale leg and `Oka/AnalyticSpace/CoveringMap.lean` records why it is not removable
+  there*, until 2026-09-14**, when `[T2Space E]` came out of
+  `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`. The named reason was that file's and was exact
+  while it stood; what this file spends `[T2Space X]` on is unchanged, and the instance is still
+  one of the two that spend it.
 * **`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isFiniteEtale_left`**, which makes the
   underlying morphism of `i` finite étale. That statement spends the **target**'s separatedness
   and the target of `i` is `C`.
@@ -227,11 +235,12 @@ morphism. **The two components of the object's pair are
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.selfProd`'s with `j.left` in the slot that
 construction repeats `i.left` in**, and the file's header says so with a `rfl`.
 
-`ComplexAnalytic.AnalyticSpace.baseChange` asks `[IsFiniteEtale i.left]` and `[T2Space A.left]`;
-the first is
+`ComplexAnalytic.AnalyticSpace.baseChange` asks `[IsFiniteEtale i.left]` and nothing else; it is
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isFiniteEtale_left`, which spends the
-separatedness of the **target** `C`, and the second is the instance
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left`, which is where `[T2Space X]`
+separatedness of the **target** `C`. **This sentence read *asks `[IsFiniteEtale i.left]` and
+`[T2Space A.left]`* and named both, until 2026-09-14**, when the second came out of
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`; the instance it named,
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left`, is still where `[T2Space X]`
 enters. **Separatedness of the structure morphism is two steps**: `IsSeparatedMap.pullback` makes
 the projection to `B.left` separated because
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isSeparatedMap_left` makes `i` separated,

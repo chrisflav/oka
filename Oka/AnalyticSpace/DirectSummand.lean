@@ -67,7 +67,8 @@ for character what it was.
   covers is injective on points. That is the remaining obligation"* until 2026-09-07**, when
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.injective_base_left_of_mono`
   (`Oka/AnalyticSpace/MonoDirectSummand.lean`) proved it for a monomorphism of covers both of
-  whose total spaces are Hausdorff, and
+  whose total spaces are Hausdorff — **it has asked only the target's since 2026-09-14**, when
+  `[T2Space E]` came out of `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` — and
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono` fed it to the
   theorem below. **Nothing below moved and nothing below derives injectivity from `Mono i`**;
   what changed is that a file this one does not import does.

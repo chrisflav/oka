@@ -133,8 +133,11 @@ which is what a `What this does not do` heading is for.
 **And `ComplexAnalytic.AnalyticSpace.hasPullback_pullbackFst_ofRestrict'` adds no shape to the
 accounting two other files keep.** `Oka/AnalyticSpace/ZeroLocus.lean` and
 `Oka/AnalyticSpace/CutOutFibreProduct.lean` each quantify over cospans by whether a leg **is** the
-inclusion of an open subspace, is finite étale with
-Hausdorff source, or is a morphism between local models presented by cut-out data. **This sentence
+inclusion of an open subspace, is finite étale, or is a morphism between local models presented by
+cut-out data. **The second of the three read *is finite étale with Hausdorff
+source* until 2026-09-14**, when the separation axiom came out of
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`; the count of shapes is unmoved and so is every
+figure in this paragraph. **This sentence
 said *three other files* and named `Oka/AnalyticSpace/LocalIso.lean` first, until 2026-09-08**,
 when that file retired its enumeration of shapes outright — an arbitrary cospan has a fibre
 product, so it keeps no list of shapes to be a member of — and the count here follows it down.

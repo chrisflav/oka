@@ -11,13 +11,20 @@ import Oka.Topology.SeparatedMap
 # A cover whose structure morphism is separated, and the direct summand it makes free
 
 `Oka/AnalyticSpace/MonoDirectSummand.lean` proves that a monomorphism of covers exhibits its
-source as a direct summand of its target, and it asks `[T2Space A.left]` and `[T2Space B.left]` —
-a separation axiom on each of the two *total spaces*. That file's own header says what those two
-hypotheses stand between: the statement it proves and the `monoInducesIsoOnDirectSummand` field of
+source as a direct summand of its target, and it asks `[T2Space B.left]` — a separation axiom on
+the *total space* of the **target**. That file's own header says what that hypothesis stands
+between: the statement it proves and the `monoInducesIsoOnDirectSummand` field of
 `Mathlib/CategoryTheory/Galois/Basic.lean`'s `PreGaloisCategory`, which asks the
 same under no hypothesis at all. `ComplexAnalytic.AnalyticSpace.exists_finiteEtaleOver_not_t2Space`
 then closed the obvious escape: a cover of a Hausdorff analytic space can have a non-Hausdorff
-total space, so neither hypothesis follows from separation of the base.
+total space, so it does not follow from separation of the base.
+
+**This paragraph said that file asks `[T2Space A.left]` and `[T2Space B.left]` — a separation
+axiom on each of the two total spaces — and closed *so neither hypothesis follows from separation
+of the base*, until 2026-09-14**, when `[T2Space E]` came out of
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and the source's became unused. **Everything this
+file states is unchanged**: it supplies both conditions object by object, and the one that is now
+surplus is supplied by a hypothesis this file still carries.
 
 **This file takes the remaining route. Ask the cover's structure morphism to be a separated map,
 and over a Hausdorff base both hypotheses are consequences rather than assumptions.**
@@ -98,7 +105,8 @@ import, and the only proof that consumes it is
 The rest is a **new file rather than an addition to
 `Oka/AnalyticSpace/MonoDirectSummand.lean`**, and the reason is the subject rather than the
 import: that file is about one theorem — a monomorphism of covers is injective on points — and
-its header is an argument about the two `[T2Space]` hypotheses of that theorem. Everything below
+its header is an argument about the `[T2Space]` hypotheses of that theorem —
+**two of them until 2026-09-14 and one since**, when the source's became unused. Everything below
 is a statement about a *condition on objects*, consumes that theorem without touching it, and
 carries the design argument this header makes, which is not that file's. The import this file
 needs and that file does not is `Oka/Topology/SeparatedMap.lean`: at `07b6670` the only file naming
@@ -119,7 +127,8 @@ touching them — but it is not the whole answer.
 
 **`…FiniteEtaleOver.injective_base_left_of_mono_of_isSeparatedMap` and
 `…FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono_of_isSeparatedMap` cannot be in that file at
-all.** They consume `…FiniteEtaleOver.injective_base_left_of_mono` and
+all**, and that is unaffected by either of them having lost a hypothesis on
+2026-09-14. They consume `…FiniteEtaleOver.injective_base_left_of_mono` and
 `…FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono`, which are in
 `Oka/AnalyticSpace/MonoDirectSummand.lean`, and that file imports
 `Oka/AnalyticSpace/DirectSummand.lean` directly — the line `import Oka.AnalyticSpace.DirectSummand`
@@ -153,11 +162,13 @@ modules, and the figures here are the former's.
   `…FiniteEtaleOver.injective_base_left_of_mono_of_isSeparatedMap`: **the two consequences of
   `Oka/AnalyticSpace/MonoDirectSummand.lean` with their separation axioms supplied** — the
   underlying morphism of a morphism of covers is finite étale, and a monomorphism of covers is
-  injective on points.
+  injective on points. **Each asks separatedness of the target and of nothing else; the second
+  asked it of the source as well, until 2026-09-14**, when that hypothesis became unused.
 - `…FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono_of_isSeparatedMap`: **a monomorphism of
   covers separated over a Hausdorff base exhibits its source as a direct summand of its target**,
-  which is the shape of the `monoInducesIsoOnDirectSummand` field with the two total-space
-  hypotheses replaced by one condition on each object.
+  which is the shape of the `monoInducesIsoOnDirectSummand` field with the total-space hypothesis
+  replaced by a condition on the target object. **This read *the two total-space hypotheses
+  replaced by one condition on each object* until 2026-09-14**, when the source's became unused.
 - `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isSeparatedMap_id`,
   `…FiniteEtaleOver.isSeparatedMap_sigma`, `…FiniteEtaleOver.isSeparatedMap_restrictClopen` and
   `…FiniteEtaleOver.isSeparatedMap_restrictClopenCompl`: **the terminal object, a finite
@@ -166,8 +177,9 @@ modules, and the figures here are the former's.
   of is, and the decomposition stays inside the condition.
 - `ComplexAnalytic.AnalyticSpace.not_isSeparatedMap_doubledLineOver`: **the condition is a real
   restriction on objects**, and the object it throws out is the line with two origins over `ℂ¹` —
-  the cover `Oka/AnalyticSpace/Double.lean` built to show that the two `[T2Space]` hypotheses
-  cannot be dropped.
+  the cover `Oka/AnalyticSpace/Double.lean` built to show that those `[T2Space]` hypotheses
+  cannot be dropped. **This read *the two `[T2Space]` hypotheses* until 2026-09-14**, when the
+  source's became unused; the witness settles the one that is left and settled both.
 
 ## What is not here
 
@@ -244,18 +256,21 @@ theorem FiniteEtaleOver.isFiniteEtale_left_of_isSeparatedMap {A B : FiniteEtaleO
   haveI := FiniteEtaleOver.t2Space_left_of_isSeparatedMap B hB
   FiniteEtaleOver.isFiniteEtale_left i
 
-/-- **A monomorphism of covers is injective on points**, when both covers are separated over a
+/-- **A monomorphism of covers is injective on points**, when the **target** is separated over a
 Hausdorff base.
 
-`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.injective_base_left_of_mono` with both of its
-separation axioms supplied. Both are needed and they are spent in different places: the target's
-makes the underlying morphism finite étale, the source's makes the fibre product of that morphism
-with itself available. -/
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.injective_base_left_of_mono` with its one
+separation axiom supplied. It is spent making the underlying morphism finite étale, and nothing
+is asked of the source.
+
+**This statement took a separatedness hypothesis on the source as well, until 2026-09-14**, when
+`[T2Space E]` came out of `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`: the hypothesis was
+there to make the fibre product of the underlying morphism with itself available, that base
+change stopped asking for it, and the tree's `unusedArguments` linter is what said so. -/
 theorem FiniteEtaleOver.injective_base_left_of_mono_of_isSeparatedMap
-    {A B : FiniteEtaleOver.{u} X} (hA : IsSeparatedMap ⇑(A.hom.toLRSHom.base))
+    {A B : FiniteEtaleOver.{u} X}
     (hB : IsSeparatedMap ⇑(B.hom.toLRSHom.base)) (i : A ⟶ B) [Mono i] :
     Function.Injective (i.left.toLRSHom.base : A.left → B.left) :=
-  haveI := FiniteEtaleOver.t2Space_left_of_isSeparatedMap A hA
   haveI := FiniteEtaleOver.t2Space_left_of_isSeparatedMap B hB
   FiniteEtaleOver.injective_base_left_of_mono i
 
@@ -265,15 +280,18 @@ is a colimit.
 
 **This is the shape of the `monoInducesIsoOnDirectSummand` field and it is not that field.** The
 field asks the same of every monomorphism and under no hypothesis at all; this asks `[T2Space X]`
-of the base and separatedness of the two objects, which together are what
-`Oka/AnalyticSpace/MonoDirectSummand.lean`'s two `[T2Space]` hypotheses cost when they are paid
-for at the objects instead of at their total spaces. -/
+of the base and separatedness of the **target**, which is what
+`Oka/AnalyticSpace/MonoDirectSummand.lean`'s one remaining `[T2Space]` hypothesis costs when it
+is paid for at the object instead of at its total space.
+
+**This paragraph said *separatedness of the two objects* and *two `[T2Space]`
+hypotheses*, until 2026-09-14**, when the source's came out along with `[T2Space E]` in
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`. -/
 theorem FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono_of_isSeparatedMap
-    {A B : FiniteEtaleOver.{u} X} (hA : IsSeparatedMap ⇑(A.hom.toLRSHom.base))
+    {A B : FiniteEtaleOver.{u} X}
     (hB : IsSeparatedMap ⇑(B.hom.toLRSHom.base)) (i : A ⟶ B) [Mono i] :
     ∃ (Z : FiniteEtaleOver.{u} X) (u : Z ⟶ B),
       Nonempty (Limits.IsColimit (Limits.BinaryCofan.mk i u)) :=
-  haveI := FiniteEtaleOver.t2Space_left_of_isSeparatedMap A hA
   haveI := FiniteEtaleOver.t2Space_left_of_isSeparatedMap B hB
   FiniteEtaleOver.inducesIsoOnDirectSummand_of_mono i
 

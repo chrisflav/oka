@@ -44,6 +44,7 @@ import OkaTest.DividedDifference
 import OkaTest.EpiIsLocallySurjective
 import OkaTest.EvalContinuous
 import OkaTest.Factorisation
+import OkaTest.FiniteEtaleBaseChangeNonHausdorff
 import OkaTest.FiniteEtaleCancel
 import OkaTest.FiniteEtaleOver
 import OkaTest.FiniteMorphism

@@ -16,9 +16,12 @@ by cut-out data, **the zero locus inside `X × Y` of the `p` differences of the 
 `ℂ^p` is the fibre product `X ×_S Y`**, and `CategoryTheory.Limits.HasPullback a b` follows.
 
 This is the first `CategoryTheory.Limits.HasPullback` instance in this repository over a cospan
-**neither of whose legs is the inclusion of an open subspace and neither of which is finite étale
-with Hausdorff source** — the two shapes `Oka/AnalyticSpace/PullbackOpen.lean` and
-`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` supply. `Oka/AnalyticSpace/Finite.lean` and
+**neither of whose legs is the inclusion of an open subspace and neither of which is finite
+étale** — the two shapes `Oka/AnalyticSpace/PullbackOpen.lean` and
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` supply. **The second shape read *is finite étale
+with Hausdorff source* until 2026-09-14**, when the separation axiom came out of that file; the
+sentence is about which shapes the two files supply and the cospan here is a leg of neither, at
+the wider shape as at the narrower. `Oka/AnalyticSpace/Finite.lean` and
 `Oka/AnalyticSpace/LocalIso.lean` each carried a clause recording the absence of a third shape and
 both are narrowed by this file; they are what a sweep for the phrase *cospan neither of whose
 legs* over every tracked `.lean` and `.md` at `c00e2a1`, the commit this file is added on, read as
