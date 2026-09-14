@@ -552,6 +552,53 @@ section is replaced, deprecated or reproved, and no guard of it moved.
 **This clause was added by the push that added that section**, 2026-09-14, for the reason the
 clause naming `### The terminal object and the product of two complex affine spaces` gives.
 
+And a section of **four** guards, every one of them of the **seventh** kind and of no other, the
+mirror tree again — **named by a count of its own guards and not by an ordinal among the
+sections of that kind**, because an ordinal there is a claim about a file anybody may append to,
+which is the failure this description's own *Named rather than counted from the end* paragraph
+records. The other clauses of this description opening on that kind are the ones opening *And
+one section more, of the seventh kind and of no other* and *And one section more, both of whose
+guards are of the seventh kind and of no other*, and this one displaces neither.
+`### The quotient of a covering map by a finite group over the base` guards the four declarations
+of `Oka/Topology/Covering/Quotient.lean`: that the descent of a covering map with finite fibres to
+the orbit space of a finite group acting continuously over the base is a covering map, that the
+descent has finite fibres, and the two halves that covering-map statement is built from — the
+shrinking step that makes the group permute the sheets over a small enough neighbourhood by a
+single permutation of the fibre, and the descent that step feeds. **No analytic space occurs in
+any of the four and no object of this repository does**, which is what puts them in the seventh
+kind, and that section has no consumer in this repository either, so it takes a section of its own
+rather than sharing one; its docstring measures both claims and gives the instruments. **The clause
+opening *And one section more, of the seventh kind and of no other* says of its own section that it
+is the first of this file whose single guard has no consumer, and that stays exact**: this section
+was added by a later push and has four guards and not one, so neither *first* nor *single guard* is
+a claim about it. **By subject these four
+belong to no kind of this file at all** — a covering map of topological spaces is not a class of
+morphisms of analytic spaces, not a statement about the total space of a cover of one, and not a
+statement about any category — so the argument that clause has to make against the sixth kind's
+criterion does not arise here.
+
+**The clauses opening *And one section more, of the seventh kind and of no other* and *And one
+section more, both of whose guards are of the seventh kind and of no other* each re-ran a
+published figure of this description on being added; this one re-runs neither, and the reason is
+that the argument here is structural.** They are named rather than counted, and the naming is what
+makes the sentence checkable: the clause standing between them and this one, the one opening
+*And one section more, adding no kind at all*, re-ran neither figure. The
+push that adds this clause adds exactly two hunks to this file — this clause and the section it
+names — and touches no line of `### The category of separated covers, and separatedness as a
+morphism property`, so the count *Five of that section's twenty-one guards* counts what it
+counted. And the published pullback check's inputs are this file's `#print axioms` names: this
+push adds **four** of them and **not one carries *isPullback* or *hasPullback***, so all four of
+that check's figures are untouched whichever way taxis #1947 settles the literal form of its
+`HasPullback` half; **that open question is why the check is not re-run here verbatim**, and what
+is claimed is only that this push moves none of its inputs. **The inputs are names and not
+prose**, which is worth saying because the section this clause names does cite two statements
+whose names carry the token in prose, in the paragraph opening *One further section of this file
+reached its placement by that route*; no form of the token occurs in
+`Oka/Topology/Covering/Quotient.lean` at all. **This clause was added by the push
+that added `### The quotient of a covering map by a finite group over the base`**, 2026-09-13, for
+the reason the clause naming `### The terminal object and the product of two complex affine
+spaces` gives.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -6886,3 +6933,123 @@ info: 'TopologicalSpace.IsOpenCover.isLocalHomeomorph_iff_restrictPreimage' depe
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms TopologicalSpace.IsOpenCover.isLocalHomeomorph_iff_restrictPreimage
+
+/-! ### The quotient of a covering map by a finite group over the base
+
+`Oka/Topology/Covering/Quotient.lean`, the whole of it. **Four names**: that the descent of a
+covering map with finite fibres to the orbit space of a finite group acting continuously over the
+base is a covering map, that the descent has finite fibres, and the two halves that covering-map
+statement is built from — the shrinking step that makes a finite group permute the sheets over a
+small enough neighbourhood by a single permutation of the fibre, and the descent that step feeds.
+**The action is not assumed free and nothing is assumed of the base.**
+
+**The routing, argued rather than assumed, because the module is new and no row of the topic table
+names its subject.** `OkaTest/Axioms.lean` says what to do with exactly that case — *Guard one in
+the file of the analytic result that motivated it*, under that result's heading. **This one has no
+consumer to sit with**, and that is two measurements at the commit that adds this section. First,
+no module under `Oka/` imports `Oka/Topology/Covering/Quotient.lean`, the `Oka.lean` aggregator
+line aside, which is the exclusion the account of that rule makes in terms and by the instrument it
+publishes, `git grep -l -E '^import <module>$'`. Second, none of the four is tagged `@[simp]`,
+`@[instance]` or `@[aesop]` — they are four plain theorems — so no proof term anywhere can reach
+one without spelling its name, and a grep for the four names over `Oka/`, `OkaTest/`, `scripts/`
+and `README.md` returns their own module and this section and nothing else — **twenty-two lines at
+the commit that adds this section, fourteen of them in the module and eight of them here**, with
+`scripts/` and `README.md` at zero. **Not this file's head description**: the clause that push adds
+there describes the four in prose and names none of them, so that grep does not reach it, and a
+reader checking this sentence against the instrument should expect the head description to be
+absent from its output rather than in it. So the guard takes a section of its own.
+
+**The precedent is `### Colimits of shape SingleObj in a category with finite colimits`, and what
+is shared with it is the reason and not the subject.** That section reaches the same placement by
+the same route — a mirror-tree module whose motivating analytic result does not exist yet, so that
+the tail rule has no heading to send it to — and it reaches it through the same member of that
+account's list, `Oka/FieldTheory/IsAlgClosed/Basic.lean`, the member the account acquits by
+measuring that no module under `Oka/` imports it. **The subject is not shared**: that section is
+about colimits in a category and this one is about covering maps of topological spaces, so neither
+is evidence about the other's row in the topic table. Only the tail rule both fall under is
+common, and the tail rule is the whole of the citation.
+
+**One further section of this file reached its placement by that route and no longer stands in
+it, which is why it is named here and not cited as a second precedent.**
+`### Base change of a local homeomorphism, and of a proper map` took a section of its own
+because the analytic result that would motivate its two guards did not exist. That result exists
+at the commit this section is cut from and consumes both, one line each:
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` applies `IsLocalHomeomorph.pullback_snd` in
+`ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase` and
+`IsProperMap.pullback_snd` in
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase`. **This push repairs neither the
+section nor its clause of the head description, and that is a scope call and not a finding that
+either is sound.** Both are in the present tense and both went false at `280bb67`, the commit
+this section is cut from and the one that wrote both of the consumers this paragraph names, at
+`2026-09-14 07:52:28Z`: the clause of the head description says the analytic result that would
+motivate that section's two guards *does not exist yet*, and that section's docstring opens
+*Neither statement is consumed by anything*, a sentence whose supporting run is pinned to the
+commit that adds the section and which carries no pin itself. **Repairing them is a push of its
+own** — this one is a re-cut whose whole claim is that it moves nothing — **and it touches no
+line of either**, which is the only thing this paragraph asserts about them.
+
+**Why this file and not another, with the competitors named.** What motivated the statement is the
+`PreGaloisCategory` field on quotients by finite group actions at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` — the class is in
+`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's import
+closure and so cannot be cited by name here — and **every guard of that ladder is in this file**.
+There is a second reason, independent of that one and checkable without leaving this file: **the
+mirror-tree covering-map material of this repository is already guarded here**, in
+`### The third rung: a finite étale morphism is a covering map`, whose own docstring says why
+`Oka/Topology/Covering/Basic.lean`'s criteria sit with their consumers rather than apart from them.
+**The competing row is *general presheaf and sheaf theory, and ringed spaces*,
+`OkaTest/Axioms/Sheaves.lean`**, which is where general material about topological spaces would go
+if the topic table routed by source directory; it loses because that table routes by topic, no
+presheaf, sheaf or ringed space occurs below, and the topic table has no row for general topology
+at all.
+
+**Which kind the four guards are, against the description at the head of this file.** They are of
+the **seventh**, the mirror tree, and of no other kind. **By subject they are of no kind of this
+file at all** — a covering map of topological spaces is not a class of morphisms of analytic
+spaces, not a statement about the total space of a cover of one, and not a statement about a
+category — so the seventh kind reaches them without having to displace another, which is the part
+of the routing argument the clause of the head description opening *And one section more, of the
+seventh kind and of no other* had to make for its own section and this one does not.
+
+**`Classical.choice` is in all four guards below and this module inherits none of the three axioms
+through a rung of this repository**: its imports are `Mathlib/Topology/Algebra/ConstMulAction.lean`
+and `Mathlib/Topology/Covering/Basic.lean` and nothing under `Oka/`. `Classical.choice` is already
+carried by `IsEvenlyCovered.fiberHomeomorph` and by `Equiv.ofBijective`, which is one
+`#print axioms` run each and not a reading of any proof below; the second of those carries that
+axiom **and neither `propext` nor `Quot.sound`**, which is why naming it alone is the honest
+citation here.
+
+**Four is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output: no `_assoc` lemma, no `.eq_1` equation lemma, no match lemma
+and no congruence lemma, all four declarations being theorems.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'IsCoveringMap.of_comp_quotientMk' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms IsCoveringMap.of_comp_quotientMk
+
+/--
+info: 'MulAction.finite_fiber_of_comp_quotientMk' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms MulAction.finite_fiber_of_comp_quotientMk
+
+/--
+info: 'IsEvenlyCovered.exists_smul_parametrisation' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms IsEvenlyCovered.exists_smul_parametrisation
+
+/--
+info: 'IsEvenlyCovered.of_smul_parametrisation' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms IsEvenlyCovered.of_smul_parametrisation
