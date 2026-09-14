@@ -522,8 +522,19 @@ this push too: its *Five of that section's twenty-one guards*, which counts over
 of separated covers, and separatedness as a morphism property`, and that same check — `git diff`
 against the commit this section is cut from touches no line of that section. **This clause was added
 by the push that added `### Base change of a local homeomorphism, and of a proper map`**,
-2026-09-13, for the reason the clause naming `### The terminal object and the product of two complex
+2026-09-14, for the reason the clause naming `### The terminal object and the product of two complex
 affine spaces` gives.
+
+**That numeral read 2026-09-13, and it is corrected here rather than dated.** `954b116`, the
+commit that carries this clause and the section it names on `master`, landed at
+`2026-09-14T01:34:48Z`, so the numeral was never the date of the push it names; a dated record
+would presuppose that the clause read true before the day it gives, and this one did not. **The
+cause is a merge that crossed midnight**, by ninety-five minutes — the other numeral this push
+repairs, in the clause naming
+`### The quotient of a covering map by a finite group over the base`, has no such excuse, its
+push having landed at midday, and the two owed the same repair all the same. `README.md`'s
+*The `until <date>` record* states the rule, publishes the register these two are the
+non-matching rows of, and says what a branch owes when it cannot know its own landing day.
 
 And one section more, adding **no kind at all** and named here because the convention this file's
 other clauses record is that a push appending a section owes the description one.
@@ -595,9 +606,18 @@ prose**, which is worth saying because the section this clause names does cite t
 whose names carry the token in prose, in the paragraph opening *One further section of this file
 reached its placement by that route*; no form of the token occurs in
 `Oka/Topology/Covering/Quotient.lean` at all. **This clause was added by the push
-that added `### The quotient of a covering map by a finite group over the base`**, 2026-09-13, for
+that added `### The quotient of a covering map by a finite group over the base`**, 2026-09-14, for
 the reason the clause naming `### The terminal object and the product of two complex affine
 spaces` gives.
+
+**That numeral read 2026-09-13, and it is corrected here rather than dated.** `ddcc4c6` — the
+commit that carries this clause and the section it names on `master` — landed at
+`2026-09-14T12:01:10Z`, a day after the numeral and ten hours clear of midnight, and a dated
+record would presuppose that the clause read true before the day it names. **This is the one of
+the two numerals this push repairs that no midnight crossing explains**; the other is in the
+clause naming `### Base change of a local homeomorphism, and of a proper map`, and `README.md`'s
+*The `until <date>` record* is where the rule, the register that found both and the reason a
+crossing explains a numeral without rescuing it are written.
 
 **And a section more, at the second category named by the clause opening
 *The sixth kind has a second category*, and at two functors out of it.**

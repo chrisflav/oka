@@ -1352,6 +1352,88 @@ file, and that only the outermost link of a chain discharging a class is dischar
 instance that starts it — and both are kept there, stated as rules and attributed to nothing. It
 is the framing that asserts the history and not the lesson.
 
+**A clause that dates *itself* answers to the rule above and is reached by none of the four scans
+above.** At `1252d8b`, **seventeen** clauses of `OkaTest/Axioms/Morphisms.lean`'s head description
+close with a sentence of the form *This clause was added by the push that added `### …`*, and
+`OkaTest/Axioms/CutOut.lean` carries one of the same shape; **sixteen** of the eighteen close with
+a numeral. **That numeral is the UTC date of the commit that carries the clause on `master`** —
+the squash commit of the pull request that added the section — and not the day the branch was cut,
+the day the clause was written or the day a re-cut was made. The reason is the one the paragraph
+opening *A record retires prose that was on `master`* gives for a record. Every pull request lands
+squashed and nothing since those eleven merges has two parents, and at `1252d8b` `%ad` equals
+`%cd` on all but one of that history's **589** commits, the exception being dated 2026-07-22 and
+so older than the merges; the branch commit's author date is discarded by the squash. **So the
+landing day is the only day a reader of `master` can check the numeral against**, and a self-date
+naming any other day is a claim no search over `master` can reach.
+
+**A branch cannot know that day, and the rule is written this way in spite of that rather than in
+ignorance of it.** The alternative is the day the clause was written, which a branch always knows
+and which nothing on `master` can check — that is the objection that decides it. Naming the pull
+request rather than a day is the third candidate, and it is declined here because it would leave
+one description carrying two forms at once. What the rule costs is that **a branch landing on a
+later UTC day than the one it wrote into the clause owes the numeral**, and a re-cut owes it in
+the repair commit rather than in the port, whose added-line multiset against the old base is what
+proves the conflict resolution changed nothing else. The push that notices a stale numeral repairs
+it in place, which is what this section's opening line asks of any clause that has stopped being
+true.
+
+**The register is one command, and it has no rows to classify away** — which is what separates it
+from the two registers above. It scans the self-dating phrase and takes the numeral that closes
+it, so a record of this section's own kind, and a historical reference to another push of the
+shape *that exclusion having been added to it on 2026-09-12 by the push that added `### …`*, are
+outside it by construction rather than by a reading. **It has to be wrap-aware in two places at
+once**: at `1252d8b` the phrase spans more than one line at **12** of the **16** dated clauses and
+the numeral opens a continuation line at **3** of them, so neither a line-anchored scan of the
+phrase nor one of the numeral reaches all sixteen.
+
+```sh
+for f in $(git ls-files 'Oka/*.lean' 'OkaTest/*.lean'); do
+  perl -0777 -ne 'while (/(?:This|That)\s+(?:clause|sentence)\s+was\s+added\s+by\s+the\s+push\s+
+                    that\s+(?:added|wrote)\b.{0,400}?\*\*(?:,\s*(\d{4}-\d{2}-\d{2}))?/gsx) {
+                    next unless defined $1;
+                    print "$ARGV ", (substr($_, 0, $-[1]) =~ tr/\n//) + 1, " $1\n" }' "$f"
+done | while read -r f n d; do
+  h=$(git blame -L "$n,$n" --porcelain -- "$f" | head -1 | cut -d' ' -f1)
+  b=$(git show -s --date=short --format=%ad "$h")
+  [ "$d" = "$b" ] && echo "matching $f:$n" || echo "behind $f:$n prose $d blame $b"
+done
+```
+
+**Its row count is its own reach test**, as the second register above is: the rows have to number
+the *dated* self-dating clauses, and the same `perl` run with the `next unless defined $1` line
+deleted numbers all of them — **16** and **18** at `1252d8b`, the two without a numeral being
+clauses of `OkaTest/Axioms/Morphisms.lean`, since the form is optional and this rule says what a
+numeral means rather than that one is owed. The register is **14** matching and **2** behind at
+that commit, and the two are the numerals the commit that writes this section repairs: the clauses
+naming `### Base change of a local homeomorphism, and of a proper map` and `### The quotient of a
+covering map by a finite group over the base`, each reading 2026-09-13 against `954b116` and
+`ddcc4c6`, which landed at `2026-09-14T01:34:48Z` and `2026-09-14T12:01:10Z`.
+
+**A row that is not matching has three causes and two of them are the numeral wrong.** A later
+push that rewrote the line, so that blame names the rewriter and not the push the numeral is
+about, is not a defect, and it is the blindness the registers above have as well. **The repair of
+a numeral is the second, and it is permanent**: the repair re-touches the line and blame reports
+the repairing push from then on, which is what the sentence *A repaired record's row stays in the
+`behind` bucket and moves cause rather than column* records for this section's own register — so a
+repaired self-date reads `behind` for as long as its clause stands, unless the repair itself lands
+on the day the numeral names. **The third is the numeral naming a day that is not its commit's**,
+whether because the branch was cut the day before or because the merge crossed midnight, and
+**both halves of the third are the numeral wrong**. This section classifies *a merge that crossed
+midnight* as not a defect, and that classification is about what a `behind` row of that register
+means rather than about whether a numeral may disagree with the date carried by the commit it
+names: `954b116` landed ninety-five minutes past midnight and `ddcc4c6` at midday, and the two
+clauses owed the same repair for all that only one of them has that excuse.
+
+**A repaired self-date is a correction and not a dated record**, so neither census above moves for
+one: the numeral was never true of the commit that carries its clause, and a dated record
+presupposes a day before which the clause read true.
+
+**The boundary against *Re-deriving a branch's measured absences after a re-cut*.** That section
+is about a clause **true when written and false when re-cut**, whose repair is a re-derivation; a
+self-date that lands a day late was **false at the commit that carries it**, and its repair is a
+correction. A re-cut is where the class is generated all the same, a re-cut being by construction
+a later day than the cut.
+
 ### How far a fronted commit pin reaches
 
 A paragraph here often opens *At `<commit>`* and then measures something — a count, an absence, a
