@@ -124,9 +124,27 @@ defining one would still be missing.** The class has six fields — `trans`, `tr
   indexed by, and `w` — which says a transition composed into the larger member is the smaller
   one's map — has nothing to be about until there are.
 * `property_trans` asks for a `CategoryTheory.MorphismProperty`. That class **is** reachable — it
-  is Mathlib's and it is in this repository's import closure — but a grep for `MorphismProperty`
-  over `Oka/` is **empty**, so nothing here has ever used the framework, and which property a
-  cover of a complex analytic space should carry is undecided rather than merely unstated.
+  is Mathlib's and it is in this repository's import closure — and **this clause read *but a grep
+  for `MorphismProperty` over `Oka/` is empty, so nothing here has ever used the framework*, and
+  stopped being true on 2026-08-31**, when `1556d01` declared
+  `ComplexAnalytic.AnalyticSpace.isFiniteEtale` as a property of that class and cut the category
+  of covers out of it with `CategoryTheory.MorphismProperty.Over`. **The form is *stopped being
+  true on* and not *until***: the day the clause stopped being true and the day it is rewritten
+  here are three weeks apart, and this repository's `until <date>` record names the second, so
+  neither date would be right in that form. `Oka/AnalyticSpace/LocalIso.lean` records a clause of
+  its own the same way and for the same reason — *it had already stopped being true before the
+  branch that removed it* — and that is the precedent followed here. **At
+  the commit that repairs it** that grep returns **218** lines in **24** files under `Oka/`, and
+  **13** modules under `Oka/` name the class in their comment-stripped code,
+  `scripts/import_cost.py`'s `strip_comments` the instrument.
+  **What the clause was evidence for survives it**, which is why the sentence below it does not
+  move: which property a cover of a complex analytic space should carry as `property_trans` is
+  undecided rather than merely unstated. The field asks the transition maps to satisfy the
+  property the cover's own precoverage is taken with — `P` in the class's own binder at
+  `Mathlib/AlgebraicGeometry/Cover/Directed.lean:44` — and nothing here has chosen one for an
+  analytic cover. That `ComplexAnalytic.AnalyticSpace.isFiniteEtale` is a
+  `CategoryTheory.MorphismProperty` of `ComplexAnalytic.AnalyticSpace` makes such a choice
+  available and is not itself that choice.
 
 So the class is three decisions away and not one: a category on the cover's index type, a choice
 of morphism property, and which level `trans_comp` lives at. Defining it remains a design
