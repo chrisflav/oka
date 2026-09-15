@@ -21,7 +21,7 @@ two functors.
 `Mathlib/CategoryTheory/Galois/Basic.lean` at the revision `lake-manifest.json` pins asks a
 `FiberFunctor` for **six** things — preservation of terminal objects, of pullbacks, of finite
 coproducts, of epimorphisms and of quotients by finite group actions, and reflection of
-isomorphisms. That namespace is **not in this repository's import closure** and so cannot be cited
+isomorphisms. That namespace is **not in this file's import closure** and so cannot be cited
 by name here, which is the spelling `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` and
 `Oka/AnalyticSpace/SeparatedFiniteEtale.lean` already use for it and the reason no instance of
 either of that file's two classes is declared anywhere below. The field is
@@ -29,7 +29,11 @@ either of that file's two classes is declared anywhere below. The field is
 `Mathlib/CategoryTheory/Functor/EpiMono.lean`'s and **is** in this repository's closure.
 
 **So what is here is one field of one of the two classes, and not the class.** No
-`PreGaloisCategory` instance is declared anywhere in this repository and none is declared here.
+`PreGaloisCategory` instance was declared anywhere in this repository **until 2026-09-15**, when
+`Oka/AnalyticSpace/GaloisCategory.lean` declared one at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` and made this sentence a record of a
+commit rather than a claim about the tree; **none is declared here**, which is what this paragraph
+is about and which that push does not touch.
 
 ## The content is one theorem about the category and the functors contribute nothing to it
 
@@ -171,6 +175,21 @@ here` says so.
   (`Oka/AnalyticSpace/SeparatedDirectSummand.lean`) — and this file neither cites it nor imports
   the module it is in; the argument below works with the open subspace and its complement at the
   level of analytic spaces and never forms either as a cover.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. **The rescoping is not this file's whole share of that push**: the `## What is not here`
+sentence asserting that no `PreGaloisCategory` instance is declared anywhere in this repository is
+a claim about existence and not about citability, the same push falsifies it, and it is rewritten
+at its commit rather than left in the present tense. `git diff` against the commit this file is
+cut from shows both.
 -/
 
 universe u

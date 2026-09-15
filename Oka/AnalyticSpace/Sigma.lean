@@ -119,7 +119,7 @@ adds is the interface — the cofan, `ComplexAnalytic.AnalyticSpace.hasCoproduct
 objects.
 
 **What asks for that interface is `Mathlib/CategoryTheory/Galois/Basic.lean`'s definition of a
-Galois category**, whose namespace is not in this repository's import closure and so cannot be
+Galois category**, whose namespace is not in this file's import closure and so cannot be
 cited by name here. **What is here does not satisfy it.** That definition asks for finite
 coproducts of the *category of finite étale covers of a fixed base*, which is
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver`; the instances below are about
@@ -153,6 +153,18 @@ with `ComplexAnalytic.AnalyticSpace.sigmaι_toLRSHom` twice.
 non-surjective on points at a two-member family with the other member inhabited. That an analytic
 space is not *isomorphic* to another is a statement about an invariant and nothing here computes
 one.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. The rescoping is this file's whole share of that push, and `git diff` against the commit it
+is cut from shows it.
 -/
 
 open CategoryTheory CategoryTheory.Limits Opposite AlgebraicGeometry

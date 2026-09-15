@@ -30,7 +30,7 @@ component.
 this category, **with nothing added**. That class asks five things of a category — a terminal
 object, pullbacks, finite coproducts, quotients by finite group actions, and that a monomorphism
 induce an isomorphism onto a direct summand — and this is one of them, so what is here is one
-field and not the class. **That namespace is not in this repository's import closure**: `#check` on
+field and not the class. **That namespace is not in this file's import closure**: `#check` on
 it reports an unknown identifier from a file importing this module, which is the spelling
 `Oka/AnalyticSpace/SeparatedFiniteEtale.lean` and `Oka/AnalyticSpace/FiniteEtaleOver.lean` already
 use for it and the reason no instance of it is declared anywhere below.
@@ -192,6 +192,18 @@ this file is about them.
   untouched by this file and are not made weaker by it*, until 2026-09-15**, when the class was
   stated and *the bullets recording that* stopped naming what records it. What this bullet claims
   of this file is unchanged.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. The rescoping is this file's whole share of that push, and `git diff` against the commit it
+is cut from shows it.
 -/
 
 open CategoryTheory
@@ -342,7 +354,7 @@ the base.
 
 **This is a Galois-category field at this category**, as
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasTerminal` is: the class in
-`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's import
+`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this file's import
 closure and so cannot be cited by name here, carries a field of exactly this class at exactly the
 category the monomorphism field is stated over. **It is one field and not the class**, and the
 module docstring says which of the five it is, which three else hold at the commit this is written

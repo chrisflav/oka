@@ -64,16 +64,26 @@ statement worth having under one name rather than as two instances elaborated se
 
 **That sentence read *The four are stated because the downstream uses of the property — a
 Galois-category structure, the comparison functor taxis #1113 wants — ask for them*, until
-2026-09-08**, when it was measured rather than read, and **neither use it named exists.** No
-`PreGaloisCategory` instance is in this repository, and the measurement is immune to being
-written down: the name occurs in the **comment-stripped code** of no module of this repository, so
-no declaration can mention it, while a plain grep for it is matched by this sentence.
-`Oka/AnalyticSpace/MonoDirectSummand.lean`, `Oka/AnalyticSpace/SeparatedOver.lean` and
+2026-09-08**, when it was measured rather than read, and **neither use it named existed at that
+commit.** No `PreGaloisCategory` instance was in this repository, and the measurement was immune
+to being written down: the name occurred in the **comment-stripped code** of no module of this
+repository, so no declaration could mention it, while a plain grep for it was matched by this
+sentence. `Oka/AnalyticSpace/MonoDirectSummand.lean`, `Oka/AnalyticSpace/SeparatedOver.lean` and
 `Oka/AnalyticSpace/SeparatedFiniteEtale.lean` each say so of themselves in those words, and
-`Oka/AnalyticSpace/SeparatedFiniteEtale.lean` adds that the namespace is not in this repository's
-import closure at all; the comparison functor is taxis #1113 and is open. **Neither a grep nor a
-guard can decide who consumes these four**, and not because they are nameless — Lean generates a
-name for an anonymous instance and `scripts/DumpOkaDecls.lean` emits all four, so
+`Oka/AnalyticSpace/SeparatedFiniteEtale.lean` adds that the namespace is not in that file's
+import closure at all.
+
+**The first of the two uses that sentence named exists from 2026-09-15 and the second is still
+open**, which is why the paragraph above is written at its commit and not in the present tense:
+`Oka/AnalyticSpace/GaloisCategory.lean` declares `CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`, so the name occurs in the
+comment-stripped code of **two** modules of this repository from that commit — that one and
+`OkaTest/GaloisCategory.lean` — with `scripts/import_cost.py`'s `strip_comments` the instrument;
+the comparison functor is taxis #1113 and is open. **Whether the structure that now exists
+consumes any of the four is not decided here**, and the paragraph below is what says which
+instrument would decide it. **Neither a grep nor a guard can decide who consumes these four**, and
+not because they are nameless — Lean generates a name for an anonymous instance and
+`scripts/DumpOkaDecls.lean` emits all four, so
 `#print axioms ComplexAnalytic.AnalyticSpace.instRespectsIsoIsFiniteEtale` elaborates. It is that
 **no use site of an instance names it**, synthesis having put the term there, which is as true of a
 named instance as of these. **The build decides it.** Declared `local instance` instead, so that no
@@ -465,7 +475,7 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fintypeFiberFunctor` below are the fibre at a
   point of the base, into `Type u` and into `FintypeCat`; the second is the shape a Galois category
   asks for, that definition being in `Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is
-  not in this repository's import closure and so cannot be cited by name here.
+  not in this file's import closure and so cannot be cited by name here.
 
   **The reason this bullet gave for their absence was wrong, and saying how is the point.** It said
   the fibre of a finite étale morphism is finite by
@@ -836,6 +846,23 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   its *input*, and no passage in that direction is exhibited or claimed here.
   `Oka/AnalyticSpace/Glue.lean`'s first bullet makes the same distinction for the same reason.
   **Nothing below mentions a scheme.**
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's* — **all but one**: the clause reporting what
+`Oka/AnalyticSpace/SeparatedFiniteEtale.lean` says of its own closure says *that file's*, a
+demonstrative in a reported claim pointing at the file reported on and not at this one. No import
+of this module reaches the one that pays for the class, so nothing here can name it and every
+clause of this file that says so stays exact. **The rescoping is not this file's whole share of
+that push**: the paragraph recording the measurement of 2026-09-08 asserted that no
+`PreGaloisCategory` instance is in this repository, which the same push falsifies, and it is
+rewritten at its commit rather than left in the present tense. `git diff` against the commit this
+file is cut from shows both.
 -/
 
 open CategoryTheory
@@ -970,7 +997,7 @@ def FiniteEtaleOver.isTerminalId (X : AnalyticSpace.{u}) :
 Stated as the class and not only as the witness above, because that is the form a
 `CategoryTheory.Limits.HasTerminal` consumer asks for — `⊤_ (FiniteEtaleOver X)` is notation for
 it — and because the Galois-category definition in `Mathlib/CategoryTheory/Galois/Basic.lean`,
-whose namespace is not in this repository's import closure and so cannot be cited by name here,
+whose namespace is not in this file's import closure and so cannot be cited by name here,
 carries this field as an instance.
 
 **It is an `instance` deliberately, and the choice was not free.** *Measured at `59f0ba2`, and
@@ -1352,7 +1379,7 @@ def FiniteEtaleOver.fiberFunctor {X : AnalyticSpace.{u}} (x : X) :
 The same functor as
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fiberFunctor` with its values bundled with the
 finiteness above; `Mathlib/CategoryTheory/Galois/Basic.lean` — whose namespace is not in this
-repository's import closure and so cannot be cited by name here — asks for a functor into
+file's import closure and so cannot be cited by name here — asks for a functor into
 `FintypeCat`, and this is one.
 
 **It is computable, which is worth recording because the obvious expectation is otherwise.**
@@ -1952,7 +1979,7 @@ This is the one a Galois category would want, that definition asking for a funct
 wrong: it said that *faithfulness is one of the axioms and base change is another*.
 **`CategoryTheory.Functor.Faithful` is not one of the axioms.** At the Mathlib revision
 `lakefile.toml` pins, `Mathlib/CategoryTheory/Galois/Basic.lean` — whose namespace is not in this
-repository's import closure and so cannot be cited by name here — carries faithfulness of a fibre
+file's import closure and so cannot be cited by name here — carries faithfulness of a fibre
 functor as an `instance` *derived* from the axioms rather than as a field of the class asking for
 them. So this instance proves something such a structure would hand back for free, and it
 discharges none of that structure's obligations.
@@ -2097,7 +2124,7 @@ point by `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.uniqueFiberId`, and
 `CategoryTheory.Limits.Types.isTerminalEquivUnique` is the conversion.
 
 **Preservation of the terminal object is a Galois-category axiom on the fibre functor**, in
-`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's import
+`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this file's import
 closure and so cannot be cited by name here. **It is one field of that structure and this instance
 does not supply the others**; the `## What is not here` bullet
 **No base change of the class over a cospan of morphisms of covers**
@@ -2524,7 +2551,7 @@ theorem FiniteEtaleOver.hasColimitsOfShape_discrete (ι : Type u) [Finite ι]
 
 **This is a Galois-category axiom on the category**, as
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.hasTerminal` is: the definition in
-`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's import
+`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this file's import
 closure and so cannot be cited by name here, carries a field of exactly this class at exactly this
 category. `Oka/AnalyticSpace/Sigma.lean` states the same class of
 `ComplexAnalytic.AnalyticSpace` itself and says there that what it holds is the ingredient the
@@ -2726,7 +2753,7 @@ the point.
 **This is a Galois-category axiom on the fibre functor**, as
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fiberFunctor` is: the
 class of a fibre functor in `Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in
-this repository's import closure and so cannot be cited by name here, carries a field of exactly
+this file's import closure and so cannot be cited by name here, carries a field of exactly
 this class.
 
 **The universe crossing is the same one

@@ -47,7 +47,7 @@ nothing else; the first succeeds and the other two are the edges:
 
 **The statement below asks `[Finite G]` at an arbitrary universe**, which is the form a class
 whose group ranges over the hom universe of `C` asks for. `Mathlib/CategoryTheory/Galois/Basic.lean`
-has a field of exactly that shape; its namespace is not in this repository's import closure, so it
+has a field of exactly that shape; its namespace is not in this file's import closure, so it
 cannot be cited by name here.
 
 ## The proof, which is Mathlib's own move with the category left general
@@ -89,6 +89,18 @@ left general.
 * **Nothing about `Finite` versus `Fintype` in general.** The probes under *What Mathlib already
   answers* measure instance search at this one shape and are not a claim about how the two classes
   relate.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. The rescoping is this file's whole share of that push, and `git diff` against the commit it
+is cut from shows it.
 -/
 
 @[expose] public section

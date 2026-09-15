@@ -660,9 +660,13 @@ index-of-a-point shape, and one of these seven.
   Galois-category structure, the comparison functor taxis #1113 wants — ask for them"*, of the four
   anonymous `CategoryTheory.MorphismProperty` instances on
   `ComplexAnalytic.AnalyticSpace.isFiniteEtale` — **false, and repaired in this push with the
-  retired wording kept there as a dated record.** Neither named use exists: there is no
-  `PreGaloisCategory` instance in this repository, which three files say of themselves in those
-  words, and taxis #1113 is open. The one consumption of any of the four is in
+  retired wording kept there as a dated record.** **Neither named use existed at the commit that
+  made that repair**: there was no `PreGaloisCategory` instance in this repository, which three
+  files say of themselves in those words, and taxis #1113 was open. **The first of the two exists
+  from 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` declared one at
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`, and **taxis #1113 is still open**;
+  what that changes is the register of the sentence and not the verdict on the wording, which was
+  false when written. The one consumption of any of the four is in
   that same file, at `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_restrictHom_top`.
 * `Oka/Analytification/UniversalProperty.lean`'s *"Everything downstream is stated in the second
   spelling"*, of the two spellings of a factorisation that

@@ -14,7 +14,7 @@ proves of it everything this repository knows about a fibre functor: that it pre
 object, that it is faithful, and that it is conservative. **All of that is stated one category out
 from where the Galois-category axioms are being assembled.**
 
-`Mathlib/CategoryTheory/Galois/Basic.lean` — whose namespace is not in this repository's import
+`Mathlib/CategoryTheory/Galois/Basic.lean` — whose namespace is not in this file's import
 closure and so cannot be cited by name here — asks for two things at once: a `PreGaloisCategory`
 structure on a category, and a `FiberFunctor` structure on a functor out of **that same category**
 into `FintypeCat`. The first of those is being built at
@@ -135,9 +135,13 @@ Every `@`-application below is that, and none of them is a mathematical step.
   `FiberFunctor` that has **six** fields — preservation of terminal objects, of pullbacks, of
   finite coproducts, of epimorphisms and of quotients by finite group actions, and reflection of
   isomorphisms — and this file supplies the **first and the last** and says nothing about the other
-  four. It is not a partial instance and no `PreGaloisCategory` instance is declared anywhere in
-  this repository; at the commit that adds this file, `PreGaloisCategory` occurs in the
-  comment-stripped code of no module of it at all.
+  four. It is not a partial instance, and **no `PreGaloisCategory` instance was declared anywhere
+  in this repository until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` declared one
+  at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`; at the commit that adds this file,
+  `PreGaloisCategory` occurs in the comment-stripped code of no module of it at all, and at the
+  commit that declares that instance in two. **Neither figure is this file's to keep current** —
+  both are pinned — and **what this bullet asserts of this file is unmoved by either**: nothing
+  here is an instance of either class.
 * **Not the preservation of pullbacks, and the obstruction is not a missing instance.**
   `Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` gives the fibre product of separated covers
   over a Hausdorff base, so the limit whose image would have to be computed exists; what is missing
@@ -306,6 +310,21 @@ Every `@`-application below is that, and none of them is a mathematical step.
   are compared. **What this file removes of the ambient subcategory's condition is now both
   halves at conservativity and the Hausdorff half at faithfulness**, where it was the Hausdorff
   half at both.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. **The rescoping is not this file's whole share of that push**: the `## What is not here`
+sentence asserting that no `PreGaloisCategory` instance is declared anywhere in this repository is
+a claim about existence and not about citability, the same push falsifies it, and it is rewritten
+at its commit rather than left in the present tense. `git diff` against the commit this file is
+cut from shows both.
 -/
 
 open CategoryTheory Limits AlgebraicGeometry TopologicalSpace
@@ -338,7 +357,7 @@ def SeparatedFiniteEtaleOver.fiberFunctor (x : X) :
 
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fintypeFiberFunctor` composed with the same
 inclusion. **This is the functor a `FiberFunctor` structure would be asked of**, that structure
-living in `Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's
+living in `Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this file's
 import closure and so cannot be cited by name here.
 
 **No import is added for it**: `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fintypeFiberFunctor`
@@ -638,7 +657,7 @@ preconnected Hausdorff base.
 at this functor and with no condition on the objects**, which is why it is named for that field:
 the pair below is the same statement at the restriction along
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected`'s inclusion, which is
-weaker and is what this file supplied until 2026-09-15. That namespace is not in this repository's
+weaker and is what this file supplied until 2026-09-15. That namespace is not in this file's
 import closure and so cannot be cited by name here.
 
 `CategoryTheory.isIso_iff_bijective` reads the hypothesis as bijectivity of the fibre map and

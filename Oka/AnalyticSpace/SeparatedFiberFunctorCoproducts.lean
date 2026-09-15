@@ -114,7 +114,7 @@ category's own universe** —
 
 * **No `FiberFunctor` instance and no `PreGaloisCategory` instance, and the class cannot be cited
   by name here.** `Mathlib/CategoryTheory/Galois/Basic.lean`'s namespace is not in this
-  repository's import closure, which is the spelling
+  file's import closure, which is the spelling
   `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` and
   `Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean` already use for it and the reason no
   instance of it is declared anywhere below. **What this file moves is one field of a structure
@@ -170,6 +170,18 @@ category's own universe** —
   other member and stays in the subcategory, so the unqualified sentence would be false — and
   nothing below states either half. Nothing below is about that subcategory or about the functor
   `CategoryTheory.ObjectProperty.ι` at it.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. The rescoping is this file's whole share of that push, and `git diff` against the commit it
+is cut from shows it.
 -/
 
 open CategoryTheory Limits AlgebraicGeometry TopologicalSpace

@@ -27,7 +27,7 @@ is
     PreservesColimitsOfShape (SingleObj G) F := by infer_instance
 ```
 
-with `u₂` the hom universe of the category. That namespace is **not in this repository's import
+with `u₂` the hom universe of the category. That namespace is **not in this file's import
 closure** and so cannot be cited by name here, which is the spelling the whole of this
 neighbourhood uses and the reason no instance of either of that file's two classes is declared
 anywhere below. **The two instances below ask nothing of the universe of `G`**, so they cover that
@@ -107,6 +107,18 @@ instances**, met one functor further out.
   `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` names as available and does not take for
   its own pair, because there it had two ambient instances to compose instead and here there are
   none.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. The rescoping is this file's whole share of that push, and `git diff` against the commit it
+is cut from shows it.
 -/
 
 open CategoryTheory TopologicalSpace Opposite AlgebraicGeometry TopCat Topology

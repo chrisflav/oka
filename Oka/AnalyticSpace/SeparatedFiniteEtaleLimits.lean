@@ -42,15 +42,18 @@ over a Hausdorff base. **At the commit that adds this module, three do**: those 
 `hasPullbacks`. The remaining two are `hasFiniteCoproducts` and `hasQuotientsByFiniteGroups`, and
 the `## What is not here` section below says where each of them stands.
 
-That namespace is not in this repository's import closure, so every name in the paragraph above is
-prose and not a citation. **That is a measurement and not a convention**: no module reachable from
-`Oka.lean` imports anything under `Mathlib/CategoryTheory/Galois/`, on an import-graph walk of the
-whole tree, and `scripts/check_docstring_names.py` reports the dotted form —
-CategoryTheory.PreGaloisCategory, written without backticks here so that this sentence does not
-fail the check it is describing — as resolving to nothing in the environment of `import Oka`. That
-is why the bare form is used above, which is the spelling
-`Oka/AnalyticSpace/SeparatedFiniteEtale.lean` and `Oka/AnalyticSpace/Sigma.lean` already use for
-the same reason.
+That namespace is not in this file's import closure, so every name in the paragraph above is
+prose and not a citation. **That is a measurement and not a convention**, and what it measures is
+this file's closure: no import of this module reaches `Oka/AnalyticSpace/GaloisCategory.lean`,
+which is the only module of this repository whose `import` lines name anything under
+`Mathlib/CategoryTheory/Galois/` at the commit that adds it. **This paragraph measured the whole
+tree instead — no module reachable from `Oka.lean` importing anything under that directory, and
+`scripts/check_docstring_names.py` reporting the class's dotted form as resolving to nothing in
+the environment of `import Oka` — until 2026-09-15**, when that module made `Oka.lean` reach it
+and so put the class in that environment. **Both halves were exact when they were written and
+neither was ever a claim about this file**, which is why the bare form is still used above: that
+is the spelling `Oka/AnalyticSpace/SeparatedFiniteEtale.lean` and `Oka/AnalyticSpace/Sigma.lean`
+already use, and the reason for it here is this file's closure and not the tree's.
 
 ## The construction costs no new mathematics, and that is a claim with a check behind it
 
@@ -147,7 +150,7 @@ symmetry of the limit and not by rerunning this**, and no statement below says s
 ## What is not here
 
 * **No `PreGaloisCategory` instance, and no claim that one is close.** That class is not in this
-  repository's import closure — measured at the head of this file rather than assumed — so it
+  file's import closure — measured at the head of this file rather than assumed — so it
   cannot be cited by name in a statement here, and **two of its five fields are untouched at the
   commit that adds this module**: `hasFiniteCoproducts`, which the bullet of this section opening
   *No finite coproducts* is about, and `hasQuotientsByFiniteGroups`, which is stated nowhere in
@@ -213,6 +216,20 @@ symmetry of the limit and not by rerunning this**, and no statement below says s
   `ComplexAnalytic.AnalyticSpace.isPullback_baseChange` is the ambient square. **What is missing
   is the statement and not the mathematics**, and a push that wants it should say which of the two
   functors it means.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. **The rescoping is not this file's whole share of that push**: the paragraph opening *That
+namespace is not in this file's import closure* measured the whole tree rather than this file, the
+same push falsifies that measurement, and it is retired at its commit above rather than left in
+the present tense. `git diff` against the commit this file is cut from shows both halves.
 -/
 
 open CategoryTheory Topology TopologicalSpace AlgebraicGeometry

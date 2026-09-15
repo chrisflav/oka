@@ -48,6 +48,7 @@ import OkaTest.FiniteEtaleBaseChangeNonHausdorff
 import OkaTest.FiniteEtaleCancel
 import OkaTest.FiniteEtaleOver
 import OkaTest.FiniteMorphism
+import OkaTest.GaloisCategory
 import OkaTest.GermFlatness
 import OkaTest.GermFlatnessAtAPoint
 import OkaTest.GermQuotientDegreeOne

@@ -56,7 +56,7 @@ before one without it.
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.injective_base_left_of_mono_of_isSeparatedMap`
 asks its morphism to be a monomorphism **in the category of covers**. The
 `monoInducesIsoOnDirectSummand` field of `Mathlib/CategoryTheory/Galois/Basic.lean`'s
-`PreGaloisCategory` — whose namespace is not in this repository's import closure and so cannot be
+`PreGaloisCategory` — whose namespace is not in this file's import closure and so cannot be
 cited by name here — offers a monomorphism **in the category the axiom is stated over**, which
 under this choice is the separated one. Those are different hypotheses, and the second is a priori
 the weaker: a monomorphism of covers is one here, because every test object of this category is a
@@ -184,6 +184,18 @@ not give either.
   `ComplexAnalytic.AnalyticSpace.isSeparatedMap` is a property of every morphism of analytic
   spaces and the four instances are about all of them, but every statement below that mentions an
   object mentions a cover.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. The rescoping is this file's whole share of that push, and `git diff` against the commit it
+is cut from shows it.
 -/
 
 open CategoryTheory Topology TopologicalSpace AlgebraicGeometry

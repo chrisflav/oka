@@ -30,7 +30,7 @@ separated over a Hausdorff base.
     HasColimitsOfShape (SingleObj G) C := by infer_instance
 ```
 
-where `u₂` is the **hom universe** of `C`. That namespace is **not in this repository's import
+where `u₂` is the **hom universe** of `C`. That namespace is **not in this file's import
 closure** and so cannot be cited by name here, which is the spelling
 `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` and `Oka/AnalyticSpace/QuotientCover.lean` already
 use for it, and the reason no instance of either of that file's two classes is declared anywhere
@@ -118,7 +118,7 @@ from the functor and none of them is assumed here.**
 ## What is not here
 
 * **No `PreGaloisCategory` instance and no `FiberFunctor` instance.** This is one field of one of
-  those two classes and not the class; that namespace is not in this repository's import closure,
+  those two classes and not the class; that namespace is not in this file's import closure,
   and `PreGaloisCategory` occurs in the comment-stripped code of **no** module of this repository
   at the commit that adds this file. **With this file every one of that class's five fields has a
   statement on `master`**, and the two halves of that are different: four are classes and are found
@@ -143,6 +143,18 @@ from the functor and none of them is assumed here.**
 * **Nothing about the quotient map as a morphism in a class** — not an epimorphism, not finite
   étale, not a local isomorphism. It is a colimit cocone leg below and nothing more, which is the
   same absence `Oka/AnalyticSpace/QuotientCover.lean` records for it.
+## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it
+
+**Every sentence of this file that scopes that namespace read *this repository's import closure*,
+until 2026-09-15**, when `Oka/AnalyticSpace/GaloisCategory.lean` imported that file and declared
+`CategoryTheory.PreGaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` together with
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor. **From
+that commit the class is in this repository's import closure and is still not in this file's**,
+which is why those sentences now say *this file's*: no import of this module reaches the one that
+pays for the class, so nothing here can name it and every clause of this file that says so stays
+exact. The rescoping is this file's whole share of that push, and `git diff` against the commit it
+is cut from shows it.
 -/
 
 open CategoryTheory TopologicalSpace Opposite AlgebraicGeometry TopCat Topology

@@ -1268,6 +1268,53 @@ under the eight-word key the section this file's head description is scanned by 
 class taxis #2016 is about, found in this push's own draft by running that scan at this head rather
 than at the base.
 
+**One section beyond that, and it is the one that retires a clause this file has carried since the
+ladder began.** `### The covers separated over a Hausdorff base form a Galois category` guards the
+two declarations of `Oka/AnalyticSpace/GaloisCategory.lean`, which imports
+`Mathlib/CategoryTheory/Galois/Basic.lean` and declares `CategoryTheory.PreGaloisCategory` at that
+second category and `CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued
+fibre functor. **Two guards, and they do not partition: both are of the sixth kind at that second
+category and neither is of any other.**
+
+**Neither binds a functor out of `CategoryTheory.SingleObj G` and neither binds a morphism of that
+category**, which is a `#check` over the two and not a reading: the first's telescope is the base
+and `[T2Space]`, the second's is the base, `[T2Space]`, `[PreconnectedSpace]` and a point. **They
+are of this kind by their subject**, the category itself and a functor out of it, which is the
+route the clause opening *The other thirteen are of the sixth kind at that second category* takes
+for the one guard of its section that binds neither, and the route the clause opening *One section
+further, at the two fibre functors and the colimit they carry* takes for its two instances.
+
+**From this push on, that class can be cited by name from a module that imports the one below**,
+and the clause that said it could not is retired wherever it stood. **Every occurrence of it under
+`Oka/` and `OkaTest/` was read and decided rather than swept by pattern**, and each file that
+carried one carries a dated record for it. **This file's two are not in the head description at
+all**: they are in the docstrings of `### Colimits of shape SingleObj in a category with finite
+colimits` and `### The quotient of a covering map by a finite group over the base`, and **they are
+the only two of the whole sweep that become nameable rather than merely rescoped**, this file
+importing `Oka` where every other site is in a module upstream of the import. **The import costs
+two Mathlib modules** — `Mathlib.CategoryTheory.Galois.Basic` itself and
+`Mathlib.CategoryTheory.Limits.FintypeCat` — by a set difference over
+`Lean.Environment.allImportedModuleNames`, which is the module's own figure and is named there
+rather than counted here.
+
+**Outside this clause and the section it names, this push edits three section docstrings of this
+file and no other line of it**: the two that carried the retired sentence, and the one whose
+*what would consume it* paragraph said that this repository cannot state a `PreGaloisCategory`
+instance — a claim about existence rather than about citability, which
+`Oka/AnalyticSpace/GaloisCategory.lean` falsifies and which no scan over the retired wording
+reaches. `git diff` against the commit this file is cut
+from shows all three. **The four counts the clause opening *A section beyond those, at the
+two fibre functors of that second category* lists as unmoved are unmoved by it too** — this push
+adding a guard to none of the four sections they count over — and the published check on the
+statements of a pullback square returns what it returned in both halves: **no name of this section
+carries** *isPullback* **or** *hasPullback*, and the four figures are nine and eight unfiltered
+and eight and six with the exclusion, at the commit this section is cut from and at the one that
+adds it alike, both runs mine. **This clause and the section it names were added by one push**,
+2026-09-15, for the reason the clause naming `### The terminal object and the product of two
+complex affine spaces` gives — written into this paragraph rather than into one of its own, for
+the reason the clause opening *One section further, at the two fibre functors and the colimit they
+carry* gives of the same sentence.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -6925,9 +6972,14 @@ file guards by name everywhere it occurs.
 and has no consumer in this repository — `git grep` over `Oka/` and `OkaTest/` returns **eight**
 lines in **three** files at the commit that writes this: **four** in this section, **three** in its
 own module, and **one** at `Oka/AnalyticSpace/SeparatedFiberPullback.lean:172`, a prose bullet
-naming it as an input that file leaves unassembled, which is a mention and not a consumption
-— and what would consume it is a `PreGaloisCategory`
-instance, which this repository cannot state. `…hasPullbacks` is consumed by `…hasFiniteLimits`
+naming it as an input that file leaves unassembled, which is a mention and not a consumption — and
+what would consume it is a `PreGaloisCategory` instance, **which this repository could not state
+until 2026-09-15 and now states**, at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` in
+`Oka/AnalyticSpace/GaloisCategory.lean`, whose two guards are in
+`### The covers separated over a Hausdorff base form a Galois category`. **That does not make this
+a consumer and this sentence does not claim it is**: the field that instance leaves to the class's
+`by infer_instance` default is `hasPullbacks` and not this one, and which instance search reaches
+it through is a trace question nobody has run. `…hasPullbacks` is consumed by `…hasFiniteLimits`
 and `…hasPullback` by `…hasPullbacks`. `…isPullback_fibreProd` names the other **eight** in its
 statement or its proof — `…fibreProd`, `…fibreProdFst`, `…fibreProdSnd`, `…fibreProd_square`,
 `…fibreProdLift`, `…fibreProdLift_fst`, `…fibreProdLift_snd` and `…fibreProd_hom_ext` — and
@@ -6935,7 +6987,8 @@ statement or its proof — `…fibreProd`, `…fibreProdFst`, `…fibreProdSnd`,
 there to keep the module header's *no second idea entered* claim from going stale in silence,
 which their own docstrings say. **So four of the fifteen are unconsumed inside this repository** —
 `…hasFiniteLimits` and the three `_self` statements — and that is a fact about a module written
-against a definition this repository cannot import rather than an omission.
+against a definition **this repository could not import when that module was written** rather than
+an omission.
 
 **That parenthetical read *`git grep` over `Oka/` and `OkaTest/` finds it in its own module and in
 this section and nowhere else* until 2026-09-15**, when
@@ -7406,9 +7459,12 @@ excludes in terms aside.
 
 **Why this file and not another, with the competitors named.** What motivated the statement is the
 `PreGaloisCategory` ladder at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` — the class
-is in `Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's
-import closure and so cannot be cited by name here — and **every guard of that ladder is in this
-file**, under the four headings that the clauses of the head description naming them give: the
+is in `Mathlib/CategoryTheory/Galois/Basic.lean` — **that clause read *whose namespace is not in
+this repository's import closure and so cannot be cited by name here*, until 2026-09-15**, when
+`Oka/AnalyticSpace/GaloisCategory.lean` added the import and declared the two class instances, and
+since this file imports `Oka` the class is nameable here from that commit on — and **every guard of
+that ladder is in this file**, under the four headings that the clauses of the head description
+naming them give: the
 category itself with its terminal object, the direct summand at a monomorphism, the fibre products,
 and the finite coproducts. The one field of that class left unstated at that category is quotients
 by finite group actions, which is the shape the statement below is about. **The competing row is
@@ -7809,8 +7865,10 @@ line of either**, which is the only thing this paragraph asserts about them.
 **Why this file and not another, with the competitors named.** What motivated the statement is the
 `PreGaloisCategory` field on quotients by finite group actions at
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` — the class is in
-`Mathlib/CategoryTheory/Galois/Basic.lean`, whose namespace is not in this repository's import
-closure and so cannot be cited by name here — and **every guard of that ladder is in this file**.
+`Mathlib/CategoryTheory/Galois/Basic.lean` — **that clause read *whose namespace is not in this
+repository's import closure and so cannot be cited by name here* until 2026-09-15 as well**, and is
+retired by the same push and for the same reason as the other — and **every guard of that ladder is
+in this file**.
 There is a second reason, independent of that one and checkable without leaving this file: **the
 mirror-tree covering-map material of this repository is already guarded here**, in
 `### The third rung: a finite étale morphism is a covering map`, whose own docstring says why
@@ -9444,3 +9502,70 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesQuotients
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesQuotients_fintypeFiber
+
+/-! ### The covers separated over a Hausdorff base form a Galois category
+
+`Oka/AnalyticSpace/GaloisCategory.lean`, the whole of it. **Two names**:
+`CategoryTheory.PreGaloisCategory` at that category, over `[T2Space]` alone, and
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor, over
+`[T2Space]`, `[PreconnectedSpace]` and a point. **Those are the two classes every clause of this
+file's head description naming that ladder has been pointing at, and this is the module that
+imports them.**
+
+**This is the first section of this file whose guards can name that namespace.** The module below
+imports `Mathlib/CategoryTheory/Galois/Basic.lean` — the first module of this repository to do so
+— and the cost, **at the commit this section is cut from**, is two Mathlib modules,
+`Mathlib.CategoryTheory.Galois.Basic` itself and `Mathlib.CategoryTheory.Limits.FintypeCat`, by a
+set difference over `Lean.Environment.allImportedModuleNames` between a file importing `Oka` and
+one importing `Oka` and that module. **At the commit that adds this section the same pair of runs
+gives the same figure twice and the cost is zero**, the module below having paid it. **Every other
+section of this file guards a statement written without the class and says so**; this one guards
+the class itself.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for both:
+one is about the category of covers separated over a fixed analytic space and the other about a
+functor out of it. **The competing row is *analytic spaces, local models, the node*,
+`OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for the reason
+`### Both fibre functors at the separated covers preserve quotients by finite group actions` gives
+against the same competitor for the module it guards: neither declaration below is a local model, a
+chart or a node.
+
+**Both are of the sixth kind at that second category and neither is of any other**, by the clause
+opening *The sixth kind has a second category*. **Neither binds a morphism of that category and
+neither binds a functor out of `CategoryTheory.SingleObj G`**, which is a `#check` over the two and
+not a reading: the first's telescope is the base and `[T2Space]`, and the second's is the base,
+`[T2Space]`, `[PreconnectedSpace]` and a point. **They are of this kind by their subject** — the
+category itself and a functor out of it — which is the route the clause opening *The other thirteen
+are of the sixth kind at that second category* takes for the one guard of its section that binds
+neither.
+
+**Two is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output: no `.eq_1` equation lemma, no match lemma and no congruence
+lemma, and a structure instance planting none of the three. **Both are instances and neither is
+anything else**, counted with a declaration keyword at the start of a line and an attribute allowed
+before it: `^def `, `^theorem ` and `^abbrev ` each return **zero** over the module, and
+`^instance ` returns **three**, the third being a line of prose that opens with the word. **Neither
+is `@[simp]`.**
+
+**The axiom triple is the same for both.** `Classical.choice` is already carried by every
+statement the two are assembled from, which is one `#print axioms` run each and not a reading of
+any proof below.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preGaloisCategory' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preGaloisCategory
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor_isFiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor_isFiberFunctor
