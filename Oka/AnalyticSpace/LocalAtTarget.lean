@@ -77,8 +77,16 @@ touches a base map goes through it.
   `ComplexAnalytic.AnalyticSpace.isPullback_ofRestrict` makes a pullback square, so each is a base
   change along one particular shape of leg. **They are not
   `CategoryTheory.MorphismProperty.IsStableUnderBaseChange`**, which quantifies over every cospan;
-  `Oka/AnalyticSpace/FiniteEtaleOver.lean`'s `## No base change of the class over a general
-  cospan` bullet is where that absence is stated, and this file does not narrow it.
+  that class is
+  `ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale`, in
+  `Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean`, and nothing below is stated from it or
+  proves it. **This clause read *`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s
+  `## No base change of the class over a general cospan` bullet is where that absence is stated,
+  and this file does not narrow it*, until 2026-09-15**, when the class stopped being an absence;
+  that bullet is now headed
+  **No base change of the class over a cospan of morphisms of covers**, which is a statement about
+  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver X` and not about the cospans of this file, and
+  this file does not narrow that either.
 * **No case analysis on the index type, and `ι` may be empty.** That is a decision and not an
   oversight: `TopologicalSpace.IsOpenCover U` at an empty `ι` says `⊥ = ⊤` in `Y.Opens`, which
   forces `Y`'s carrier to be empty, and each conclusion then holds because every condition below

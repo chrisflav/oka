@@ -108,9 +108,17 @@ docstring gives.
   `CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for
   `ComplexAnalytic.AnalyticSpace.isFiniteEtale` quantifies over cospans whose finite étale leg may
   have a non-Hausdorff source, and `ComplexAnalytic.AnalyticSpace.doubledLineOver` is the standing
-  witness against it. The bullets recording that in
+  witness against it. That class is
+  `ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale`, in
+  `Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean`, which is untouched by this file and is
+  not made weaker by it; so are the bullets about it in
+  `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and `Oka/AnalyticSpace/FiniteEtaleOver.lean`.
+
+  **The second sentence of this bullet ended *The bullets recording that in
   `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and `Oka/AnalyticSpace/FiniteEtaleOver.lean` are
-  untouched by this file and are not made weaker by it.
+  untouched by this file and are not made weaker by it*, until 2026-09-15**, when the class was
+  stated and *the bullets recording that* stopped naming what records it. What this bullet claims
+  of this file is unchanged.
 * **No coproducts and no cofan.**
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isSeparatedMap_sigma` makes a finite disjoint
   union of separated covers separated, so the objects of that cofan are available; the cofan

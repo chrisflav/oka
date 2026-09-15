@@ -377,12 +377,20 @@ falsified it — a statement about that functor, and neither of its laws — and
 file when it landed. What retires the clause outright rather than narrowing it is
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.hom_ext_of_fiberFunctor_map_eq`, which is
 faithfulness wherever its hypotheses hold. What is missing there is base change of the class over
-a general cospan, and `CategoryTheory.Functor.Faithful` as a class. **That clause read *base change
-over a general cospan* until 2026-09-08**, and is narrowed for the reason
-`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s `## No base change of the class over a general cospan`
-bullet gives — the limit exists and the class carried across it does not — which is the narrowing
+a cospan of morphisms of covers, and `CategoryTheory.Functor.Faithful` as a class. **That clause
+read *base change
+over a general cospan* until 2026-09-08**, and was narrowed for the reason
+`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s bullet
+gave — the limit exists and the class carried across it does not — which is the narrowing
 the clause of this docstring naming `Oka/AnalyticSpace/PullbackReduction.lean` took, in the same
-push and by the same landing. -/
+push and by the same landing. **And it read *base change of the class over a general cospan*, and
+named that bullet by the heading `## No base change of the class over a general cospan`, until
+2026-09-15**, when
+`Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean` stated the class over every cospan of
+`ComplexAnalytic.AnalyticSpace` and that bullet was re-headed
+**No base change of the class over a cospan of morphisms of covers**. What is missing where a
+Galois category needs it is unchanged across both moves, those cospans being cospans of
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver X` throughout. -/
 theorem isFiniteEtale_of_comp {X Y Z : AnalyticSpace.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
     [T2Space Y] [IsFiniteEtale (f ≫ g)] [IsLocalIso g] : IsFiniteEtale f where
   isFinite := isFinite_of_comp_of_t2Space f g

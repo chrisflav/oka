@@ -79,12 +79,30 @@ bijection with finite fibres and is not a closed map.
   base change is `Function.Pullback.finite_fiber_snd` in `Oka/Topology/Covering/Basic.lean`, which
   assumes no topology at all. **This file imports neither of those two and neither imports it**,
   the only import here being the Mathlib module this file mirrors.
-* **No consumer in this repository yet.** What this statement is for is the finiteness half of
+* **One consumer, and it is the one this statement was written for.** What this statement is for is
+  the finiteness half of
   `CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for
   `ComplexAnalytic.AnalyticSpace.isFiniteEtale`: `ComplexAnalytic.AnalyticSpace.IsFinite` is a
   closed base map with finite fibres, `ComplexAnalytic.AnalyticSpace.isProperMap_base_of_isFinite`
   turns that into a proper map with no separation hypothesis, and this statement is what carries it
-  across the cospan. That base change is not in the tree and nothing below claims it.
+  across the cospan. The consumer is
+  `ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase`
+  (`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`), and the class itself is
+  `ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale`
+  (`Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean`). **Nothing below claims either**, and
+  both are downstream of this file rather than in it.
+
+  **This bullet was headed *No consumer in this repository yet* and closed *That base change is not
+  in the tree and nothing below claims it*, until 2026-09-15.** It was exact when written and went
+  false in two steps, neither of them here: `280bb67` wrote
+  `ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase` from this statement, and the push
+  that retires this wording added the class. **The first step was already landed when this wording
+  was retired**, so what the heading denied had been false on `master` from `280bb67` onwards and
+  before anything swept it — **and no census over the qualified name could have caught it**,
+  because that consumer reaches this statement by projection notation on its receiver and never
+  writes `IsProperMap.pullback_snd`. `OkaTest/Axioms/Morphisms.lean`'s
+  `### Base change of a local homeomorphism, and of a proper map` publishes that run and the
+  measurement that it does not move when the consumer arrives.
 -/
 
 open Filter Topology

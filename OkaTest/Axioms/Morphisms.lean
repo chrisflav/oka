@@ -498,11 +498,22 @@ And one section more, both of whose guards are of the **seventh** kind and of no
 proper map each stay what they are under base change along an arbitrary continuous map, at Mathlib's
 set-level fibre product `Function.Pullback`. **No analytic space occurs in either and no object of
 this repository does**, which is what puts them in the seventh kind, and the routing rule that kind
-records sends them to a section of their own for the reason it sends the guard of
-`### Colimits of shape SingleObj in a category with finite colimits` to one: the analytic result
-that would motivate them does not exist yet. That section's docstring argues the routing, names what
-it would take for either to have a consumer, and publishes the run behind its claim that neither is
-consumed.
+records sent them to a section of their own for the reason it sends the guard of
+`### Colimits of shape SingleObj in a category with finite colimits` to one: at the commit that
+wrote the section, the analytic result that would motivate them did not exist. It does now —
+`ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase` and
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase`, guarded under
+`### Base change of a finite étale morphism, and the fibre product it is the projection of` — and
+the section stays where it is, a section moved being a conflict for somebody else. That section's
+docstring argues the routing and dates both halves.
+
+**This clause read *the analytic result that would motivate them does not exist yet*, and closed
+*That section's docstring argues the routing, names what it would take for either to have a
+consumer, and publishes the run behind its claim that neither is consumed*, until 2026-09-15.** It
+was exact when written and was falsified by `280bb67`, already on `master` when the push that
+retires it was cut: that commit wrote both consumers, out of the very read-off that section
+publishes. **The routing verdict is unchanged by the retirement** — the rule fixes where a guard
+goes when it is written, and a consumer arriving afterwards is not a re-routing.
 
 **The clause opening *And a seventh kind is of the mirror tree* is untouched, and its numeral is
 scoped rather than tree-wide**: its *two statements of pure topology* counts the guards of the
@@ -853,6 +864,108 @@ pullback square is unmoved in both halves**: no name of the new section carries 
 with the exclusion at both commits. **This clause was added by the push that added
 `### The fibre functor at the separated covers preserves pullbacks`**, 2026-09-15, for the reason
 the clause naming `### The terminal object and the product of two complex affine spaces` gives.
+
+And a section more, whose single guard adds **no kind at all**, named here because the convention
+this file's other clauses record is that a push appending a section owes the description one.
+`### Finite étaleness is stable under base change, as a morphism property` guards the **one**
+declaration of `Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean`,
+`CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale`: finite étaleness carried across **every** pullback
+square of `ComplexAnalytic.AnalyticSpace` whose right-hand leg is finite étale, with no hypothesis
+on any of the four objects. **That one guard is of the first kind**, by this description's opening
+clause naming *the classes of morphisms — finite, local isomorphism, finite étale* — the subject
+is one of those classes and the statement is that it survives a base change. **And it is a third
+spelling of a subject two guards of this file already hold, which is why it adds no kind**: the
+clause opening *Two of those five hold statements of the first kind as well* names
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_baseChangeSnd` and
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale`, under
+`### Base change of a finite étale morphism, and the fibre product it is the projection of`, as
+statements of the first kind in two spellings; this is the third, at an arbitrary pullback square
+rather than at the constructed one or at `CategoryTheory.Limits.pullback`. **That clause's *two
+spellings* is untouched**, being scoped to the guards *that* section holds, and this guard is not
+among them.
+
+**Cited by opening words, this clause is the one whose opening runs *whose single guard adds no
+kind at all*; it opens *And a section more* and not *And one section more*, and that is forced and
+not a preference.** **A second clause of this description opens *And a section more* at the base
+this clause is now cut from**: the one naming `### The fibre functor at the separated covers, and
+the two axioms of it that are reachable`, which landed at `8d50165` after this clause was approved
+and before it was re-cut onto it. **That costs this clause nothing and the reason is the
+discriminator and not the opening** — the two agree for the **20** characters of
+*And a section more,* and the space after it, the italicised string being **19** and a trailing
+space being a thing an italicised quotation cannot carry, and then run to *at the second category
+named by* and to *whose single guard*, and the phrase this clause is cited by is the whole of the
+one this paragraph names below, which occurs in neither that clause nor its section. The clause
+above naming
+`### The quotient of a covering map by a finite group
+over the base` identifies a clause of this description as *the one opening «And one section more,
+adding no kind at all»* and says in terms that the naming is what makes its sentence checkable; the
+clause it so identifies is the one naming `### The three classes are local on the target, and the
+topology half of it`, whose opening runs on through the whole of this description's shared
+boilerplate before it reaches its section name. **An opening reproduced is an identification
+lost**: had this clause opened as that one does, that sentence would name two clauses where it
+names one, and until `321879e` nothing in this file would have recorded the loss — no count was
+taken over these openings, no date moves, and the citing sentence's
+other half, *standing between them and this one*, goes on resolving, so a reader is handed an
+identification that has quietly stopped identifying. **At the base this clause is now cut from
+there is such a count and it is `321879e`'s**: that push's own head-description clause counts
+*Six clauses of this description open «And one section more»* and publishes a run over every
+occurrence of that opening, asserting that no citation in this file reaches two of the six. A
+seventh clause reproducing one of those six openings is what that run would report, so the loss
+would now be recorded rather than go unrecorded. **That changes what makes the choice below
+forced and not the choice**: an instrument that catches a collision is a reason not to write one,
+and the identification the clause above makes is the thing this clause declines to break either
+way. **The figures, with this file's whitespace
+collapsed and its `*` marks stripped**: the two openings would have agreed for **181** characters,
+the whole of the boilerplate and the ``### `` that introduces the name, where as written they agree
+for **4**. And the discriminator over the openings of this description is the whole of *whose
+single guard adds no kind at all*, which under that same normalisation occurs **three** times in
+this file — the opening above, and twice in this paragraph, which gives the phrase rather than
+citing a clause by it — and in no other clause of this description. **Every occurrence of *And one
+section more* in this paragraph gives the phrase rather than citing a clause by it**, which is this
+file's own distinction: the paragraph opening *The second half of that check has a token of its
+own* draws it for a token **described rather than reached**, and this is that distinction at an
+opening described rather than cited — one of them names the form this opening does not take, one
+quotes the opening the clause above cites, and none of them is an identification of a clause made
+here. **With this paragraph's occurrences set aside, no citation of a clause opening in this
+description reaches two clauses by any of the three openings this paragraph is about**, and that is
+a run over every occurrence of each of those three in this file — this clause's, the one it
+declined to reproduce, and the one `8d50165` landed — and not a reading of this paragraph. **What
+was run is those openings and the sentence quantifies over no more, because an opening this
+description cites outside them does reach two at this head**: the one cited above as `954b116`'s,
+which the paragraph below this one opens with, opens two paragraphs of this description here where
+it opened one at the commit this clause is cut from. **That citation pins its referent and goes on
+resolving**, which is why this push records the collision rather than re-wording either clause.
+
+**The published check on this file's statements of a pullback square is unmoved in both halves,
+and that is a run and not an assumption.** The one name this push adds carries neither *isPullback*
+nor *hasPullback*, so the four figures are what they were — **nine and eight unfiltered and eight
+and six with the exclusion, at the commit this section is cut from and at the one that adds it
+alike**. **The list those figures are read off has to be taken continuation-aware**, which is worth
+saying here because the obvious instrument is wrong: this file writes **twenty-five** of its
+`#print axioms` with the name on the following line, so it carries **629** guard names at the
+commit that adds this clause where a one-line `grep -E '^#print axioms .+$'` returns **604**.
+**Those three numerals read eleven, 591 and 580 while this clause was cut from `ddcc4c6`,
+fifteen, 608 and 593 while it was cut from `ebee177`, nineteen, 613 and 594 while it was cut
+from `7577386`, and nineteen, 620 and 601 while it was cut from `321879e`**, and each moved under
+a re-cut rather than under an edit: four of the seventeen guards `8d50165` appends wrap, four of
+the five that `7577386` appends do, and six of the nine that `fbe1e95` appends do, the namespace
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.` being 55 characters. **The re-cut onto
+`321879e` is the one of the four that moved two of the three and not all three**: none of the
+seven guards that push appends wraps, its longest line being 99 characters, so the count of
+continuations was the one numeral that base move left standing, where the re-cut onto `fbe1e95`
+moves all three again. **No dated record is
+owed for them and this is not a correction either** — none of the retired numerals landed, and
+each was exact at the base it was measured at; **it is the numeral a re-cut moves without an
+edit**, which is what makes the continuation-aware instrument worth naming here rather than the
+figure. And
+the two claims the clause opening *And one section more, at the second category* makes are
+untouched by this push as well: its *Five of that section's twenty-one guards* counts over
+`### The category of separated covers, and separatedness as a morphism property`, no line of which
+this push touches, and that same pullback check. **This clause was added by the push that added
+`### Finite étaleness is stable under base change, as a morphism property`**, 2026-09-15, for the
+reason the clause naming `### The terminal object and the product of two complex affine spaces`
+gives.
 
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
@@ -6969,17 +7082,36 @@ is guarded with the analytic result that motivated it, and where that result doe
 guard takes a section of its own, as `### Colimits of shape SingleObj in a category with finite
 colimits` does.
 
-**Neither statement is consumed by anything, and that is a run rather than an impression.** Under
-`scripts/import_cost.py`'s nesting-aware `strip_comments`, each of the two names occurs in the code
-of exactly **two** tracked `.lean` files at the commit that adds this section: the module that
+**Neither statement was consumed by anything at the commit that added this section, and that was a
+run rather than an impression.** Under
+`scripts/import_cost.py`'s nesting-aware `strip_comments`, each of the two names occurred in the
+code
+of exactly **two** tracked `.lean` files at that commit: the module that
 declares it, and this one. `OkaTest/CoveringBaseChange.lean` names both in prose and consumes
 neither — what its three witnesses consume is `IsLocalHomeomorph.isOpenMap`,
 `IsProperMap.isClosedMap` and the two set-level failures of the projection at that witness, which is
 why the continuity hypothesis they are about is exhibited as not droppable for all three base-change
 statements by one pair of maps.
 
-**What it would take for either to have a consumer, said because an unconsumed guard invites the
-question, and read off the declarations rather than argued.**
+**Each has had one consumer since `280bb67`, and the run above does not move when it arrives** —
+which is the thing to carry away from this paragraph. The same run at the commit that retires this
+wording still puts each of the two names in the code of exactly **two** tracked `.lean` files, the
+same two. Both consumers are in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` —
+`ComplexAnalytic.AnalyticSpace.isLocalHomeomorph_baseChangeSndBase` at `:258` and
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase` at `:267` — the lines that reach,
+under declarations at `:256` and `:265` — and each reaches its
+lemma by **projection notation on the receiver**, `(… ).pullback_snd`, so the qualified name is not
+written and a census over qualified names cannot see the use. **A name-occurrence run is evidence
+of absence only for the qualified spelling**, and the token that would have caught these two is the
+bare final component `pullback_snd`, which at this commit is in the code of **eleven** tracked
+files and is not specific to either lemma. **The sentence above was in the present tense and said
+*Neither statement is consumed by anything*, with the run pinned to the commit that adds this
+section, until 2026-09-15**: the figure was pinned, the sentence it supported was not, and the
+figure would not have moved even had the sentence been checked against it.
+
+**What it would take for either to have a consumer, read off the declarations rather than argued.
+This is the paragraph `280bb67` followed**, and it is kept as it was written for that reason rather
+than rewritten in the past tense.
 `ComplexAnalytic.AnalyticSpace.coveringSpace` and
 `ComplexAnalytic.AnalyticSpace.isLocalIso_coveringSpaceHom` ask only `IsLocalHomeomorph` of the base
 map, and each of the two classes below them — `ComplexAnalytic.AnalyticSpace.IsFinite` and
@@ -8040,3 +8172,68 @@ info:
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesPullbacks_fintypeFiberFunctor
+
+/-! ### Finite étaleness is stable under base change, as a morphism property
+
+`Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean`, the whole of it: **one name**, the
+`CategoryTheory.MorphismProperty.IsStableUnderBaseChange` instance for
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale`. That module declares nothing else and contributes
+exactly one row to `scripts/DumpOkaDecls.lean`'s dump.
+
+**Which kind it is, against the description at the head of this file: the first.** The head's
+opening clause names *the classes of morphisms — finite, local isomorphism, finite étale*, and the
+subject here is the class finite étale carried across a pullback square. **It is the same subject
+as two guards this file already holds and a third spelling of it**: the paragraph opening *Two of
+those five hold statements of the first kind as well* names
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_baseChangeSnd` and
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale`, under
+`### Base change of a finite étale morphism, and the fibre product it is the projection of`, as
+statements of the first kind in two spellings; this is the third, at an arbitrary pullback square
+rather than at the constructed one or at `CategoryTheory.Limits.pullback`. **So the clause this
+section owes the head description adds no kind**, which is what it says; and that paragraph's *two
+spellings* is untouched: it is scoped to the guards *that* section holds, and this section is not
+in it.
+
+**Why a section of its own rather than two lines added to that one.** The two are different
+modules — that section is `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and this one is the file
+that joins it to `Oka/AnalyticSpace/FiniteEtaleOver.lean`, neither of which is in the other's
+import closure — and this file's standing reason applies as well: a section moved is a conflict
+for somebody else, so a new section is appended.
+
+**This is a `CategoryTheory.MorphismProperty` instance that *is* guarded, and the practice
+recorded above is not broken by it.** The paragraph under
+`### The category of separated covers, and separatedness as a morphism property` opening *Four
+declarations of that module are guarded nowhere* records the practice for the
+`CategoryTheory.MorphismProperty` **closure** instances — the ones asserting closure under
+composition and identities and under isomorphism — and bounds itself by the shape rather than by
+anonymity, in its own words *What that practice is bounded by is the shape and not anonymity*.
+`CategoryTheory.MorphismProperty.IsStableUnderBaseChange` is of neither shape: it is a statement
+about which morphisms of the category are finite étale, with the same content as the two guards
+named above, and not a property of the property. **The published check that paragraph runs is
+unmoved and still empty**: `git grep -nE '^#print axioms .*inst.*IsFiniteEtale$' -- OkaTest/`
+returns nothing at the head that adds this section, the guard below naming a declaration written
+with a name whose last component is `isStableUnderBaseChange_isFiniteEtale` — no `inst`, and the
+final token in the lower-case spelling the pattern's `IsFiniteEtale` does not match.
+
+**The published check on this file's statements of a pullback square is unmoved in both halves.**
+No name in this section contains *isPullback* and none contains *hasPullback*, so listing this
+file's `#print axioms` names and filtering on either token returns what it returned before this
+section, and no clause citing either half is touched by the push that adds it.
+
+**What this section does not claim.** It does not say that the fibre product exists at a general
+cospan — that is `ComplexAnalytic.AnalyticSpace.hasPullbacks`, in
+`Oka/AnalyticSpace/PullbackReduction.lean`, and the instance below quantifies over squares that
+are already pullbacks rather than asserting any. And it does not reach the category
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver X`: its cospans are cospans of morphisms **of
+covers**, and `Oka/AnalyticSpace/FiniteEtaleOver.lean`'s bullet
+**No base change of the class over a cospan of morphisms of covers** is where that absence is
+stated.
+
+**Appended as its own section**, for the reason the sections above give. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale

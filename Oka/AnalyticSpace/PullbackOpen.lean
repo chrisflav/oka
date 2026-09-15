@@ -636,13 +636,22 @@ The two fields are `ComplexAnalytic.AnalyticSpace.isFinite_restrictHom` above an
 `ComplexAnalytic.AnalyticSpace.isFiniteEtale` along an open immersion**: the restriction is the
 pullback, so the pullback of a finite étale morphism along the inclusion of an open subspace is
 finite étale. It is not `CategoryTheory.MorphismProperty.IsStableUnderBaseChange`, which
-quantifies over every cospan and asks for the class across each of them;
-`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s `## No base change of the class over a general cospan`
-bullet is where that absence is stated and measured, and this sentence defers to it rather than
-restating it. **The clause closing this sentence read *and needs a fibre product this category does
+quantifies over every cospan and asks for the class across each of them; that class is
+`ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale`, in
+`Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean`, which is assembled from
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale` and not from this
+instance — **this statement asks nothing of the open subset and is not a consequence of that
+class**, since it reaches the restriction rather than a chosen pullback. **The clause closing this
+sentence read *and needs a fibre product this category does
 not have* until 2026-09-08**, when `Oka/AnalyticSpace/PullbackReduction.lean` gave the category
 `ComplexAnalytic.AnalyticSpace.hasPullbacks`: the limit is there and the class carried across it is
-what is not, which is the narrowing that bullet took on the same day. -/
+what is not, which is the narrowing
+`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s bullet took on the same day. **And the sentence read
+*`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s `## No base change of the class over a general cospan`
+bullet is where that absence is stated and measured, and this sentence defers to it rather than
+restating it* until 2026-09-15**, when the class stopped being an absence and that bullet was
+re-headed **No base change of the class over a cospan of morphisms of covers**, which is about a
+different category and is not what this sentence was deferring to. -/
 instance isFiniteEtale_restrictHom [IsFiniteEtale f] : IsFiniteEtale (restrictHom f V) where
   isFinite := isFinite_restrictHom f V
   isLocalIso := isLocalIso_restrictHom f V

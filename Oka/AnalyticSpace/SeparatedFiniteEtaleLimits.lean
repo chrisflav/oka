@@ -175,14 +175,21 @@ symmetry of the limit and not by rerunning this**, and no statement below says s
   `## What is not here` for one word is not what this push is. The measurement is recorded so a
   later seat does not have to make it again.
 * **This is not `CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for
-  `ComplexAnalytic.AnalyticSpace.isFiniteEtale`, and the bullets recording that absence are not
-  narrowed.** That class quantifies over cospans in `ComplexAnalytic.AnalyticSpace` whose finite
+  `ComplexAnalytic.AnalyticSpace.isFiniteEtale`, and nothing below is stated from that class or
+  bears on it.** That class quantifies over cospans in `ComplexAnalytic.AnalyticSpace` whose finite
   étale leg may have a non-Hausdorff source, and
   `ComplexAnalytic.AnalyticSpace.doubledLineOver` is the standing witness that such a cospan
   exists. Every cospan below is a cospan of **objects of this category**, whose total spaces are
   Hausdorff by `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left`. The bullets
   in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and `Oka/AnalyticSpace/FiniteEtaleOver.lean`
   say what they said before this file existed.
+
+  **This bullet read *…, and the bullets recording that absence are not narrowed* until
+  2026-09-15**, when
+  `Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean` stated the class and there ceased to be
+  an absence for a bullet to record. Nothing else in the bullet moves: what is here is still not
+  that class, for the reason the sentence after the heading gives, and the two bullets named are
+  still untouched by this file.
 * **`[T2Space X]` is not removed and nothing here tries.** The construction spends it through
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left` and
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isFiniteEtale_left`, which are the two

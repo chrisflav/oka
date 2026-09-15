@@ -31,19 +31,29 @@ constructions are unchanged**: `ComplexAnalytic.AnalyticSpace.baseChange` and
 terms are the same and no consumer is transported.
 
 `Oka/AnalyticSpace/FiniteEtaleOver.lean` records the absence of this base change in its
-`## What is not here` bullet **No base change of the class over a general cospan**, and again in
+`## What is not here` bullet **No base change of the class over a cospan of morphisms of covers**,
+and again in
 the docstring of `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fintypeFiberFunctor`. **That bullet
 was headed *No pullback over a general cospan, so no base change* when this sentence was written
 and until 2026-09-08**, when `Oka/AnalyticSpace/PullbackReduction.lean` made
 `CategoryTheory.Limits.HasPullbacks ComplexAnalytic.AnalyticSpace` a theorem and the first half of
 the heading stopped being true; only the heading moved and what this file narrows is what it
-always narrowed. **The bullet is narrowed by this file and is not narrowed to nothing, and this
+always narrowed. **And it was headed *No base change of the class over a general cospan* until
+2026-09-15**, when `Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean` assembled the
+statements below into
+`CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale`; the heading moved again and what this file narrows
+is still what it always narrowed. **The bullet is narrowed by this file and is not narrowed to
+nothing, and this
 file does not make that category a Galois category.** Those axioms quantify over cospans of
 morphisms *of covers*, and a morphism of
 covers is not known to be finite étale without `[T2Space]` of its target, which is taxis #1772's
 remaining half; nor is a cover's total space assumed Hausdorff anywhere in that file. The four
-further sentences of that file which cite the bullet by its heading are unaffected, and it says
-so.
+further sentences of that file which cite the bullet by its heading assert of it what they always
+asserted, and it says so. **That clause called them *unaffected* until 2026-09-15**, when the
+heading moved a second time and all four were rewritten to name the new one — a rewriting of the
+pointer and not of the claim, which is the distinction the clause was making and now makes in
+words that do not also deny the edit.
 
 ## The route, and why it touches no local model
 
@@ -151,15 +161,27 @@ what moved is the route and not the accounting rule.
   statement about the *class* `ComplexAnalytic.AnalyticSpace.isFiniteEtale` as a
   `CategoryTheory.MorphismProperty`, and nothing below is stated at that spelling;
   `ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale` is the statement it
-  would be assembled from and the assembly is not here.
+  is assembled from and the assembly is not here. **It is in
+  `Oka/AnalyticSpace/FiniteEtaleStableUnderBaseChange.lean`**, which imports this file and
+  `Oka/AnalyticSpace/FiniteEtaleOver.lean` — the second being where
+  `ComplexAnalytic.AnalyticSpace.isFiniteEtale` is declared, and it is not in this file's import
+  closure, which is why the assembly is not here and not merely why it is elsewhere.
+  **The sentence ending *and the assembly is not here* read *is the statement it would be
+  assembled from* and stopped there, until 2026-09-15**, when the assembly was made and the
+  sentence naming where it is was added after it. What the bullet says of the statements *below*
+  is unchanged, and the reason it is a bullet at all is that a reader looking here for the class
+  should be sent somewhere rather than told it does not exist.
 
   **This bullet gave as its reason that the class quantifies over *all* cospans with a leg in the
   class, including those whose finite étale leg has a non-Hausdorff source, and that nothing
   below reaches one, until 2026-09-14.** The second half stopped being true in the same push that
   removed `[T2Space E]`: the statements below reach every cospan the class quantifies over, and
   `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean` compiles them at one whose finite étale leg has
-  a non-Hausdorff source. What is still absent is the `CategoryTheory.MorphismProperty` spelling
-  and not the reach.
+  a non-Hausdorff source. What is absent **from this file** is the
+  `CategoryTheory.MorphismProperty` spelling and not the reach. **That last sentence read *What is
+  still absent is the `CategoryTheory.MorphismProperty` spelling and not the reach*, with no file
+  named, until 2026-09-15**, when that spelling landed one module further on and *still absent*
+  stopped being available as a reading of it.
 * **Nothing about the degree.** `ComplexAnalytic.AnalyticSpace.degree_eq_card_fiber` would say the
   base change has the same number of sheets; the fibres do correspond, by
   `Function.Pullback.fst`, and no statement below says so.
