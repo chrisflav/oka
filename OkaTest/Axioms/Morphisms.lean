@@ -588,8 +588,13 @@ descent has finite fibres, and the two halves that covering-map statement is bui
 shrinking step that makes the group permute the sheets over a small enough neighbourhood by a
 single permutation of the fibre, and the descent that step feeds. **No analytic space occurs in
 any of the four and no object of this repository does**, which is what puts them in the seventh
-kind, and that section has no consumer in this repository either, so it takes a section of its own
-rather than sharing one; its docstring measures both claims and gives the instruments. **The clause
+kind, and that section had no consumer in this repository when it was written either, so it takes
+a section of its own rather than sharing one; its docstring measures both claims and gives the
+instruments. **That second half read *and that section has no consumer in this repository either*
+until 2026-09-15**, when `Oka/AnalyticSpace/QuotientCover.lean` became that module's first
+importer and first consumer; the section's own docstring carries the record, the re-run figure and
+the reason the four guards stay where they are, and nothing in this clause's other claims moves
+with it. **The clause
 opening *And one section more, of the seventh kind and of no other* says of its own section that it
 is the first of this file whose single guard has no consumer, and that stays exact**: this section
 was added by a later push and has four guards and not one, so neither *first* nor *single guard* is
@@ -966,6 +971,85 @@ this push touches, and that same pullback check. **This clause was added by the 
 `### Finite étaleness is stable under base change, as a morphism property`**, 2026-09-15, for the
 reason the clause naming `### The terminal object and the product of two complex affine spaces`
 gives.
+
+And a section of **five** guards, adding **no kind at all** and named here because the convention
+this file's other clauses record is that a push appending a section owes the description one.
+**The opening is the one the clause opening *And a section of four guards* uses, a count of the
+section's own guards, and the reason for taking it here is this push's own.** The paragraph above
+that says which clauses of this description re-ran a published figure on being added identifies a
+third clause by its opening words, with a positional half beside them; those words are what the
+two clauses added here would otherwise have opened with, and a second and a third paragraph
+carrying them would leave that sentence reading as though it identified something while
+identifying nothing. **Its positional half — *the clause standing between them and this one* —
+would not have caught it**, because both clauses added here land after the citing one rather than
+between it and anything, so no count moves, no date moves and nothing mechanical reports the loss.
+**This push opens no paragraph of this file with those words at all**, which is the property to
+check and is stronger than the two openings merely being distinct from that one and from each
+other. **The count these two are opened by asserts nothing their own sentences do not already
+assert**, each giving its section's guard count again in the sentence that names its heading, so
+what the opening carries is a figure the clause is answerable for anyway.
+`### Morphisms between the covering spaces of an analytic space` guards the five declarations of
+`Oka/AnalyticSpace/CoveringSpaceMap.lean`: the morphism of analytic spaces that a continuous map
+over the base carries between the two covering spaces it is a map of, that morphism's underlying
+morphism of locally ringed spaces and its underlying map, its triangle over the base, and that two
+morphisms into a covering space which agree on underlying maps and over the base are equal.
+**All five are of the first kind**, by the opening description's clause naming *the construction
+that produces a morphism in a class from a covering map*, and they are that construction's action
+on **maps** where `### A covering space of a complex analytic space is a complex analytic space`
+guards its action on **objects**. **The clause is read at the construction and not at the class,
+and that is the whole of what is claimed**: no guard of the new section says that any morphism is
+finite, a local isomorphism, finite étale or an isomorphism, and the class statements about that
+construction are the ones the older section already holds, which this push does not touch.
+
+And a section of **seventeen** guards, adding **no kind at all**, named here for the same reason
+and named by a count of its own guards for the same two.
+`### The quotient of an analytic cover by a finite group acting over the base` guards the
+seventeen declarations of `Oka/AnalyticSpace/QuotientCover.lean`, which takes the orbit space of a
+finite group acting over the base on the total space of a finite étale morphism with Hausdorff
+source and gives it back as a finite étale morphism with separated base map, with the quotient map
+a morphism of analytic spaces over the base. **Sixteen of the seventeen are of the first kind and
+the seventeenth is of the kind opening *And one kind more*.** **Fourteen** are of the first kind by
+the opening description's clause naming *the construction that produces a morphism in a class from
+a covering map*, together with the clause naming the criteria that read a class off the underlying
+map: the covering map the construction is fed and the finiteness of its fibres, the orbit space
+with the quotient map onto it and the descent to the base and the two equations those satisfy,
+which are the data those two statements are about and none of which is statable without the
+analytic space they are taken over, the analytic space the construction produces with its
+structure morphism and that morphism's
+underlying map, that that morphism is finite étale, and the quotient map with its underlying map
+and its triangle. **Two** are of the first kind by the opening description's clause naming the
+category the finite étale ones form over a fixed base, read at the second category
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` — an object of it and a morphism of it —
+exactly as the clause opening *And one section more, at the second category* assigns the four it
+calls of the first kind. **The seventeenth is
+`ComplexAnalytic.AnalyticSpace.isSeparatedMap_quotientCoverHom`**, that the base map of the
+quotient's structure morphism is a separated map, which is the subject of the clause opening *And
+one kind more* and none of the classes the opening description lists. **No new kind is needed and
+none is claimed.**
+
+**What this push moves in this file outside the two sections it adds, stated rather than left to a
+diff.** It edits `### The quotient of a covering map by a finite group over the base` and the
+clause of this description that names it, in each case editing in place the sentences that had
+gone false and putting a dated record beside them, because
+`Oka/AnalyticSpace/QuotientCover.lean` is that module's first importer and first consumer
+and both said it had neither. **It touches no other section and no other clause**, and two
+published figures are untouched in consequence and by measurement alike: the count *Five of that
+section's twenty-one guards*, in the clause opening *The sixth kind has a second category*, counts
+over `### The category of separated covers, and separatedness as a morphism property`, and `git
+diff` against the commit these sections are cut from touches no line of it; and the published
+pullback check's inputs are this file's `#print axioms` names, of which this push adds
+**twenty-two** and removes none, **not one of them carrying *isPullback* or *hasPullback***, so
+all four of that check's figures are what they were. **This push does not repair
+`### Base change of a local homeomorphism, and of a proper map` or the clause of this description
+that names it**, which
+`### The quotient of a covering map by a finite group over the base`'s own docstring records as
+having gone false at `280bb67` for the same reason; that is a scope call and not a finding that
+either is sound.
+**These two clauses were added by the push that added
+`### Morphisms between the covering spaces of an analytic space` and
+`### The quotient of an analytic cover by a finite group acting over the base`**, 2026-09-15, for
+the reason the clause naming `### The terminal object and the product of two complex affine
+spaces` gives.
 
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
@@ -7332,19 +7416,50 @@ small enough neighbourhood by a single permutation of the fibre, and the descent
 
 **The routing, argued rather than assumed, because the module is new and no row of the topic table
 names its subject.** `OkaTest/Axioms.lean` says what to do with exactly that case — *Guard one in
-the file of the analytic result that motivated it*, under that result's heading. **This one has no
-consumer to sit with**, and that is two measurements at the commit that adds this section. First,
-no module under `Oka/` imports `Oka/Topology/Covering/Quotient.lean`, the `Oka.lean` aggregator
+the file of the analytic result that motivated it*, under that result's heading. **This one had no
+consumer to sit with when this section was written**, and that is two measurements at the commit
+that adds this section. First, no module under `Oka/` imported
+`Oka/Topology/Covering/Quotient.lean` there, the `Oka.lean` aggregator
 line aside, which is the exclusion the account of that rule makes in terms and by the instrument it
 publishes, `git grep -l -E '^import <module>$'`. Second, none of the four is tagged `@[simp]`,
 `@[instance]` or `@[aesop]` — they are four plain theorems — so no proof term anywhere can reach
 one without spelling its name, and a grep for the four names over `Oka/`, `OkaTest/`, `scripts/`
-and `README.md` returns their own module and this section and nothing else — **twenty-two lines at
+and `README.md` returned their own module and this section and nothing else — **twenty-two lines at
 the commit that adds this section, fourteen of them in the module and eight of them here**, with
-`scripts/` and `README.md` at zero. **Not this file's head description**: the clause that push adds
+`scripts/` and `README.md` at zero.
+
+**Not this file's head description**: the clause that push adds
 there describes the four in prose and names none of them, so that grep does not reach it, and a
 reader checking this sentence against the instrument should expect the head description to be
 absent from its output rather than in it. So the guard takes a section of its own.
+
+**Those two sentences read in the present tense — *This one has no consumer to sit with*, *no
+module under `Oka/` imports*, *a grep … returns* — until 2026-09-15**, when
+`Oka/AnalyticSpace/QuotientCover.lean` became this module's first importer and first consumer. It
+reads `IsCoveringMap.of_comp_quotientMk` and `MulAction.finite_fiber_of_comp_quotientMk` off it,
+one application each, and cites both by name in prose. **Neither figure moves**: both were pinned
+to the commit that adds this section when they were written, and this record changes tense and
+nothing else in them. **The grep is twenty-nine lines at the commit that writes
+this record** — the same twenty-two, every one of them still a hit, plus four prose lines and two
+code lines in the new module, plus **the sentence of this record above that spells two of the four
+names**, which the instrument reaches for exactly the reason the *Not this file's head
+description* paragraph gives for its not reaching the head description's clause: that clause
+describes the four and names none, and this record names two — and the other two names are
+unmoved at six lines each. **A re-run figure published in prose that the figure itself counts owes
+a reader the self-hit, and this one gives it**: the eight lines the first measurement counts in
+this file are all still hits, the ninth is this record's own sentence, and the delta is seven and
+not six. **The instrument is the one the first measurement publishes**:
+`git grep -l -E '^import Oka\.Topology\.Covering\.Quotient$'` over `Oka/`, `OkaTest/` and
+`Oka.lean` returns `Oka.lean` and `Oka/AnalyticSpace/QuotientCover.lean` at the commit that writes
+this record, and `Oka.lean` alone at the commit before it.
+
+**The section is not moved and the four guards are not re-routed**, and this file already has the
+same situation on record. `### Base change of a local homeomorphism, and of
+a proper map` acquired a consumer at `280bb67` and is still a section of its own; the paragraph
+opening *One further section of this file reached its placement by that route* is where that is
+written down, together with the ground that repairing what a consumer falsifies is a push of its
+own. **Re-routing a landed guard is at least as much of one**, and this push does neither to that
+section.
 
 **The precedent is `### Colimits of shape SingleObj in a category with finite colimits`, and what
 is shared with it is the reason and not the subject.** That section reaches the same placement by
@@ -8237,3 +8352,247 @@ info: 'ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale' depe
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.isStableUnderBaseChange_isFiniteEtale
+
+/-! ### Morphisms between the covering spaces of an analytic space
+
+`Oka/AnalyticSpace/CoveringSpaceMap.lean`, the whole of it. **Five names**: the morphism of
+analytic spaces that a continuous map over the base carries between the two covering spaces it is
+a map of, its underlying morphism of locally ringed spaces and its underlying map, its triangle
+over the base, and the extensionality statement that two morphisms into a covering space which
+agree on underlying maps and over the base are equal.
+
+**The routing is a row of the topic table and not an argument.** `OkaTest/Axioms.lean` routes
+*morphisms of analytic spaces* to this file, and every one of the five is about a morphism of
+analytic spaces — the first four about one particular morphism and the fifth about morphisms into
+one particular object. **The tail rule that sends a module whose subject no row names to the file
+of the analytic result that motivated it does not apply**, and the two sections of this file that
+reach their placement by that rule are the two whose docstrings argue it; nothing here shares
+their problem.
+
+**The section it continues is
+`### A covering space of a complex analytic space is a complex analytic space`**, which guards
+`Oka/AnalyticSpace/CoveringSpace.lean` — the module that builds the analytic structure and the
+structure morphism, and the module the five names below are stated over. **That section guards
+that construction's action on objects and this one its action on maps**, and the two are separate
+sections because they are two modules, which is this file's ordinary shape and not a decision
+taken here. **This push touches no line of that section**, which `git diff` against the commit
+this section is cut from shows.
+
+**Five is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output: no `_assoc` lemma, no `.eq_1` equation lemma, no match
+lemma and no congruence lemma. One of the five is a definition and the other four are theorems,
+one of them `@[simp]` — and which one is a report of `lake lint` and not a choice, as that
+declaration's own docstring records.
+
+**The axiom triple is the same for all five and is Mathlib's and not this module's.** Nothing
+below adds an axiom to what `Oka/AnalyticSpace/CoveringSpace.lean` already carries; the sheaf
+theory the five rest on is `AlgebraicGeometry.LocallyRingedSpace.inverseImage`'s, and the two
+morphism-level statements go through `ComplexAnalytic.AnalyticSpace.forgetToLocallyRingedSpace`,
+which is a functor and carries none of its own.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.coveringSpaceMap' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.coveringSpaceMap
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.toLRSHom_coveringSpaceMap' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.toLRSHom_coveringSpaceMap
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.base_coveringSpaceMap' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.base_coveringSpaceMap
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.coveringSpaceMap_comp' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.coveringSpaceMap_comp
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.coveringSpace_hom_ext' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.coveringSpace_hom_ext
+
+/-! ### The quotient of an analytic cover by a finite group acting over the base
+
+`Oka/AnalyticSpace/QuotientCover.lean`, the whole of it. **Seventeen names**, and the module
+docstring partitions them in the same order this section guards them: **five** build the orbit
+space of a finite group acting on the total space of a morphism over the base, the quotient map
+onto it and the descent of the structure map along that quotient map, with the two equations
+those satisfy; **two** are the topological conclusions, that the descent is a covering map and
+that its fibres are finite; **six** are the analytic structure on the orbit space, its structure
+morphism, that morphism's underlying map, that it is finite étale, that its base map is separated,
+and the quotient map as a morphism of analytic spaces; **two** are that quotient map's underlying
+map and its triangle over the base; and **two** read the whole of it at an object of
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` over a Hausdorff base, giving an object
+of that category and a morphism of it.
+
+**The routing is a row of the topic table.** `OkaTest/Axioms.lean` routes *morphisms of analytic
+spaces* to this file, and the module's subject is the structure morphism of the quotient cover.
+**Five of the seventeen conclude nothing in the category of analytic spaces**: the orbit space is
+an object of `TopCat`, the quotient map and the descent are morphisms of `TopCat`, and the two
+equations are an equation between `TopCat` morphisms and an equation between points. **Three of
+those five do mention a morphism of analytic spaces**, through its base map — the descent and the
+two equations — and the other two are stated at an analytic space alone. **None of the five is of
+the mirror-tree kind**, and that is the distinction that matters here: none is statable without an
+analytic space, where the guards this file routes to a section of their own under the tail rule
+have no analytic subject at all.
+
+**It consumes `### The quotient of a covering map by a finite group over the base`**, the section
+guarding `Oka/Topology/Covering/Quotient.lean`, whose two conclusions are what the two topological
+names below are read from. **That makes this push that module's first importer and first
+consumer, and two sentences of this file said it had neither** — one in that section's docstring
+and one in the clause of the head description that names it. **Both are repaired in place by this
+push and both carry a dated record**, and the two figures those sentences publish are untouched,
+being pinned to the commit that added that section. **The guard-name grep the second of them
+publishes returns seven lines more at the commit that writes this section** — four of them prose,
+in `Oka/AnalyticSpace/QuotientCover.lean`'s module and declaration docstrings, two of them code,
+the two applications, and the seventh the sentence of that record which spells two of the four
+guard names, the instrument reaching the record that republishes it — and the record beside it
+says so and gives the new total rather than leaving a reader to find the old one wrong.
+
+**Seventeen is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output: no `_assoc` lemma, no `.eq_1` equation lemma, no match
+lemma and no congruence lemma. Eight of the seventeen are definitions and nine are theorems,
+three of them `@[simp]`.
+
+**The axiom triple is the same for all seventeen.** `Classical.choice` is already carried by every
+statement of `Oka/Topology/Covering/Quotient.lean` and by the analytic structure on a covering
+space, which is one `#print axioms` run each and not a reading of any proof below.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitSpace' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitSpace
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitMk' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitMk
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitDesc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitDesc_apply' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitDesc_apply
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitMk_comp_orbitDesc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitMk_comp_orbitDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isCoveringMap_orbitDesc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isCoveringMap_orbitDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.finite_fiber_orbitDesc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.finite_fiber_orbitDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.quotientCover' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.quotientCover
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.quotientCoverHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.quotientCoverHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.base_quotientCoverHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.base_quotientCoverHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFiniteEtale_quotientCoverHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFiniteEtale_quotientCoverHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isSeparatedMap_quotientCoverHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isSeparatedMap_quotientCoverHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.toQuotientCover' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.toQuotientCover
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.base_toQuotientCover' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.base_toQuotientCover
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.toQuotientCover_comp' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.toQuotientCover_comp
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.quotient' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.quotient
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toQuotient' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toQuotient

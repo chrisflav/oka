@@ -46,6 +46,7 @@ import Oka.AnalyticSpace.Coherent
 import Oka.AnalyticSpace.Continuity
 import Oka.AnalyticSpace.CoveringMap
 import Oka.AnalyticSpace.CoveringSpace
+import Oka.AnalyticSpace.CoveringSpaceMap
 import Oka.AnalyticSpace.CutOutCancel
 import Oka.AnalyticSpace.CutOutCompose
 import Oka.AnalyticSpace.CutOutFibreProduct
@@ -87,6 +88,7 @@ import Oka.AnalyticSpace.PullbackLimit
 import Oka.AnalyticSpace.PullbackModulesStalk
 import Oka.AnalyticSpace.PullbackOpen
 import Oka.AnalyticSpace.PullbackReduction
+import Oka.AnalyticSpace.QuotientCover
 import Oka.AnalyticSpace.Relations
 import Oka.AnalyticSpace.Restrict
 import Oka.AnalyticSpace.SeparatedDirectSummand
