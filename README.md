@@ -2057,6 +2057,208 @@ gives.** The truth condition of *X occurs nowhere* lives outside any file a chec
 and the clauses carrying it are prose a parser would have to guess at; a check somebody wants to
 switch off is worse than a command somebody has to run.
 
+### When two paragraphs open with the same words
+
+`OkaTest/Axioms/Morphisms.lean`'s head description is a sequence of clauses that cite one another
+**by opening words** — *the clause opening «X»* — which is what a pointer that reaches a paragraph
+by its position is asked to become, for the reason taxis #1709 gives: a quotation survives an
+insertion where an ordinal does not. **A push that opens a new paragraph with the words an
+existing one opens with gives every such pointer a second referent**, and **none of three named
+checks sees it** — a claim about those three and not about the tree. The two paragraphs need not
+be near each other, so there is no conflict. Neither is code, so the build has nothing to say.
+`scripts/check_docstring_names.py` resolves dotted names and there is no dotted name in either.
+Taxis #2016 records two pull requests rejected for this on 2026-09-14, each by a reviewer who
+happened to read two paragraphs in one sitting.
+
+**Opening against opening is the test, and citation against openings is not**, which is why the
+class had been invisible. A scan that starts from a citation and asks whether it still resolves
+finds nothing at the moment of the push that breaks it, because the colliding paragraph is
+normally written before anything cites either of the two. By the time a citation exists the
+collision is old, and it is outside the diff the next grader reads.
+
+**The population is the head description and not the file, and getting that wrong produces a
+figure that means nothing.** Over the whole of `OkaTest/Axioms/Morphisms.lean` at the commit that
+adds this section, the eight-word key below returns **31** duplicated openings over **1202**
+paragraphs — **122** paragraphs in excess of one per opening. **Twenty-six of the 31 are outside
+the head description**, and those twenty-six are a house form these conventions prescribe and that
+repairing would be vandalism: *Named by file rather than counted*, **22** times; *Named and not
+located*, **14**; *The routing, argued rather than assumed*, **15**; *Appended as its own section
+rather than merged*, **10**; a **second** spelling of *Named by file rather than counted* — the
+first continues *, as* and the second *, for* — at **9**; and *`Classical.choice` is in every guard
+below*, **9** in the spelling that continues *and is* and **7** in the spelling that continues *and
+none*, with two further spellings of that sentence at **4** and **3**. **The families are spellings
+and not sentences, which is the whole reason the key is mechanical**: four spellings of one
+sentence are four openings here, and two spellings of one sentence are two. Those open section
+docstrings, which are reached by their `/-! ### ` heading rather than by a quotation — **and no
+clause quotes one**: a search for *opening `*`* followed by the
+first five words of any of the 31 matches **once** in the file, and the one it matches is in the
+head description. **Over the head description alone — the file's first `/-! … -/` block — the
+same run returns 5 over 79 paragraphs**, and each of the five is a collision inside the
+population that pointers do range over. **Every figure this section takes in that file is a run at
+`6b295aa`, the commit this section is cut from**, and this push touches no `.lean` file, so it is a
+run at the commit that adds this section as well — unless a push to that file lands in between,
+which is how the first cut of this section went stale and the reason the base is named here rather
+than left implicit.
+
+**The instrument**, whole-population and restricted to no family of opening, run at the base and
+at the head and never over the diff:
+
+```sh
+python3 - OkaTest/Axioms/Morphisms.lean <<'EOF'
+import re, sys
+from collections import defaultdict
+L = open(sys.argv[1], encoding="utf-8").read().splitlines()
+s = next(i for i, l in enumerate(L) if l.startswith("/-!"))
+e = next(i for i in range(s, len(L)) if L[i].rstrip().endswith("-/"))
+ps, ln = [], s + 1
+for ch in re.split(r"\n\s*\n", "\n".join(L[s:e + 1])):
+    t = re.sub(r"\s+", " ", ch.replace("*", " ")).strip()
+    if t: ps.append((ln, t))
+    ln += ch.count("\n") + 2
+d = defaultdict(list)
+for ln, t in ps: d[" ".join(t.split()[:8])].append((ln, t))
+print(len(ps), "paragraphs")
+for k, v in d.items():
+    if len(v) > 1:
+        a, b = v[0][1], v[1][1]
+        n = 0
+        while n < min(len(a), len(b)) and a[n] == b[n]: n += 1
+        print(f"  [{len(v)}] prefix {n}ch  {k}")
+        for ln, _ in v: print(f"      :{ln}")
+EOF
+```
+
+**Both numbers are the figure and a delivery owes both**: how many openings are duplicated, and
+**the longest prefix two of them share**. The second is what says whether a citation could have
+been written that no further word would rescue.
+
+**Eight words, and not a character prefix, and the width is measured rather than a taste.** The
+same five collisions read with a fixed-width character key at that commit:
+
+| key | duplicated openings it reaches |
+|---|---|
+| first eight words | **5** |
+| first 60 characters | 4 |
+| first 80 characters | **1** |
+| first 120 characters | 1 |
+| first 140 characters | 0 |
+
+An 80-character key — one terminal line, and a natural thing to reach for — finds **one of the
+five**, and the reason is arithmetic rather than luck: the eight-word key is **41 to 53
+characters** long on these five, so a key of 80 characters is very nearly twice as strict a test,
+and the four pairs it drops are the four that diverge at **46, 66, 68 and 75** characters. **A
+width chosen in characters is a width chosen against line length; the unit a collision lives in is
+the words a citation quotes.**
+
+**Restricting to `And …` openings reaches none of the five**, and that restriction is the practice
+this section replaces. **19** of the head description's 79 paragraphs open with `And `, and
+`^And one section more` alone matches **6** lines inside the block — a collision family six deep
+that the file tracks explicitly and differentiates by its fifth and sixth words, so that the
+eight-word key sees six distinct openings there and no duplicate at all. **The one family this
+file already manages is the only family that has not collided**, and every scan taxis #2016
+records as being in circulation before it was restricted to that family.
+
+**The five at the commit that adds this section**, with the push that wrote each member — `git
+log -S` at a first line of each opening that does not wrap, together with the paragraph-opening
+count re-taken at each of the nine commits below, which is a run and not a blame walk:
+
+| opening, abbreviated | at | prefix | first | second |
+|---|---|---|---|---|
+| *Two claims elsewhere in this paragraph* | `:444` `:773` | 68 | `da72056` | `321879e` |
+| *The published check on this file's* | `:545` `:989` | **135** | `954b116` | `f1e0d83` |
+| *That numeral read 2026-09-13* | `:557` `:647` | 75 | `e40a9d2` | `e40a9d2` |
+| *Cited by opening words* | `:798` `:937` | 66 | `321879e` | `f1e0d83` |
+| *What this push moves in this file* | `:1074` `:1214` | 46 | `e9bbdda` | `cce6d6c` |
+
+The ten cells of the columns headed *first* and *second* name **seven** distinct commits —
+oka#530, oka#539, oka#543, oka#554, oka#556, oka#559 and oka#565. **The head description held 26
+paragraphs at `077f6d5` and holds 79 here, and the duplicate count runs 0, 0, 0, 0, 1, 2, 4, 4, 5
+across `077f6d5`, `da72056`, `003e38f`, `954b116`, `e40a9d2`, `321879e`, `f1e0d83`, `5dc5878` and
+`6b295aa`, the commit this section is cut from**, which are `git show -s --format=%cI`
+**2026-09-12 23:41Z** through **2026-09-15 21:38Z**. **The ninth cell is taken at the base and not
+at the commit that adds this section**, because this push touches no `.lean` file and so cannot
+move it; the two are the same number and only the base's is a run. **So the class is under three
+days old and all five of it arrived inside the fourteen hours from `e40a9d2` onwards**, while the
+block grew from 46 paragraphs to 72 — it arrived with the block's growth and not with any one
+push. **The block has grown to 79 in the nine hours since and no sixth has arrived**, which is the
+first evidence on this page that the five are not simply a function of the block's size.
+
+**One push wrote both members of one of the five; the other four were written by two pushes
+each**, and that is what decides where the rule points. A push writing N paragraphs from one
+template gives them N identical openings by construction — which is `e40a9d2`, two numeral
+corrections beside each other from one form — and a grader reading that diff can see it. **The
+cross-push form is the one to design against**: the colliding paragraph is already in the file and
+is in no hunk, so no census scan of the added lines reaches it, and **the run has to be taken over
+the whole base file and over the whole head file rather than over the diff.**
+
+**One of the five is quoted, four are not, and none of the five is a false sentence here.** Over
+every tracked `.lean` and `.md`, whitespace-normalised, a search for *opening `*`* followed by
+each of the five matches **once in total**: `OkaTest/Axioms/Morphisms.lean`'s citation of *The
+published check on this file's statements of a pullback square is unmoved in both halves*. **That
+citation resolves for two independent reasons and needs neither twice** — its head noun is *the
+one* of *the other two*, so its population is a pair named in its own sentence rather than the
+block, and it carries the pin *added at `954b116`*, which is the commit that wrote the first
+member. **So all five are latent**: a trap for the next push that wants to cite one of them, and
+not a pointer that has stopped pointing.
+
+**All five are left standing and none is repaired, deliberately.** Differentiating an opening
+rewrites landed prose that no citation depends on — which is the tree-wide search two paragraphs
+back and not an assumption — and each of the five would owe a record under *The `until <date>`
+record* for a change no reader can observe the effect of. **What a later push
+wanting to cite one of them owes instead is a longer quotation**: the shared prefixes above are
+46, 66, 68, 75 and 135 characters, so a citation quoting past the point where two members diverge
+names one paragraph and a citation stopping short of it names two. **The case for repairing an
+opening is a pair that no reasonable quotation separates**, and none of the five is that pair.
+
+**What a push owes, and it is two runs and one sentence.** Run the instrument above on the base
+file and on your own head; publish the paragraph count and the duplicate count at both, and the
+longest shared prefix of any pair your push creates; and if it creates one, say whether you
+differentiated it or left it, and why. **A push that appends no paragraph to that block owes the
+figures anyway**, because the block is where the pointers live and *unmoved* is the answer that
+lets the rest of a column be carried.
+
+**The boundary against its neighbour and against taxis #1709.** *Re-deriving a branch's
+measured absences after a re-cut* is about a clause that was true when written and false when the
+base moved, and its instrument is an occurrence scan in three columns; this section is about two
+clauses that are each true and that a pointer can no longer tell apart, and its instrument runs in
+one file over one block. Taxis #1709 is the pointer that reaches a paragraph **by position**, and
+the repair it asks for is a quotation — **which is the thing this section gives the failure mode
+of** — so the two are consecutive rather than alternative: quote rather than count, then check
+that the quotation reaches one paragraph.
+
+**A command and not a gate, for the reason *Re-deriving a branch's measured absences after a
+re-cut* gives of its own instrument.** Whether two openings are identical is mechanical and
+whether that matters is not: six clauses of that block share four opening words on purpose, and no
+check could tell those from the five above.
+
+**This section's own first draft failed its own instrument, which is the best argument for it
+there is.** That draft opened this last paragraph *This is a command and not a gate, for the
+reason …*, which is the opening of the last paragraph of *Re-deriving a branch's measured absences
+after a re-cut* — a cross-push collision written from that section's own closing form, by the push
+writing the rule against it, into the one file this rule is not even scoped to. Running the
+instrument over `README.md` before committing took its duplicate count from **3** to **4** and
+named the pair; the opening above is the repair, and the count is **3** at the commit that adds
+this section, unmoved. **At `6b295aa`, the commit this section is cut from, the three that remain
+are two `sh` fences and a real pair** — `:1292` and `:1595`, both opening *Its row count is its
+own reach test* and sharing **39** characters under the instrument's own normalisation — **and one
+of the two is now reached, by a pointer that used this section's repair five hours after this
+section's head was pushed and before it landed.** `daeb942` cites the second of the pair at
+`:1606` with a quotation running **fourteen** words and **68** characters, carrying on through *as
+the second register above is*, which is **29** characters past the point the pair diverges at; it
+names `:1595` and not `:1292`, and its own next sentence says it runs to fourteen words *because
+eight do not separate it*. **That is what this section asks for, done by a push that could not
+have read it**, and it is the reason this section states its rule as a quotation length rather
+than as a repair to an opening. **The other of the pair is reached by nothing.** A
+whitespace-normalised search for *opening* followed by *Its row count is its own reach test* over
+every tracked `.md` and `.lean` returns **two** hits — `:1606`, and the sentence you are reading,
+which names the pair rather than points at one of them. **A repair that quotes what it is about
+adds a hit to the class it is scanning**, and a delivery running this instrument over `README.md`
+has to subtract its own prose or it will report its own sentence as a defect — **and there are now
+two such sentences in this file, only one of them the delivery's.** **All three of the line
+numbers in this paragraph are `README.md`'s at `6b295aa`**, and they are pinned rather than left
+live because any push inserting prose earlier in this file moves all three together — which is the
+class taxis #1709 names, met here in the file that states the rule against it.
+
 ### Declaration docstrings, and why `docBlameThm` is off
 
 `lake lint` runs **Batteries'** `docBlame` — the environment linters are a mixture, fourteen in
