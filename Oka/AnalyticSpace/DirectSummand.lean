@@ -47,6 +47,12 @@ already says a cover is the coproduct of a clopen part and its complement.
 - `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.inducesIsoOnDirectSummand_of_injective`: **the
   direct-summand statement itself**, in the shape `PreGaloisCategory`'s field is written in — an
   object and a morphism to `B` whose binary cofan with `i` is a colimit.
+- `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap_of_t2`: **a morphism
+  of covers bijective on the fibre over one point of a preconnected base is an isomorphism**, with
+  nothing asked of either cover beyond Hausdorffness. It is here and not in
+  `Oka/AnalyticSpace/FiniteEtaleOver.lean` because the summand above is what empties and that file
+  cannot cite it — this module's only `Oka` import line names it, so the direction is read off the
+  head of this file; taxis #2025 is the filing and the docstring below compares the two routes.
 
 **The named witness and the existential are both here on purpose.** The existential is the shape
 the field asks for and is what the two modules of `Oka/` that apply it cite; the named one is what
@@ -333,5 +339,116 @@ theorem FiniteEtaleOver.inducesIsoOnDirectSummand_of_injective {X : AnalyticSpac
       Nonempty (Limits.IsColimit (Limits.BinaryCofan.mk i u)) :=
   ⟨FiniteEtaleOver.directSummandCompl i, FiniteEtaleOver.directSummandComplι i,
     ⟨FiniteEtaleOver.isColimitBinaryCofanDirectSummandCompl i hinj⟩⟩
+
+/-! ### Conservativity, with nothing asked of the target cover beyond Hausdorffness -/
+
+/-- **A morphism of covers whose fibre map at one point of the base is bijective is an
+isomorphism** — over a preconnected base, with both total spaces Hausdorff and **nothing asked of
+either of them beyond that**.
+
+**This is `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap` with
+`[PreconnectedSpace B.left]` gone, and the suffix names what is left**: Hausdorffness of the two
+total spaces, which is the whole of what this statement asks of the two covers. That hypothesis was
+the *route's* and not the statement's — that proof reads the degree of `f.left` off
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree_eq_mul`, and a degree is one number only over
+a connected space — and the route here never forms it.
+
+**It is in this file and not in that one because the summand is**, which is the same reason the
+paragraph opening *`…degree_eq_mul` and `…isIso_of_bijective_fiberMap` cannot cite this* gives
+above: `Oka/AnalyticSpace/FiniteEtaleOver.lean` is imported by this module and cannot cite
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.directSummandCompl`. **The direction is one line of
+this file and not a reading of it** — `import Oka.AnalyticSpace.FiniteEtaleOver` is the only
+`Oka` import line this module has, so nothing of this file is in that file's closure.
+**Both statements stand**: the
+one above is the one a caller inside
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2` already has and the two
+conservativity instances of that file are stated from it, and this one is what a caller outside
+that subcategory needs.
+
+**Two halves, and neither forms a degree of `f.left`.** *Surjectivity*: the image of `f.left` is
+clopen by `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isClopen_range_left` above, which is where
+`[T2Space B.left]` goes, so `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.directSummandCompl` is
+an object of the category; its fibre over `x` is empty because the fibre map there is onto, and
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isEmpty_left_of_isEmpty_fiber` — which asks
+`[PreconnectedSpace X]` and nothing of the cover — empties the whole of it. *Injectivity*: a
+surjection of total spaces makes **every** fibre map onto, by
+`CategoryTheory.MorphismProperty.Over.w` read at a preimage; each fibre is finite and
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.card_fiber` reads the two cardinalities as the two
+degrees, which the hypothesis at `x` makes equal; and a surjection between finite types of equal
+`Nat.card` is injective, which is `Nat.bijective_iff_surjective_and_card`. Two points with one
+image lie over one point of the base, so injectivity of that one fibre map is injectivity of
+`f.left`.
+
+**The empty case is not a case here**, where the proof above splits on it: nothing in the route
+asks for a point, so a cover with empty total space is carried by the same two steps as any other.
+
+**Neither membership in the complement is crossed by a `simp` naming
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.rangeOpens`, and that is the same measured choice
+the paragraph above makes for `isColimitBinaryCofanDirectSummandCompl`.** Membership in that open
+is the range condition definitionally, so a type ascription crosses it; `simpa [rangeOpens]` also
+crosses it and **generates that definition's equation lemma**, which then stands in
+`scripts/DumpOkaDecls.lean`'s output as a row this file did not write — measured, not expected:
+the draft that spelled it that way reported **one** extra row,
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.rangeOpens.eq_1`, and `Δdump` for the push that
+adds this theorem was `+4` against three declarations. **Both crossings here are ascriptions**, so
+that push's `Δdump` is the three declarations it states and no more.
+
+**Where the hypotheses go.** `[T2Space B.left]` is spent three times, on
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isFiniteEtale_left` at `f.left`, on the image being
+clopen and on `card_fiber` of the target; `[T2Space A.left]` once, on `card_fiber` of the source;
+and `[PreconnectedSpace X]` twice, on emptying the complementary summand and on `card_fiber` at
+each point of the base. **Neither total space is asked to be preconnected.** -/
+theorem FiniteEtaleOver.isIso_of_bijective_fiberMap_of_t2 {X : AnalyticSpace.{u}}
+    {A B : FiniteEtaleOver.{u} X} (f : A ⟶ B)
+    [T2Space (A.left : Type u)] [T2Space (B.left : Type u)]
+    [PreconnectedSpace (X : Type u)] (x : X)
+    (hf : Function.Bijective (FiniteEtaleOver.fiberMap.{u} x f)) : IsIso f := by
+  have hw : f.left ≫ B.hom = A.hom := MorphismProperty.Over.w f
+  haveI : IsFiniteEtale f.left := FiniteEtaleOver.isFiniteEtale_left f
+  refine FiniteEtaleOver.isIso_of_isIso_left f ?_
+  have hCempty : IsEmpty (FiniteEtaleOver.fiber.{u} x (FiniteEtaleOver.directSummandCompl f)) := by
+    constructor
+    rintro ⟨b, hb⟩
+    have hx : (B.hom.toLRSHom.base : B.left → X) b.1 = x := hb
+    obtain ⟨a, ha⟩ := hf.2 ⟨b.1, hx⟩
+    have hmem : (b.1 : B.left) ∈ Set.range (f.left.toLRSHom.base : A.left → B.left) :=
+      ⟨a.1, congrArg Subtype.val ha⟩
+    exact (b.2 : (b.1 : B.left) ∈ (FiniteEtaleOver.rangeOpens f : Set B.left)ᶜ) hmem
+  have hCleft := FiniteEtaleOver.isEmpty_left_of_isEmpty_fiber.{u}
+    (FiniteEtaleOver.directSummandCompl f) x hCempty
+  have hsurj : Function.Surjective (f.left.toLRSHom.base : A.left → B.left) := by
+    intro b
+    by_contra hb
+    exact hCleft.elim
+      (⟨b, fun hmem ↦ hb (hmem : (b : B.left) ∈
+          Set.range (f.left.toLRSHom.base : A.left → B.left))⟩ :
+        ((FiniteEtaleOver.directSummandCompl f).left : Type u))
+  have hAB : ∀ a : (A.left : Type u),
+      (B.hom.toLRSHom.base : B.left → X) ((f.left.toLRSHom.base : A.left → B.left) a)
+        = (A.hom.toLRSHom.base : A.left → X) a :=
+    fun a ↦ congrArg (fun g : A.left ⟶ X ↦ (g.toLRSHom.base : A.left → X) a) hw
+  have hdeg : A.degree = B.degree := by
+    rw [← FiniteEtaleOver.card_fiber A x, ← FiniteEtaleOver.card_fiber B x]
+    exact Nat.card_eq_of_bijective _ hf
+  have hinj : Function.Injective (f.left.toLRSHom.base : A.left → B.left) := by
+    intro a₁ a₂ h
+    set y : X := (A.hom.toLRSHom.base : A.left → X) a₁ with hy
+    have hy₂ : (A.hom.toLRSHom.base : A.left → X) a₂ = y := by
+      rw [← hAB a₂, ← h, hAB a₁]
+    have hfibsurj : Function.Surjective (FiniteEtaleOver.fiberMap.{u} y f) := by
+      rintro ⟨b, hb⟩
+      obtain ⟨a, ha⟩ := hsurj b
+      refine ⟨⟨a, ?_⟩, Subtype.ext ha⟩
+      change (A.hom.toLRSHom.base : A.left → X) a = y
+      rw [← hAB a, ha]
+      exact hb
+    have hcard : Nat.card (FiniteEtaleOver.fiber.{u} y A)
+        = Nat.card (FiniteEtaleOver.fiber.{u} y B) := by
+      rw [FiniteEtaleOver.card_fiber A y, FiniteEtaleOver.card_fiber B y, hdeg]
+    have hbij : Function.Bijective (FiniteEtaleOver.fiberMap.{u} y f) :=
+      (Nat.bijective_iff_surjective_and_card _).2 ⟨hfibsurj, hcard⟩
+    exact congrArg Subtype.val
+      (hbij.1 (a₁ := ⟨a₁, rfl⟩) (a₂ := ⟨a₂, hy₂⟩) (Subtype.ext h))
+  exact isIso_of_isLocalIso_of_bijective f.left ⟨hinj, hsurj⟩
 
 end ComplexAnalytic.AnalyticSpace

@@ -115,12 +115,19 @@ Every `@`-application below is that, and none of them is a mathematical step.
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.faithful_fintypeFiberFunctor`: **both are
   faithful on that subcategory.**
 - `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap`: **a
-  morphism whose fibre map at one point is bijective is an isomorphism**, over a preconnected
-  target.
+  morphism whose fibre map at one point is bijective is an isomorphism**, with nothing asked of
+  either cover. **This bullet closed *over a preconnected target*, until 2026-09-15.**
+- `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsos_fiberFunctor` and
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsos_fintypeFiberFunctor`:
+  **both are conservative on the whole category** — the sixth Galois-category obligation on a fibre
+  functor, at the functor the class asks it of and not at a restriction of it. The names are the
+  class's own field name for that obligation.
 - `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsomorphisms_fiberFunctor` and
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsomorphisms_fintypeFiberFunctor`:
-  **both are conservative on that subcategory** — the sixth Galois-category obligation on a fibre
-  functor.
+  **the same at their restrictions along the preconnected subcategory's inclusion**, which is what a
+  caller working inside that subcategory meets. **That pair was this file's only conservativity
+  statement and the bullet naming it read *both are conservative on that subcategory*, until
+  2026-09-15.**
 
 ## What is not here
 
@@ -184,12 +191,19 @@ Every `@`-application below is that, and none of them is a mathematical step.
 
   **One thing about the instrument, found by getting it wrong.** *A transitive walk of the
   `Oka`-prefixed `import` lines* is exact only if `public import` lines are followed as well: 29 of
-  the 240 tracked `.lean` files under `Oka/` open with `module` and write their imports that way,
+  the **244** tracked `.lean` files under `Oka/` **at the commit that repairs this numeral** open
+  with `module` and write their imports that way,
   13 of them carrying a `public import Oka…` line, and a walk anchored on `^import Oka` alone
   returns **61** for this module where the closure is **75**, silently and with no unparsed line to
-  report. The figures above are right; what is under-specified is the phrase, and the check that
-  needs no walk is `env.allImportedModuleNames` filtered to the `Oka` prefix in a file importing
-  the module.
+  report. **That population read 240 and was unpinned, until 2026-09-15**: it was exact at
+  `fbe1e95`, where this paragraph was written, and `f1e0d83`, `e9bbdda` and `998d5ad` added one
+  module under `Oka/`, two and one between them. **The other three numerals are unmoved
+  and that is a run and not a reading** — a `git grep -l '^public import'` over `Oka/*.lean`
+  returns **29** at `fbe1e95` and **29** here, thirteen of those naming an `Oka` module, and the
+  two closure figures are this module's own and are re-taken at this commit. **It is pinned now**,
+  so the next push that adds a module under `Oka/` owes it nothing. The figures above are right;
+  what is under-specified is the phrase, and the check that needs no walk is
+  `env.allImportedModuleNames` filtered to the `Oka` prefix in a file importing the module.
   **That sentence read *None of the six is about* that name, until 2026-09-14, and under the
   reading its own enumeration invites it was false when written rather than falsified later, so
   this is a correction and not one of this repository's dated records**: taken as a claim about the
@@ -276,12 +290,22 @@ Every `@`-application below is that, and none of them is a mathematical step.
   unchanged and stay the right ones for a caller working in the covers, which is the reason
   `Oka/AnalyticSpace/SeparatedDirectSummand.lean` gives for the same asymmetry at the direct
   summand.
-* **The subcategory's preconnectedness condition is not removed and this file does not argue that
-  it could be.** It is the hypothesis
-  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap` asks of its target
-  and `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fiberFunctor_map_injective` asks of its
-  source; what this file removes is the **Hausdorff** half of the ambient subcategory's condition
-  and nothing else.
+* **The subcategory's preconnectedness condition is gone at conservativity and kept at
+  faithfulness, and the asymmetry is the two ambient hypotheses' and not this file's.**
+  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fiberFunctor_map_injective` asks preconnectedness
+  of its **source** and nothing removes it, so the faithfulness pair is still stated on the
+  subcategory; the conservativity pair is not, because
+  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap_of_t2`
+  (`Oka/AnalyticSpace/DirectSummand.lean`) asks nothing of either cover beyond Hausdorffness, which
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left` supplies here for free.
+  **This bullet read *The subcategory's preconnectedness condition is not removed and this file
+  does not argue that it could be* and gave that condition as what
+  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap` asks of its target,
+  until 2026-09-15**, when that hypothesis was shown to be the degree route's and not the
+  statement's — taxis #2025 is the filing and the new theorem's docstring is where the two routes
+  are compared. **What this file removes of the ambient subcategory's condition is now both
+  halves at conservativity and the Hausdorff half at faithfulness**, where it was the Hausdorff
+  half at both.
 -/
 
 open CategoryTheory Limits AlgebraicGeometry TopologicalSpace
@@ -573,60 +597,66 @@ instance SeparatedFiniteEtaleOver.faithful_fintypeFiberFunctor [PreconnectedSpac
 variable [PreconnectedSpace (X : Type u)]
 
 /-- **A morphism of separated covers whose fibre map at one point is bijective is an
-isomorphism**, over a preconnected Hausdorff base and a preconnected target.
+isomorphism**, over a preconnected Hausdorff base — **and nothing at all is asked of either
+cover**.
 
-`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap` at the image of the
-morphism, then `CategoryTheory.isIso_of_reflects_iso` along
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap_of_t2`
+(`Oka/AnalyticSpace/DirectSummand.lean`) at the image of the morphism, then
+`CategoryTheory.isIso_of_reflects_iso` along
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toFiniteEtaleOver`, which reflects
 isomorphisms because it is fully faithful.
 
-**Both of the ambient lemma's `[T2Space]` hypotheses are supplied here**, on the source *and* on
-the target, by `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left`; what is left
-to the caller is the target's preconnectedness, which is exactly the subcategory's condition below.
-Both are passed positionally, for the seam recorded on
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor_map_injective`. -/
+**Both of that lemma's `[T2Space]` hypotheses are supplied here**, on the source *and* on the
+target, by `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.t2Space_left`, and they are the
+whole of what it asks of the two covers — so nothing is left for the caller. Both are passed
+positionally, for the seam recorded on
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor_map_injective`.
+
+**This theorem asked `[PreconnectedSpace B.left]` of the target, until 2026-09-15**, when the
+statement it reads across stopped asking it: the sentence retired here closed *what is left to the
+caller is the target's preconnectedness, which is exactly the subcategory's condition below*, and
+that is what made the two instances below statements about the preconnected subcategory rather than
+about this category. **The subcategory this file cuts is now one condition fewer than it was and
+not one fewer than the ambient one** — `Oka/AnalyticSpace/DirectSummand.lean`'s new theorem is
+where the change is and its docstring says which route asked for the hypothesis. -/
 theorem SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap
-    {A B : SeparatedFiniteEtaleOver.{u} X} (f : A ⟶ B)
-    [PreconnectedSpace (B.left : Type u)] (x : X)
+    {A B : SeparatedFiniteEtaleOver.{u} X} (f : A ⟶ B) (x : X)
     (hf : Function.Bijective (FiniteEtaleOver.fiberMap.{u} x
       ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).map f))) : IsIso f := by
   haveI : IsIso ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).map f) :=
-    @FiniteEtaleOver.isIso_of_bijective_fiberMap X
+    @FiniteEtaleOver.isIso_of_bijective_fiberMap_of_t2 X
       ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).obj A)
       ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).obj B) _
-      (SeparatedFiniteEtaleOver.t2Space_left A) (SeparatedFiniteEtaleOver.t2Space_left B) ‹_› ‹_›
+      (SeparatedFiniteEtaleOver.t2Space_left A) (SeparatedFiniteEtaleOver.t2Space_left B) ‹_›
       x hf
   exact isIso_of_reflects_iso f (SeparatedFiniteEtaleOver.toFiniteEtaleOver X)
 
-/-- **The `Type u`-valued fibre functor is conservative on the preconnected subcategory**, over a
+/-- **The `Type u`-valued fibre functor is conservative on the whole category**, over a
 preconnected Hausdorff base.
 
-`CategoryTheory.isIso_iff_bijective` reads the hypothesis as bijectivity of the fibre map,
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap` turns that into
-an isomorphism of the ambient category, and `CategoryTheory.isIso_of_reflects_iso` along the
-subcategory inclusion puts it back. The target's preconnectedness is `B.property` and is passed
-positionally, for the seam recorded above.
+**This is the `reflectsIsos` field of `Mathlib/CategoryTheory/Galois/Basic.lean`'s `FiberFunctor`,
+at this functor and with no condition on the objects**, which is why it is named for that field:
+the pair below is the same statement at the restriction along
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected`'s inclusion, which is
+weaker and is what this file supplied until 2026-09-15. That namespace is not in this repository's
+import closure and so cannot be cited by name here.
 
-**Conservativity is one of the six Galois-category obligations on a fibre functor**, and it is one
-of the two this file supplies; the module docstring's `## What is not here` says which four it does
-not. -/
-instance SeparatedFiniteEtaleOver.reflectsIsomorphisms_fiberFunctor (x : X) :
-    ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι
-      ⋙ SeparatedFiniteEtaleOver.fiberFunctor.{u} x).ReflectsIsomorphisms where
+`CategoryTheory.isIso_iff_bijective` reads the hypothesis as bijectivity of the fibre map and
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap` above turns
+that into an isomorphism. **No object property is passed and none is available**: an object of this
+category carries separatedness of its structure map and nothing about connectedness. -/
+instance SeparatedFiniteEtaleOver.reflectsIsos_fiberFunctor (x : X) :
+    (SeparatedFiniteEtaleOver.fiberFunctor.{u} x).ReflectsIsomorphisms where
   reflects {A B} f h := by
-    haveI : IsIso ((SeparatedFiniteEtaleOver.fiberFunctor.{u} x).map
-      ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f)) := h
+    haveI : IsIso ((SeparatedFiniteEtaleOver.fiberFunctor.{u} x).map f) := h
     have hb : Function.Bijective (FiniteEtaleOver.fiberMap.{u} x
-        ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).map
-          ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f))) :=
+        ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).map f)) :=
       (isIso_iff_bijective (X := FiniteEtaleOver.fiber.{u} x
-        ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).obj A.obj)) _).mp this
-    haveI : IsIso ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f) :=
-      @SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap X _ _ A.obj B.obj _ B.property x hb
-    exact isIso_of_reflects_iso f (SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι
+        ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).obj A)) _).mp this
+    exact SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap f x hb
 
 /-- **The same for the `FintypeCat`-valued fibre functor**, which is the one a Galois category asks
-for.
+for, and which is why this one and not the one above is the field.
 
 **Not derived from the instance above and not a restatement of it**, for the reason
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.reflectsIsomorphisms_fintypeFiberFunctor`'s docstring
@@ -635,20 +665,53 @@ for, so `CategoryTheory.IsIso` of one is not `CategoryTheory.IsIso` of the other
 bijectivity has to be read off through the concrete-category forgetful functor,
 `CategoryTheory.ConcreteCategory.isIso_iff_bijective`, rather than through
 `CategoryTheory.isIso_iff_bijective`. -/
+instance SeparatedFiniteEtaleOver.reflectsIsos_fintypeFiberFunctor (x : X) :
+    (SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u} x).ReflectsIsomorphisms where
+  reflects {A B} f h := by
+    haveI : IsIso ((SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u} x).map f) := h
+    have hb : Function.Bijective (FiniteEtaleOver.fiberMap.{u} x
+        ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).map f)) :=
+      (ConcreteCategory.isIso_iff_bijective
+        ((SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u} x).map f)).mp this
+    exact SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap f x hb
+
+/-- **The `Type u`-valued fibre functor is conservative on the preconnected subcategory**, over a
+preconnected Hausdorff base.
+
+**This is now a corollary of the statement at the whole category and it is kept**, for the reason
+`Oka/AnalyticSpace/SeparatedDirectSummand.lean` gives for its own asymmetry: a caller working
+inside `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected` meets the composed
+functor and not this one, and instance search does not cross between them. **Its proof was the
+argument now above until 2026-09-15**, when that argument stopped needing the subcategory's
+condition; the statement is character for character what it was.
+
+Both steps are `CategoryTheory.isIso_of_reflects_iso`: the first along the fibre functor, by
+the instance above, and the second along the subcategory inclusion, which reflects isomorphisms
+because it is fully faithful. -/
+instance SeparatedFiniteEtaleOver.reflectsIsomorphisms_fiberFunctor (x : X) :
+    ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι
+      ⋙ SeparatedFiniteEtaleOver.fiberFunctor.{u} x).ReflectsIsomorphisms where
+  reflects {A B} f h := by
+    haveI : IsIso ((SeparatedFiniteEtaleOver.fiberFunctor.{u} x).map
+      ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f)) := h
+    haveI : IsIso ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f) :=
+      isIso_of_reflects_iso _ (SeparatedFiniteEtaleOver.fiberFunctor.{u} x)
+    exact isIso_of_reflects_iso f (SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι
+
+/-- **The same for the `FintypeCat`-valued fibre functor**, on the preconnected subcategory.
+
+**Kept for the same reason as the instance above and now a corollary in the same way**, of
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.reflectsIsos_fintypeFiberFunctor`; **its
+proof was the bijectivity argument until 2026-09-15** and the statement is unchanged. The two
+functors are still not interchangeable, which is what the pair above records. -/
 instance SeparatedFiniteEtaleOver.reflectsIsomorphisms_fintypeFiberFunctor (x : X) :
     ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι
       ⋙ SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u} x).ReflectsIsomorphisms where
   reflects {A B} f h := by
     haveI : IsIso ((SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u} x).map
       ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f)) := h
-    have hb : Function.Bijective (FiniteEtaleOver.fiberMap.{u} x
-        ((SeparatedFiniteEtaleOver.toFiniteEtaleOver X).map
-          ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f))) :=
-      (ConcreteCategory.isIso_iff_bijective
-        ((SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u} x).map
-          ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f))).mp this
     haveI : IsIso ((SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι.map f) :=
-      @SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap X _ _ A.obj B.obj _ B.property x hb
+      isIso_of_reflects_iso _ (SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u} x)
     exact isIso_of_reflects_iso f (SeparatedFiniteEtaleOver.isPreconnected.{u} X).ι
 
 end ComplexAnalytic.AnalyticSpace

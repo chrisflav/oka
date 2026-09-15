@@ -12,8 +12,12 @@ import Oka.AnalyticSpace.SeparatedFiniteEtaleCoproducts
 `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` builds the fibre at a point of the base as a functor
 out of `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`, into `Type u` and into
 `FintypeCat`, and proves two of the six obligations a fibre functor of a Galois category carries —
-the terminal object at the two functors themselves, and the reflection of isomorphisms at their
-restrictions along the inclusion of the subcategory of objects with preconnected total space.
+the terminal object and the reflection of isomorphisms, both at the two functors themselves.
+**That second clause read *the reflection of isomorphisms at their restrictions along the inclusion
+of the subcategory of objects with preconnected total space*, until 2026-09-15**, when that file
+stated it at the two functors and left the restricted pair standing beside it; taxis #2025 is the
+filing and `Oka/AnalyticSpace/DirectSummand.lean` is where the hypothesis that forced the
+restriction came out.
 Its `## What is not here` records a third as absent and says exactly what stands in the way:
 
 > **Not the preservation of finite coproducts, and what is absent is the statement and not the
@@ -123,11 +127,14 @@ category's own universe** —
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fintypeFiberFunctor`, and none of them
   Mathlib's structure. Of the six obligations that structure carries — the terminal object,
   pullbacks, finite coproducts, epimorphisms, quotients by finite group actions and the reflection
-  of isomorphisms — `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` supplies the first at these two
-  functors and the last **at their restrictions along
-  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected`'s inclusion**, which is a
-  weaker statement than the field asks for and is that file's own reading of what is reachable, and
-  this file supplies the third at the two functors themselves.
+  of isomorphisms — `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` supplies the first and the last
+  **at these two functors**, and this file supplies the third at them too. **That sentence gave the
+  last as supplied *at their restrictions along
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected`'s inclusion*, and called
+  it *a weaker statement than the field asks for and that file's own reading of what is reachable*,
+  until 2026-09-15**: the reading was right about the statement that was there and wrong about what
+  was reachable, and the restricted pair is still stated beside the unrestricted one for the caller
+  that meets the composed functor.
 * **Not the preservation of pullbacks**, and this file does not narrow that absence.
   `Oka/AnalyticSpace/SeparatedFiberFunctor.lean`'s bullet on it is untouched and stands as written:
   fibre products of this category exist, and what is missing is an identification of the **fibre**

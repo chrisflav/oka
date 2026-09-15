@@ -12,8 +12,11 @@ import Oka.AnalyticSpace.SeparatedFiniteEtaleLimits
 `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` builds the fibre at a point of the base as a functor
 out of `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver X`, into `Type u` and into
 `FintypeCat`, and proves two of the six obligations a fibre functor of a Galois category carries —
-the terminal object at the two functors themselves, and the reflection of isomorphisms at their
-restrictions along the inclusion of the subcategory of objects with preconnected total space.
+the terminal object and the reflection of isomorphisms, both at the two functors themselves.
+**That second clause read *the reflection of isomorphisms at their restrictions along the inclusion
+of the subcategory of objects with preconnected total space*, until 2026-09-15**, when that file
+stated it at the two functors; the counts below are pinned to the commit that adds this file and
+are not moved by it.
 `Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` builds the fibre product of two morphisms of
 that category over a Hausdorff base. **Neither file can see the other, and the instrument is one
 walk**: the transitive `Oka`-prefixed import closure of each — `import` **and** `public import`
