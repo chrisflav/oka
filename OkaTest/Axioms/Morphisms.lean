@@ -684,6 +684,124 @@ check's, and this push adds five `#print axioms` names of which **not one carrie
 added that section**, 2026-09-15, for the reason the clause naming
 `### The terminal object and the product of two complex affine spaces` gives.
 
+And one section more, at that second category and adding **no kind at all**, named here because
+the convention this file's other clauses record is that a push appending a section owes the
+description one.
+`### Base change of separated covers along a morphism of the base` guards the seven declarations of
+`Oka/AnalyticSpace/SeparatedFiniteEtaleBaseChange.lean`, which base-changes a separated cover along
+a morphism of the base and packages that as a functor between the categories of separated covers at
+the two bases. **Seven guards, and they partition two, one and four.**
+
+**Two are of the kind opening *And one kind more*** — statements about a morphism's underlying map
+being a separated map — `ComplexAnalytic.AnalyticSpace.isSeparatedMap_baseChangeSnd` and
+`ComplexAnalytic.AnalyticSpace.isSeparatedMap_pullback_snd_of_isSeparatedMap`, whose conclusion is
+that class of a base map and which is none of the classes the opening description lists. **One is
+of the sixth kind at that second category** — about the category rather than about any morphism in
+it — `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor`, which is a functor
+between two of those categories; the clause opening *The sixth kind has a second category* assigns
+that kind to `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toFiniteEtaleOver`, a functor
+out of that category, among its five, and this is the same reading at a functor between two of
+them. **Four are of the first kind**, by the opening description's clause naming the category the
+finite étale ones form over a fixed base, read at that second category: the two `rfl`s saying what
+the functor's value is as an object, `…SeparatedFiniteEtaleOver.baseChangeFunctor_obj_left` and
+`…SeparatedFiniteEtaleOver.baseChangeFunctor_obj_hom`, and the two triangles of a mapped morphism,
+`…SeparatedFiniteEtaleOver.baseChangeFunctor_map_left_fst` and
+`…SeparatedFiniteEtaleOver.baseChangeFunctor_map_left_snd`.
+
+**Those two `rfl`s are not of the kind the paragraph opening *The boundary of the clause, said
+rather than left to be discovered* sets aside**, which is worth saying because each of them names a
+fibre product. That paragraph sets aside *the guards that
+identify such a limit with an object presenting it* — the ones whose name carries `IsoProd` or
+`IsoPullback`, and `ComplexAnalytic.AnalyticSpace.restrictIsoPullbackOfRestrict` with its
+`_hom_fst` — and each of those compares two independently built objects. These two say what one
+definition unfolds to: the functor's value **is** that fibre product, on the nose, and no second
+construction is compared with it. So that paragraph's enumeration is not short of the file.
+
+**Two claims elsewhere in this paragraph are untouched, and that is a run and not an assumption.**
+The clause opening *The sixth kind has a second category* counts over `### The category of
+separated covers, and separatedness as a morphism property`, and its *Five of that section's
+twenty-one guards* still counts what it counted: this push appends a section and adds no guard to
+that one, which `git diff` against the commit this section is cut from shows by touching no line of
+it. And the published check on the statements of a pullback square — *list this file's
+`#print axioms` names whose declaration name contains* isPullback *and compare that list against the
+clause, dropping the ones over `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`* — returns
+what it returned, and so does the same list taken at *hasPullback*: **no name of this section
+carries either token**, the seven being two separatedness statements, a functor, two statements of
+its value at an object and two of its value at a morphism. **Nine and eight unfiltered and eight and
+six with the exclusion at `ddcc4c6`, and the same four figures at the commit that adds this
+section**, all four runs mine.
+
+**The second half is written at the token and not at the class spelling, and that is a re-cut and
+not a preference.** This clause read *the same list taken at `HasPullback`* while it was cut from
+`003e38f`; the paragraph opening *The second half of that check has a token of its own* gave that
+half the token *hasPullback* and brought the three clauses of this file that cited it at the class
+spelling level with it, on the ground that a reader running it at the class spelling reaches
+**none** of the eight where the clause says six. **This clause was on no `master` at the time and
+so was reachable by no sweep that push could run**; it is brought level here, which is where it
+becomes possible. **No dated record is owed for it** — the retired wording never landed — and no
+figure it is a check on moves: nine, eight, eight and six at `003e38f`, at `168ff30`, at
+`280bb67`, at `ddcc4c6` and at the commit that adds this section alike, all my runs.
+
+**Cited by opening words, this clause is the one whose opening runs *at that second category*.**
+**Six clauses of this description open *And one section more* at the commit that adds this
+section, and four of those six carry the words *no kind at all***: the one naming `### The direct
+summand with its witness named, and the summand inside the separated covers`, which opens *which
+adds*; the one naming `### Finite coproducts of the category of separated covers`, which opens *at
+the second category*; the one naming `### The three classes are local on the target, and the
+topology half of it`, which opens *adding* and which `b79ab9b` landed after this clause was
+drafted; and this one. **The nearest of them is the second, whose opening differs from this one by
+a single word** — *the* against *that* — so a citation of either has to carry enough of it to tell
+them apart, and every site in this file that cites one of the six does: as a discriminator over
+the six openings, *at the second category* reaches that one alone and *at that second category and
+adding no kind at all* reaches this one alone, and neither substring occurs in either of the other
+two. **That is a run over the six openings and over every site in this file that cites one of
+them, and not a reading of this clause by itself.** The run is: collapse the file's whitespace,
+strip its emphasis marks, and take every occurrence of *And one section more*. **Each of them
+either opens one of the six or carries the whole of an opening after it**, so no citation anywhere
+in this file reaches two of the six; **and every occurrence that does neither is in this paragraph,
+which gives the phrase rather than citing it** — once to count the openings and once to say what
+the run is taken over — which is the exemption the paragraph opening *The second half of that
+check has a token of its own* already makes, in those words, for a token given rather than cited.
+**A count of the citing paragraphs is asserted nowhere here, and `ddcc4c6` is why**: this clause
+was drafted against `280bb67` with **five** of them — two at *at the second category*, two at *of
+the seventh kind and of no other*, one at this clause's own opening in the section docstring
+below — and `ddcc4c6`'s own head-description clause and section docstring cite three of the six
+between them, so a figure this clause was carrying moved under a push that touched no word of it.
+**The property above does not move that way**, which is why it and not the count is what is
+written. **This
+clause was added by the push that added that section**, 2026-09-15, for the reason the clause
+naming `### The terminal object and the product of two complex affine spaces` gives. **The date is
+the push's and not the draft's**: this clause and its section were written on 2026-09-13 against
+`003e38f`, re-cut onto `168ff30` the next day, onto `280bb67` the same day, onto `ddcc4c6` four
+hours after that, onto `ebee177` six and a half hours after *that* and onto `7577386` eight hours
+after *that*, and the date written here is the one the landing push carries. **The first four
+re-cuts did not move the numeral and the fifth does**: `ddcc4c6` and `ebee177` are 2026-09-14
+alike and this numeral read 2026-09-14 until that re-cut, which is the first to cross midnight
+UTC — and `e40a9d2`, which landed after this clause was last written, says in terms that a
+clause's self-date is the UTC date of the commit carrying it on `master` and that a branch
+landing on a later UTC day owes the numeral in its re-cut. **Repairing it is a correction and not
+one of this file's dated records**, the numeral never having been true of a commit that carried
+this clause on `master`, which is how that push repaired its own two sites. **That is the
+convention and not a claim about every dated clause of this file**, and the clause above naming
+`### Base change of a local homeomorphism, and of a proper map` is one that does not follow it:
+it is dated 2026-09-13,
+and the push that added that section is `954b116` at `2026-09-14 01:34:48Z`. **It is not a
+defect** — a merge that crosses midnight UTC is what `README.md`'s section on the `until <date>`
+record names as a prose date legitimately behind its commit — and it is a counterexample all the
+same. **And in the register where the convention is a command rather than a reading, this file has
+exactly one row whose prose date differs from the `git blame` date of the line carrying it, and it
+is this same shape.** That section publishes two blame scans. The **unwrapped** one, which reaches
+a record whose `until` ends a line and whose date opens the next, returns **17** rows for this
+file at `ddcc4c6` — **16 matching, 1 behind, 0 ahead**, and the same four figures at `280bb67`,
+the base this clause was drafted against. The line-wise one sees **16** of those 17
+and returns no differing row at all, so **the register in which the convention holds here without
+exception is the one that cannot see the exception**, and saying only that would be narrow and
+true rather than true. The row is `:126`, the record that wraps: prose 2026-09-07 against blame
+2026-09-08, `d2ae161` having introduced it at `2026-09-08T00:10:27Z`, ten minutes past midnight
+UTC — the crossing conceded two sentences above, and the row `README.md` names as the midnight
+one. **This section writes no record of its own**, so both figures are `ddcc4c6`'s and the commit
+that adds this section's alike.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -7543,3 +7661,112 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesFiniteCop
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesFiniteCoproducts_fintypeFiber
+
+/-! ### Base change of separated covers along a morphism of the base
+
+`Oka/AnalyticSpace/SeparatedFiniteEtaleBaseChange.lean`, the whole of it. **Seven names**: that the
+base change of a separated morphism is separated, in the two spellings
+`ComplexAnalytic.AnalyticSpace.baseChangeSnd` and `CategoryTheory.Limits.pullback.snd`; the functor
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor` between the categories
+of separated covers at the two bases; and four statements of what that functor does to an object
+and to a morphism.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
+seven: two are about a class of a morphism's underlying map, one is about a functor between two
+categories of morphisms over a fixed base, and four are about an object and a morphism of such a
+category. **The competing row is *analytic spaces, local models, the node*,
+`OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for the reason
+`### The category of separated covers, and separatedness as a morphism property` gives against the
+same competitor: nothing below is a local model, a chart or a node, and the fibre products named
+below are named as the values of a functor rather than as spaces. **The second competitor is
+`### Fibre products in the category of separated covers, and its finite limits`**, which guards the
+module that gives that category its own fibre products; that section is not extended, for the
+reason this file gives for appending — a section appended at the end cannot say which section is
+above it and stay true, since the next branch appends between them — and because the two modules
+are siblings rather than a module and its consumer: neither imports the other, and the fibre
+product guarded there is taken along a morphism **of** that category over a base that does not
+move, where the functor guarded here moves the base and lands in a different category.
+
+**The kinds, and they partition seven as two, one and four.** The clause of the head description
+opening *And one section more, at that second category and adding no kind at all* assigns each of
+them by name, and the split is two of the kind opening *And one kind more*, one of the sixth kind
+at the second category, and four of the first kind read at that second category.
+
+**`Classical.choice` is in every guard below** and is introduced by none of them. It arrives
+through the covering-map rung, as the sections about the fibre functor record: the object the
+functor produces is `ComplexAnalytic.AnalyticSpace.baseChange` up to the comparison isomorphism,
+and `ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale`, guarded under
+`### Base change of a finite étale morphism, and the fibre product it is the projection of`,
+carries all three axioms already.
+
+**Nothing generated is guarded and this push generated nothing.** The module's tab-anchored row
+count in `scripts/DumpOkaDecls.lean`'s output is seven: no `_assoc` lemma, no `.eq_1` equation
+lemma, no match lemma and no congruence lemma. Equation lemmas are generated on demand, so that
+sentence is about the environment at the commit that adds this section.
+
+**What the guarded statements do not say, said here because their names are about a fibre
+product.** None of them is
+`CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale`, and **what separates them is the assembly and not a
+separation axiom**: that class is a statement about the class as a
+`CategoryTheory.MorphismProperty`, over every cospan with a leg in it, and no name below is stated
+at that spelling. **The reading that separated them by Hausdorffness is not available at this
+base** — `280bb67` took `[T2Space E]` out of
+`ComplexAnalytic.AnalyticSpace.isFiniteEtale_pullback_snd_of_isFiniteEtale`, the module guarded
+under `### Base change of a finite étale morphism, and the fibre product it is the projection of`
+records that retirement in its own `## What is not here`, and none of the seven names below asks a
+separation axiom of anything. The module's own `## What is not here` says the same and names what
+else is absent.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isSeparatedMap_baseChangeSnd' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isSeparatedMap_baseChangeSnd
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isSeparatedMap_pullback_snd_of_isSeparatedMap' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isSeparatedMap_pullback_snd_of_isSeparatedMap
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_obj_left' depends
+  on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_obj_left
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_obj_hom' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_obj_hom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_map_left_fst'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_map_left_fst
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_map_left_snd'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.baseChangeFunctor_map_left_snd
