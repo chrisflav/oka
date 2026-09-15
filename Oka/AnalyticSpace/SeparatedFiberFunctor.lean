@@ -151,6 +151,36 @@ Every `@`-application below is that, and none of them is a mathematical step.
   `…fibreProd` itself among them. **None of the six's `Function.Pullback` occurrences is about
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fibreProd`**, and nothing carries
   the identification to it.
+
+  **What this bullet says is not in *this* module is unchanged, and what it is supplied by
+  elsewhere is `Oka/AnalyticSpace/SeparatedFiberPullback.lean` since 2026-09-15** — the module that
+  imports this one and `Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` and states what neither
+  could. **So the bullet's opening sentence is neither retired nor dated**: `README.md`'s test for
+  a record is that the wording read true before the day the record gives and *stopped*, and no
+  declaration below mentions a fibre product now any more than it did. **One clause of this bullet
+  did stop, and it is the clause *and nothing carries the identification to it* that closes the
+  sentence above.**
+
+  **That clause read so until 2026-09-15**, when
+  `Oka/AnalyticSpace/SeparatedFiberPullback.lean` carried it:
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fibreProdFiberEquiv` is the
+  identification, and the fibre functor's preservation of pullbacks is what it was wanted for.
+  **The rest of this bullet is untouched and none of its figures moves**, which is a reading of
+  them and not a re-run: *the obstruction is not a missing instance* and the sibling relation are
+  claims about this module and its two neighbours, and that module imports both of them rather
+  than changing either; the **six** `Function.Pullback` modules and the two closures of **75** are
+  pinned *at the commit that adds this file* and *at the commit that adds this clause*, and a
+  pinned figure survives a push that moves it. **The live count is seven**, that module being the
+  seventh, and it is given here rather than written over the pinned one.
+
+  **One thing about the instrument, found by getting it wrong.** *A transitive walk of the
+  `Oka`-prefixed `import` lines* is exact only if `public import` lines are followed as well: 29 of
+  the 240 tracked `.lean` files under `Oka/` open with `module` and write their imports that way,
+  13 of them carrying a `public import Oka…` line, and a walk anchored on `^import Oka` alone
+  returns **61** for this module where the closure is **75**, silently and with no unparsed line to
+  report. The figures above are right; what is under-specified is the phrase, and the check that
+  needs no walk is `env.allImportedModuleNames` filtered to the `Oka` prefix in a file importing
+  the module.
   **That sentence read *None of the six is about* that name, until 2026-09-14, and under the
   reading its own enumeration invites it was false when written rather than falsified later, so
   this is a correction and not one of this repository's dated records**: taken as a claim about the
