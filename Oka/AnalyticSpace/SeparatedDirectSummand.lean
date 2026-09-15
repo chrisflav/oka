@@ -88,7 +88,12 @@ docstring gives.
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasTerminal` gives and with no hypothesis
   on the base; pullbacks, which taxis #1918 is the filing for and which is not on `master` at the
   commit that writes this; finite coproducts, which the bullet opening *No coproducts and no cofan*
-  is about; and quotients by finite group actions, about which this repository states nothing.
+  is about; and quotients by finite group actions, which
+  `Oka/AnalyticSpace/QuotientColimit.lean` now gives at this category, for every finite group and
+  at every universe. **That clause read *about which this repository states nothing*, until
+  2026-09-15**, when that module landed the colimit of shape `CategoryTheory.SingleObj G`; it was
+  exact when written and at the base of the push that wrote it, and the push that falsified it is
+  not the push that repairs it — which is this one, the first to edit this file since.
 
   **Measured rather than read**: at `0eed5cd`, the base of this push, the string
   `SeparatedFiniteEtaleOver` occurs in the comment-stripped code of exactly two modules,

@@ -84,6 +84,7 @@ import OkaTest.RefineDatumUnitFamily
 import OkaTest.RefineDatumUnitFamilyNode
 import OkaTest.RefineDatumWitness
 import OkaTest.SeparatedFiberFunctorEpi
+import OkaTest.SeparatedFiberQuotient
 import OkaTest.SheafOfModulesStalk
 import OkaTest.SimpDiscrTree
 import OkaTest.SimpleZeroStalk

@@ -1228,6 +1228,46 @@ from and at the one that adds it alike, both runs mine.
 **This clause was added by the push that added that section**, 2026-09-15, for the reason the
 clause naming `### The terminal object and the product of two complex affine spaces` gives.
 
+**One section further, at the two fibre functors and the colimit they carry.**
+`### Both fibre functors at the separated covers preserve quotients by finite group actions` guards
+the ten declarations of `Oka/AnalyticSpace/SeparatedFiberQuotient.lean`, which identifies the fibre
+of that quotient with the orbit set of the fibre and reads the colimit
+`### The quotient of a cover by a finite group is the colimit of the action` guards across both
+fibre functors, giving the sixth and last of the obligations
+`Mathlib/CategoryTheory/Galois/Basic.lean`'s `FiberFunctor` carries. **Ten guards, and they do not
+partition: all ten are of the sixth kind at that second category and none is of any other.**
+
+**The criterion is the one the clause opening *The sixth kind has a second category* draws**, and
+the run behind it is a `#check` over the ten. **Eight of them bind a
+`CategoryTheory.SingleObj G ⥤ …SeparatedFiniteEtaleOver X`**; **the two instances bind neither a
+functor out of that shape nor anything else of it** — their telescopes are the base, the group and
+a point of the base, and the functor they are statements about is
+`…SeparatedFiniteEtaleOver.fiberFunctor` and its `FintypeCat` twin, out of the category itself.
+**None of the ten binds a morphism of that category**, which is the line this description draws
+between the first kind and the sixth, and it puts all ten on one side. That is the same
+assignment the clause naming `### The fibre functor at the separated covers preserves pullbacks`
+makes of all nine of its guards, and it is why this clause publishes no partition where the two
+clauses above it do.
+
+**This push adds this clause and the section it names and touches no other clause and no other
+section of this file**, which `git diff` against the commit it is cut from shows. **The four
+counts the clause opening *A section beyond those, at the two fibre functors of that second
+category* lists as unmoved are unmoved by it too** — *Five of
+that section's twenty-one guards*, *Seventeen guards, and they partition fourteen and three*, *Five
+guards, and they partition one and four*, and *All nine of its guards are of the sixth kind at that
+second category* — this push adding a guard to none of the four sections they count over. And the
+published check on the statements of a pullback square returns what it returned in both halves:
+**no name of this section carries** *isPullback* **or** *hasPullback*, and the four figures are
+nine and eight unfiltered and eight and six with the exclusion, at the commit this section is cut
+from and at the one that adds it alike, both runs mine. **This clause and the section it names were
+added by one push**, 2026-09-15, for the reason the clause naming
+`### The terminal object and the product of two complex affine spaces` gives — **written into this
+paragraph and not into one of its own**, because a paragraph holding that sentence alone opens with
+the words the clause above it closes with, and the two openings then collide at **182** characters
+under the eight-word key the section this file's head description is scanned by uses. That is the
+class taxis #2016 is about, found in this push's own draft by running that scan at this head rather
+than at the base.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -9194,3 +9234,138 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasColimitsOfShape
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasColimitsOfShape_singleObj
+
+/-! ### Both fibre functors at the separated covers preserve quotients by finite group actions
+
+`Oka/AnalyticSpace/SeparatedFiberQuotient.lean`, the whole of it. **Ten names**: the fibre of the
+object a functor out of `CategoryTheory.SingleObj G` names with the action of `G` on it, the
+quotient map read at that fibre with its value, the two halves of the identification — that the map
+is surjective and that two points share an image exactly when one is a translate of the other — the
+identification itself, that the image of the quotient cocone is a colimit in `Type u`, and the two
+`CategoryTheory.Limits.PreservesColimitsOfShape` instances those give, which are the sixth and last
+`FiberFunctor` obligation.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
+ten: every one of them is about a functor out of the category of covers separated over a fixed
+analytic space, or about the value of one at an object of it. **The competing row is *analytic
+spaces, local models, the node*, `OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for the reason
+`### Both fibre functors at the separated covers preserve finite coproducts` gives against the same
+competitor for the sibling module: nothing below is a local model, a chart or a node.
+
+**All ten are of the sixth kind at that second category and none is of any other**, by the clause
+opening *The sixth kind has a second category* and by that clause's own reading that a functor out
+of a category counts as being about it. **Eight of the ten bind a
+`CategoryTheory.SingleObj G ⥤ …SeparatedFiniteEtaleOver X`** — the fibre of the object such a
+functor names with the action on it, the quotient map read there with its value, the two halves of
+the identification, the identification itself and the colimit — **and none of the ten binds a
+morphism of that category**, which is the line this description draws between the first kind and
+the sixth. **The two instances bind neither**, and that is a run of `#check` and not a reading of
+the source: their telescopes are the base, the group and a point of the base, every functor of
+that shape being reached inside the `PreservesColimitsOfShape` they assert rather than bound by
+their statements. They are of this kind **by their subject**, which is
+`…SeparatedFiniteEtaleOver.fiberFunctor` and its `FintypeCat` twin, functors out of that category
+— the route the clause opening *The other thirteen are of the sixth kind at that second category*
+takes for the one guard of its section that binds no functor either. That is the same assignment
+`### The fibre functor at the separated covers preserves pullbacks` makes of all nine of its
+guards.
+
+**This push is `Oka/AnalyticSpace/QuotientColimit.lean`'s first importer other than the aggregator
+`Oka.lean`, and its first consumer outside the commit that added it.** The first half is
+`git grep -l 'import Oka.AnalyticSpace.QuotientColimit'` at the commit this section is cut from,
+which returns `Oka.lean` and nothing else. The second half is bounded deliberately:
+`OkaTest/QuotientColimit.lean` discharges
+`CategoryTheory.Limits.HasColimitsOfShape (CategoryTheory.SingleObj G)` at that category by
+`infer_instance`, which is what `…SeparatedFiniteEtaleOver.hasColimitsOfShape_singleObj` answers,
+and it landed in that same commit — **so it is a consumer this push does not precede**. No sentence
+of this file or of that module said the module had neither — a `git grep` over both for *no
+consumer*, *no importer* and *nothing imports* returns nothing of it — so nothing is repaired on
+that account here.
+
+**Ten is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output: no `_assoc` lemma, no `.eq_1` equation lemma, no match lemma
+and no congruence lemma. **Five are definitions, three are theorems and two are instances**,
+counted with a declaration keyword at the start of a line and an attribute allowed before it. **The
+spelling matters here more than it does under
+`### The quotient of a cover by a finite group is the colimit of the action`**: of the five
+definitions two are `abbrev`,
+one is a `@[reducible] def` and two are bare `def`, so a scan for `^def ` returns **two** and a
+scan for `^instance ` returns **three**, the third being a line of prose that opens with the word.
+**None of the ten is `@[simp]`.**
+
+**The axiom triple is the same for all ten.** `Classical.choice` is already carried by the colimit
+this file's statements are about and by the analytic structure under it, which is one
+`#print axioms` run each and not a reading of any proof below.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiber' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiber
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberSMul' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberSMul
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk_val' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk_val
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk_surjective'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk_surjective
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk_eq_iff' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberMk_eq_iff
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberQuotientEquiv'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberQuotientEquiv
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberIsColimit' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjFiberIsColimit
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesQuotients_fiber' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesQuotients_fiber
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesQuotients_fintypeFiber'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesQuotients_fintypeFiber
