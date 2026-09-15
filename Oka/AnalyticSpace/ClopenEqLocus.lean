@@ -78,10 +78,15 @@ asking it is why the set is worth naming.
   file. `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isClopen_fixedLocus` is the
   statement such an action would be read one element at a time through, and stating it is not
   stating the action.
-* **No quotient, and nothing about `CategoryTheory.Limits.HasColimitsOfShape`.** What a quotient by
-  a finite action would need is a coequaliser, and no coequaliser and no pushout is stated for this
-  category, for the covers, or for `ComplexAnalytic.AnalyticSpace` itself. Nothing below bears on
-  that and no bullet anywhere may be rewritten as though it did.
+* **No quotient, and nothing about `CategoryTheory.Limits.HasColimitsOfShape`.** No coequaliser and
+  no pushout is stated for this category, for the covers, or for `ComplexAnalytic.AnalyticSpace`
+  itself. Nothing below bears on that and no bullet anywhere may be rewritten as though it did.
+  **This bullet opened *What a quotient by a finite action would need is a coequaliser*, until
+  2026-09-15**, when `Oka/AnalyticSpace/QuotientColimit.lean` built that quotient as a colimit of
+  shape `CategoryTheory.SingleObj G` out of the orbit space, citing no coequaliser and no finite
+  colimit: what a quotient needs is the orbit space, and a coequaliser is what the **route through
+  `CategoryTheory.Limits.HasFiniteColimits`** would have needed. The half of the sentence that is a
+  measurement is unmoved and is re-run at the commit that retires the other half.
 * **Nothing is concluded from the clopen set.** Over a preconnected source it would give that two
   morphisms agreeing at a point agree everywhere, which is Mathlib's
   `IsSeparatedMap.eq_of_comp_eq` and needs no line of this file; and even there what it would give

@@ -79,6 +79,7 @@ import OkaTest.ProjectiveLineDirected
 import OkaTest.ProjectiveLineSpan
 import OkaTest.PullbackModulesStalk
 import OkaTest.PushforwardFullyFaithful
+import OkaTest.QuotientColimit
 import OkaTest.RefineDatumUnitFamily
 import OkaTest.RefineDatumUnitFamilyNode
 import OkaTest.RefineDatumWitness

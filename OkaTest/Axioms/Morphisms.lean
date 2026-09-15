@@ -472,9 +472,27 @@ first section of this file whose single guard has no consumer in this repository
 every finite group `G`, at every universe. **No analytic space occurs in it and no object of this
 repository does**, which is what puts it in the seventh kind; the routing rule that kind records
 sends a mirror-tree module whose subject no row of `OkaTest/Axioms.lean`'s topic table names to the
-file of the analytic result that motivated it, and **that result does not exist yet**, so the guard
-takes a section of its own rather than sharing one. That section's docstring argues both halves of
-that and says what it would take for the statement to read at a category of this repository. **By
+file of the analytic result that motivated it, and at the commit that wrote the section that result
+did not exist. **It does now** —
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasColimitsOfShape_singleObj`, guarded
+under `### The quotient of a cover by a finite group is the colimit of the action` — **and the
+guard stays where it is**, a section moved being a conflict for somebody else. **This clause read
+*that result does not exist yet*, until 2026-09-15**, when that section landed; the routing verdict
+is unchanged by the retirement, for the reason the clause opening *And one section more, both of
+whose guards are of the seventh kind and of no other* gives at its own retirement of the same
+wording. **And *the first section of this file whose single guard has no consumer in this
+repository at all* is unmoved by the same push, which is a run and not a reading**: the result that
+now motivates it does not consume it — `CategoryTheory.Limits.hasColimitsOfShape_singleObj` occurs
+in the comment-stripped code of **one** module of this repository at the commit that retires the
+wording above, and that module is **this one**, the occurrence being the `#print axioms` line of
+the section named here, which states nothing; **no module under `Oka/` carries the name at all**,
+that section's own module declaring it inside `namespace CategoryTheory.Limits` and so not spelling
+it, and the new module constructing its colimit at the one shape out of an orbit space rather than
+through `CategoryTheory.Limits.HasFiniteColimits`, which this category is still not known to have.
+The instrument is `scripts/import_cost.py`'s `strip_comments` over every tracked `.lean`, which is
+the one the clause opening *And a section of **four** guards* uses for the same kind of claim. That
+section's docstring argues both halves of the routing and says what it would take for the statement
+to read at a category of this repository. **By
 subject it would be of the sixth kind** — a statement that a category has colimits of a shape —
 **and it is counted here and not there for the reason the clause opening *And a kind that is the
 separated-map one's dual* gives of its own mirror-tree guard**: the seventh kind is a kind of
@@ -1145,6 +1163,70 @@ such figure is restated here, for the reason the clause naming
 **This clause was added by the push that added that section**, 2026-09-15, for the
 reason the clause naming
 `### The terminal object and the product of two complex affine spaces` gives.
+
+**One further section, at the colimit that quotient is, and it adds no kind at all.**
+`### The quotient of a cover by a finite group is the colimit of the action` guards the
+twenty-six declarations of `Oka/AnalyticSpace/QuotientColimit.lean`, which gives the quotient
+`Oka/AnalyticSpace/QuotientCover.lean` builds its universal property, carries a functor out of
+`CategoryTheory.SingleObj G` to an action on points, and puts the two together as
+`CategoryTheory.Limits.HasColimitsOfShape (CategoryTheory.SingleObj G)` for the covers separated
+over a Hausdorff base. **Twenty-six guards, and they partition thirteen and thirteen.**
+
+**Thirteen are of the first kind.** Nine are so by the opening description's clause naming *the
+construction that produces a morphism in a class from a covering map*, exactly as the fourteen of
+`### The quotient of an analytic cover by a finite group acting over the base` are: the descent of
+an invariant morphism to the orbit space with its two equations, the morphism out of the quotient
+cover with its defining equation and its triangle over the base, the factorisation through the
+quotient map, the extensionality statement for two morphisms out of the quotient, and the statement
+that the quotient map absorbs an endomorphism moving each point inside its orbit. **Four more are
+of the first kind read at the second category**, by the clause naming *the category the finite
+étale ones form over a fixed base* and for the reason the two of that section are — each binds a
+morphism of `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` as a hypothesis and concludes
+about that morphism: `…SeparatedFiniteEtaleOver.quotientDesc` and its factorisation take a
+`u : A ⟶ B`, `…SeparatedFiniteEtaleOver.quotient_hom_ext` takes two morphisms out of the quotient,
+and `…SeparatedFiniteEtaleOver.comp_toQuotient` takes an `m : A ⟶ A`.
+
+**The other thirteen are of the sixth kind at that second category**, by the clause opening *The
+sixth kind has a second category* and by that clause's own reading that a functor out of a category
+counts as being about it: **twelve of the thirteen bind a
+`CategoryTheory.SingleObj G ⥤ …SeparatedFiniteEtaleOver X`** and **none of the thirteen binds a
+morphism of that category** — the endomorphism a group element names with its two laws, the action
+on points with its continuity and its commuting with the structure map, the quotient of that action
+with the quotient map onto it, the cocone they form, the morphism a competing cocone factors
+through with its factorisation, and that the cocone is a colimit. **The thirteenth binds neither**,
+and that is a run of `#check` and not a reading of the source: the `HasColimitsOfShape` instance
+those twelve give quantifies over the base and the group and **takes no functor argument at all**,
+every functor of that shape being reached inside its one field rather than bound by its statement.
+It is of this kind by its subject — **a statement that a category has colimits of a shape**, which
+is what the clause opening *And one section more, of the seventh kind and of no other* says would
+be of the sixth kind — and it is here at a named category where that one is at a category
+variable.
+
+**The other reading is available and is not taken.** Two of the thirteen produce an object and a
+morphism of that category — `…SeparatedFiniteEtaleOver.singleObjQuotient` and
+`…SeparatedFiniteEtaleOver.singleObjToQuotient` — and could be counted of the first kind as the
+object and the morphism of `### The quotient of an analytic cover by a finite group acting over the
+base` are, which would make the partition fifteen and eleven. They are not, because the line this
+description draws is whether the statement **binds** a morphism of the category, and what these two
+bind is a functor; a later seat may take the other reading by moving two names between two
+sentences and recounting nothing else.
+
+**What this push moves in this file outside the section it adds.** It edits the clause opening
+*And one section more, of the seventh kind and of no other*, whose *that result does not exist yet*
+this push falsifies by writing the result, and puts a dated record beside it; **it touches no other
+clause and no other section**, which `git diff` against the commit this section is cut from shows.
+**The four counts the clause opening *A section beyond those, at the two fibre functors of that
+second category* lists as unmoved are unmoved by this push too** — *Five of that section's
+twenty-one guards*, *Seventeen guards, and they partition fourteen and three*, *Five guards, and
+they partition one and four*, and *All nine of its guards are of the sixth kind at that second
+category* — this push adding a guard to none of the four sections they count over. And the
+published check on the statements of a pullback square returns what it returned in both halves:
+**no name of this section carries** *isPullback* **or** *hasPullback*, and the four figures are
+nine and eight unfiltered and eight and six with the exclusion, at the commit this section is cut
+from and at the one that adds it alike, both runs mine.
+
+**This clause was added by the push that added that section**, 2026-09-15, for the reason the
+clause naming `### The terminal object and the product of two complex affine spaces` gives.
 
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
@@ -8863,3 +8945,252 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphi
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fintypeFiberFunctor
+
+/-! ### The quotient of a cover by a finite group is the colimit of the action
+
+`Oka/AnalyticSpace/QuotientColimit.lean`, the whole of it. **Twenty-six names**, and the module
+docstring partitions them in the order this section guards them: **nine** give the quotient
+`Oka/AnalyticSpace/QuotientCover.lean` builds its universal property at the covering space — the
+descent of an invariant morphism to the orbit space with its two equations, the morphism out of the
+quotient with its defining equation and its triangle over the base, the factorisation through the
+quotient map, the uniqueness of that factor, and that the quotient map absorbs an endomorphism
+moving each point inside its own orbit; **four** read those at an object of
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` over a Hausdorff base; **six** are the
+bridge, which carries a functor out of `CategoryTheory.SingleObj G` to the three hypotheses that
+quotient asks for; and **seven** are the colimit, from the quotient of the action that functor
+encodes to the `CategoryTheory.Limits.HasColimitsOfShape` instance.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
+twenty-six: thirteen are about the quotient cover and morphisms out of it, and thirteen about a
+category of covers of a fixed analytic space and a functor into it. **The competing row is
+*analytic spaces, local models, the node*, `OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for
+the reason `### The quotient of an analytic cover by a finite group acting over the base` gives
+against the same competitor for the module this one builds on: nothing below is a local model, a
+chart or a node.
+
+**It is not of the seventh kind, and the section that is says why.**
+`### Colimits of shape SingleObj in a category with finite colimits` guards the mirror-tree module
+that gives colimits of this shape at any category with
+`CategoryTheory.Limits.HasFiniteColimits`, and **nothing below cites it**: this category is not
+known to have finite colimits — `#synth` at that class fails at the commit that adds this section,
+while `HasTerminal`, `HasPullbacks` and `HasFiniteCoproducts` are found, all four probes runs of
+mine — so the colimit below is constructed at the one shape out of the orbit space. That section's
+guard therefore still has no consumer in this repository, which is what the clause of the head
+description naming it says of it and what this push re-runs rather than assumes. **The result that
+motivates that guard's routing does now exist and is the last name below**, and the clause naming
+that section carries the dated record for the half of it this push retires.
+
+**This push is `Oka/AnalyticSpace/QuotientCover.lean`'s first importer and first consumer**, and no
+sentence of this file or of that module said it had neither, which is a `git grep` over both for
+*no consumer*, *no importer* and *nothing imports* and not an impression — so nothing is repaired
+on that account here, where the push that added that section had two such sentences to repair in
+the section below it.
+
+**Twenty-six is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output: no `_assoc` lemma, no `.eq_1` equation lemma, no match lemma
+and no congruence lemma. **That the count is exactly the declarations is a measured choice and not
+a rounding**: the first green draft of that module held **twenty-five** declarations —
+`ComplexAnalytic.AnalyticSpace.quotientCoverDesc_eq` not being written yet — and anchored
+**twenty-eight** rows, `ComplexAnalytic.AnalyticSpace.quotientCoverDesc.eq_1` from a `rw` naming
+the definition and two congruence lemmas from a `congr 1`, one of those two standing for a
+definition of `Oka/AnalyticSpace/CoveringSpaceMap.lean` and anchored — like all three planted rows
+— to the module that planted it and not to the module that declares what it is about. The
+declaration docstring of that defining equation records the same two numerals and
+`Oka/AnalyticSpace/DirectSummand.lean` records the same choice twice.
+**Ten of the twenty-six are definitions, fifteen are theorems and one is an
+instance**, counted with a declaration keyword at the start of a line and an attribute allowed
+before it — the spelling matters, since `@[reducible] def` is one of the ten and a bare `^def `
+returns nine, and `^structure ` returns two lines of prose and no declaration. By section that is
+two and seven, one and three, two and four, and five and one beside the instance. **None of the
+twenty-six is `@[simp]`** — where the module this one builds on has three that are, so the absence
+is this module's own and not the neighbourhood's.
+
+**The axiom triple is the same for all twenty-six.** `Classical.choice` is already carried by every
+statement of `Oka/AnalyticSpace/QuotientCover.lean` and by the analytic structure on a covering
+space, which is one `#print axioms` run each and not a reading of any proof below.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitLift' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitLift
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitMk_comp_orbitLift' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitMk_comp_orbitLift
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.orbitDesc_eq_orbitLift_comp' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.orbitDesc_eq_orbitLift_comp
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.quotientCoverDesc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.quotientCoverDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.quotientCoverDesc_eq' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.quotientCoverDesc_eq
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.quotientCoverDesc_comp' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.quotientCoverDesc_comp
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.toQuotientCover_comp_desc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.toQuotientCover_comp_desc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.quotientCover_hom_ext' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.quotientCover_hom_ext
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.comp_toQuotientCover_eq' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.comp_toQuotientCover_eq
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.quotientDesc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.quotientDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toQuotient_comp_quotientDesc'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toQuotient_comp_quotientDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.quotient_hom_ext' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.quotient_hom_ext
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.comp_toQuotient' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.comp_toQuotient
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut_one' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut_one
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut_mul' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut_mul
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjSMul' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjSMul
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.continuous_singleObjAut_base'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.continuous_singleObjAut_base
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut_base_over' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjAut_base_over
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjQuotient' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjQuotient
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjToQuotient' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjToQuotient
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjCocone' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjCocone
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjDesc' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjDesc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjToQuotient_comp_desc'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjToQuotient_comp_desc
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjIsColimit' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.singleObjIsColimit
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasColimitsOfShape_singleObj'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasColimitsOfShape_singleObj
