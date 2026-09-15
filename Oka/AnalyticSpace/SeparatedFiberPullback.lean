@@ -32,12 +32,24 @@ This is the module that imports both and says the one thing that needs both:
 for `[T2Space X]`, and the same for the `Type u`-valued functor. **That is the second of the six
 obligations in the order the class lists them, and the third this repository states at the two
 fibre functors themselves** — after the terminal object and finite coproducts — **which brings to
-four the number of the six it states anywhere**, the reflection of isomorphisms being stated at the
-restrictions of the two functors along the preconnected subcategory's inclusion and not at them.
+four the number of the six it states anywhere**, the reflection of isomorphisms being, at the
+commit that adds this file, stated at the restrictions of the two functors along the preconnected
+subcategory's inclusion and not at them.
 **The second and third of those three counts are pinned to the commit that adds this file and the
 first is not** — the first is a fact about the order of the fields of Mathlib's class and does not
 move with this tree, and `## What is not here`'s first bullet is where the other two are
 enumerated and where the reason for their pin is given.
+**That reason carried no pin of its own and read *the reflection of isomorphisms being stated at
+the restrictions of the two functors along the preconnected subcategory's inclusion and not at
+them*, in the present tense, until 2026-09-15**, when `5dc5878` stated it at the two functors as
+well and left the restricted pair standing beside it. **Neither pinned count moves**: at `fbe1e95`
+the reflection of isomorphisms was stated only at the restrictions, so both pinned numerals are
+what they were, three at the two fibre functors themselves and four anywhere. The record opening
+*That second clause read* is the same change recorded for the clause of this description that
+`5dc5878` did repair, and the reason repaired here is the copy that push left standing beside it.
+taxis #2025 is the filing that landed the change; taxis #2053 is the filing that named this
+copy, and re-reading this description for the same shape is what found the two in
+`## What is not here`'s first bullet.
 
 ## What the obstruction was, and it was an identification and not an instance
 
@@ -150,15 +162,33 @@ the other composed with a fully faithful one, so the derivation is available and
   file, and three of the four at the two fibre functors themselves**: preservation of the terminal
   object, in that module; preservation of finite coproducts, in
   `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean`; and preservation of pullbacks, here.
-  **The fourth is the reflection of isomorphisms, and it is stated at the restrictions of the two
-  functors along the preconnected subcategory's inclusion and not at them** — which is the
-  distinction `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` draws in terms for its own
-  count, and the reason a bare numeral will not do here. The two this repository does not state at
-  all are preservation of epimorphisms and of quotients by finite group actions. **Both counts are
-  pinned to the commit that adds this file, and the reason is that they move under pushes this file
-  cannot see**: the count at the two functors stood at one and the count anywhere at two until
-  `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` landed on 2026-09-15, and this file
-  moves each of them by one again.
+  **The fourth is the reflection of isomorphisms, and at that commit it is stated at the
+  restrictions of the two functors along the preconnected subcategory's inclusion and not at
+  them** — which is the distinction `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` draws
+  in terms for its own count, and the reason a bare numeral will not do here. The two it did not
+  state at all there are preservation of epimorphisms and of quotients by finite group actions.
+  **Both counts are pinned to the commit that adds this file, and the reason is that they move
+  under pushes this file cannot see**: the count at the two functors stood at one and the count
+  anywhere at two until `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` landed on
+  2026-09-15, and this file moves each of them by one again.
+  **Those two sentences read *The fourth is the reflection of isomorphisms, and it is stated at
+  the restrictions of the two functors along the preconnected subcategory's inclusion and not at
+  them* and *The two this repository does not state at all are preservation of epimorphisms and of
+  quotients by finite group actions*, both in the present tense and neither pinned, until
+  2026-09-15**, when three pushes of that same day moved what they describe: `998d5ad` at
+  09:03:35Z stated preservation of epimorphisms at the two functors, `5dc5878` at 10:40:40Z stated
+  the reflection of isomorphisms at them, and `aa50c8e` at 14:17:55Z stated preservation of
+  quotients by finite group actions at them — this file having landed at 05:49:26Z, so each
+  sentence was exact when it was written and neither outlived the day. **At the commit carrying
+  this record every one of the six is stated and every one at the two fibre functors themselves**:
+  the terminal object and the reflection of isomorphisms in
+  `Oka/AnalyticSpace/SeparatedFiberFunctor.lean`, finite coproducts in
+  `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean`, pullbacks here, epimorphisms in
+  `Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean`, and quotients by finite group actions in
+  `Oka/AnalyticSpace/SeparatedFiberQuotient.lean`. **The count at the two functors and the count
+  anywhere are pinned and are not recounted**, and the restricted pair is still stated beside the
+  unrestricted one, which is what `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean`'s own
+  record of the same change says.
 * **Nothing about the other three fields, and *other* is read against this file and not against
   the tree.** No epimorphism is mapped below, no group acts on anything, and the coproduct of this
   category is not mentioned here — **finite coproducts are nevertheless stated at both fibre
