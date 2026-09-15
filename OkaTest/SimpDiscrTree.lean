@@ -97,7 +97,7 @@ variable {ι : Type} [Fintype ι]
 /-- The shape the library actually meets: `okaStalkEquiv_germ` is `@[simp]` and inert, and
 both `rw` and pinning the index type work.
 
-**All three halves are exercised below**, which until 2026-08-25 only two of them were: the
+**All three halves are exercised below**, which until 2026-08-27 only two of them were: the
 `fail_if_success` is the inertness, the `have` is `rw`, and the closing `simp only` is the
 pinning. The `rw` half was prose here and prose again in `Oka/StalkEquiv.lean`'s comment above
 `okaStalkEquiv_germ_algebraMap`, which cites this file as the place holding the tripwires — so

@@ -123,7 +123,7 @@ claims about a limit too and the description at the head of this file does not r
 widening the sentence to cover them is a push of its own.
 
 **That clause named three of this file's `#print axioms` statements of a pullback square, until
-2026-09-07**, when it was brought level with the file and named all eight. It was exact when
+2026-09-08**, when it was brought level with the file and named all eight. It was exact when
 written and went stale twice without anything on this board seeing it: the push that stated that
 square in `AlgebraicGeometry.LocallyRingedSpace` added two such guards and did not extend the
 clause, and this push adds three more at the cospan a glue datum's transition maps open over.

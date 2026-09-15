@@ -29,7 +29,7 @@ continuous map as local at the target and `IsLocalHomeomorph` is not one of them
 declarations too — which is why the statement is here.
 
 **The heading above read *The sheets of a map, as a family of opens* and the paragraph under it
-ended at `IsLocalHomeomorph.sSup_sheetOpens` says its supremum is `⊤`, until 2026-09-13**, when the
+ended at `IsLocalHomeomorph.sSup_sheetOpens` says its supremum is `⊤`, until 2026-09-14**, when the
 base-change statement was appended. The heading is broadened rather than replaced: what it named is
 still here.
 

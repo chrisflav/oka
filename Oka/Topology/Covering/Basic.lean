@@ -439,7 +439,7 @@ it is not removable: `TwoIndiscrete.not_isCoveringMap_pullback_snd`
 (`OkaTest/CoveringBaseChange.lean`) compiles a witness with `f` the identity of a two-element
 discrete space and `g` the identity out of the same two points carrying the indiscrete topology,
 where `Function.Pullback.snd` is a continuous bijection and not an open map. **The clause read *It
-is used once, for `g ⁻¹' U` to be open, and that one use is not removable* until 2026-09-13**, when
+is used once, for `g ⁻¹' U` to be open, and that one use is not removable* until 2026-09-14**, when
 the second fact was read off `IsCoveringMap.pullback_snd`'s own proof; the same numeral was in
 `OkaTest/CoveringBaseChange.lean`'s module docstring and is repaired there by the same push. -/
 theorem IsCoveringMap.pullback_snd (hf : IsCoveringMap f) (hg : Continuous g) :

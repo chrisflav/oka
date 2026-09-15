@@ -32,8 +32,8 @@ open map, which kills the covering-map and the local-homeomorphism conclusions t
 kills properness through `IsProperMap.isClosedMap`.
 
 **The heading above read *The continuity hypothesis of `IsCoveringMap.pullback_snd`, and the witness
-that it is needed* until 2026-09-13**, when the two further statements were appended. **The clause
-read *It is spent once, on `g ⁻¹' U` being open for an evenly covered `U`* until 2026-09-13**, when
+that it is needed* until 2026-09-14**, when the two further statements were appended. **The clause
+read *It is spent once, on `g ⁻¹' U` being open for an evenly covered `U`* until 2026-09-14**, when
 the spend of the continuity was read off all three proofs and `IsCoveringMap.pullback_snd`'s came
 out two; the same numeral was in `Oka/Topology/Covering/Basic.lean`'s docstring for that statement
 and is repaired there by the same push.

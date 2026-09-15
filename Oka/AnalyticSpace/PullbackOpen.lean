@@ -400,7 +400,7 @@ that and applies `CategoryTheory.IsPullback.isoPullback`. **The cospan of two lo
 presented by cut-out data is reached by neither**, and nothing in this file is about it.
 
 **This paragraph closed *Whether the comparison is available there is not settled here and nothing
-below claims it is* until 2026-09-07**, when
+below claims it is* until 2026-09-08**, when
 `ComplexAnalytic.AnalyticSpace.isPullback_map_pullback_pullbackFst_ofRestrict` settled that
 cospan. It was exact when written. -/
 noncomputable def toLRSIsoPullbackMap :
