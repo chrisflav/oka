@@ -123,8 +123,16 @@ not give either.
 * **No `PreGaloisCategory` instance and no claim of one.** The field
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.inducesIsoOnDirectSummand_of_mono`
   answers to still asks `[T2Space X]` of the base, which the axiom does not; and nothing here
-  bears on the other fields — base change over a general cospan of morphisms of this category,
-  quotients by finite group actions, or the preservation of epimorphisms by a fibre functor.
+  bears on the other fields — base change over a general cospan of morphisms of this category, or
+  quotients by finite group actions — nor on the preservation of epimorphisms by a fibre functor,
+  **which is a field of `FiberFunctor` and not one of the other fields of the class this bullet is
+  headed by**. **That is a correction and not one of this repository's dated records**: the
+  sentence listed that preservation among *the other fields* of `PreGaloisCategory` from the commit
+  that wrote it, so it was false when written rather than falsified later.
+  `Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` is where the slip was measured and recorded,
+  in a bullet saying in terms that the push which made the measurement was not the one to repair
+  it; the repair is made here by the push that lands that preservation, in
+  `Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean`.
 * **The summand is produced in the covers and not inside this category, and a file this one does
   not import now also produces it inside.**
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.inducesIsoOnDirectSummand_of_mono`

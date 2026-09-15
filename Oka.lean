@@ -94,6 +94,7 @@ import Oka.AnalyticSpace.Restrict
 import Oka.AnalyticSpace.SeparatedDirectSummand
 import Oka.AnalyticSpace.SeparatedFiberFunctor
 import Oka.AnalyticSpace.SeparatedFiberFunctorCoproducts
+import Oka.AnalyticSpace.SeparatedFiberFunctorEpi
 import Oka.AnalyticSpace.SeparatedFiberPullback
 import Oka.AnalyticSpace.SeparatedFiniteEtale
 import Oka.AnalyticSpace.SeparatedFiniteEtaleBaseChange

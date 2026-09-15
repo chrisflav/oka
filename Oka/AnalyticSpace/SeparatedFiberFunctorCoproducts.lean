@@ -135,9 +135,18 @@ category's own universe** —
   identification for a limit**, and the coproduct case is no evidence about it: the identification
   this file rests on is `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fiberSigmaEquiv`, which is a
   statement about a disjoint union and is already in the ambient file.
-* **Not the preservation of epimorphisms and not quotients by finite group actions.** Both are
-  where `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` left them and nothing here moves either;
-  the quotients field is stated over `CategoryTheory.SingleObj`, which no declaration below names.
+* **Not the preservation of epimorphisms and not quotients by finite group actions.** Neither is
+  moved by anything here; the quotients field is stated over `CategoryTheory.SingleObj`, which no
+  declaration below names. **This bullet read *Both are where
+  `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` left them and nothing here moves either*, until
+  2026-09-15**, when `Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean` moved the first of the two
+  at both of the functors this file is about: the half of that sentence which is about this file is
+  what is kept, and the half which is about where the two absences stand in the tree is what
+  stopped being true. **The quotients half is unmoved, and that is a re-run and not a reading**:
+  `CategoryTheory.SingleObj` occurs in the comment-stripped code of exactly **one** module of this
+  repository at the commit that retires this wording — the mirror-tree module the declaration
+  docstring below names at its own commit — and that module is not the one which moved the other
+  half.
 * **Nothing at `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver` is superseded or restated.**
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesFiniteCoproducts_fiberFunctor` and its
   `FintypeCat` counterpart are what a caller working in the covers wants and are unchanged; this

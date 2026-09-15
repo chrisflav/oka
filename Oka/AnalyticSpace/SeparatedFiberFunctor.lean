@@ -25,11 +25,20 @@ are. **This file is the fibre functor at that category**, and the two of its six
 are reachable without a new import.
 
 **That sentence read *the two of its six obligations that are reachable with what is in the tree*,
-until 2026-09-15**, when `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` — the only
-module under `Oka/` whose own `import` lines name both this one and
+until 2026-09-15**, when `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` — a module
+under `Oka/` whose own `import` lines name both this one and
 `Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean`, the aggregator `Oka.lean` naming both as
 it names every module — landed a third at these two functors, the
-preservation of finite coproducts. **The numeral in the repaired sentence is not three, and that is
+preservation of finite coproducts. **That apposition read *the only module under `Oka/` whose own
+`import` lines name both*, until 2026-09-15**, when
+`Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean` made them two: it has the same two
+`import Oka…` lines, neither of the pair imports the other, and each of the two therefore has a
+closure of seventy-seven modules counting itself, the two agreeing on the seventy-six under them.
+**The instrument is unchanged and is the retired wording's own** —
+a scan of the `import Oka…` lines of the comment-stripped code of every tracked `.lean`, the
+aggregator excluded because it is not under `Oka/` — so what moved is the population and not the
+register.
+**The numeral in the repaired sentence is not three, and that is
 deliberate**: a second branch was in review at the time of writing which states the preservation of
 pullbacks at these same two functors in a module of its own, and it moves the same count
 independently of this one, so *two of its six obligations that are reachable without a new import*
@@ -233,15 +242,35 @@ Every `@`-application below is that, and none of them is a mathematical step.
   `Oka/` imports, and whose one declaration gives colimits of that shape at any category with
   `CategoryTheory.Limits.HasFiniteColimits`. **Neither category of covers has that class at that
   commit**, so what is absent for quotients is a colimit and not a statement about the shape.
-  **Two modules of this repository declare an instance of
-  `CategoryTheory.Functor.PreservesEpimorphisms`** — `Oka/Algebra/Category/Grp/EpiMono.lean` and
-  `Oka/Algebra/Category/ModuleCat/Sheaf/Colimits.lean` — and **neither is about a cover or about a
-  fibre functor**, so what is absent there is the statement at these functors and not the class.
+  **Three modules of this repository declare an instance of
+  `CategoryTheory.Functor.PreservesEpimorphisms`** — `Oka/Algebra/Category/Grp/EpiMono.lean`,
+  `Oka/Algebra/Category/ModuleCat/Sheaf/Colimits.lean` and
+  `Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean` — and **the first two are about neither a cover
+  nor a fibre functor**, so what was absent there was the statement at these functors and not the
+  class. **That sentence read *Two modules of this repository declare an instance* and named the
+  first two of the three, until 2026-09-15**, when the third — a module which imports this one and
+  `Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean` — declared the class at both of this
+  file's fibre functors. **The count is of instances, so a third instance moves it whatever the
+  spelling.**
   **That count is of instances and not of occurrences of a name**, which the
-  `CategoryTheory.SingleObj` count in this bullet is, and the two registers do not agree here: both
-  modules spell the class by dot notation on the functor, so the literal
+  `CategoryTheory.SingleObj` count in this bullet is, and the two registers still do not agree
+  here: all three modules spell the class by dot notation on the functor, so the literal
   `CategoryTheory.Functor.PreservesEpimorphisms` occurs in the comment-stripped code of **no**
-  module of this repository.
+  module of this repository — **re-run at the commit that adds that third module and not carried
+  across from the commit that adds this file**. **A fourth module names the class and declares no
+  instance of it**, `OkaTest/SeparatedFiberFunctorEpi.lean`, whose four `example`s ask instance
+  search for it twice successfully and twice not; so at that commit the register counting
+  occurrences of the unqualified token returns **four** where the register counting instances
+  returns three, and the sentence above is the second of the two.
+  **Everything else in this bullet is still true of this file, and the epimorphisms half of its
+  heading is no longer true of the tree, since 2026-09-15**: the preservation is
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fiberFunctor` and
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fintypeFiberFunctor`
+  in that third module. **This sentence is a pointer and the repair of the numeral above is a dated
+  record**, and the two are told apart exactly as the bullet opening *Not the preservation of finite
+  coproducts* tells them apart: a record says what a clause read *until* some day and presupposes
+  it stopped reading true, and a heading which says what **this file** does not supply has not
+  stopped reading true.
 * **Nothing at `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver` is superseded or restated.**
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2` and every statement over it are
   unchanged and stay the right ones for a caller working in the covers, which is the reason

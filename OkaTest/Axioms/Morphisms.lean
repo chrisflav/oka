@@ -666,17 +666,28 @@ section**, 2026-09-14, for the reason the clause naming
 `### The terminal object and the product of two complex affine spaces` gives.
 
 **A further section, at the two functors out of that second category.** **The three words this
-clause opens with occur nowhere else in this file**, which is deliberate: the openings of the
-clauses here are cited by their first words elsewhere in this tree and are counted by at least one
-branch in review, so a clause that can be given an unused opening for free should have one.
+clause opens with open no other clause of this description**, which is deliberate: the openings of
+the clauses here are cited by their first words elsewhere in this tree and are counted by at least
+one branch in review, so a clause that can be given an unused opening for free should have one.
+**That sentence read *occur nowhere else in this file*, until 2026-09-15**, when the clause naming
+`### The fibre functor at the separated covers preserves pullbacks` cited this one by those three
+words twice; **the citation is the use the unused opening was chosen for and not a collision**, so
+what the sentence claims of itself is narrowed to the openings and is unmoved. **Neither this
+section nor that one is touched by the push that makes this repair**, which owns neither sentence
+and repairs this one because it runs the same register over its own opening a page below.
 `### Both fibre functors at the separated covers preserve finite coproducts` guards
-`Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean`, the only module under `Oka/` whose own
+`Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean`, a module under `Oka/` whose own
 `import` lines name both `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` and
 `Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean` — the section named at the head of this
 clause says with what that was measured and what the aggregator does — and which reads the ambient
 preservation
 of finite coproducts across
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toFiniteEtaleOver`. **Five guards, and they
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toFiniteEtaleOver`. **This clause read *the
+only module under `Oka/` whose own `import` lines name both*, until 2026-09-15**, when
+`Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean` made them two with the same two `import Oka…`
+lines and neither of the pair importing the other; **the instrument and the aggregator exclusion
+are unchanged**, and the second of the two is guarded under
+`### Both fibre functors at the separated covers preserve epimorphisms`. **Five guards, and they
 partition one and four.** **One is of the first kind** —
 `…SeparatedFiniteEtaleOver.isColimitMapCofanSigma`, which names a family of objects and the
 morphisms out of its members and says that bundle is universal, the same reading
@@ -1050,6 +1061,75 @@ either is sound.
 `### The quotient of an analytic cover by a finite group acting over the base`**, 2026-09-15, for
 the reason the clause naming `### The terminal object and the product of two complex affine
 spaces` gives.
+
+**A section beyond those, at the two fibre functors of that second category, and it gives the
+fourth kind a third class.**
+`### Both fibre functors at the separated covers preserve epimorphisms` guards the five
+declarations of `Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean`, which shows an epimorphism of
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` surjective on total spaces and reads that
+across both fibre functors. **Five guards, and they partition three and two.**
+
+**Three are of the fourth kind, at a third class: the epimorphisms.** The clause opening *The
+fourth kind has a second class, and it is the monomorphisms* reads a topological consequence off a
+class of morphisms which is none of the classes the opening description lists, and the class it
+reads it off is `CategoryTheory.Mono`; these three read one off `CategoryTheory.Epi`, which is
+none of those classes either and is not that one —
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.surjective_base_left_of_epi`,
+`…SeparatedFiniteEtaleOver.fiberFunctor_map_surjective_of_epi` and
+`…SeparatedFiniteEtaleOver.fintypeFiberFunctor_map_surjective_of_epi`. **The line between this
+group and the next is whether the statement binds a morphism of the category**: each of the three
+takes an `i : A ⟶ B` and concludes about that `i`, and the two below quantify over every morphism
+and name none. **The other reading, named rather than left to be found**: two of the three
+conclude about the value of a *functor* at `i` rather than about `i`'s own base map, which is the
+ground on which they could be read into the sixth kind at that second category. They are not,
+because that kind's criterion is *about the category rather than about any morphism in it* and
+both of them bind one; the same line is the one
+`### The fibre functor at the separated covers, and the two axioms of it that are reachable`
+draws in assigning its two injectivity guards.
+
+**The other two are of the sixth kind at that second category**, by the clause opening *The sixth
+kind has a second category* — `…SeparatedFiniteEtaleOver.preservesEpimorphisms_fiberFunctor` and
+`…SeparatedFiniteEtaleOver.preservesEpimorphisms_fintypeFiberFunctor`, each a statement about a
+functor out of that category and neither naming a morphism of it, exactly as the clause naming
+`### Both fibre functors at the separated covers preserve finite coproducts` assigns the two
+preservation instances that section holds at these same two functors.
+
+**Four counts this file publishes are unmoved by it, and each is a run and not a reading.**
+*Five of that section's twenty-one guards*, in the clause opening *The sixth kind has a second
+category*, counts over `### The category of separated covers, and separatedness as a morphism
+property`; *Seventeen guards, and they partition fourteen and three* counts over `### The fibre
+functor at the separated covers, and the two axioms of it that are reachable`; *Five guards,
+and they partition one and four* counts over `### Both fibre functors at the separated covers
+preserve finite coproducts`; and *All nine of its guards are of the sixth kind at that second
+category* counts over `### The fibre functor at the separated covers preserves pullbacks`.
+**This push appends a section and adds a guard to none of those four**, which `git diff` against
+the commit this section is cut from shows by touching no `#print axioms` line of any of them.
+And the published check on the statements of a pullback
+square — *list this file's `#print axioms` names whose declaration name contains* isPullback *and
+compare that list against the clause, dropping the ones over
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`* — returns what it returned, and so does
+the same list taken at *hasPullback*: **no name of this section carries either token**, the five
+being one surjectivity of a base map, two of a fibre map and two preservation instances. **Nine
+and eight unfiltered and eight and six with the exclusion at `e9bbdda`, and the same four figures
+at the commit that adds this section**, all four runs mine.
+
+**This clause's opening words occur in exactly one other place in this file, and that is
+deliberate.** They open no other clause of this description and stand in no other sentence: the
+second hit is the docstring of the section this clause names, which cites the clause by them, and
+a run over the whitespace-collapsed, emphasis-stripped file returns those two and nothing else.
+**That is the property the clause naming
+`### Both fibre functors at the separated covers preserve finite coproducts` gives the reason
+for** — the openings of the clauses here are cited by their first words elsewhere in this tree, so
+a clause that can be given an unused opening for free should have one — **stated in the form a
+citation leaves true**, which is the form that clause's own sentence is repaired into a page above
+by this same push and for the reason the record beside it gives.
+**And this clause reproduces the opening of no other clause of this description**, so every count
+and every discriminator this description takes over those openings returns what it returned; no
+such figure is restated here, for the reason the clause naming
+`### Base change of separated covers along a morphism of the base` gives against carrying one.
+**This clause was added by the push that added that section**, 2026-09-15, for the
+reason the clause naming
+`### The terminal object and the product of two complex affine spaces` gives.
 
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
@@ -7848,12 +7928,17 @@ same competitor: nothing below is a local model, a chart or a node.
 `Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean`, and
 `### The fibre functor at the separated covers, and the two axioms of it that are reachable` guards
 the seventeen of `Oka/AnalyticSpace/SeparatedFiberFunctor.lean`. **The module below imports both of
-those modules and is the only module under `Oka/` whose own `import` lines name both** — the
+those modules** — the
 instrument is a scan of the `import Oka…` lines of the comment-stripped code of every tracked
 `.lean`, with `scripts/import_cost.py`'s `strip_comments` and its `IMPORT` pattern, and **the
 aggregator `Oka.lean` that `mk_all` generates names both as well**, as it names every module of the
 library; it is not under `Oka/` and is nobody's dependency argument, which is the distinction a
-scan of a bare token cannot make and the one taxis #1928's fourth round is on record for. This is
+scan of a bare token cannot make and the one taxis #1928's fourth round is on record for.
+**This sentence said the module below *is the only module under `Oka/` whose own `import` lines
+name both*, until 2026-09-15**, when `Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean` — guarded
+under `### Both fibre functors at the separated covers preserve epimorphisms` — arrived with the
+same two `import Oka…` lines. **Neither of the two imports the other**, so they are siblings with
+one closure of seventy-seven modules each, and the instrument above is the one that says so. This is
 what its
 declarations are made of and is also why neither of those sections is the home for them: this
 file's own rule is that a guard goes in the section of the push that added it, which
@@ -8596,3 +8681,115 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toQuotient' depend
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toQuotient
+
+/-! ### Both fibre functors at the separated covers preserve epimorphisms
+
+`Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean`, the whole of it. **Five names**: that an
+epimorphism of `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` is surjective on total
+spaces, that each of the two fibre functors carries it to a surjection, and the two
+`CategoryTheory.Functor.PreservesEpimorphisms` instances those two surjectivities give.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
+five: three are about a morphism of the category the finite étale morphisms form over a fixed base,
+or about the value of a functor at one, and two are about a functor out of the subcategory of them
+separated over the base. **The competing row is *analytic spaces, local models, the node*,
+`OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for the reason
+`### Finite coproducts of the category of separated covers` gives against the same competitor:
+nothing below is a local model, a chart or a node.
+
+**Two sections of this file are closer competitors and neither is extended.**
+`### Both fibre functors at the separated covers preserve finite coproducts` guards the sibling
+module named below, and `### The fibre functor at the separated covers preserves pullbacks` guards
+the other obligation of the same class stated at these same two functors. Neither is extended, for
+the reason this file gives for appending — a section appended at the end cannot say which section is
+above it and stay true, since the next branch appends between them — and because this file's own
+rule is that a guard goes in the section of the push that added it. **The module below imports
+neither of the two modules those sections guard**, which the closure walk in the next paragraph is
+what says.
+
+**The module below is a sibling of `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` and
+not its consumer.** The two have the same two `import Oka…` lines —
+`Oka/AnalyticSpace/SeparatedFiberFunctor.lean` and
+`Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean` — and neither imports the other, so
+**each has a transitive `Oka`-prefixed closure of seventy-seven modules counting itself**, the two
+imports having closures of seventy-five each and sharing the seventy-four of
+`Oka.AnalyticSpace.SeparatedFiniteEtale`. The instrument is the one the section named above
+publishes: a scan of the `import Oka…` lines of the comment-stripped code of every tracked `.lean`,
+with `scripts/import_cost.py`'s `strip_comments` and its `IMPORT` pattern, the aggregator `Oka.lean`
+excluded because it is not under `Oka/`. **`Oka/AnalyticSpace/SeparatedDirectSummand.lean` is
+outside that closure**, so the complementary clopen summand of this category is not in scope below
+and nothing guarded here names it — which is the membership a reader should re-run rather than the
+arithmetic.
+
+**The kinds, and they partition five as three and two.** The clause of the head description opening
+*A section beyond those* assigns each of them by name: three of the fourth kind at the third class
+that clause introduces, the epimorphisms, and two of the sixth kind at that second category.
+**Nothing below is of the kind opening *And one kind more***: no name here concludes that a map is,
+or fails to be, a separated map, and no hypothesis below is `IsSeparatedMap` — the separatedness
+this category carries enters only inside the definitions the module cites.
+
+**`Classical.choice` is in every guard below and none of them introduces it.** It arrives through
+the covering-map rung, as the sections about the fibre functor record, and is present already in
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.sigma` and in
+`ComplexAnalytic.AnalyticSpace.descClopen`, which the surjectivity below is built out of — the
+second by construction, being a `choose` of an existential. **All five are
+`[propext, Classical.choice, Quot.sound]` and none is on any shorter list.**
+
+**Nothing generated is guarded and this push generated nothing.** The module's tab-anchored row
+count in `scripts/DumpOkaDecls.lean`'s output is five: no `_assoc` lemma, no `.eq_1` equation
+lemma, no match lemma and no congruence lemma. Equation lemmas are generated on demand, so that
+sentence is about the environment at the commit that adds this section.
+
+**Four of the five names below wrap onto an indented line of their own**, which is the layout
+`scripts/guard_coverage.py` documents and its `guarded_names` reads — every one but
+`…SeparatedFiniteEtaleOver.surjective_base_left_of_epi`, which is eighty-two characters and fits
+beside `#print axioms` on one line. **No name here needed shortening**: the namespace
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.` is fifty-five characters and an indented
+line leaves forty-three after it, and the widest two of the five —
+`…preservesEpimorphisms_fintypeFiberFunctor` and `…fintypeFiberFunctor_map_surjective_of_epi` — are
+forty-one each. **That is the arithmetic
+`### Both fibre functors at the separated covers preserve finite coproducts` records for the one
+name it had to shorten**, applied here and coming out the other way.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.surjective_base_left_of_epi' depends
+  on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.surjective_base_left_of_epi
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor_map_surjective_of_epi'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fiberFunctor_map_surjective_of_epi
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor_map_surjective_of_epi'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor_map_surjective_of_epi
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fintypeFiberFunctor'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fintypeFiberFunctor
