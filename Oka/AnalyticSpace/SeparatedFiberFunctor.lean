@@ -22,7 +22,23 @@ into `FintypeCat`. The first of those is being built at
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasTerminal` and
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.inducesIsoOnDirectSummand_of_mono'` already
 are. **This file is the fibre functor at that category**, and the two of its six obligations that
-are reachable with what is in the tree.
+are reachable without a new import.
+
+**That sentence read *the two of its six obligations that are reachable with what is in the tree*,
+until 2026-09-15**, when `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` — the only
+module under `Oka/` whose own `import` lines name both this one and
+`Oka/AnalyticSpace/SeparatedFiniteEtaleCoproducts.lean`, the aggregator `Oka.lean` naming both as
+it names every module — landed a third at these two functors, the
+preservation of finite coproducts. **The numeral in the repaired sentence is not three, and that is
+deliberate**: a second branch was in review at the time of writing which states the preservation of
+pullbacks at these same two functors in a module of its own, and it moves the same count
+independently of this one, so *two of its six obligations that are reachable without a new import*
+is the claim that is true whichever of the two lands and in whichever order.
+**What the wording had wrong is its scope and not its numeral**: two is still what is reachable
+here, and the bullet below opening *Not the preservation of finite
+coproducts* is where the one that moved is recorded. **The numeral in this file's `#` heading and in
+the heading of the section of `OkaTest/Axioms/Morphisms.lean` that guards this module counts what
+this module carries, which is unmoved at two**, and neither heading is touched.
 
 ## The `[T2Space]` that stops being a hypothesis, which is the one thing here that is not transport
 
@@ -162,6 +178,23 @@ Every `@`-application below is that, and none of them is a mathematical step.
   `Oka/AnalyticSpace/FiniteEtaleOver.lean`, which declares it, and `OkaTest/Axioms/Morphisms.lean`,
   which guards it — and neither is about a functor out of
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`.
+  **Everything in this bullet is still true of this file and the statement it says is absent is no
+  longer absent from the tree, since 2026-09-15**: it is
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesFiniteCoproducts_fiberFunctor`
+  and
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesFiniteCoproducts_fintypeFiber`
+  in `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean`, which imports this module and that
+  sibling and takes the first of the two routes this bullet names — the ambient preservation read
+  across the inclusion, the inclusion itself being shown to preserve finite coproducts there.
+  **The two pinned figures above are not retired by that push and are not restated by it**: both
+  are read at the commit that adds this file, and a scan of the same token at any later commit is a
+  different measurement — at the commit that adds that module the count is **three**, the third
+  being the module itself.
+  **This paragraph is a pointer and not one of this repository's dated records**, which is why it
+  does not use the `until <date>` spelling and why neither census of those records moves for it:
+  a record says what a clause read *until* some day and presupposes that it stopped reading true,
+  and every sentence of this bullet is as true at the commit that adds that module as at the
+  commit that wrote it. What changed is the tree the bullet sits in, not the bullet.
 * **Not the preservation of epimorphisms and not quotients by finite group actions**, and the two
   absences are not the same shape. `CategoryTheory.SingleObj`, which is the shape the quotients
   field is stated over, occurs in the comment-stripped code of exactly **one** module of this

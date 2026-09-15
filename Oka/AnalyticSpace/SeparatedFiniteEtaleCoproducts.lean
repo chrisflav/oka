@@ -168,7 +168,15 @@ this file is about them.
   **In particular the fibre-functor statements are not extended**: that a fibre functor preserves
   finite coproducts is proved in `Oka/AnalyticSpace/FiniteEtaleOver.lean` for the covers, this file
   declares no functor out of this category, and preservation along the inclusion composed with
-  such a functor is not stated.
+  such a functor is not stated **here**.
+  **That last clause read *is not stated*, until 2026-09-15**, when
+  `Oka/AnalyticSpace/SeparatedFiberFunctorCoproducts.lean` stated it — a module that imports this
+  one and `Oka/AnalyticSpace/SeparatedFiberFunctor.lean`, which is where the two functors out of
+  this category are. **What it consumes from this file is
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isColimitCofanSigma`**, whose image under
+  the inclusion it shows to be the ambient colimit; nothing of this file is restated there and the
+  clauses before this record are unmoved — this file still declares no functor out of this
+  category, and the ambient statement is still where the sentence says it is.
 * **Nothing about base change in `ComplexAnalytic.AnalyticSpace` is narrowed.**
   `CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for
   `ComplexAnalytic.AnalyticSpace.isFiniteEtale` quantifies over cospans whose finite étale leg may
