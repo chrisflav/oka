@@ -6922,8 +6922,11 @@ file guards by name everywhere it occurs.
 
 **What consumes each of them, said at the strength it has.**
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasFiniteLimits` is the module's purpose
-and has no consumer in this repository — `git grep` over `Oka/` and `OkaTest/` finds it in its own
-module and in this section and nowhere else — and what would consume it is a `PreGaloisCategory`
+and has no consumer in this repository — `git grep` over `Oka/` and `OkaTest/` returns **eight**
+lines in **three** files at the commit that writes this: **four** in this section, **three** in its
+own module, and **one** at `Oka/AnalyticSpace/SeparatedFiberPullback.lean:172`, a prose bullet
+naming it as an input that file leaves unassembled, which is a mention and not a consumption
+— and what would consume it is a `PreGaloisCategory`
 instance, which this repository cannot state. `…hasPullbacks` is consumed by `…hasFiniteLimits`
 and `…hasPullback` by `…hasPullbacks`. `…isPullback_fibreProd` names the other **eight** in its
 statement or its proof — `…fibreProd`, `…fibreProdFst`, `…fibreProdSnd`, `…fibreProd_square`,
@@ -6933,6 +6936,19 @@ there to keep the module header's *no second idea entered* claim from going stal
 which their own docstrings say. **So four of the fifteen are unconsumed inside this repository** —
 `…hasFiniteLimits` and the three `_self` statements — and that is a fact about a module written
 against a definition this repository cannot import rather than an omission.
+
+**That parenthetical read *`git grep` over `Oka/` and `OkaTest/` finds it in its own module and in
+this section and nowhere else* until 2026-09-15**, when
+`Oka/AnalyticSpace/SeparatedFiberPullback.lean` named
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasFiniteLimits` in the bullet quoted
+above. **The clause was exact when `4d40d05` wrote it on 2026-09-12 and `fbe1e95` falsified it at
+05:49:26Z on the day of this repair**, which is why the form here is `until <date>` and not the
+`stopped being true on <date>` that `Oka/AnalyticSpace/LocalIso.lean` uses: those two dates are
+the same UTC day, so the date the wording is retired and the date it stopped reading true agree,
+and the record presupposes what it is entitled to. **What the clause was evidence for is
+unmoved** — `…hasFiniteLimits` still has no consumer, and *no consumer* and *no occurrence* are
+what came apart. `fbe1e95` owed this repair and did not make it, which is the ordinary way a
+sentence of this shape goes stale: nothing re-runs it.
 
 **The head of that module says `HasFiniteLimits` is not a field of `PreGaloisCategory` and this
 section does not restate the measurement**, only its consequence for the sentence above: the
@@ -7089,6 +7105,65 @@ this repository* is the careful form — *`git grep` over `Oka/` and `OkaTest/` 
 module and in this section and nowhere else* — naming the instrument, naming the scope, and
 counting the guard section as a location. **When one sentence of a paragraph has that form and its
 neighbour does not, the loose one is an oversight and not a scoping choice.**
+
+**That form is careful about the instrument and about the scope and says nothing about *when*, and
+that is how its neighbour went stale.** The class is small enough to publish. Whitespace-flattened
+over every tracked file, a sentence pairing a grep — `git grep`, `grep`, or *a grep* — with a
+locator of the shape *nowhere else*, *only in* or *finds it in* returns **eight** at this commit.
+**Two of the eight are this repair and not members of the class**: the record opening *That
+parenthetical read*, which quotes the retired wording, and this paragraph, which describes the
+shape rather than using it. **The scan returned seven before this push and returns eight after
+it** — repairing a member into
+a record leaves the retired wording in the file, so a raw count of the shape does not fall when
+one of its members is fixed, and a figure taken from it has to say which rows are the repair.
+**The remaining six are the class and all six are exact**:
+
+* **Two are pinned to a commit and are records rather than claims.**
+  `Oka/Analytification/RefineDatumTransition.lean`'s *at `46525e6`* sentence: each of the two names
+  it is about occurs at that commit in one `Oka/` file and one `OkaTest/` file, which is what it
+  says. This file's *`CategoryTheory.Limits.hasColimitsOfShape_singleObj`* sentence, fronted by *at
+  the commit that adds this section*: at `003e38f` the name is in its own module,
+  `Oka/CategoryTheory/Limits/Shapes/SingleObj.lean`, and in this file and nowhere else, which is
+  what it says. `README.md`'s *How far a fronted commit pin reaches* is what makes the second one
+  a record throughout rather than to its first comma.
+* **Two are about Mathlib's tree and not this one.**
+  `Oka/CategoryTheory/GlueData.lean` and `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean`
+  each say `grep` finds `CategoryTheory.GlueData.ofGlueData'` only in its own defining file, and
+  a `grep -rn` over `.lake/packages/mathlib/Mathlib/` returns two lines, both in
+  `Mathlib/CategoryTheory/GlueData.lean`.
+* **One is live and true**: the `…isClopen_fixedLocus` sentence quoted above. `git grep` returns
+  **eleven** lines in **two** files at this commit, `Oka/AnalyticSpace/ClopenEqLocus.lean` and
+  this one — **nine at the base of this push, and the two that make eleven are this bullet's own
+  citation and the one below the list**. That is the same effect the count of the shape above
+  shows, at a name instead of at a shape: **prose about a census is part of the census.**
+* **One is the paragraph opening *The rule the sentence above follows***, which quotes that
+  sentence as the careful form rather than making a claim of its own.
+
+**The seventh, before this push, was the `…hasFiniteLimits` parenthetical repaired at the top of
+this section.** Two of the seven were pinned and two were about Mathlib, so **the three that were
+live claims about this tree were the `…isClopen_fixedLocus` sentence, the paragraph quoting it,
+and that parenthetical — and it is the parenthetical that had gone stale.** None of the ten
+checks `.orchestra/validation.sh` runs reads a sentence of this shape, for the reason `README.md`'s
+*Re-deriving a branch's measured absences after a re-cut* gives of the absence claims it is about.
+The rule the measurement supports: **a sentence whose evidence is a grep over this tree owes what
+that grep returns, and not only where it does not**, so that re-running it is a check on the
+sentence rather than a re-derivation of an argument the sentence never wrote down. A clause saying
+*and nowhere else* names a set by its complement and cannot be compared against a run; one saying
+*seven lines in three files, and they are these* can. **The alternative is the pin**, which is what
+the first two members use, and a pinned sentence owes no re-run at all.
+
+**The rule is not coined here.** It is already practised by the paragraph whose opening runs
+*`IsSeparatedMap.isClopen_eqLocus` is of the mirror tree*, where its occurrences are given as
+*`git grep` over `Oka/` and `OkaTest/` returns **16** lines in **three** files at that commit*,
+with the per-file split and the two non-prose occurrences named. **What that sentence does and
+the repaired one did not is say what the run returns instead of what it does not contain**, and
+it is pinned besides. This paragraph writes down what that one was already doing.
+
+**The scan above had to be widened to find its own population, which is the recurring defect on
+this board.** Keyed on the literal `git grep` it reaches **five** of the eight and missed **three**
+of the seven it would have found before this push: the two Mathlib sentences say `grep` and this
+file's pinned one says *a grep*. **A scan for a prose shape is a claim about spellings and not
+about the shape**, and the figure it returns is only as wide as the spellings it was written with.
 
 **This paragraph and the one opening *What is in the context at a call site* were `until <date>`
 records until 2026-09-13**, each quoting a sentence that had been written and repaired inside one
