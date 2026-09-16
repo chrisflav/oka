@@ -618,7 +618,10 @@ category — and `[Finite G]` rather than `[Fintype G]` is what it asks with; ne
 here.
 
 **An `instance` and not a `theorem`**: a consumer of that field arrives by instance search, and
-`#synth` at this statement fails at the base and succeeds here. -/
+`#synth` at this statement fails at `ba32326` and succeeds here — a run of mine at that commit.
+**That read *fails at the base* until this push**, and *the base* had stopped naming `ba32326`:
+this file was pushed to a second time, and at the parent of that second push the statement is
+**found**, this instance being in the environment there. -/
 instance SeparatedFiniteEtaleOver.hasColimitsOfShape_singleObj :
     Limits.HasColimitsOfShape (SingleObj G) (SeparatedFiniteEtaleOver.{u} X) where
   has_colimit F := ⟨⟨⟨SeparatedFiniteEtaleOver.singleObjCocone F,

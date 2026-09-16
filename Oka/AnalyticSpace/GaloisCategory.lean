@@ -16,8 +16,8 @@ import Mathlib.CategoryTheory.Galois.Basic
 `Mathlib/CategoryTheory/Galois/Basic.lean` asks eleven things across two classes:
 `CategoryTheory.PreGaloisCategory` has five fields and
 `CategoryTheory.PreGaloisCategory.FiberFunctor` has six. **Every one of the eleven has had a
-statement at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` since the commit before this
-one, in ten modules under `Oka/AnalyticSpace/`, and none of them could say so**: until this file
+statement at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` since `386d6ab`, in ten
+modules under `Oka/AnalyticSpace/`, and none of them could say so**: until this file
 that namespace was outside this repository's import closure, so no module could name either class.
 **This file is the import and the three instances, and it is nothing else.**
 
@@ -242,10 +242,24 @@ this instance consumes the class**, and these four are what a consumer of it wou
   none could be.**
 * **No limit or colimit that was not already there.** The class's own downstream instances —
   `CategoryTheory.Limits.HasFiniteLimits`, `CategoryTheory.Limits.HasInitial` and
-  `CategoryTheory.Limits.HasEqualizers` at this category — are all found by search **at the base of
-  this push as well**, three runs of mine in a checkout without this file, so declaring the class
-  buys none of them. `CategoryTheory.Limits.HasFiniteColimits` is **not** found at either end, and
-  this push does not touch it.
+  `CategoryTheory.Limits.HasEqualizers` at this category — are all found by search **at `386d6ab`
+  as well**, in a checkout without this file, so declaring the class buys none of them.
+  `CategoryTheory.Limits.HasFiniteColimits` is **not** found there, at `642ae9b` or here. **That
+  read *at the base of this push as well* until this push**, and by then *the base* named
+  `642ae9b`, which is a checkout that **has** this file: at that commit `…HasEqualizers` is found
+  through the `PreGaloisCategory` instance this file declares and not through the route the bullet
+  is about, so the clause named a base that could not carry its own evidence while its conclusion
+  stayed true. **All four results are runs at all three commits, each taken with `import Oka` so
+  that the whole of the tree at that commit is in scope**, and the one that moves is
+  `…HasEqualizers`: `CategoryTheory.Limits.hasLimitsOfShape_of_hasFiniteLimits` at `386d6ab`, and
+  `CategoryTheory.PreGaloisCategory.instHasEqualizers` at `642ae9b` **and here** — the two of the
+  three that carry this file. **The figure is a function of the import closure and not of the
+  checkout**, which is why the `386d6ab` result above is quoted as *in a checkout without this
+  file*: at this push, the same theorem in a file carrying this module's whole import block but
+  **not** this module reaches `CategoryTheory.Limits.hasLimitsOfShape_of_hasFiniteLimits` through
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasFiniteLimits`, and adding
+  `import Oka.AnalyticSpace.GaloisCategory` to that file flips it to
+  `CategoryTheory.PreGaloisCategory.instHasEqualizers`.
 * **One thing the class does buy, and it is named rather than gestured at**:
   `(…SeparatedFiniteEtaleOver.fintypeFiberFunctor x).ReflectsMonomorphisms` is not synthesizable at
   `386d6ab` **even in a file that imports `Mathlib.CategoryTheory.Galois.Basic` directly**, and is

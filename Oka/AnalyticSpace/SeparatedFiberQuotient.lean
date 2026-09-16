@@ -344,7 +344,10 @@ rather than chosen, which is why this is an instance at every `G` and not a stat
 
 **An `instance` and not a `theorem`**: the field of
 `Mathlib/CategoryTheory/Galois/Basic.lean`'s `FiberFunctor` it answers is discharged by
-`infer_instance`, and `#synth` at this statement fails at the base and succeeds here. -/
+`infer_instance`, and `#synth` at this statement fails at `cce6d6c` and succeeds here — a run of
+mine at that commit. **That read *fails at the base* until this push**, for the reason
+`Oka/AnalyticSpace/QuotientColimit.lean`'s statement of the same shape gives: this file has been
+pushed to a second time and *the base* moved with it. -/
 instance SeparatedFiniteEtaleOver.preservesQuotients_fiber :
     Limits.PreservesColimitsOfShape (SingleObj G)
       (SeparatedFiniteEtaleOver.fiberFunctor.{u} x) where

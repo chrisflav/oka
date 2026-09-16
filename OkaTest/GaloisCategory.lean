@@ -128,8 +128,14 @@ example :
   infer_instance
 
 /-- And what that instance buys: Mathlib derives `CategoryTheory.Functor.ReflectsMonomorphisms`
-from the class, and it is not synthesizable at the commit before this one even with
-`Mathlib.CategoryTheory.Galois.Basic` imported directly. -/
+from the class, and it is not synthesizable at `386d6ab` even with
+`Mathlib.CategoryTheory.Galois.Basic` imported directly.
+
+That read *at the commit before this one* until this push, and the module docstring above carries
+the same claim and was pinned one push earlier: **an indexical names the parent of whatever the
+file's latest commit is**, so it moved when this file was pushed to a second time, and at that
+second parent — `642ae9b` — the class **is** synthesizable. A run at each: `failed to synthesize`
+at `386d6ab`, found at `642ae9b`. -/
 example :
     (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor.{u}
       x).ReflectsMonomorphisms := by

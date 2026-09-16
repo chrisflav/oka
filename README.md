@@ -2259,6 +2259,76 @@ numbers in this paragraph are `README.md`'s at `6b295aa`**, and they are pinned 
 live because any push inserting prose earlier in this file moves all three together — which is the
 class taxis #1709 names, met here in the file that states the rule against it.
 
+### When a sentence names a commit by pointing at one
+
+**`the commit before this one`, `at the base` and `the base of this push` name a commit that
+depends on the file's history rather than on who wrote the sentence**, and they are false the
+moment the file is pushed to a second time. `this push`, `the commit that adds this file` and
+`the base of the push that wrote it` name a commit fixed by the sentence's own authorship and go
+on naming it however many pushes follow. **That is the whole of the test, and it is the one to
+apply before writing either form**: ask what the phrase names after the *next* push to this file.
+
+**This is taxis #1709's defect one register out.** That section's positional pointer — *the row
+above*, *that last sentence* — reaches a paragraph by where it sits and breaks when prose is
+inserted; this one reaches a commit by where the file's history currently ends and breaks when the
+file is pushed to. The repairs are the same shape: **quote, or pin.** A hash costs seven
+characters and cannot move.
+
+**The worked example is in this repository and it cost two pushes.**
+`OkaTest/GaloisCategory.lean` carried *not synthesizable at the commit before this one* in a
+**declaration** docstring and the same claim in its **module** docstring. `51edff7` pinned the
+module copy to `386d6ab` — and that push is exactly what made the declaration copy false, since it
+was the file's second commit and moved *the commit before this one* from `386d6ab` to `642ae9b`,
+where the class **is** synthesizable. **A reviewer reading the diff of that push saw the repair and
+not the copy**, because the copy was in no hunk.
+
+**So the hazard has two halves and the second is the expensive one**: a module docstring and a
+declaration docstring in the same file saying the same thing, where a push repairs one. Grep the
+file for the claim rather than the diff — it is the same instrument taxis #2053 asked for after the
+same thing happened in `Oka/AnalyticSpace/SeparatedFiberPullback.lean`.
+
+**The scan, and it is worthless without its exclusion list.**
+
+```sh
+python3 - <<'EOF'
+import re, subprocess
+files = subprocess.run(["git", "ls-files", "*.lean", "*.md"],
+                       capture_output=True, text=True).stdout.split()
+pat = re.compile(r"the commit before this one|the base of this push"
+                 r"|at the base(?![ -](map|point|change|over|the|hypothesis|end|`))\b")
+for f in files:
+    flat = re.sub(r"\s+", " ", open(f, encoding="utf-8").read())
+    for m in pat.finditer(flat):
+        print(f"{f}: …{flat[max(0, m.start() - 80):m.end() + 60]}…")
+EOF
+```
+
+**The unfiltered pattern returns 48 hits in 26 files at `51edff7` and the lookahead excludes 32 of
+them** — `at the base map`, `at the basepoint`, `at the base change` and the rest of the ordinary
+mathematical sense, which has nothing to do with a commit. **A scan of this family that does not
+subtract the base-map sense is measuring the wrong population**, which is the defect this page's
+other sections exist to catch.
+
+**With the lookahead the scan returns 16 at `51edff7` and 23 at the commit that adds this section,
+and the rise is the whole story of what a repair of this class costs.** At `51edff7`: **four** are
+false under the referent they then named — three verified by a run at each end, one whose evidence
+clause named a base that could not carry it — **one** is mis-referring and true under either
+referent, **four** are the safe register, and the remaining seven are self-describing or are
+instrument instructions like the one in `### When two paragraphs open with the same words`. This
+push repairs all five. **The count goes up because each repair leaves a record quoting the phrase
+it retires, and because this section names all three spellings and its own scan spells them once
+more.** **Ten** of the 23 are in this file, two of them older than this section and three of them
+inside this section's own scan. **A repair that quotes what it is about adds hits to the class it
+is scanning** — the same arithmetic the section
+`### When two paragraphs open with the same words` records for its own instrument, and a delivery
+that publishes only the head figure is reporting its own prose as a defect.
+
+**What a push owes**: if it writes one of these phrases, pin it or use the authorship-fixed form;
+if it is the **second** push to a file, run the scan over that file, because that is the push at
+which the first push's indexicals go wrong. **It is a command and not a gate** — **32 of the 48 raw
+hits at `51edff7` are the base of a morphism or a base point**, and the lookahead that excludes
+them is a list of the spellings seen so far and not a decision procedure.
+
 ### Declaration docstrings, and why `docBlameThm` is off
 
 `lake lint` runs **Batteries'** `docBlame` — the environment linters are a mixture, fourteen in
