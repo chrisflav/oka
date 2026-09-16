@@ -6986,12 +6986,39 @@ until 2026-09-15 and now states**, at `ComplexAnalytic.AnalyticSpace.SeparatedFi
 `Oka/AnalyticSpace/GaloisCategory.lean`, whose three guards are in
 `### The covers separated over a Hausdorff base form a Galois category` — **that clause read
 *whose two guards are* from the commit that wrote it until this push**, which adds the third.
-**That does not make this a consumer and this sentence does not claim it is**: the field the
-`PreGaloisCategory` instance leaves to the class's
+**That does not make this a consumer and this sentence does not claim it is**, and what says so is
+now a run and not a reading: **three** of that class's five fields are left to its own
+`by infer_instance` default, and the declarations instance search reaches for them are
+`…hasTerminal`, `…hasPullbacks` and `…hasFiniteCoproducts`. **`…hasFiniteLimits` is not among the
+three.** The instrument is the landed instance's own proof term — `…preGaloisCategory` names all
+three, of which `…hasPullbacks` alone is one of the fifteen, the other two being declared in other
+modules — cross-checked by `#synth` at each of the three fields in a file carrying that module's
+own imports, and by `set_option trace.Meta.synthInstance true`, whose answer at the `HasPullbacks`
+goal is `…SeparatedFiniteEtaleOver.hasPullbacks`. **taxis #2061 is the filing that asked for the
+run.**
+
+**The clause survives on instance order and not on the absence of a route, which is a different
+thing and is the half worth writing down.**
+`CategoryTheory.Limits.hasLimitsOfShape_of_hasFiniteLimits` is among the candidate instances the
+trace lists at that goal and it is never tried, `…hasPullbacks` being reached first and
+succeeding. **With `…hasPullbacks` removed by an `attribute` command the same goal is discharged
+and the term then does name `…hasFiniteLimits`** — one run, and it is what makes *no consumer* here
+a fact about which instance search arrives first rather than about what this category could be
+given.
+
+**That sentence read *the field the `PreGaloisCategory` instance leaves to the class's
 `by infer_instance` default is `hasPullbacks` and not this one, and which instance search reaches
-it through is a trace question nobody has run. `…hasPullbacks` is consumed by `…hasFiniteLimits`
-and `…hasPullback` by `…hasPullbacks`. `…isPullback_fibreProd` names the other **eight** in its
-statement or its proof — `…fibreProd`, `…fibreProdFst`, `…fibreProdSnd`, `…fibreProd_square`,
+it through is a trace question nobody has run* until this push, which is the push that runs it.**
+The register is *until this push* and not `until <date>` because this push is what falsifies the
+wording, so the date the rule asks for is this push's own landing day and no seat knows that
+before the merge.
+
+`…hasPullbacks` is consumed by `…hasFiniteLimits` and, since `6b295aa`, by `…preGaloisCategory` as
+well — **two consumers and not one** — and `…hasPullback` by `…hasPullbacks`. **That pair of
+clauses read *`…hasPullbacks` is consumed by `…hasFiniteLimits` and `…hasPullback` by
+`…hasPullbacks`* until this push**, and only the first half of it moves.
+`…isPullback_fibreProd` names the other **eight** in its statement or its proof —
+`…fibreProd`, `…fibreProdFst`, `…fibreProdSnd`, `…fibreProd_square`,
 `…fibreProdLift`, `…fibreProdLift_fst`, `…fibreProdLift_snd` and `…fibreProd_hom_ext` — and
 `…hasPullback` is built from it. The three `_self` statements are consumed by nothing and are
 there to keep the module header's *no second idea entered* claim from going stale in silence,
@@ -6999,6 +7026,18 @@ which their own docstrings say. **So four of the fifteen are unconsumed inside t
 `…hasFiniteLimits` and the three `_self` statements — and that is a fact about a module written
 against a definition **this repository could not import when that module was written** rather than
 an omission.
+
+**Every *consumed by* figure of this paragraph is re-taken at this push with a term census rather
+than with a `git grep`**, over the **4934** non-internal constants the modules of this repository
+declare — the population `scripts/DumpOkaDecls.lean` writes — counting a name as consumed when
+another of those declarations names it in its type or in its proof term. It returns **0** for
+`…hasFiniteLimits` and **0** for each of the three `_self` statements, so *four of the fifteen* is
+a run here and not a carry; **2** for `…hasPullbacks`, the second being `…preGaloisCategory`; and
+**2** for `…isPullback_fibreProd`, the second being `…preservesLimit_cospan_fiberFunctor`, which
+this paragraph does not name and does not claim to. **A consumption of this shape lives in the
+proof term**, so a census that reads only the types cannot see one — which is the same distinction
+*no consumer* and *no occurrence* come apart on in the record opening *That parenthetical read*,
+one instrument further in.
 
 **That parenthetical read *`git grep` over `Oka/` and `OkaTest/` finds it in its own module and in
 this section and nowhere else* until 2026-09-15**, when
