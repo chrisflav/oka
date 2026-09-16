@@ -1270,15 +1270,23 @@ than at the base.
 
 **One section beyond that, and it is the one that retires a clause this file has carried since the
 ladder began.** `### The covers separated over a Hausdorff base form a Galois category` guards the
-two declarations of `Oka/AnalyticSpace/GaloisCategory.lean`, which imports
+three declarations of `Oka/AnalyticSpace/GaloisCategory.lean`, which imports
 `Mathlib/CategoryTheory/Galois/Basic.lean` and declares `CategoryTheory.PreGaloisCategory` at that
-second category and `CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued
-fibre functor. **Two guards, and they do not partition: both are of the sixth kind at that second
-category and neither is of any other.**
+second category, `CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued
+fibre functor and `CategoryTheory.GaloisCategory` at that category again over a nonempty base.
+**Three guards, and they do not partition: all three are of the sixth kind at that second category
+and none is of any other.**
 
-**Neither binds a functor out of `CategoryTheory.SingleObj G` and neither binds a morphism of that
-category**, which is a `#check` over the two and not a reading: the first's telescope is the base
-and `[T2Space]`, the second's is the base, `[T2Space]`, `[PreconnectedSpace]` and a point. **They
+**That clause read *the two declarations*, named two classes and said *Two guards … both are of the
+sixth kind … and neither is of any other*, from the commit that wrote it until this push, which is
+what falsifies it.** The third declaration is `…SeparatedFiniteEtaleOver.galoisCategory` and taxis
+#2043 is the filing that asked for it. **Neither the kind nor the partition moves under it**: its
+subject is the category itself, as the first's is.
+
+**None of the three binds a functor out of `CategoryTheory.SingleObj G` and none binds a morphism of
+that category**, which is a `#check` over the three and not a reading: the first's telescope is the
+base and `[T2Space]`, the second's is the base, `[T2Space]`, `[PreconnectedSpace]` and a point, and
+the third's is the base, `[T2Space]`, `[PreconnectedSpace]` and `[Nonempty]`. **They
 are of this kind by their subject**, the category itself and a functor out of it, which is the
 route the clause opening *The other thirteen are of the sixth kind at that second category* takes
 for the one guard of its section that binds neither, and the route the clause opening *One section
@@ -6975,9 +6983,11 @@ own module, and **one** at `Oka/AnalyticSpace/SeparatedFiberPullback.lean:172`, 
 naming it as an input that file leaves unassembled, which is a mention and not a consumption — and
 what would consume it is a `PreGaloisCategory` instance, **which this repository could not state
 until 2026-09-15 and now states**, at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` in
-`Oka/AnalyticSpace/GaloisCategory.lean`, whose two guards are in
-`### The covers separated over a Hausdorff base form a Galois category`. **That does not make this
-a consumer and this sentence does not claim it is**: the field that instance leaves to the class's
+`Oka/AnalyticSpace/GaloisCategory.lean`, whose three guards are in
+`### The covers separated over a Hausdorff base form a Galois category` — **that clause read
+*whose two guards are* from the commit that wrote it until this push**, which adds the third.
+**That does not make this a consumer and this sentence does not claim it is**: the field the
+`PreGaloisCategory` instance leaves to the class's
 `by infer_instance` default is `hasPullbacks` and not this one, and which instance search reaches
 it through is a trace question nobody has run. `…hasPullbacks` is consumed by `…hasFiniteLimits`
 and `…hasPullback` by `…hasPullbacks`. `…isPullback_fibreProd` names the other **eight** in its
@@ -9505,12 +9515,21 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesQuotients
 
 /-! ### The covers separated over a Hausdorff base form a Galois category
 
-`Oka/AnalyticSpace/GaloisCategory.lean`, the whole of it. **Two names**:
-`CategoryTheory.PreGaloisCategory` at that category, over `[T2Space]` alone, and
+`Oka/AnalyticSpace/GaloisCategory.lean`, the whole of it. **Three names**:
+`CategoryTheory.PreGaloisCategory` at that category, over `[T2Space]` alone,
 `CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor, over
-`[T2Space]`, `[PreconnectedSpace]` and a point. **Those are the two classes every clause of this
-file's head description naming that ladder has been pointing at, and this is the module that
-imports them.**
+`[T2Space]`, `[PreconnectedSpace]` and a point, and `CategoryTheory.GaloisCategory` at that
+category again, over `[T2Space]`, `[PreconnectedSpace]` and `[Nonempty]`. **Those are the three
+classes every clause of this file's head description naming that ladder has been pointing at, and
+this is the module that imports them.**
+
+**This section read *Two names* and named two classes, from the commit that wrote it until this
+push, which is what falsifies it.** taxis #2043 is the filing that asked for the third, and what it
+adds is a hypothesis and an existential: `CategoryTheory.GaloisCategory` is the two classes above
+together with the **existence** of a fibre functor, and this repository's fibre functors are taken
+at a point, so the third guard's statement is the second's with `[Nonempty]` in place of the point.
+**Each figure of this section that moves under it is re-taken below rather than
+adjusted, and the import cost is the one that does not move**, this push adding no `import` line.
 
 **This is the first section of this file whose guards can name that namespace.** The module below
 imports `Mathlib/CategoryTheory/Galois/Basic.lean` — the first module of this repository to do so
@@ -9523,34 +9542,46 @@ section of this file guards a statement written without the class and says so**;
 the class itself.
 
 **The routing, argued rather than assumed, because the module is new.** The topic table at the head
-of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for both:
-one is about the category of covers separated over a fixed analytic space and the other about a
-functor out of it. **The competing row is *analytic spaces, local models, the node*,
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
+three: two are about the category of covers separated over a fixed analytic space and the other
+about a functor out of it. **That clause read *the row for both* and *one is … and the other* until
+this push.** **The competing row is *analytic spaces, local models, the node*,
 `OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for the reason
 `### Both fibre functors at the separated covers preserve quotients by finite group actions` gives
 against the same competitor for the module it guards: neither declaration below is a local model, a
 chart or a node.
 
-**Both are of the sixth kind at that second category and neither is of any other**, by the clause
-opening *The sixth kind has a second category*. **Neither binds a morphism of that category and
-neither binds a functor out of `CategoryTheory.SingleObj G`**, which is a `#check` over the two and
-not a reading: the first's telescope is the base and `[T2Space]`, and the second's is the base,
-`[T2Space]`, `[PreconnectedSpace]` and a point. **They are of this kind by their subject** — the
+**All three are of the sixth kind at that second category and none is of any other**, by the clause
+opening *The sixth kind has a second category*. **None binds a morphism of that category and none
+binds a functor out of `CategoryTheory.SingleObj G`**, which is a `#check` over the three and
+not a reading: the first's telescope is the base and `[T2Space]`, the second's is the base,
+`[T2Space]`, `[PreconnectedSpace]` and a point, and the third's is the base, `[T2Space]`,
+`[PreconnectedSpace]` and `[Nonempty]`. **They are of this kind by their subject** — the
 category itself and a functor out of it — which is the route the clause opening *The other thirteen
 are of the sixth kind at that second category* takes for the one guard of its section that binds
-neither.
+neither. **That clause read *Both … and neither is of any other* and *over the two* until this
+push**, which adds the third and moves neither the kind nor the partition.
 
-**Two is the whole of the section**, which is the module's row count in
+**Three is the whole of the section**, which is the module's row count in
 `scripts/DumpOkaDecls.lean`'s output: no `.eq_1` equation lemma, no match lemma and no congruence
-lemma, and a structure instance planting none of the three. **Both are instances and neither is
+lemma, and a structure instance planting none of the three. **All three are instances and none is
 anything else**, counted with a declaration keyword at the start of a line and an attribute allowed
 before it: `^def `, `^theorem ` and `^abbrev ` each return **zero** over the module, and
-`^instance ` returns **three**, the third being a line of prose that opens with the word. **Neither
+`^instance ` returns **four**, the fourth being a line of prose that opens with the word. **None
 is `@[simp]`.**
 
-**The axiom triple is the same for both.** `Classical.choice` is already carried by every
-statement the two are assembled from, which is one `#print axioms` run each and not a reading of
-any proof below.
+**That paragraph read *Two is the whole of the section*, *Both are instances and neither is
+anything else*, `^instance ` returning *three* with *the third* a line of prose, and *Neither is
+`@[simp]`*, until this push, which is what falsifies all four.** **The `^instance ` figure is a
+count of lines and not of declarations** — one of the four it returns is a line of prose that
+opens with the word — so it is the one figure here that a reflow of that module's docstring moves
+without any declaration changing, and it is re-taken at this head rather than incremented.
+
+**The axiom triple is the same for all three.** `Classical.choice` is already carried by every
+statement the three are assembled from — **and the third spends it a second way, on
+`Classical.arbitrary`**, which adds no axiom to the triple. That is one `#print axioms` run each
+and not a reading of any proof below. **That clause read *the same for both* and *the two* until
+this push.**
 
 **Named by file rather than counted**, as the sections of this file say and for the reason they
 give. **Named and not located**: no sentence here says which section is above or below it. -/
@@ -9569,3 +9600,10 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFuncto
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor_isFiberFunctor
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.galoisCategory' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.galoisCategory

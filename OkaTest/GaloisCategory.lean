@@ -10,22 +10,38 @@ import Oka
 
 `Oka/AnalyticSpace/GaloisCategory.lean` declares
 `CategoryTheory.PreGaloisCategory` at
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` and
-`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor, and its
-`## What is not here` claims three absences and one consequence. **This file is the control for all
-four, and it is a control and not a theorem.**
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`,
+`CategoryTheory.PreGaloisCategory.FiberFunctor` at its `FintypeCat`-valued fibre functor and
+`CategoryTheory.GaloisCategory` at that category again over a base that is in addition nonempty.
+**This file is the control for what that module claims about all three, and it is a control and not
+a theorem.**
 
-**The two `example`s that succeed are there so that a reader can see the instances are found by
+**The `example`s that succeed are there so that a reader can see the instances are found by
 search** and not only by name, which is the form every consumer of those classes meets them in.
-**The two `#guard_msgs` probes are there so that the claimed absences are failures this file
-records rather than assertions the prose makes.**
+**The `#guard_msgs` probes are there so that the claimed absences are failures this file records
+rather than assertions the prose makes.**
 
-**The probe at `CategoryTheory.GaloisCategory` is the priced one.** That class asks for a fibre
-functor to **exist**, and every fibre functor this repository has is taken at a point of the base,
-so reaching it costs `[Nonempty X]` — a hypothesis neither instance below carries. The probe is
-what makes *no `CategoryTheory.GaloisCategory` instance* a measurement rather than an omission, and
-it would start failing the moment somebody declared one, which is the point of writing it as a
-probe rather than as a sentence.
+**The probe at `CategoryTheory.GaloisCategory` called itself a canary and is not one, and that is
+the one thing in this file worth reading twice.** Its paragraph read *The probe at
+`CategoryTheory.GaloisCategory` is the priced one … it would start failing the moment somebody
+declared one, which is the point of writing it as a probe rather than as a sentence*, from the
+commit that added this file until this push, which is what falsifies it. **The instance was
+declared and the probe did not start failing**: the probe is stated in a context carrying
+`[T2Space]` and `[PreconnectedSpace]` and no `[Nonempty X]`, and the instance carries
+`[Nonempty X]`, so nothing about the probe's context changed. **A probe is a control for the
+context it is stated in and not for the tree** — the general form of the rule
+`Oka/AnalyticSpace/GaloisCategory.lean`'s own head description states for a scan keyed on a
+wording. **What this one measures is worth keeping and is not what its prose claimed**: that
+the class is unreachable from the two hypotheses the fibre-functor instance carries, which is
+the statement that `[Nonempty X]` is load-bearing. It is kept, with that written beside it, and the
+`example`s under `variable [Nonempty (X : Type u)]` below are what record the class being
+reachable at all.
+
+**The instrument that would have been a canary is a second probe on the other side of the same
+line.** `CategoryTheory.Limits.MonoCoprod` is probed twice — failing in the context without
+`[Nonempty X]` and found in the one with it — so the pair says both halves and neither half can
+be read as the other. **A single failing probe cannot distinguish *the class is not declared* from
+*this context does not reach it*, and that distinction is the whole of what went wrong above.**
 
 **The probe at `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver` is the one that fails for a reason
 unrelated to this file** and is therefore what makes a silent no-op visible: the ambient covers are
@@ -33,23 +49,45 @@ not separated, the `monoInducesIsoOnDirectSummand` field is stated only at the s
 and no statement of this repository puts either class at the ambient covers. If the two instances
 were ever restated there this probe would fail and this file would stop compiling.
 
-**One `example` is not an absence but a purchase.**
+**A *purchase* here is an `example` for a declaration of Mathlib's that this repository does not
+state and that instance search reaches only through one of the three instances the module declares;
+there are six, five of them added by this push, and one of those five is a definition.** The
+`example`s for the three instances themselves and the `#guard_msgs` probes are neither, which is
+what the count is a count of. The sixth is the one the commit that added this file carried:
 `CategoryTheory.Functor.ReflectsMonomorphisms` at that fibre functor is **not** synthesizable at
-the commit before this one — not even in a file that imports
+`386d6ab`, the commit *before* the one that added this file — not even in a file that imports
 `Mathlib.CategoryTheory.Galois.Basic` directly, since the derivation Mathlib gives for it runs off
-the `FiberFunctor` instance and not off the functor — and is synthesizable here. It is the one
-thing in this neighbourhood that the class instance buys and that the eleven statements underneath
-it did not already give.
+the `FiberFunctor` instance and not off the functor, and that instance is what the commit that
+added this file declares — and is synthesizable here and at `642ae9b`. **That sentence went on to
+say it was *the one thing in this neighbourhood that the class instance buys*, from the commit that
+added this file until this push, which is what falsifies it**: the **four** instances
+`Mathlib/CategoryTheory/Galois/Basic.lean` declares under `[GaloisCategory C]` are
+`CategoryTheory.Limits.MonoCoprod` at the category, `Finite (A ⟶ Y)` and `Finite (Aut A)` at a
+connected object, and `CategoryTheory.PreGaloisCategory.FiberFunctor` at
+`CategoryTheory.PreGaloisCategory.GaloisCategory.getFiberFunctor`, **none of the four is
+synthesizable at `642ae9b` and all four are here**, and that `getFiberFunctor` is the definition,
+which elaborates. **The one thing the `FiberFunctor` instance buys is what that clause was about
+and is unmoved**; what moved is that there is now a second instance above it with a purchase of its
+own.
 
 **Nothing here is guarded in `OkaTest/Axioms/Morphisms.lean` and nothing here should be.** An
-`example` has no name, so `#print axioms` cannot be pointed at it; the two declarations this file
+`example` has no name, so `#print axioms` cannot be pointed at it; the three declarations this file
 probes are guarded there, under
-`### The covers separated over a Hausdorff base form a Galois category`.
+`### The covers separated over a Hausdorff base form a Galois category`. **That clause read *the
+two declarations* from the commit that added this file until this push**, which adds the third
+guard in the same section.
 
 **The hypotheses are the ones the library statements carry and no object is built.** Nothing below
 needs a concrete analytic space or a concrete point: the instances are stated at a variable base
-with `[T2Space]`, a variable point and — for the second — `[PreconnectedSpace]`, which is exactly
-the shape a caller meets them in.
+with `[T2Space]`, a variable point, `[PreconnectedSpace]` for the second and `[Nonempty]` as well
+for the third, which is exactly the shape a caller meets them in.
+
+**The last `section` binds a second base and the reason is a hypothesis and not a name.** It
+restates the base as `Y` with `[ConnectedSpace Y]` in place of `[PreconnectedSpace X]` and
+`[Nonempty X]`, which cannot be done by adding a `variable` to what is above it: those two are
+already in scope there, and the point of the `example` is that a caller holding neither of them
+separately still reaches the class. **It records that the implication runs one way**, which is why
+the instance is stated over the pair and not over `ConnectedSpace`.
 -/
 
 universe u
@@ -111,5 +149,73 @@ it is not found without `[Nonempty X]` even here, where both of its other ingred
 instances. -/
 example : GaloisCategory (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X) := by
   infer_instance
+
+/--
+error: failed to synthesize instance of type class
+  Limits.MonoCoprod X.SeparatedFiniteEtaleOver
+
+Hint: Type class instance resolution failures can be inspected with the `set_option
+trace.Meta.synthInstance true` command.
+-/
+#guard_msgs (whitespace := lax) in
+/-- And one of the four the class buys, probed in the same context: it is not reached without
+`[Nonempty X]` either, because the only route to it is through the class above. **It is the only
+one of the four with a failing counterpart**; the other three are recorded below as purchases, and
+their absence at `642ae9b` is one of the eight `#synth` runs the module's prose reports and not a
+probe of this file. -/
+example : Limits.MonoCoprod (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X) := by
+  infer_instance
+
+variable [Nonempty (X : Type u)]
+
+/-- The class itself, with the one hypothesis the two probes above are missing, found by search. -/
+example : GaloisCategory (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X) := by
+  infer_instance
+
+/-- The first of the four the class buys. -/
+example : Limits.MonoCoprod (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X) := by
+  infer_instance
+
+/-- The second of the four, which asks its source to be a connected object. -/
+example (A Y : ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X)
+    [PreGaloisCategory.IsConnected A] : Finite (A ⟶ Y) := by
+  infer_instance
+
+/-- The third of the four, at the same object. -/
+example (A : ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X)
+    [PreGaloisCategory.IsConnected A] : Finite (Aut A) := by
+  infer_instance
+
+/-- And the definition the class carries, which needs no hypothesis on an object. -/
+noncomputable example :
+    ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X ⥤ FintypeCat :=
+  PreGaloisCategory.GaloisCategory.getFiberFunctor _
+
+/-- The fourth of the four, and it is stated at that definition: Mathlib's arbitrarily chosen fibre
+functor is a `CategoryTheory.PreGaloisCategory.FiberFunctor`. It is the instance a read of
+`Mathlib/CategoryTheory/Galois/Basic.lean` that stops at the `variable {C}` line misses, since that
+line is `:436` and this instance is `:433`, above it and below the definition at `:429`. At
+`642ae9b` it is not synthesizable, and what instance search reports there is the class and not
+this instance: `failed to synthesize instance of type class GaloisCategory
+X.SeparatedFiniteEtaleOver`, because `getFiberFunctor` consumes the class in its own statement, so
+the elaboration stops before this instance is reached. -/
+noncomputable example :
+    PreGaloisCategory.FiberFunctor
+      (PreGaloisCategory.GaloisCategory.getFiberFunctor
+        (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X)) := by
+  infer_instance
+
+section Connected
+
+variable {Y : ComplexAnalytic.AnalyticSpace.{u}} [T2Space (Y : Type u)]
+  [ConnectedSpace (Y : Type u)]
+
+/-- A caller holding `[ConnectedSpace Y]` reaches the class by search, `ConnectedSpace` projecting
+to both `PreconnectedSpace` and `Nonempty`: **this is why the instance is stated over the pair and
+not over `ConnectedSpace`**, since the implication runs only this way. -/
+example : GaloisCategory (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} Y) := by
+  infer_instance
+
+end Connected
 
 end OkaTest.GaloisCategory
