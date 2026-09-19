@@ -1375,6 +1375,44 @@ the one that adds it alike, all four runs mine. **This clause and the section it
 by one push**, 2026-09-19, for the reason the clause naming `### The terminal object and the
 product of two complex affine spaces` gives.
 
+**Appended after that one is a section every one of whose guards is of the sixth kind at that
+second category, and it is the first whose module takes the Galois-category class as an input
+rather than declaring or refuting it.**
+`### The fundamental group, and the covers separated over a connected base classified by it`
+guards the nine declarations of `Oka/AnalyticSpace/FundamentalGroup.lean`, which
+imports `Mathlib/CategoryTheory/Galois/Equivalence.lean` and reads at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` the equivalence Mathlib proves between a
+Galois category and the finite discrete continuous actions of the automorphism group of its fibre
+functor. **Nine guards, and they do not partition: all nine are of this kind and none is of any
+other** — the group `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fundamentalGroup`, the
+equivalence `…SeparatedFiniteEtaleOver.contActionEquivalence`, the two identities
+`…SeparatedFiniteEtaleOver.contActionEquivalence_comp_forget₂` and
+`…SeparatedFiniteEtaleOver.smul_fiber` that carry the classifying action, the two halves
+`…SeparatedFiniteEtaleOver.nonempty_iso_iff` and
+`…SeparatedFiniteEtaleOver.exists_iso_functor_obj`, the transitivity
+`…SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup`, the decomposition
+`…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` and the domination
+`…SeparatedFiniteEtaleOver.exists_isGalois_hom`. **None binds a morphism of that category**, which
+is a `#check` over the nine and not a reading: **seven bind a point of the base** — every one but
+`…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` and
+`…SeparatedFiniteEtaleOver.exists_isGalois_hom` — **five bind an object of the category**, and
+**two of those five bind `CategoryTheory.PreGaloisCategory.IsConnected` of it**.
+
+**The two counts the clause opening *One section beyond that* and the clause opening *The sixth
+kind has a second category* publish are unmoved, and each is a run rather than an assumption.**
+*Three guards, and they do not partition* counts over
+`### The covers separated over a Hausdorff base form a Galois category`, and *Five of that
+section's twenty-one guards* counts over
+`### The category of separated covers, and separatedness as a morphism property`; `git diff`
+against the commit this section is cut from touches no line of either, this push declaring into a
+module that imports the first's and adding no guard to either. And the published check on the
+statements of a pullback square returns what it returned in both halves: **no name of the new
+section carries** *isPullback* **or** *hasPullback*, and the four figures are **nine and eight
+unfiltered and eight and six with the exclusion**, at the commit this section is cut from and at
+the one that adds it alike, all four runs mine. **This clause and the section it names were added
+by one push**, 2026-09-19, for the reason the clause naming `### The terminal object and the
+product of two complex affine spaces` gives.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -9864,3 +9902,153 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty
+
+/-! ### The fundamental group, and the covers separated over a connected base classified by it
+
+`Oka/AnalyticSpace/FundamentalGroup.lean`, the whole of it. **Nine names**: the fundamental group
+at a point of the base, `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fundamentalGroup`;
+the equivalence between the covers separated over that base and the finite discrete continuous
+actions of that group, `…SeparatedFiniteEtaleOver.contActionEquivalence`; the two `rfl` identities
+that say the classifying action is carried by the fibre,
+`…SeparatedFiniteEtaleOver.contActionEquivalence_comp_forget₂` and
+`…SeparatedFiniteEtaleOver.smul_fiber`; the two halves of the equivalence spelled out,
+`…SeparatedFiniteEtaleOver.nonempty_iso_iff` and
+`…SeparatedFiniteEtaleOver.exists_iso_functor_obj`; the transitivity of the action on the fibre of
+a connected cover, `…SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup`; the decomposition
+of a cover into connected ones, `…SeparatedFiniteEtaleOver.exists_isConnected_decomposition`; and
+the domination of a connected cover by a Galois one,
+`…SeparatedFiniteEtaleOver.exists_isGalois_hom`.
+
+**The module this section guards is the first in this file to take the Galois-category class as an
+input.** Three sections of this file guard a module that names that class and this is the third:
+`### The covers separated over a Hausdorff base form a Galois category` guards the module that
+**declares** it and `### The Galois-category class is false over an empty base` the module that
+**refutes** it at a base with no points. The distinction is worth drawing because **the class
+appears in none of the nine telescopes**, which is a `#check` over the nine and not a reading:
+each is stated over the base and
+`[T2Space]`, `[PreconnectedSpace]` and `[Nonempty]` — the hypotheses instance search reaches the
+class from — except `…SeparatedFiniteEtaleOver.fundamentalGroup`, whose telescope is the base and a
+point and nothing else, and `…SeparatedFiniteEtaleOver.smul_fiber`, which `omit`s all three. **Two
+of the nine bind `CategoryTheory.PreGaloisCategory.IsConnected` of an object** —
+`…SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup` and
+`…SeparatedFiniteEtaleOver.exists_isGalois_hom` — and a third,
+`…SeparatedFiniteEtaleOver.exists_isConnected_decomposition`, names that class in its conclusion
+and binds nothing of it.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
+nine, on the argument
+`### The covers separated over a Hausdorff base form a Galois category` gives for the module this
+one is built on: each is about the category of covers separated over a fixed analytic space, about
+a functor out of it, or about the automorphism group of such a functor. **The competing row is
+*analytic spaces, local models, the node*, `OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for
+the reason it loses there: no declaration below is a local model, a chart or a node.
+
+**All nine are of the sixth kind at that second category and none is of any other**, by the clause
+opening *The sixth kind has a second category* — each is a claim about
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` rather than about any morphism in it, and
+the five that bind an object bind it as the subject of such a claim. **The group and the two
+identities are of this kind by their subject**, a functor out of that category and the
+automorphisms of one, which is the route the clause opening *One section beyond that* takes for the
+fibre-functor guard of the section it names.
+
+**What the import costs, measured in the environment and not by a scan.** The module below imports
+`Mathlib/CategoryTheory/Galois/Equivalence.lean` — the first module of this repository to do so —
+and the cost, **at the commit this section is cut from**, is **20** Mathlib modules, by a set
+difference over `Lean.Environment.allImportedModuleNames` between a file importing `Oka` and one
+importing `Oka` and that module: **5512** against **5532**. **At the commit that adds this section
+the same pair of runs gives 5533 twice and the cost is zero**, the module below having paid it.
+That module's docstring names all twenty.
+
+**Nine is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output and not a reading of the file: no `.eq_1` equation lemma and
+no congruence lemma, and **no match lemma either, which took a choice**. The first draft of
+`…SeparatedFiniteEtaleOver.nonempty_iso_iff` destructured its argument with an anonymous
+constructor pattern in each direction, and that plants two match lemmas beside that name in the
+dump, for eleven rows against nine guards. `Nonempty.map` in place of the patterns removes both,
+and the names those two would have carried are cited nowhere here, since they do not exist at the
+commit that adds this section.
+
+**Three counts this file's head description publishes are unmoved, and each is a run rather than
+an assumption.** *Five of that section's twenty-one guards*, in the clause opening *The sixth kind
+has a second category*, counts over
+`### The category of separated covers, and separatedness as a morphism property`, and `git diff`
+against the commit this section is cut from touches no line of that section. *Three guards, and
+they do not partition*, in the clause opening *One section beyond that*, counts over
+`### The covers separated over a Hausdorff base form a Galois category`, and the same `git diff`
+touches no line of that one either — **the module it guards gains no declaration**, this push
+declaring into a module that imports it. And the published check on the statements of a pullback
+square returns what it returned in both halves: **no name of this section carries** *isPullback*
+**or** *hasPullback*, the nine being a group, an equivalence, two identities, two halves of that
+equivalence, a transitivity, a decomposition and a domination, and the four figures are **nine and
+eight unfiltered and eight and six with the exclusion**, at the commit this section is cut from and
+at the one that adds it alike, all four runs mine.
+-/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fundamentalGroup' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fundamentalGroup
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.contActionEquivalence' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.contActionEquivalence
+
+/--
+info:
+  'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.contActionEquivalence_comp_forget₂'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.contActionEquivalence_comp_forget₂
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.smul_fiber' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.smul_fiber
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nonempty_iso_iff' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nonempty_iso_iff
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_iso_functor_obj' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_iso_functor_obj
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_isConnected_decomposition'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_isConnected_decomposition
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_isGalois_hom' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_isGalois_hom
+

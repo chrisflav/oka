@@ -62,6 +62,7 @@ import Oka.AnalyticSpace.Finite
 import Oka.AnalyticSpace.FiniteEtaleBaseChange
 import Oka.AnalyticSpace.FiniteEtaleOver
 import Oka.AnalyticSpace.FiniteEtaleStableUnderBaseChange
+import Oka.AnalyticSpace.FundamentalGroup
 import Oka.AnalyticSpace.GaloisCategory
 import Oka.AnalyticSpace.Glue
 import Oka.AnalyticSpace.Hausdorff
