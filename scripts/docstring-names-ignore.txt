@@ -10,6 +10,12 @@
 # (`Oka.Weierstrass`), and paths to files in the repository (`README.md`). If you have hit a
 # false positive of a shape not on that list, prefer fixing the rule to growing this file.
 #
+# An **elided** citation goes in here with its `…`, as `…Ns.decl` — that spelling is what the
+# checker matches on, and writing the bare `Ns.decl` instead would exempt the written-out name
+# and not the elided one. Since 2026-09-19 and taxis #2056 the checker resolves elided citations
+# too; before that they were outside it by construction and no entry could have been needed.
+# **No elided citation needs one today**: all 107 distinct ones at `daeb942` resolve.
+#
 # How many entries there are is deliberately not stated here. Nothing checks such a count, and
 # this header asserted that the file was empty from 2026-08-22 16:53Z, when the file was created.
 # The entries below were added at 19:49Z the same day and the sentence was not removed; it stood

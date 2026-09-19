@@ -937,9 +937,32 @@ each line `module` or `decl`: a module is not a term and has no fields, so a cit
 arrived in one undifferentiated list and every such citation passed unexamined — eight of them
 were doing so, three naming no declaration at all — which taxis #1326 measured with a planted
 control and `--self-test` now asserts in both directions.
+**Since 2026-09-19 it also reads the `…`-elided citations**, which are this repository's house
+form for a long name — `` `…SeparatedFiniteEtaleOver.hasFiniteLimits` `` — and which it could not
+see at all before, because a component beginning with `…` is not identifier-shaped and so was
+never a candidate. **The citations most likely to be mistyped were exactly the ones outside the
+check**: two naming no declaration at all survived three rounds, two graders and a green
+`0 unresolved` in `Oka/AnalyticSpace/GaloisCategory.lean`, and were caught by a reader. taxis #2056
+is the filing. They are **a second population with its own report line** and the two
+figures a pull request body quotes do not count them, before the change or after it, so that a
+figure written today is comparable with every one already written down. A citation resolves if
+some declaration or module ends with it as a run of whole components *with at least one component
+before it*; a finding says where the final component **does** occur, which is what distinguishes
+a name misspelled from a name written one namespace over; resolving under several namespaces is a
+figure and not a finding, six at `daeb942` and every one correct, `--ambiguous` lists them;
+and a **dotless** `` `…decl` `` is out of scope, because that form elides a prefix of the last
+component rather than a namespace and reading them as citations would report **29** on a tree with
+no such defect — **232 occurrences at `ec82227`**, the base this paragraph is written against,
+where `scripts/check_docstring_names.py` pins **207** at `daeb942`, the base this branch was first
+cut from. **Both numerals name a commit that has already happened, which is what makes them
+checkable**: a count named at the commit that lands it has to be measured before that commit
+exists, and any push landing in between falsifies it. The occurrence count moves with `master`
+and the 29 does not.
+
 `scripts/docstring-names-ignore.txt` is the escape hatch, for a name that is correct, cited on
 purpose, and resolves nowhere only because this build does not import the declaration it names;
-its header says what qualifies, and fixing a rule in the checker beats adding an entry.
+its header says what qualifies, and fixing a rule in the checker beats adding an entry. An elided
+citation goes in it **with its `…`**, so that exempting one cannot exempt the written-out name.
 
 **The figures a pull request body quotes come from the same script, and there is one command for
 them.** Every description on this project reports how the *distinct* candidate count moved

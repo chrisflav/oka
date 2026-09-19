@@ -19,7 +19,8 @@ Usage:
     python3 scripts/check_docstring_names.py --tree DIR  # ...against another checkout
     python3 scripts/check_docstring_names.py --diff BASE # the name diff, no build needed
     python3 scripts/check_docstring_names.py --diff BASE --sites   # ...per occurrence
-    python3 scripts/check_docstring_names.py --self-test
+    python3 scripts/check_docstring_names.py --ambiguous # list the elided citations with several
+    python3 scripts/check_docstring_names.py --self-test #   resolutions; see "Elided citations"
 
 Exits 0 when every candidate resolves, 1 when some do not, and 2 when the tool itself cannot
 answer: the environment dump fails, `--tree` or `--diff` names something that is not a checkout of
@@ -100,6 +101,10 @@ containing at least one `.`, and shaped like a Lean name: every dot-separated co
 and starting with a letter or `_`, every character alphanumeric or one of `_ ' ! ?`.  That shape
 test alone discards `Mathlib/RingTheory/Filtration.lean`, `[M.IsCoherent]`, `Scheme.{0}`,
 `?V.isOpenEmbedding` and `⊤.isOpenEmbedding` without any of them needing to be listed anywhere.
+
+**It also discarded every `…`-elided citation in this tree**, which is a second population with a
+rule of its own; see "Elided citations" below.  The two do not overlap, and the two figures this
+section is about count elided citations neither before that change nor after it.
 
 **`scripts/` is in the walk and was not until 2026-08-31**, which made the module docstrings of
 `scripts/DumpEnvNames.lean` and `scripts/DumpOkaDecls.lean` — the two files that *describe* this
@@ -276,6 +281,91 @@ positives.  A candidate resolves if any of the following holds.
 
 Anything left over is a finding unless `scripts/docstring-names-ignore.txt` lists it.
 
+## Elided citations, `…Ns.decl`
+
+**This repository's house form for a long name is to elide the leading namespace with `…`**, and
+until 2026-09-19 this check could not see one — and by the enumeration this file opens with,
+nothing else in this repository looks inside a comment at all.  `is_name_shaped` rejects a
+component that does not begin with a letter or `_`; `…` is neither, so the citation
+`` `…SeparatedFiniteEtaleOver.hasFiniteLimits` `` was never a candidate, was never looked up, and
+**could not have been reported however it was spelled**.  The citations most likely to be mistyped
+were exactly the ones outside the check, and the headline `0 unresolved` was a statement about the
+other spelling only.  taxis #2056 is the filing, and it records that **two citations naming no
+declaration at all survived three rounds, two graders and a green CI** in
+`Oka/AnalyticSpace/GaloisCategory.lean`, caught in the end by a reader and not by a check.
+
+**Both are reported by this rule, and that is a run and not an argument.**  At `1569409`, the
+round that carried them, `--tree` on a worktree of that commit names exactly those two elided
+citations, each with the message its own defect deserves.  (The dump there has to be `master`'s,
+so that run also reports seven *plain* names and all seven are the dump's doing rather than the
+branch's: five are Mathlib's, under the `Mathlib.CategoryTheory.Galois.Basic` that branch newly
+imports and absent from an environment without it, and two — `…preGaloisCategory` and
+`…fintypeFiberFunctor_isFiberFunctor` — are instances declared in the very file, at `:200` and
+`:222`.  **The two elided ones are not of that kind**: `preservesEpis_` occurs nowhere in that
+tree's own *source* either, and the coproducts instance it means is declared
+`SeparatedFiniteEtaleOver.preservesFiniteCoproducts_fintypeFiber` — no `Functor` — while the
+`Functor` spelling is `FiniteEtaleOver`'s, one category out.)
+
+They are counted and resolved as a **second population**, reported on their own line, and the two
+headline figures above do not move.  That is deliberate: an elided citation is not a Lean name —
+nothing would resolve it, `os.path.exists` cannot take it, the field-notation and short-head rules
+are meaningless on it — and by "The name diff" above, every pull request body on this project
+quotes `N backticked names (M distinct)` as a branch's own figure.  Folding 165 occurrences into
+that number would have made every such figure already written down incomparable with every one
+written after.
+
+* **What is in scope.**  A backticked run beginning `…` whose remainder is `is_name_shaped` — so
+  at least one dot, every component identifier-shaped.  **165 occurrences, 107 distinct, in 14
+  files** at `daeb942`, `OkaTest/Axioms/Morphisms.lean` holding 109 of them.
+
+* **What resolving means.**  Some declaration or module in the environment ends with the remainder
+  as a run of whole components **and has at least one component before it** — a proper suffix,
+  which is what the `…` asserts: it stands for an elided namespace, so there has to be one.  The
+  weaker reading, which would also accept a name that *is* the remainder, changes no verdict here
+  and is measured: **0 of the 107 resolve only as a whole name** at `daeb942`.
+
+* **The wrong-namespace case, which is the one the filing was written about, needs no machinery
+  beyond that.**  taxis #2056 predicted that a resolver checking only existence would *pass*
+  `` `…SeparatedFiniteEtaleOver.preservesFiniteCoproducts_fintypeFiberFunctor` `` — the first of
+  the two live defects — because that name does resolve, to `FiniteEtaleOver`'s declaration one
+  category out, and asked for a resolver that prefers the enclosing file's namespace.  **Measured
+  against `1569409`, the round that carried it: as a run of whole components it resolves to
+  nothing**, because the real declaration's penultimate component is `FiniteEtaleOver` and the
+  citation's is `SeparatedFiniteEtaleOver`.  Matching *whole components* is already the suffix
+  rule's definition and it is what separates the two.  **The namespace-preferring resolver is not
+  needed for the gate**, and it is not here; what the last component buys instead is the
+  *message*, below.
+
+* **The message, and why it is the deliverable.**  A bare *names nothing* would have sent the
+  author of that citation looking for a typo in a name that is spelled correctly one namespace
+  over.  So a finding also says where the final component **does** occur — `` `…Wrong.foo` ``
+  reports that `foo` occurs under `Planted.Right` — or, when it occurs nowhere at all, says that,
+  which is the other of the two live defects: nothing in the tree ends in `.preservesEpis_…`.
+
+* **Ambiguity is a figure and not a finding.**  Six of the 107 resolve under more than one
+  namespace at `daeb942`, and every one is a correct citation: `…GlueData.ι_jointly_surjective`
+  is six of Mathlib's, `…Pullback.hasPullback_of_cover` is ambiguous between
+  `AlgebraicGeometry.Scheme.` and **this repository's own**.  Gating on ambiguity would report six
+  citations that are right, which is how a check earns an ignore-list and stops being a check.
+  The count is printed on every run and `--ambiguous` lists them.
+
+* **A dotless `` `…decl` `` is out of scope, and that is a measurement rather than a preference.**
+  **207 occurrences, 107 distinct, in 31 files** at `daeb942` — and the dotless `…` elides a
+  *prefix of the last component* rather than a namespace, so what follows is a fragment and not a
+  name: `…_of_coeff`, `…_iff_restrictPreimage`, `…_apply`, and `…isPullback_map…` with an elision
+  at both ends.  **26 occurrences (11 distinct) begin with `_`**, which no Lean component does.
+  Read as citations they would report **29 occurrences (14 distinct)** on a tree that has no
+  defect of that shape at all — a check that cries wolf on a house form, which is the failure the
+  permissiveness of every rule above is chosen to avoid.  They are counted on the report line so
+  that the class stays visible, and they are not resolved.  taxis #2056's thread has
+  `oka-slot-3`'s independent run of both halves; its **29** and **26** are occurrence counts of
+  the same 14 and 11 distinct forms this paragraph gives, which is a reconciliation and not a
+  correction — the two runs agree name for name.
+
+`scripts/docstring-names-ignore.txt` takes an elided citation **with its `…`**, so that an entry
+cannot be confused with the plain name it elides and so that ignoring one does not ignore the
+other.
+
 ## What a green here does NOT mean
 
 A name that resolves *somewhere* but not where the prose means it to is accepted; so is a name
@@ -307,6 +397,17 @@ PROSE_DIRS = ("scripts",)
 # A candidate whose head component is at most this long, and is not a root namespace, is field
 # notation on a local binder rather than a declaration reference.
 MAX_LOCAL_HEAD = 2
+
+# The house form for a long name: `…Ns.decl` elides the leading namespace.  It is U+2026 and not
+# three dots, and a component starting with it is not identifier-shaped, which is why
+# `is_name_shaped` rejected the whole class and nothing checked it until taxis #2056.
+ELLIPSIS = "…"
+
+# How many witnesses a finding's message keeps for the final component of an unresolved elided
+# citation.  The message names where that component *does* occur, which is what turns "names
+# nothing" into "not under the namespace you wrote"; a handful is enough to say that and a cap is
+# what keeps a common last component from holding thousands of names in memory.
+MAX_WITNESSES = 6
 
 # A name component the elaborator generates for the declaration it hangs off, rather than one an
 # author wrote.  Such a component must not make its parent a namespace: see the field-notation
@@ -387,6 +488,18 @@ def candidates(repo: str | None = None) -> dict[str, list[tuple[str, int]]]:
     and not the module-level `REPO` so that two trees can be scanned in one process, which is
     what `--diff` needs and what the `os.chdir` driver this replaced could not do.
 
+    **The elided citations are not in here and never were**, which is what keeps the two figures
+    this returns comparable across the change that started checking them; `scan_prose` returns
+    those separately and the module docstring says why they are a population of their own.  So
+    this is the whole of what `--diff` compares and of what the headline counts, as before.
+    """
+    found, _, _ = scan_prose(repo)
+    return found
+
+
+def prose_files(repo: str) -> list[str]:
+    """Every `.lean` file the walk reads, sorted, as absolute paths.
+
     The two loops differ in one line and it is the reason `PROSE_DIRS` is a separate constant: a
     library root has a `<name>.lean` module beside the directory and is `open`ed unconditionally,
     while a prose directory has none and `scripts.lean` does not exist.  `os.walk` on a directory
@@ -394,7 +507,6 @@ def candidates(repo: str | None = None) -> dict[str, list[tuple[str, int]]]:
     tree costs a silent zero — which is what lets `--self-test` plant fixtures with no `scripts/`
     and what would let a `--diff` base predating this change be scanned without special-casing.
     """
-    repo = REPO if repo is None else repo
     paths = []
     for root in ROOTS:
         for dirpath, _, filenames in os.walk(os.path.join(repo, root)):
@@ -403,18 +515,52 @@ def candidates(repo: str | None = None) -> dict[str, list[tuple[str, int]]]:
     for extra in PROSE_DIRS:
         for dirpath, _, filenames in os.walk(os.path.join(repo, extra)):
             paths += [os.path.join(dirpath, f) for f in filenames if f.endswith(".lean")]
+    return sorted(paths)
+
+
+def scan_prose(repo: str | None = None) -> tuple[dict[str, list[tuple[str, int]]],
+                                                 dict[str, list[tuple[str, int]]],
+                                                 dict[str, list[tuple[str, int]]]]:
+    """One walk, three populations: plain candidates, elided citations, and the dotless rest.
+
+    Returned in that order, each in the `candidates()` shape — name to the places it occurs — and
+    **the second and third are keyed without their `…`**, so `` `…Ns.decl` `` is `Ns.decl`.  The
+    one walk is what keeps the three exhaustive of each other: a backticked run that begins with
+    `…` is in exactly one of the last two or in neither, never in the first, and a run that does
+    not begin with `…` can only be in the first.
+
+    The third population is not resolved against anything; see "Elided citations" in the module
+    docstring for the measurement that says a dotless `` `…decl` `` elides a prefix of the last
+    *component* and so is not a name at all.  It is returned rather than dropped so that the
+    report can print its size, because a class nobody counts is how this one got to 165
+    occurrences without a check.
+
+    A run beginning with `…` whose remainder is neither name-shaped nor dotless-identifier-shaped
+    is in none of the three — `` `…Foo.bar…` `` would be, with an elision at each end.  **There
+    are none at `daeb942`**, and the shape is named here so that the exhaustiveness above is read
+    as the two-of-three claim it is rather than as an all-three one.
+    """
+    repo = REPO if repo is None else repo
     found: dict[str, list[tuple[str, int]]] = {}
-    for path in sorted(paths):
+    elided: dict[str, list[tuple[str, int]]] = {}
+    dotless: dict[str, list[tuple[str, int]]] = {}
+    for path in prose_files(repo):
         rel = os.path.relpath(path, repo)
         with open(path, encoding="utf-8") as f:
             text = f.read()
         for (a, b) in comment_regions(text):
             for m in re.finditer(r"`([^`\s]+)`", text[a:b]):
                 s = m.group(1)
-                if "." not in s or not is_name_shaped(s):
-                    continue
-                found.setdefault(s, []).append((rel, text.count("\n", 0, a + m.start()) + 1))
-    return found
+                site = (rel, text.count("\n", 0, a + m.start()) + 1)
+                if s.startswith(ELLIPSIS):
+                    rest = s[len(ELLIPSIS):]
+                    if is_name_shaped(rest):
+                        elided.setdefault(rest, []).append(site)
+                    elif "." not in rest and rest and (rest[0].isalpha() or rest[0] == "_"):
+                        dotless.setdefault(rest, []).append(site)
+                elif "." in s and is_name_shaped(s):
+                    found.setdefault(s, []).append(site)
+    return found, elided, dotless
 
 
 def scan(dump: str, wanted: set[str],
@@ -491,6 +637,63 @@ def scan(dump: str, wanted: set[str],
                             root_namespaces.add(run)
     return (resolved, resolved_decl, namespaces, root_namespaces, namespace_cause, lines,
             tagged)
+
+
+def scan_elided(dump: str, tails: set[str]) -> tuple[dict[str, set[str]], dict[str, set[str]],
+                                                     dict[str, int]]:
+    """A second pass over the dump, resolving `…`-elided citations by proper component-run suffix.
+
+    A separate pass and not another parameter to `scan`: the two ask different questions of the
+    same lines — `scan` wants runs that reach the end *or* have something after them, keyed on two
+    small sets, while this wants only runs that reach the end and start after the first component,
+    plus a witness for the final component alone.  Folding them together would have meant a third
+    condition inside the innermost loop of a function whose contract four self-test checks pin.
+    Reading 337k lines twice costs well under a second and the check has already spent nine on the
+    import.
+
+    Returns `(resolutions, witnesses, occurrences)`.
+
+    * `resolutions[tail]` is every full name ending in `tail` as a run of whole components **with
+      at least one component before it**.  Empty means unresolved; more than one means the
+      citation is ambiguous, which is a figure here and not a finding — see the module docstring.
+    * `witnesses[last]`, for the *final component* of each tail, is up to `MAX_WITNESSES` of the
+      names ending in it.  This is what a finding's message uses to say where the component does
+      occur, which is the difference between "you made a typo" and "you named the wrong
+      namespace", and the second is the defect that motivated the whole rule.
+    * `occurrences[last]` is how many there are in total, because the witnesses are capped and a
+      message that shows three of forty must say so.
+
+    Modules count, as they do for the plain suffix and module rules: a docstring cites
+    `…AnalyticSpace.PullbackGlue` in the same form as a declaration.  Field notation does not
+    arise — the head of an elided citation is by construction not written out, so there is no head
+    to notate on.
+    """
+    finals = {t.rsplit(".", 1)[-1] for t in tails}
+    resolutions: dict[str, set[str]] = {t: set() for t in tails}
+    witnesses: dict[str, set[str]] = {f: set() for f in finals}
+    occurrences: dict[str, int] = {f: 0 for f in finals}
+    with open(dump, encoding="utf-8") as f:
+        for line in f:
+            full = line.rstrip("\n")
+            if not full:
+                continue
+            _, tab, rest = full.partition("\t")
+            if tab:
+                full = rest
+            parts = full.split(".")
+            last = parts[-1]
+            if last not in finals:
+                continue
+            occurrences[last] += 1
+            if len(witnesses[last]) < MAX_WITNESSES:
+                witnesses[last].add(full)
+            # Runs that reach the end and start after the first component: `i` from 1, never 0,
+            # which is the whole of what makes this a *proper* suffix and the `…` mean something.
+            for i in range(1, len(parts)):
+                run = ".".join(parts[i:])
+                if run in resolutions:
+                    resolutions[run].add(full)
+    return resolutions, witnesses, occurrences
 
 
 def read_ignore(repo: str | None = None) -> set[str]:
@@ -658,9 +861,17 @@ def diff_trees(base: str, tree: str, sites: bool = False) -> int:
     With `sites`, the per-occurrence report follows; see the module docstring for the branch that
     needs it.  The summary above it is unchanged, so a body that quotes the two figures reads the
     same with the flag and without.
+
+    **The elided citations get their own summary line and their own added/removed lists, and are
+    in neither of the two figures**, for the reason the module docstring gives.  `--sites` is
+    about the plain population only: a moved elided citation is not reported, and that is the one
+    thing this report is now silent about that it could be made to say.  It is left out because
+    the `name -> file -> lines` pairing `site_changes` does would have to be duplicated for a
+    second population to say it, and nothing has asked for it; the summary line moves whenever an
+    elided citation is added or removed, which is what a body needs.
     """
-    base_found = candidates(base)
-    tree_found = candidates(tree)
+    base_found, base_elided, _ = scan_prose(base)
+    tree_found, tree_elided, _ = scan_prose(tree)
     added = sorted(set(tree_found) - set(base_found))
     removed = sorted(set(base_found) - set(tree_found))
     print("base   " + report(base, base_found))
@@ -675,6 +886,24 @@ def diff_trees(base: str, tree: str, sites: bool = False) -> int:
             path, line = where[name][0]
             extra = f" (+{len(where[name]) - 1} more)" if len(where[name]) > 1 else ""
             print(f"  {name}\t{path}:{line}{extra}")
+    # The elided population, reported beside the plain one and never folded into it.  A branch
+    # that adds an elided citation moves neither figure `report` prints nor the `added`/`removed`
+    # lists, which is how the class reached 165 occurrences with no figure of its own in any run
+    # of this script.
+    el_added = sorted(set(tree_elided) - set(base_elided))
+    el_removed = sorted(set(base_elided) - set(tree_elided))
+    print(f"elided {sum(len(v) for v in base_elided.values())} ({len(base_elided)} distinct) "
+          f"\u2192 {sum(len(v) for v in tree_elided.values())} ({len(tree_elided)} distinct): "
+          f"{len(el_added)} added, {len(el_removed)} removed")
+    for label, names, where in (("added", el_added, tree_elided),
+                                ("removed", el_removed, base_elided)):
+        print(f"elided {label}:")
+        if not names:
+            print("  (none)")
+        for name in names:
+            path, line = where[name][0]
+            extra = f" (+{len(where[name]) - 1} more)" if len(where[name]) > 1 else ""
+            print(f"  {ELLIPSIS}{name}\t{path}:{line}{extra}")
     if sites:
         print_sites(*site_changes(base_found, tree_found))
     return 0
@@ -686,22 +915,35 @@ def self_test() -> int:
     **The test that matters is the positive one.**  "Two identical trees diff to empty" is what
     the `os.chdir` driver this option replaced printed on every branch it was ever run on, so a
     self-test built only from that would have passed while measuring nothing.  **Every check below
-    carries a `positive:` or `negative:` label and there are eighteen and eight** — a count is
+    carries a `positive:` or `negative:` label and there are twenty-five and eleven** — a count is
     stated here rather than left to be inferred because a reader who trusts the labels has to be
-    able to see that none is missing.
+    able to see that none is missing.  **It was eighteen and eight until 2026-09-19**, when the
+    elided-citation block below added seven and three; `grep -c '^ *check("positive: '` on this
+    file is the check on this sentence and it is one command.  **The anchor is load-bearing**: a
+    pattern written against the bare label alone matches this sentence too, which publishes it,
+    and returns one more than the number it is published to check.
 
-    Ten of them are about the *rules* rather than about the walk, and they reach them by planting
-    an environment as a `--dump` file instead of building one.  That is the only way to hold
-    everything fixed but the environment, which is the variable the field-notation rule turns on,
-    and it keeps the whole self-test free of `lake`.  Four of those are about the
+    Twenty of them are about the *rules* rather than about the walk, and they reach them by
+    planting an environment as a `--dump` file instead of building one.  That is the only way to
+    hold everything fixed but the environment, which is the variable the field-notation rule turns
+    on, and it keeps the whole self-test free of `lake`.  Four of those are about the
     `module`/`decl` tag: a module head must be *reported*, a declaration head with the same shape
     must not be, the message must say which of the two declined it, and an untagged dump must
     revert loudly rather than silently.
 
-    **The last four are about the walk and arrived with taxis #1337**, which found that
-    `scripts/` had never been in it.  They are one positive — a name in a `scripts/*.lean`
-    docstring is read and reported — and three controls that fix the boundary on both sides, so
-    that neither narrowing the walk back nor widening it to everything passes here.
+    **Four are about the walk and arrived with taxis #1337**, which found that `scripts/` had
+    never been in it.  They are one positive — a name in a `scripts/*.lean` docstring is read and
+    reported — and three controls that fix the boundary on both sides, so that neither narrowing
+    the walk back nor widening it to everything passes here.
+
+    **The last ten are the elided citations and arrived with taxis #2056.**  They are the only
+    block here whose positive control is a defect this repository actually shipped: two citations
+    of declarations that do not exist, green through three rounds and two graders because the
+    checker could not see the spelling they were written in.  Four of the ten fix decisions
+    rather than behaviour — that ambiguity is a figure, that the two headline figures do not move,
+    that a dotless `…name` is out of scope, and that a match which is the whole name is not a
+    proper suffix — because each of those is a place where a later change could be *more*
+    thorough and be wrong for it.
     """
     def plant(root: str, body: str) -> str:
         os.makedirs(os.path.join(root, "Oka"), exist_ok=True)
@@ -979,6 +1221,98 @@ def self_test() -> int:
               and "1 unresolved" in walked.stdout,
               "the run above reports one name and it is the planted one")
 
+        # **Elided citations, and this is the planted-defect control taxis #2056 asks for.**
+        # Until 2026-09-19 a citation beginning `…` was not a candidate at all — `is_name_shaped`
+        # rejects a component that does not begin with a letter or `_` — so the checker was green
+        # on `Oka/AnalyticSpace/GaloisCategory.lean`'s two citations of declarations that did not
+        # exist, through three rounds and two graders.  A rule whose whole content is *and now it
+        # is not green on that* is worth exactly as much as the fixture that shows it, so the
+        # fixture is here and the two shapes below are the two real defects: a tail whose final
+        # component exists **under another namespace**, and one that exists nowhere.
+        el_env = tagged_env(
+            "env-elided.txt",
+            "decl\tPlanted.Right.foo", "decl\tPlanted.Other.bar", "module\tPlanted.Mod.Fixture",
+            "decl\tFirst.Amb.thing", "decl\tSecond.Amb.thing", "decl\tExact.name",
+            "decl\tUnrelated.decl")
+
+        def run_tree(tree: str, dump: str = el_env) -> subprocess.CompletedProcess:
+            return subprocess.run(
+                [sys.executable, os.path.abspath(__file__), "--tree", tree, "--dump", dump],
+                capture_output=True, text=True,
+                env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1"))
+
+        good = run_tree(plant(os.path.join(tmp, "el-good"),
+                              "/-! `Unrelated.decl`, `…Right.foo`, `…Mod.Fixture` and "
+                              "`…Amb.thing`. -/\n"))
+        check("positive: an elided citation resolving as a proper component run is accepted",
+              good.returncode == 0 and "…Right.foo` names nothing" not in good.stdout,
+              good.stdout.strip().replace("\n", " | "))
+        check("positive: an elided citation of a *module* resolves",
+              "…Mod.Fixture` names nothing" not in good.stdout,
+              "the module rule takes either kind, as it does for a written-out name")
+        # Ambiguity is a figure and not a finding, and this is where that decision lives.  Six
+        # citations at `daeb942` resolve under more than one namespace and every one is correct —
+        # `…Pullback.hasPullback_of_cover` is ambiguous between Mathlib's and this repository's —
+        # so gating on it would report six right sentences, which is how a check earns an
+        # ignore-list and stops being a check.
+        check("positive: an elided citation with two resolutions is counted, not reported",
+              good.returncode == 0
+              and "3 elided citations (3 distinct): 0 unresolved, 1 resolving under more than "
+                  "one namespace" in good.stdout,
+              good.stdout.strip().replace("\n", " | "))
+        # The population separation, asserted rather than described: three elided citations sit
+        # in that fixture and the headline figure every pull request body quotes says **one**.
+        # Without this a later change that folded them in would pass every other check here and
+        # silently make every figure in this repository's history incomparable with every one
+        # written after it.
+        check("negative: elided citations are not counted in the two headline figures",
+              "1 backticked names (1 distinct)" in good.stdout,
+              good.stdout.strip().replace("\n", " | "))
+
+        bad = run_tree(plant(os.path.join(tmp, "el-bad"),
+                             "/-! `…Wrong.foo`, `…Nothing.zzzNoSuchComponent`, "
+                             "`…Exact.name` and `…zzzDotless`. -/\n"))
+        check("positive: an elided citation naming nothing is reported (the defect this adds)",
+              bad.returncode == 1 and "`…Wrong.foo` names nothing" in bad.stdout,
+              bad.stdout.strip().replace("\n", " | ") or f"rc={bad.returncode}")
+        # **The message is the deliverable and not the exit code.**  `…Wrong.foo` is spelled
+        # correctly one namespace over, so a bare *names nothing* sends its author hunting for a
+        # typo that is not there; that is the first of the two real defects exactly.
+        check("positive: the message says where the final component does occur",
+              "the final component `foo` does occur, in `Planted.Right.foo`" in bad.stdout,
+              bad.stdout.strip().replace("\n", " | "))
+        # ...and the other of the two, which is a different sentence because it is a different
+        # defect: nothing in the tree ends in `.preservesEpis_fintypeFiberFunctor` at all.
+        check("positive: a final component occurring nowhere is called a misspelling instead",
+              "nothing in the environment ends in `.zzzNoSuchComponent` at all" in bad.stdout,
+              bad.stdout.strip().replace("\n", " | "))
+        # The `…` stands for an elided namespace, so there has to be one: a match that is the
+        # *whole* name is not a proper suffix.  0 of the 107 distinct citations at `daeb942`
+        # resolve only that way, so this pins a decision rather than a repair.
+        check("negative: a match that is the whole name is not a proper suffix",
+              "`…Exact.name` names nothing" in bad.stdout,
+              bad.stdout.strip().replace("\n", " | "))
+        # The scope decision, which is a measurement: read as citations the dotless forms would
+        # report 29 occurrences on a tree that has no defect of that shape, because `…_of_coeff`
+        # elides a prefix of a *component* and is not a name.  `zzzDotless` resolves nowhere in
+        # the planted environment, so only the scope rule can be keeping it quiet.
+        check("negative: a dotless `…name` is not resolved and not reported",
+              "zzzDotless" not in bad.stdout
+              and "1 dotless `…name` occurrences (1 distinct)" in bad.stdout,
+              bad.stdout.strip().replace("\n", " | "))
+
+        # The escape hatch reaches the new shape, and it takes the `…` with it so that ignoring
+        # an elided citation cannot silently ignore the written-out name it elides.
+        ign = plant(os.path.join(tmp, "el-ignore"), "/-! `…Wrong.foo`. -/\n")
+        os.makedirs(os.path.join(ign, "scripts"), exist_ok=True)
+        with open(os.path.join(ign, IGNORE_FILE), "w", encoding="utf-8") as fh:
+            fh.write("# planted by --self-test\n…Wrong.foo\n")
+        ignored_run = run_tree(ign)
+        check("positive: the ignore file silences an elided citation, with its `…`",
+              ignored_run.returncode == 0 and "names nothing" not in ignored_run.stdout,
+              ignored_run.stdout.strip().replace("\n", " | ")
+              or f"rc={ignored_run.returncode}")
+
     if failures:
         print(f"\n{len(failures)} check(s) failed: " + ", ".join(failures))
         return 2
@@ -999,6 +1333,9 @@ def main() -> int:
     ap.add_argument("--sites", action="store_true",
                     help="with --diff, also report every occurrence that moved, by file:line; "
                          "this is the only report a branch that only rewords can move")
+    ap.add_argument("--ambiguous", action="store_true",
+                    help="list the elided citations that resolve under more than one namespace; "
+                         "the count is printed either way, and none of them is a finding")
     ap.add_argument("--self-test", action="store_true",
                     help="plant two fixture trees that differ and assert the diff sees it")
     args = ap.parse_args()
@@ -1014,7 +1351,7 @@ def main() -> int:
                          "--diff BASE_DIR to have a second tree to move them from.\n")
         sys.exit(2)
 
-    found = candidates(repo)
+    found, elided, dotless = scan_prose(repo)
     # Every proper prefix of every candidate is a possible head for the field-notation rule, and
     # has to be classified as resolving-or-not and as a namespace-or-not just as candidates do.
     wanted = set(found)
@@ -1028,6 +1365,7 @@ def main() -> int:
     dump = args.dump or build_dump(repo)
     (resolved, resolved_decl, namespaces, root_namespaces, namespace_cause, dumped,
      tagged) = scan(dump, wanted, heads)
+    elided_resolutions, elided_witnesses, elided_occurrences = scan_elided(dump, set(elided))
     if not args.dump:
         os.unlink(dump)
     if not tagged:
@@ -1108,14 +1446,51 @@ def main() -> int:
                       f"`{cause}` makes it a namespace and the field-notation rule does not "
                       f"apply to namespaces")
 
+    # The elided half.  Its findings are printed after the plain ones and counted on their own
+    # line, so that the two figures every pull request body quotes keep meaning what they meant.
+    elided_findings = [
+        tail for tail in sorted(elided)
+        if not elided_resolutions[tail] and ELLIPSIS + tail not in ignored
+    ]
+    ambiguous = sorted(t for t in elided if len(elided_resolutions[t]) > 1)
+
+    for tail in elided_findings:
+        for (path, line) in elided[tail]:
+            print(f"{path}:{line}: `{ELLIPSIS}{tail}` names nothing in the environment")
+        last = tail.rsplit(".", 1)[-1]
+        seen, total_seen = elided_witnesses[last], elided_occurrences[last]
+        if seen:
+            more = f" (+{total_seen - len(seen)} more)" if total_seen > len(seen) else ""
+            print(f"    the final component `{last}` does occur, in "
+                  + ", ".join(f"`{n}`" for n in sorted(seen)) + more
+                  + f": the namespace `{ELLIPSIS}` stands for is not the one this citation names.")
+        else:
+            print(f"    nothing in the environment ends in `.{last}` at all, so this is a "
+                  f"misspelled name rather than a wrongly elided one.")
+
     total = sum(len(v) for v in found.values())
     print(f"checked {total} backticked names ({len(found)} distinct) against {dumped} "
           f"declarations and modules: {len(findings)} unresolved")
-    if findings:
+    elided_total = sum(len(v) for v in elided.values())
+    print(f"checked {elided_total} elided citations ({len(elided)} distinct): "
+          f"{len(elided_findings)} unresolved, {len(ambiguous)} resolving under more than one "
+          f"namespace")
+    if args.ambiguous:
+        for tail in ambiguous:
+            print(f"  `{ELLIPSIS}{tail}` — " + ", ".join(
+                f"`{n}`" for n in sorted(elided_resolutions[tail])))
+        if not ambiguous:
+            print("  (none)")
+    dotless_total = sum(len(v) for v in dotless.values())
+    print(f"not checked: {dotless_total} dotless `{ELLIPSIS}name` occurrences "
+          f"({len(dotless)} distinct), which elide a prefix of a component rather than a "
+          f"namespace")
+    if findings or elided_findings:
         print(
             "\nEach name above is spelled in a comment and resolves to nothing. Fix the prose.\n"
             f"If one of them is not a declaration reference at all, add it to {IGNORE_FILE}\n"
-            "with a comment saying what it is instead.")
+            "with a comment saying what it is instead; an elided citation goes in there with\n"
+            f"its `{ELLIPSIS}`.")
         return 1
     return 0
 
