@@ -4032,8 +4032,45 @@ info: 'ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree_left_eq_one' depends
 `Oka/AnalyticSpace/Basic.lean`, `Oka/AnalyticSpace/LocalIso.lean` and
 `Oka/AnalyticSpace/Degree.lean`: that the forgetful functor to locally ringed spaces reflects
 isomorphisms, the criterion that turns a local isomorphism with bijective base into an
-isomorphism, and the two hypotheses this repository can feed that criterion — injectivity over a
-preconnected base, and degree one.
+isomorphism, and the three hypotheses this repository can feed that criterion — injectivity over a
+preconnected base, degree one, and an empty target.
+
+**That clause read *the two hypotheses this repository can feed that criterion* and stopped at
+degree one, until 2026-09-19**, when lana-agents/oka#579 added
+`ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty` to `Oka/AnalyticSpace/LocalIso.lean` — a third
+statement of exactly that shape, whose proof is that criterion applied with an emptiness hypothesis
+in the bijectivity slot. It was exact from `ba8177c`, the push that wrote both it and the criterion,
+until that one. **The third
+member is guarded under `### The Galois-category class is false over an empty base` and not below**,
+for the reason that section gives; membership of this enumeration is created by the declaration and
+not by the guard, so the five guards below are unmoved by the repair and a reader looking for a
+`#print axioms` of the third member looks in that section.
+
+**Which uses of the criterion the numeral counts, measured rather than read off.** Comment-stripped
+with `scripts/import_cost.py`'s `strip_comments` over `git ls-tree -r`,
+`ComplexAnalytic.AnalyticSpace.isIso_of_isLocalIso_of_bijective` occurs **8** times in the tree at
+the commit that writes this clause — `Oka/AnalyticSpace/LocalIso.lean` **3**,
+`Oka/AnalyticSpace/DirectSummand.lean` **2**, `Oka/AnalyticSpace/Degree.lean` **1**,
+`Oka/AnalyticSpace/FiniteEtaleOver.lean` **1**, and this file **1**, the last being the
+`#print axioms` line below, which names the criterion and does not feed it. Of the **7** under
+`Oka/`, one is the theorem's own statement and three are the enumerated members:
+`ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty` and
+`ComplexAnalytic.AnalyticSpace.isIso_of_isFiniteEtale_of_injective` in
+`Oka/AnalyticSpace/LocalIso.lean`, and `ComplexAnalytic.AnalyticSpace.isIso_of_degree_eq_one` in
+`Oka/AnalyticSpace/Degree.lean`. **The remaining three are outside the enumeration, which is why
+the numeral is three and not five.**
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isColimitBinaryCofanDirectSummandCompl`
+(`Oka/AnalyticSpace/DirectSummand.lean`) is a colimit construction that uses the criterion as a step
+and is not a hypothesis-to-`CategoryTheory.IsIso` statement at all. The other two,
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap_of_t2` (same module) and
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isIso_of_bijective_fiberMap`
+(`Oka/AnalyticSpace/FiniteEtaleOver.lean`), **are** of that shape and are out for a different
+reason: each binds a morphism of the category of covers over a fixed base and concludes
+`CategoryTheory.IsIso` of that morphism rather than of a morphism of analytic spaces, and both are
+stated in modules the paragraph above does not name. **That is the reading under which the clause
+was exact from the commit that wrote it**, and it is stated here rather than left implicit because
+the numeral asserts it. **A later seat who reads those two in writes *five* and moves this
+paragraph with the numeral**; they are not silently dropped.
 
 **Guarded here rather than in `OkaTest/Axioms/AnalyticSpace.lean`, for the reason the section
 `### An isomorphism of analytic spaces is bijective on points` gives**: the subject is a class of
@@ -9729,11 +9766,19 @@ guarded in **six** sections of this file at the commit this section is cut from 
 the one that adds it — a run over this file's `#print axioms` names against the declaring module
 `scripts/DumpOkaDecls.lean` gives each, and not a reading of the headings. **The reason it is here
 and not under `### A bijective base, or degree one, makes a local isomorphism an isomorphism`** is
-that that section's opening enumerates what feeds its criterion — *the two hypotheses this
-repository can feed that criterion — injectivity over a preconnected base, and degree one* — and an
-empty target is a third of exactly that shape, so a guard added there owes that enumeration a
-repair and gets no reading of its own. **Here it is the ingredient the five below are built on**,
-which is the relation this file's sections are cut along.
+that **here it is the ingredient the five below are built on**, which is the relation this file's
+sections are cut along. That section's opening enumerates what feeds its criterion and an empty
+target is a third of exactly that shape, so the declaration owes that enumeration an entry — but it
+owes it wherever the `#print axioms` line goes, membership being created by the declaration and not
+by the guard, so the debt is not an argument about placement in either direction.
+
+**That passage gave the enumeration as the reason for the placement, quoted it as *the two
+hypotheses this repository can feed that criterion — injectivity over a preconnected base, and
+degree one*, and put the debt in the present, until 2026-09-19**, when the push carrying this record
+repaired that opening to read *the three* and name an empty target. **Nothing about this section
+moves with it** — not where the guard sits, not the six guards below, not the kind the declaration
+is read as — and what the repair retires is the quotation together with the claim that a debt the
+declaration incurred bore on where its guard went.
 
 **The routing, argued rather than assumed, because the module is new.** The topic table at the head
 of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
