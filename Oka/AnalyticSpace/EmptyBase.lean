@@ -109,12 +109,28 @@ theorem SeparatedFiniteEtaleOver.isIso_hom_of_isEmpty (A : SeparatedFiniteEtaleO
 `CategoryTheory.MorphismProperty.Over.isoMk` at `…SeparatedFiniteEtaleOver.isIso_hom_of_isEmpty`,
 whose compatibility is
 `A.hom ≫ 𝟙 X = A.hom`. **The instance is supplied by name rather than found**, which is what the
-`@` is doing: instance search does not match a `CategoryTheory.IsIso` hypothesis about `A.hom`
-against the goal `asIso` states — the unifier is asked for `IsIso A.hom ≟ IsIso
-(CategoryTheory.MorphismProperty.Comma.toComma ?m).hom` and declines — so that theorem is passed
-as the instance argument. That is a run and not a reading: the same term with the instance
-left to search fails with `failed to synthesize instance of type class IsIso A.hom` at a goal that
-has it in context.
+`@` is doing: instance search declines in every shape this `CategoryTheory.IsIso` fact can be
+offered in, and the shapes are named below because they do not all print the same thing.
+
+**As a global `instance` of `IsIso A.hom`, or as a quantified binder `[∀ B, IsIso B.hom]`, the
+unifier is asked for `IsIso A.hom ≟ IsIso (CategoryTheory.MorphismProperty.Comma.toComma ?m).hom`
+and declines.** The metavariable is the universally quantified object of those two statements,
+which is exactly what the `@` supplies by hand.
+
+**With the specialised statement in context the two sides pretty-print alike and search declines
+anyway, and that is the reason for the `@`.** `haveI := A.isIso_hom_of_isEmpty` gives
+`IsIso A.hom ≟ IsIso A.hom`, with `toComma` occurring nowhere in that trace, and the term fails
+with `failed to synthesize instance of type class IsIso A.hom` at a goal that has it in context.
+**It is the stronger of the two facts**: a reader holding only the first would conclude that
+naming the specialised statement in a `haveI` would have done, and it does not. All three are runs
+and none is a reading.
+
+**The clause this replaces gave the `≟` line under the hypothesis shape, which prints the other
+one, and it is corrected rather than dated.** A hypothesis about a fixed `A` carries no
+metavariable, so the pairing was already wrong at the commit that wrote it — and a dated record
+says what a clause read *until* some day, which presupposes it read true before that day, the
+distinction `README.md`'s *The `until <date>` record* draws in the paragraph opening *The wording
+this section repairs here is corrected and not dated*. **Argued at taxis #2075.**
 
 **This is the statement the module docstring's `## What is not here` declines to make in a
 stronger form.** It says every object is isomorphic to `…SeparatedFiniteEtaleOver.id X`; it does
