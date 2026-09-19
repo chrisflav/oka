@@ -77,10 +77,27 @@ probes are guarded there, under
 two declarations* from the commit that added this file until this push**, which adds the third
 guard in the same section.
 
-**The hypotheses are the ones the library statements carry and no object is built.** Nothing below
-needs a concrete analytic space or a concrete point: the instances are stated at a variable base
-with `[T2Space]`, a variable point, `[PreconnectedSpace]` for the second and `[Nonempty]` as well
-for the third, which is exactly the shape a caller meets them in.
+**The hypotheses are the ones the library statements carry, and one object is built.** The three
+instances are probed at a variable base with `[T2Space]`, a variable point, `[PreconnectedSpace]`
+for the second and `[Nonempty]` as well for the third, which is exactly the shape a caller meets
+them in; the `EmptyBase` section is the one place a concrete analytic space appears, and it appears
+because a refutation stated under a hypothesis says nothing until something satisfies the
+hypothesis. **That sentence read *and no object is built* and closed *Nothing below needs a
+concrete analytic space or a concrete point*, until 2026-09-19**, when that section built one.
+
+**The `EmptyBase` section is a refutation at a named space and not a probe of this file's usual
+kind.**
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty`
+(`Oka/AnalyticSpace/EmptyBase.lean`) is a theorem of the library and what this file adds is the
+instantiation: the space is `ComplexAnalytic.AnalyticSpace.sigma` at `PEmpty.elim` and
+`ComplexAnalytic.AnalyticSpace.isEmpty_sigma` is what says it has no points, both of them
+`Oka/AnalyticSpace/Sigma.lean`'s and neither new. **That section and this file's `#guard_msgs`
+probe at `CategoryTheory.GaloisCategory` say different things**: the probe says instance search
+does not reach the class from `[T2Space]` and `[PreconnectedSpace]` alone, and the section says the
+class is false at a base that has both. **None of its three `example`s is a purchase** in the sense
+the paragraph opening *A purchase here is an `example`* uses, emphasis stripped — two are
+statements of this repository and the third is the emptiness of that object — so that paragraph's
+count is unmoved by it.
 
 **The last `section` binds a second base and the reason is a hypothesis and not a name.** It
 restates the base as `Y` with `[ConnectedSpace Y]` in place of `[PreconnectedSpace X]` and
@@ -210,6 +227,41 @@ noncomputable example :
       (PreGaloisCategory.GaloisCategory.getFiberFunctor
         (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u} X)) := by
   infer_instance
+
+section EmptyBase
+
+/-- The disjoint union of the **empty** family of analytic spaces, which is the object this
+section's refutation is read at: `ComplexAnalytic.AnalyticSpace.isEmpty_sigma` says a disjoint
+union at an empty index type has no points, and `PEmpty` is that index type. -/
+example : IsEmpty
+    ((ComplexAnalytic.AnalyticSpace.sigma
+      (PEmpty.elim : PEmpty.{u + 1} → ComplexAnalytic.AnalyticSpace.{u})) : Type u) :=
+  ComplexAnalytic.AnalyticSpace.isEmpty_sigma _
+
+/-- **`CategoryTheory.PreGaloisCategory` is still found there**, by search and with no hypothesis
+supplied by hand beyond the emptiness: an empty space is Hausdorff, which is the only thing that
+instance asks of the base. **This is what makes this section's refutation a statement about the
+existence of a fibre functor** and not about either of the class's other two ingredients. -/
+example : PreGaloisCategory (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u}
+    (ComplexAnalytic.AnalyticSpace.sigma
+      (PEmpty.elim : PEmpty.{u + 1} → ComplexAnalytic.AnalyticSpace.{u}))) :=
+  haveI := ComplexAnalytic.AnalyticSpace.isEmpty_sigma
+    (PEmpty.elim : PEmpty.{u + 1} → ComplexAnalytic.AnalyticSpace.{u})
+  inferInstance
+
+/-- **And `CategoryTheory.GaloisCategory` is false there.** This file's `#guard_msgs` probe at that
+class says search does not reach it from `[T2Space]` and `[PreconnectedSpace]`; this says no
+instance of it exists at this base, which is the statement that `[Nonempty X]` on
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.galoisCategory` is a hypothesis of the
+mathematics. -/
+example : ¬ GaloisCategory (ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.{u}
+    (ComplexAnalytic.AnalyticSpace.sigma
+      (PEmpty.elim : PEmpty.{u + 1} → ComplexAnalytic.AnalyticSpace.{u}))) :=
+  haveI := ComplexAnalytic.AnalyticSpace.isEmpty_sigma
+    (PEmpty.elim : PEmpty.{u + 1} → ComplexAnalytic.AnalyticSpace.{u})
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty
+
+end EmptyBase
 
 section Connected
 

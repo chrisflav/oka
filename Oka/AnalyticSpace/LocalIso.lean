@@ -166,6 +166,10 @@ the rung.
   morphism out of a non-empty space onto a preconnected base is an isomorphism** —
   `ComplexAnalytic.AnalyticSpace.isIso_of_isLocalIso_of_bijective` with the surjective half
   supplied by the clopen dichotomy, so that only injectivity is asked of the caller.
+- `ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty`: **a morphism whose target is empty is an
+  isomorphism**, which is the same criterion with both halves of bijectivity and both fields of
+  `ComplexAnalytic.AnalyticSpace.IsLocalIso` discharged vacuously. It asks nothing of the source,
+  which is empty as soon as the target is.
 
 ## References
 
@@ -572,6 +576,32 @@ theorem isIso_of_isLocalIso_of_bijective {X Y : AnalyticSpace.{u}} (f : X ⟶ Y)
   haveI : IsIso (forgetToLocallyRingedSpace.map f) :=
     LocallyRingedSpace.IsOpenImmersion.to_iso f.toLRSHom
   exact isIso_of_reflects_iso f forgetToLocallyRingedSpace
+
+/-- **A morphism whose target is empty is an isomorphism.**
+
+Everything `ComplexAnalytic.AnalyticSpace.isIso_of_isLocalIso_of_bijective` asks is vacuous here.
+A map into an empty type has an empty source, so both fields of
+`ComplexAnalytic.AnalyticSpace.IsLocalIso` are discharged at a point of the source that does not
+exist, injectivity likewise, and surjectivity at a point of the target that does not exist either.
+**Nothing is asked of the source**: it is empty as soon as the target is, and `Function.isEmpty`
+is that step.
+
+**The hypothesis is an explicit argument and not an `[IsEmpty Y]` instance**, and the reason is a
+run rather than a taste. The caller this is written for is a cover of an empty base, whose
+structure morphism has target `(CategoryTheory.Functor.fromPUnit X).obj A.right` and not `X`:
+search there reports `failed to synthesize IsEmpty` of that expression although the base's own
+instance is in scope, so the instance form would have to be unfolded by hand at every use.
+`AlgebraicGeometry.LocallyRingedSpace.hom_ext_of_isEmpty` takes the explicit form one shape down
+and its docstring gives a reason of the same kind, about a carrier instance search does not
+find. -/
+theorem isIso_of_isEmpty {X Y : AnalyticSpace.{u}} (f : X ⟶ Y) (hY : IsEmpty (Y : Type u)) :
+    IsIso f := by
+  have hX : IsEmpty (X : Type u) := Function.isEmpty (β := (Y : Type u)) f.toLRSHom.base
+  haveI : IsLocalIso f :=
+    { isLocalHomeomorph := fun x ↦ (hX.false x).elim
+      isIso_stalkMap := fun x ↦ (hX.false x).elim }
+  exact isIso_of_isLocalIso_of_bijective f
+    ⟨fun a ↦ (hX.false a).elim, fun y ↦ (hY.false y).elim⟩
 
 /-- **An injective finite étale morphism out of a non-empty space onto a preconnected base is an
 isomorphism.**

@@ -169,16 +169,23 @@ above with exactly the hypotheses they already carried.
 
 **`[PreconnectedSpace X]` alone will not do, and the reason is that it does not imply `Nonempty`**:
 `IsPreconnected` holds of the empty set, so a preconnected base may be empty. **What happens over
-an empty base is an argument and not a run, and it is marked as one here rather than published as a
-figure.** Every cover of an empty base is empty, so the initial object of the category — the empty
-coproduct — is isomorphic to its terminal object; a `CategoryTheory.PreGaloisCategory.FiberFunctor`
-preserves finite coproducts and the terminal object, so it would have to send that one object to a
-`FintypeCat` that is both empty and a singleton. **So over an empty base the class looks not merely
-unreachable but false**, which would make `[Nonempty X]` a hypothesis of the mathematics rather
-than of the search — the distinction this file already draws for `[PreconnectedSpace X]` and the
-`reflectsIsos` field. **No line of that paragraph is formalised at the commit that adds this
-instance**, in this file or in any other of this repository, and no numeral of this file rests
-on it.
+an empty base is a run, and `Oka/AnalyticSpace/EmptyBase.lean` is where it is**:
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty` refutes the
+class at such a base, so `[Nonempty X]` is a hypothesis of the mathematics rather than of the
+search — the distinction this file already draws for `[PreconnectedSpace X]` and the
+`reflectsIsos` field.
+
+**Two clauses of that paragraph were an argument and are retired by the module that ran it.** It
+read *What happens over an empty base is an argument and not a run, and it is marked as one here
+rather than published as a figure*, and it closed *So over an empty base the class looks not merely
+unreachable but false*, until 2026-09-19, when that module landed. **The route it takes is not the
+one the sketch gave.** The sketch ran through the initial object being the empty coproduct and
+isomorphic to the terminal object; what is proved is that the terminal object
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.id` is **itself** initial there, which
+names no coproduct and no `CategoryTheory.Limits.HasInitial`, and the sketch is not restated beside
+it — that module's docstring is where the divergence is written down. **No line of that paragraph
+is formalised at the commit that adds this instance**, in this file or in any other of this
+repository, and no numeral of this file rests on it.
 
 ## What the third instance buys, probed at both ends
 

@@ -25,7 +25,12 @@ classes above; its sections are named here for the same reason.
 `### An isomorphism of analytic spaces is bijective on points` reads a topological consequence
 off an isomorphism and is built from no criterion and transported from nowhere;
 `### A bijective base, or degree one, makes a local isomorphism an isomorphism` goes the other
-way and is where a criterion concludes `CategoryTheory.IsIso`. **The sentence this replaces said
+way and is where a criterion concludes `CategoryTheory.IsIso`; and
+`### The Galois-category class is false over an empty base` holds one guard of this kind,
+`ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty`, a criterion whose hypothesis is that the target
+has no points. **That sentence named two sections, until 2026-09-19**, when the third was
+appended; the kind's criterion is unmoved and so is the reading of the two named before it.
+**The sentence this replaces said
 that one section was of this kind and that no section of it is built from a topological
 criterion**, and `### A bijective base, or degree one, makes a local isomorphism an isomorphism`
 is both — which is what retired the clause, rather than a recount. And one is of a fifth:
@@ -1322,6 +1327,53 @@ adds it alike, both runs mine. **This clause and the section it names were added
 complex affine spaces` gives — written into this paragraph rather than into one of its own, for
 the reason the clause opening *One section further, at the two fibre functors and the colimit they
 carry* gives of the same sentence.
+
+And a section that turns a hypothesis of the newest instance this file guards into a theorem about
+that hypothesis, named here because the convention this file's other clauses record is that a push
+appending a section owes the description one.
+`### The Galois-category class is false over an empty base` guards the five declarations of
+`Oka/AnalyticSpace/EmptyBase.lean`, which refutes `CategoryTheory.GaloisCategory` at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` over an empty base, together with
+`ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty` of `Oka/AnalyticSpace/LocalIso.lean`, which is
+what the first statement of that module is built from. **Six guards, and they partition one, two
+and three.**
+
+**One is of the fourth kind** — `ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty`, whose conclusion
+is `CategoryTheory.IsIso` of a morphism of analytic spaces. **Two are of the first kind** read at
+that second category, by the opening description's clause naming the category the finite étale ones
+form over a fixed base: `…SeparatedFiniteEtaleOver.isIso_hom_of_isEmpty`, which binds an object of
+it and concludes `CategoryTheory.IsIso` of the morphism that object carries, and
+`…SeparatedFiniteEtaleOver.isoIdOfIsEmpty`, which names the two objects it relates. **Three are of
+the sixth kind at that second category** — about the category rather than about any morphism in it
+— the initiality of a named object of it, and the two refutations, one about every
+`FintypeCat`-valued functor out of it and one about the category itself. **The section assigns all
+six by name and argues each assignment against the clause it answers to.**
+
+**The clause opening *And a fourth kind is statements about the class of isomorphisms* is repaired
+in place by this push and is the only claim of this description that moves.** It read *its sections
+are named here for the same reason* and named **two**, until 2026-09-19, when this section became a
+third holding a guard of that kind; **the kind's criterion is unchanged and no guard moved**, and
+what the repair adds there is the third name and the one guard of it that answers to that clause.
+
+**Three counts this description publishes are unmoved, and each is a run rather than an
+assumption.** *Five of that section's twenty-one guards*, in the clause opening *The sixth kind has
+a second category*, counts over
+`### The category of separated covers, and separatedness as a morphism property`, and `git diff`
+against the commit this section is cut from touches no line of that section. *Three guards, and
+they do not partition*, in the clause opening *One section beyond that*, counts over
+`### The covers separated over a Hausdorff base form a Galois category`, and the same `git diff`
+rewrites and removes no line of that one either — **the module it guards gains no declaration**,
+this push declaring into a module that imports it. **The one line this push adds inside that
+section's range is the blank separator before the new heading**, which is what appending a section
+to this file costs and is the same line every clause of this description making the same claim
+understates in the same way. And the published check on the statements of a pullback
+square returns what it returned in both halves: **no name of the new section carries** *isPullback*
+**or** *hasPullback*, the six being an isomorphism criterion, a structure morphism, an isomorphism
+of objects, an initial object and two refutations, and the four figures are **nine and eight
+unfiltered and eight and six with the exclusion**, at the commit this section is cut from and at
+the one that adds it alike, all four runs mine. **This clause and the section it names were added
+by one push**, 2026-09-19, for the reason the clause naming `### The terminal object and the
+product of two complex affine spaces` gives.
 
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
@@ -9646,3 +9698,124 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.galoisCategory' de
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.galoisCategory
+
+/-! ### The Galois-category class is false over an empty base
+
+`Oka/AnalyticSpace/EmptyBase.lean`, the whole of it, together with one declaration of
+`Oka/AnalyticSpace/LocalIso.lean`. **Six names**: that a morphism of analytic spaces whose target
+is empty is an isomorphism, `ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty`; that the structure
+morphism of a cover of an empty base is one,
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_hom_of_isEmpty`; the isomorphism
+that makes of every object,
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isoIdOfIsEmpty`; the initiality of the
+object that is already terminal,
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isInitialIdOfIsEmpty`; that no
+`FintypeCat`-valued functor out of that category is a fibre functor,
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_isFiberFunctor_of_isEmpty`; and that
+the category is not a `CategoryTheory.GaloisCategory`,
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty`.
+
+**What this section guards is the run behind a paragraph that said it was an argument and not
+one.** `Oka/AnalyticSpace/GaloisCategory.lean`'s justification of `[Nonempty X]` on
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.galoisCategory` argued in prose that over
+an empty base the class is false, and marked itself as unformalised in terms; taxis #2071 is the
+filing that asked for the formalisation, and the module below is it.
+
+**One guard of this section is of a module whose other guards are elsewhere in this file, and that
+is the ordinary arrangement here rather than a departure.**
+`ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty` is declared by
+`Oka/AnalyticSpace/LocalIso.lean`, whose declarations are
+guarded in **six** sections of this file at the commit this section is cut from and in **seven** at
+the one that adds it — a run over this file's `#print axioms` names against the declaring module
+`scripts/DumpOkaDecls.lean` gives each, and not a reading of the headings. **The reason it is here
+and not under `### A bijective base, or degree one, makes a local isomorphism an isomorphism`** is
+that that section's opening enumerates what feeds its criterion — *the two hypotheses this
+repository can feed that criterion — injectivity over a preconnected base, and degree one* — and an
+empty target is a third of exactly that shape, so a guard added there owes that enumeration a
+repair and gets no reading of its own. **Here it is the ingredient the five below are built on**,
+which is the relation this file's sections are cut along.
+
+**The routing, argued rather than assumed, because the module is new.** The topic table at the head
+of `OkaTest/Axioms.lean` routes *morphisms of analytic spaces* here, and that is the row for all
+six: one is about a morphism of analytic spaces, two about the structure morphism of an object of
+the category of covers separated over a fixed base and an isomorphism of that category, and three
+about that category or a functor out of it. **The competing row is *analytic spaces, local models,
+the node*, `OkaTest/Axioms/AnalyticSpace.lean`**, and it loses for the reason
+`### The covers separated over a Hausdorff base form a Galois category` gives against the same
+competitor for the module it guards: no declaration below is a local model, a chart or a node.
+
+**Six guards, and they partition one, two and three.** **One is of the fourth kind** — statements
+about the class of isomorphisms — `ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty`, whose
+conclusion is `CategoryTheory.IsIso` of a morphism of analytic spaces and which is built from no
+criterion this file's opening description lists. **Two are of the first kind**, by that
+description's clause naming the category the finite étale ones form over a fixed base, read at the
+second category the clause opening *The sixth kind has a second category* names:
+`…SeparatedFiniteEtaleOver.isIso_hom_of_isEmpty`, which binds an object of that category and
+concludes `CategoryTheory.IsIso` of the morphism that object carries, exactly as
+`…SeparatedFiniteEtaleOver.isIso_of_bijective_fiberMap` binds a morphism of it and concludes
+`CategoryTheory.IsIso` of that; and `…SeparatedFiniteEtaleOver.isoIdOfIsEmpty`, which names the two
+objects it relates and the isomorphism between them. **Three are of the sixth kind at that second
+category** — about the category rather than about any morphism in it —
+`…SeparatedFiniteEtaleOver.isInitialIdOfIsEmpty`, which says a named object of it is initial,
+exactly as the clause opening *The sixth kind has a second category* assigns
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isTerminalId`; and the two refutations,
+which are about a functor out of that category and about the category itself, by the reading that
+clause takes of `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.toFiniteEtaleOver`.
+
+**Six is the whole of the section**, which is the module's row count in
+`scripts/DumpOkaDecls.lean`'s output — **five**, one per name below that is declared there — plus
+the one row `Oka/AnalyticSpace/LocalIso.lean` gains: no `_assoc` lemma, no `.eq_1` equation lemma,
+no match lemma and no congruence lemma. **Three of the five are theorems and two are
+definitions**, counted with a declaration keyword at the start of a line and an attribute allowed
+before it: `^theorem ` returns **three** over that module, `^noncomputable def ` **two**, and
+`^def `, `^instance ` and `^abbrev ` **zero** each. **None of the six is `@[simp]`.**
+
+**The axiom triple is the same for all six.** `Classical.choice` is already carried by the
+criterion the first is built from and by the analytic structure under all of them, and the two
+refutations add nothing to it: the contradiction they turn on is between an `IsEmpty` and a point
+of the same finite type. That is one `#print axioms` run each and not a reading of any proof below.
+
+**Named by file rather than counted**, as the sections of this file say and for the reason they
+give. **Named and not located**: no sentence here says which section is above or below it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isIso_of_isEmpty
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_hom_of_isEmpty' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isIso_hom_of_isEmpty
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isoIdOfIsEmpty' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isoIdOfIsEmpty
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isInitialIdOfIsEmpty' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isInitialIdOfIsEmpty
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_isFiberFunctor_of_isEmpty'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_isFiberFunctor_of_isEmpty
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty
