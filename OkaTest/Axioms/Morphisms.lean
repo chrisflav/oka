@@ -10350,3 +10350,81 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.finite_connectedCo
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.finite_connectedComponents_left
+
+/-! ### A base whose fundamental group is trivial has only trivial covers
+
+`Oka/AnalyticSpace/SimplyConnected.lean`, the whole of it. **Four names**: the fibre of a connected
+cover as a subsingleton when the group is trivial,
+`…SeparatedFiniteEtaleOver.subsingleton_fiber`; a non-empty subsingleton fibre as a terminal object
+of `FintypeCat`, `…SeparatedFiniteEtaleOver.isTerminalFintypeFiber`; a connected cover over such a
+base as the base over itself, `…SeparatedFiniteEtaleOver.nonempty_iso_id`; and an arbitrary one as
+a finite coproduct of copies of the base over itself,
+`…SeparatedFiniteEtaleOver.exists_iso_coprod_id`.
+
+**This is the first consumer of the neighbourhood three sections above.** The section *The
+fundamental group, and the covers separated over a connected base classified by it* guards a group
+and a classification that, at the commit this section is written at, no module outside
+`Oka/AnalyticSpace/FundamentalGroup.lean` read: `fundamentalGroup`,
+`…SeparatedFiniteEtaleOver.contActionEquivalence` and
+`…SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup` each occurred in the comment-stripped
+code of exactly two modules, that one and this file. **The push that adds this section makes the
+third of them a consumed rung** — `…SeparatedFiniteEtaleOver.subsingleton_fiber`'s proof is that
+transitivity read at a trivial group — and leaves the first two where they were, the equivalence
+in particular. **That is deliberate and is the shape of the module**: the classification is not
+what proves anything below, the transitivity of the action on one fibre is.
+
+**What the telescopes bind, by `#check` over the four and not by reading the file.** **All four
+bind `[T2Space]`, `[PreconnectedSpace]` and `[Nonempty]` of the base except the second**, which
+`omit`s the three and binds none of them: it is a statement about an object of `FintypeCat` written
+as a fibre and asks nothing of the covering theory. **Three of the four bind
+`[Subsingleton (…SeparatedFiniteEtaleOver.fundamentalGroup x)]`** — the second does not, for the
+same reason — and **two of the four bind
+`[CategoryTheory.PreGaloisCategory.IsConnected A]`**, the exceptions being the second again and
+`…SeparatedFiniteEtaleOver.exists_iso_coprod_id`, whose whole point is that it asks for no
+connectedness at all.
+
+**One of the four is a `def` and the other three are theorems.**
+`…SeparatedFiniteEtaleOver.isTerminalFintypeFiber` is `CategoryTheory.Limits.IsTerminal`, which is
+a `CategoryTheory.Limits.IsLimit` and so is data; it is the only `noncomputable` name of the four
+and the `Classical.choice` in its axiom list below is the `Classical.arbitrary` that picks the
+fibre's one point.
+
+**The witness is not here and is not a library declaration.**
+`OkaTest/FundamentalGroup.lean`'s `nontrivial_fundamentalGroup` — the punctured line's group is not
+trivial — is the contrapositive of the third name above at `OkaTest/FiniteEtaleOver.lean`'s
+`sqOver`, and it is in the test library because the object it is about is. Nothing in this file
+guards it, as nothing in this file guards any `OkaTest` declaration.
+
+**The routing.** The topic table at the head of `OkaTest/Axioms.lean` routes *morphisms of analytic
+spaces* here and these are statements about the covers of a base; the group of
+`OkaTest/Axioms/Analysis.lean`'s row — *`π₁(ℂ ∖ {0})`* — is
+`Oka/Analysis/Complex/FundamentalGroup.lean`'s, a different group of a different kind, and no name
+of this push belongs there. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fiber' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fiber
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isTerminalFintypeFiber' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isTerminalFintypeFiber
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nonempty_iso_id' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nonempty_iso_id
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_iso_coprod_id' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_iso_coprod_id

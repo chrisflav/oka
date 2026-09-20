@@ -113,6 +113,7 @@ import Oka.AnalyticSpace.SigmaFiniteEtale
 import Oka.AnalyticSpace.SimpleZeroPolynomial
 import Oka.AnalyticSpace.SimpleZeroStalk
 import Oka.AnalyticSpace.SimpleZeroTopology
+import Oka.AnalyticSpace.SimplyConnected
 import Oka.AnalyticSpace.StalkLocalInverse
 import Oka.AnalyticSpace.ZeroLocus
 import Oka.Analytification.AffineCover
