@@ -1811,6 +1811,20 @@ info: 'ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy' depends on axioms:
 #print axioms ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy
 
 /--
+info: 'ComplexAnalytic.AnalyticSpace.isFinite_of_comp_eq_of_isClosedEmbedding' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFinite_of_comp_eq_of_isClosedEmbedding
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy_of_comp_eq' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy_of_comp_eq
+
+/--
 info: 'ComplexAnalytic.AnalyticSpace.isFinite_of_isFinite_comp' depends on axioms:
   [propext, Classical.choice, Quot.sound]
 -/
@@ -5810,17 +5824,26 @@ local models, of the `p` differences of the two composites to `ℂ^p` is their f
 third — the object, the two projections, the induced morphism, the two triangles and the
 uniqueness that make it one — together with the mapping property of
 `ComplexAnalytic.AnalyticSpace.zeroLocusSubspace` in the shape a morphism of analytic spaces has
-it. **A limit and not a class**, in the sense
+it, and the morphism between two zero loci that a morphism of the ambient spaces induces.
+**A limit and not a class**, in the sense
 `### That restriction is a pullback square, and the base change it gives` uses of itself: no
-statement guarded below carries any class of morphisms across the square.
+statement guarded below carries any class of morphisms across **that** square. **That last clause
+read *across the square* until 2026-09-20**, when
+`ComplexAnalytic.AnalyticSpace.isFinite_zeroLocusSubspaceHom` was added below: it carries
+`ComplexAnalytic.AnalyticSpace.IsFinite` across the square of a zero locus and its pulled-back
+family, which is a commuting square and not the fibre-product square this section is about, and
+which this repository identifies with no limit.
 
 **Which clause of the description at the head of that file reaches which guard below**, said
 rather than left to a reader. *Two mapping properties* reaches
 `ComplexAnalytic.AnalyticSpace.hom_ext_restrict_complexAffineSpace`,
 `ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceLift`,
 `ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceLift_comp` and
-`ComplexAnalytic.AnalyticSpace.hom_ext_zeroLocusSubspace`; *the two composites to `ℂ^p`* and *the
-cutting family* reach `ComplexAnalytic.AnalyticSpace.toAffineOfCutOut` and
+`ComplexAnalytic.AnalyticSpace.hom_ext_zeroLocusSubspace`; *the morphism between two zero loci*
+reaches `ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom`,
+`ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom_comp` and
+`ComplexAnalytic.AnalyticSpace.isFinite_zeroLocusSubspaceHom`; *the two composites to `ℂ^p`* and
+*the cutting family* reach `ComplexAnalytic.AnalyticSpace.toAffineOfCutOut` and
 `ComplexAnalytic.AnalyticSpace.eqCutFamily`; *the object* reaches
 `ComplexAnalytic.AnalyticSpace.fibreProdCutOut`,
 `ComplexAnalytic.AnalyticSpace.fibreProdCutOutι`,
@@ -5841,8 +5864,10 @@ cutting family* reach `ComplexAnalytic.AnalyticSpace.toAffineOfCutOut` and
 `ComplexAnalytic.AnalyticSpace.isLimitPullbackConeFibreProdCutOut`,
 `ComplexAnalytic.AnalyticSpace.isPullback_fibreProdCutOut`,
 `ComplexAnalytic.AnalyticSpace.hasPullback_ofCutOut` and
-`ComplexAnalytic.AnalyticSpace.fibreProdCutOutIsoPullback`. Four plus two plus six plus two plus
-five plus two plus five is twenty-six, and twenty-six is what is below.
+`ComplexAnalytic.AnalyticSpace.fibreProdCutOutIsoPullback`. Four plus three plus two plus six plus
+two plus five plus two plus five is twenty-nine, and twenty-nine is what is below. **That sentence
+read *Four plus two plus six plus two plus five plus two plus five is twenty-six, and twenty-six is
+what is below* until 2026-09-20**, when the three guards of the clause above were added.
 
 **`Classical.choice` is in every guard of this section and none of it is this section's
 subject**, for the reason `### The binary product of two local models` gives of its own guards:
@@ -5903,6 +5928,27 @@ info: 'ComplexAnalytic.AnalyticSpace.hom_ext_zeroLocusSubspace' depends on axiom
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.hom_ext_zeroLocusSubspace
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom_comp' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom_comp
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isFinite_zeroLocusSubspaceHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isFinite_zeroLocusSubspaceHom
 
 
 /--

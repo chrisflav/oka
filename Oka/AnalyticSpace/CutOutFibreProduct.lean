@@ -112,6 +112,9 @@ ring operation on global sections, or a lemma of `Oka/AnalyticSpace/CutOutProduc
 
 - `ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceLift`: **the mapping property of the zero locus
   of global sections**, at the analytic level.
+- `ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom`: **the morphism between zero loci a
+  morphism of the ambient spaces induces**, when the family upstairs is the pullback of the one
+  downstairs.
 - `ComplexAnalytic.AnalyticSpace.toAffineOfCutOut`: a local model read in `ℂ^p`.
 - `ComplexAnalytic.AnalyticSpace.eqCutFamily`: **the `p` differences that cut the fibre product
   out of the product.**
@@ -130,6 +133,11 @@ ring operation on global sections, or a lemma of `Oka/AnalyticSpace/CutOutProduc
   inclusion.**
 - `ComplexAnalytic.AnalyticSpace.hom_ext_zeroLocusSubspace`: a morphism into the zero locus is
   determined by its composite with the immersion.
+- `ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom_comp` and
+  `ComplexAnalytic.AnalyticSpace.isFinite_zeroLocusSubspaceHom`: **that morphism is over the one
+  it is induced by, and it is finite whenever that one is.** The second is the first consumer of
+  `ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy_of_comp_eq`
+  (`Oka/AnalyticSpace/Finite.lean`).
 - `ComplexAnalytic.AnalyticSpace.fibreProdCutOut_condition`: **the square commutes.**
 - `ComplexAnalytic.AnalyticSpace.fibreProdCutOutLift_fst`,
   `ComplexAnalytic.AnalyticSpace.fibreProdCutOutLift_snd` and
@@ -169,6 +177,18 @@ ring operation on global sections, or a lemma of `Oka/AnalyticSpace/CutOutProduc
 * **`CategoryTheory.MorphismProperty.IsStableUnderBaseChange` for any class.** That quantifies over
   every cospan with a leg in the class, including cospans of spaces that are not local models, and
   nothing below carries a class across the square built here.
+
+  **The sentence above is unchanged by the push that adds
+  `ComplexAnalytic.AnalyticSpace.isFinite_zeroLocusSubspaceHom` below, and this paragraph is why it
+  did not have to change.** That theorem *does* carry a class across a square: it carries
+  `ComplexAnalytic.AnalyticSpace.IsFinite` across
+  `ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceHom_comp`, the square of a zero locus and the zero
+  locus of its pulled-back family. But that is not *the square built here* — the square built here
+  is the fibre-product one, and nothing below carries a class across **that**, which is what the
+  sentence says and said before. The square it does carry one across is a commuting square and not
+  a limit: nothing below identifies its source with a fibre product. **So nothing in this bullet is
+  retired by that push**, and the class quantifier is untouched either way, one class across one
+  shape of commuting square not being `IsStableUnderBaseChange` for any class.
 * **Independence of the presentations.** `ComplexAnalytic.AnalyticSpace.fibreProdCutOut` is indexed
   by the three cutting families and the two morphisms, exactly as
   `ComplexAnalytic.AnalyticSpace.prodCutOut` is indexed by two families; two presentations of the
@@ -256,6 +276,66 @@ theorem hom_ext_zeroLocusSubspace (ψ₁ ψ₂ : Z ⟶ X.zeroLocusSubspace s)
   (cancel_mono (X.zeroLocusSubspaceι s)).1 h
 
 end MappingProperty
+
+/-! ### The zero locus of a pulled-back family, over the zero locus of the family -/
+
+section ZeroLocusHom
+
+variable {E B : AnalyticSpace.{u}} {k : ℕ}
+
+/-- **The zero locus of a pulled-back family, over the zero locus of the family.**
+
+For `φ : E ⟶ B` and global sections `s` of `B`, the zero locus of `fun j ↦ φ.pullbackΓ (s j)` in
+`E` maps to the zero locus of `s` in `B`, over `φ`. It is
+`ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceLift` applied to the immersion followed by `φ`,
+whose pullbacks of the `s j` vanish by
+`ComplexAnalytic.AnalyticSpace.Hom.pullbackΓ_comp` and
+`ComplexAnalytic.AnalyticSpace.pullbackΓ_zeroLocusSubspaceι_eq_zero`.
+
+**Nothing here identifies this with a fibre product, and nothing below needs the
+identification.** What the finiteness statement consumes is the square, and no declaration of this
+repository says that the zero locus of a pulled-back family is a `CategoryTheory.Limits.pullback`
+— the only `CategoryTheory.IsPullback` below is
+`ComplexAnalytic.AnalyticSpace.isPullback_fibreProdCutOut`, about the other square. -/
+def zeroLocusSubspaceHom (φ : E ⟶ B) (s : Fin k → B.presheaf.obj (op ⊤)) :
+    E.zeroLocusSubspace (fun j ↦ φ.pullbackΓ (s j)) ⟶ B.zeroLocusSubspace s :=
+  zeroLocusSubspaceLift (E.zeroLocusSubspaceι (fun j ↦ φ.pullbackΓ (s j)) ≫ φ) fun j ↦ by
+    rw [Hom.pullbackΓ_comp]
+    exact E.pullbackΓ_zeroLocusSubspaceι_eq_zero (fun j ↦ φ.pullbackΓ (s j)) j
+
+/-- **The square commutes**: the comparison followed by the immersion of the zero locus of `s` is
+the immersion of the zero locus of the pulled-back family followed by `φ`. This is
+`ComplexAnalytic.AnalyticSpace.zeroLocusSubspaceLift_comp` at the datum above, and it is the whole
+of what the theorem below reads. -/
+@[simp]
+lemma zeroLocusSubspaceHom_comp (φ : E ⟶ B) (s : Fin k → B.presheaf.obj (op ⊤)) :
+    zeroLocusSubspaceHom φ s ≫ B.zeroLocusSubspaceι s =
+      E.zeroLocusSubspaceι (fun j ↦ φ.pullbackΓ (s j)) ≫ φ :=
+  zeroLocusSubspaceLift_comp _ _
+
+/-- **Finiteness is carried across a zero locus.** If `φ` is finite then so is the morphism it
+induces between the zero locus of a pulled-back family and the zero locus of the family.
+
+`ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy_of_comp_eq`
+(`Oka/AnalyticSpace/Finite.lean`) at the square above and the two cut-out data
+`ComplexAnalytic.AnalyticSpace.isCutOutBy_zeroLocusSubspaceι` supplies on each side. **Only the
+`IsFinite` half is asked**: the base-change statements of
+`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` are stated under `[IsFiniteEtale q]` — including
+`ComplexAnalytic.AnalyticSpace.isClosedMap_baseChangeSndBase` and
+`ComplexAnalytic.AnalyticSpace.finite_fiber_baseChangeSndBase`, which spend only its `IsFinite`
+field — and `Oka/AnalyticSpace/PullbackOpen.lean`'s
+`ComplexAnalytic.AnalyticSpace.isFinite_restrictHom` is along an open subspace, so neither reaches
+a closed one.
+
+**No limit is constructed and none is needed.** The statement is about the square, so it does not
+wait on an identification of the source with a fibre product of `φ` and the immersion below it —
+an identification no declaration of this repository states. -/
+theorem isFinite_zeroLocusSubspaceHom (φ : E ⟶ B) [IsFinite φ]
+    (s : Fin k → B.presheaf.obj (op ⊤)) : IsFinite (zeroLocusSubspaceHom φ s) :=
+  isFinite_of_isCutOutBy_of_comp_eq (B.isCutOutBy_zeroLocusSubspaceι s)
+    (E.isCutOutBy_zeroLocusSubspaceι _) (zeroLocusSubspaceHom_comp φ s)
+
+end ZeroLocusHom
 
 /-! ### The fibre product of two local models over a third -/
 

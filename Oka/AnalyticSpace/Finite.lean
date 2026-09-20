@@ -138,26 +138,32 @@ stand beside it does not, and is now the section above.
 is about finite *étale* covers — finite together with being a local isomorphism — and that is a
 second notion resting on this one.
 
-**Base change along a general morphism is absent, and along two particular shapes of leg it is
-elsewhere in this repository.** `AlgebraicGeometry.IsFinite`'s `IsStableUnderBaseChange`
-quantifies over every cospan and has no analogue below, because nothing here carries finiteness
-across a square whose base is arbitrary. **The reason clause read *because a fibre product over a
-general cospan is what `Oka/AnalyticSpace/PullbackOpen.lean`'s header prices and does not build*
-until 2026-09-08**, when `Oka/AnalyticSpace/PullbackReduction.lean` built one
-(`ComplexAnalytic.AnalyticSpace.hasPullbacks`); the absence stated here is unchanged and only its
-reason is, the missing thing being the transfer of the class and no longer the limit. What
-`Oka/AnalyticSpace/PullbackOpen.lean` does build is the pullback along the inclusion of an open
-subspace, and
-`ComplexAnalytic.AnalyticSpace.isFinite_restrictHom` there is finiteness carried across it, with
-no hypothesis on the open subset. **The words `and along the inclusion of an open subspace it is
-here` closed the sentence above until 2026-09-07**, when
-`Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` gave a second shape:
-`ComplexAnalytic.AnalyticSpace.baseChangeSnd` is the projection of a fibre product over a cospan
-whose other leg is finite étale, and it is finite étale — hence finite — with no hypothesis on the
-leg it is a base change of. **That clause read *whose other leg is finite étale with Hausdorff
-source* until 2026-09-14**, when the separation axiom came out of that file; the shape is wider
-and the record it sits in is unmoved. Neither shape is a general morphism and
-neither is below.
+**Base change along a general morphism is absent, and along three particular shapes of leg it is
+available — two of them elsewhere in this repository and the third below.**
+`AlgebraicGeometry.IsFinite`'s `IsStableUnderBaseChange` quantifies over every cospan and has no
+analogue below, because nothing here carries finiteness across a square whose base is arbitrary.
+**The reason clause read *because a fibre product over a general cospan is what
+`Oka/AnalyticSpace/PullbackOpen.lean`'s header prices and does not build* until 2026-09-08**, when
+`Oka/AnalyticSpace/PullbackReduction.lean` built one (`ComplexAnalytic.AnalyticSpace.hasPullbacks`);
+the absence stated here is unchanged and only its reason is, the missing thing being the transfer of
+the class and no longer the limit. What `Oka/AnalyticSpace/PullbackOpen.lean` does build is the
+pullback along the inclusion of an open subspace, and
+`ComplexAnalytic.AnalyticSpace.isFinite_restrictHom` there is finiteness carried across it, with no
+hypothesis on the open subset. **The words `and along the inclusion of an open subspace it is here`
+closed the sentence above until 2026-09-07**, when `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`
+gave a second shape: `ComplexAnalytic.AnalyticSpace.baseChangeSnd` is the projection of a fibre
+product over a cospan whose other leg is finite étale, and it is finite étale — hence finite — with
+no hypothesis on the leg it is a base change of. **That clause read *whose other leg is finite étale
+with Hausdorff source* until 2026-09-14**, when the separation axiom came out of that file; the
+shape is wider and the record it sits in is unmoved. **Neither of those two shapes is a general
+morphism and neither is below; the sentence opening this paragraph read *and along two particular
+shapes of leg it is elsewhere in this repository* until 2026-09-20**, when
+`ComplexAnalytic.AnalyticSpace.isFinite_of_comp_eq_of_isClosedEmbedding` added a third shape and put
+it in this file. That one carries finiteness across a commuting square whose two verticals are an
+injective morphism and a closed embedding — the leg it is changed along being the injective one —
+and **it is not a base change in the sense of a limit**: nothing in it says the source is a fibre
+product, and its proof does not need one. The general-morphism absence is untouched by it, since a
+leg that is not injective is exactly what it cannot take.
 
 **This paragraph said flatly that there is no base change and that this repository has no fibre
 products of analytic spaces.** Both were exact at `e8c5f03`, the commit
@@ -180,6 +186,16 @@ discovered.
   `ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy`: **a closed embedding is finite, and
   hence so is every morphism cutting its source out of its target by global sections** — which is
   every local model this development builds.
+- `ComplexAnalytic.AnalyticSpace.isFinite_of_comp_eq_of_isClosedEmbedding` and
+  `ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy_of_comp_eq`: **a finite morphism cut down
+  on both sides is finite** — given `q ≫ iX = iY ≫ p` with `p` finite, `iX` injective and `iY` a
+  closed embedding, `q` is finite, and in particular this holds when `iX` and `iY` cut their
+  sources out of `B` and `E` by global sections. This is the finiteness counterpart of
+  `ComplexAnalytic.AnalyticSpace.isLocalIso_of_isCutOutBy_pullbackΓ`
+  (`Oka/AnalyticSpace/CutOutLocalIso.lean`) and costs strictly less: no relation between the two
+  cutting families and no stalk computation.
+  `ComplexAnalytic.AnalyticSpace.isFinite_zeroLocusSubspaceHom`
+  (`Oka/AnalyticSpace/CutOutFibreProduct.lean`) is the consumer.
 - `ComplexAnalytic.AnalyticSpace.isFinite_comp_of_isClosedEmbedding`: **a closed embedding
   followed by a map that is closed and has finite fibres *over the image of that embedding* is
   finite**, even when the second factor is not.
@@ -297,6 +313,86 @@ those has this theorem for free. -/
 theorem isFinite_of_isCutOutBy {X Y : AnalyticSpace.{u}} (f : X ⟶ Y) {k : ℕ}
     {s : Fin k → Y.presheaf.obj (op ⊤)} (h : IsCutOutBy f.toLRSHom s) : IsFinite f :=
   isFinite_of_isClosedEmbedding f h.isClosedEmbedding
+
+/-- **A finite morphism cut down on both sides is finite.**
+
+Given `p : E ⟶ B` finite, a morphism `iX : X ⟶ B` whose base map is injective, a morphism
+`iY : Y ⟶ E` whose base map is a closed embedding, and a `q : Y ⟶ X` **over `p`** — that is, with
+`q ≫ iX = iY ≫ p` — the morphism `q` is finite.
+
+**Both fields are the corresponding field of `p` read through the square, and neither mentions a
+structure sheaf.** For the closed half, `q '' C = iX ⁻¹' (p '' (iY '' C))` for every `C ⊆ Y`: the
+square gives `iX ∘ q = p ∘ iY`, and injectivity of `iX` is what turns the image of `q` back into a
+preimage. So `q` is closed because `iY` is closed, `p` is closed and `iX` is continuous. For the
+fibre half, `iY` carries the fibre of `q` over `x` injectively into the fibre of `p` over `iX x`,
+which is finite.
+
+**Closedness of the image of `iX` is not used and neither is anything else about it.** Only `iY`
+has to be a closed embedding; `iX` has to be injective, and is continuous because it is a
+morphism.
+
+**What is not spent is a relation between the two subspaces.** The local-isomorphism statement of
+the same shape, `ComplexAnalytic.AnalyticSpace.isLocalIso_of_isCutOutBy_pullbackΓ`
+(`Oka/AnalyticSpace/CutOutLocalIso.lean`), asks for two `ComplexAnalytic.IsCutOutBy` data whose
+families are related by `ComplexAnalytic.AnalyticSpace.Hom.pullbackΓ`, and spends the full data in
+its stalk field. Here the families play no part — there need be no families at all — and what is
+left of the two data is the topology of the two immersions. That is why this statement is in this
+file, beside `ComplexAnalytic.AnalyticSpace.isFinite_of_isCutOutBy`, rather than beside its
+sibling: it adds no import to the file whose only import is `Oka/AnalyticSpace/Basic.lean`.
+
+**It is a square and not a pullback square.** Nothing here says `Y` is the fibre product
+`E ×_B X`, and the proof does not need it; a caller holding a fibre product holds a square and can
+use this, and a caller holding only a square is not asked for more. -/
+theorem isFinite_of_comp_eq_of_isClosedEmbedding {B E X Y : AnalyticSpace.{u}} {p : E ⟶ B}
+    {iX : X ⟶ B} {iY : Y ⟶ E} {q : Y ⟶ X} [IsFinite p]
+    (hX : Function.Injective (iX.toLRSHom.base : X → B))
+    (hY : IsClosedEmbedding (iY.toLRSHom.base : Y → E))
+    (hq : q ≫ iX = iY ≫ p) : IsFinite q := by
+  have hsq : (iX.toLRSHom.base : X → B) ∘ (q.toLRSHom.base : Y → X)
+      = (p.toLRSHom.base : E → B) ∘ (iY.toLRSHom.base : Y → E) := by
+    have h₁ : (((q ≫ iX).toLRSHom.base) : Y → B)
+        = (iX.toLRSHom.base : X → B) ∘ (q.toLRSHom.base : Y → X) := rfl
+    have h₂ : (((iY ≫ p).toLRSHom.base) : Y → B)
+        = (p.toLRSHom.base : E → B) ∘ (iY.toLRSHom.base : Y → E) := rfl
+    rw [← h₁, ← h₂, hq]
+  constructor
+  · intro C hC
+    have himg : (q.toLRSHom.base : Y → X) '' C
+        = (iX.toLRSHom.base : X → B) ⁻¹'
+            ((p.toLRSHom.base : E → B) '' ((iY.toLRSHom.base : Y → E) '' C)) := by
+      rw [← Set.image_comp, ← hsq, Set.image_comp, Set.preimage_image_eq _ hX]
+    rw [himg]
+    exact (IsFinite.isClosedMap (f := p) _ (hY.isClosedMap _ hC)).preimage
+      iX.toLRSHom.base.hom.continuous
+  · intro x
+    have hsub : (iY.toLRSHom.base : Y → E) '' ((q.toLRSHom.base : Y → X) ⁻¹' {x})
+        ⊆ (p.toLRSHom.base : E → B) ⁻¹' {(iX.toLRSHom.base : X → B) x} := by
+      rintro _ ⟨y, hy, rfl⟩
+      simp only [Set.mem_preimage, Set.mem_singleton_iff] at hy ⊢
+      have := congrFun hsq y
+      simp only [Function.comp_apply] at this
+      rw [← this, hy]
+    haveI : Finite ((p.toLRSHom.base : E → B) ⁻¹' {(iX.toLRSHom.base : X → B) x}) :=
+      IsFinite.finite_fiber _
+    exact (Set.Finite.of_finite_image ((Set.toFinite _).subset hsub)
+      hY.injective.injOn).to_subtype
+
+/-- **A finite morphism cut down on both sides by subspaces cut out by global sections is
+finite**, which is the theorem above at the data a caller usually holds:
+`ComplexAnalytic.IsCutOutBy` carries `isClosedEmbedding` as a field, so both hypotheses are that
+field and nothing else is read.
+
+**The two families are unrelated**, and their lengths `k` and `l` are independent: neither the
+pullback relation that `ComplexAnalytic.AnalyticSpace.isLocalIso_of_isCutOutBy_pullbackΓ` needs
+nor equality of the two lengths, which that statement also needs, is asked here. At the data that
+statement takes — `t j = p.pullbackΓ (s j)`, one family for both sides — this applies verbatim,
+so the two can be read at the same square. -/
+theorem isFinite_of_isCutOutBy_of_comp_eq {B E X Y : AnalyticSpace.{u}} {p : E ⟶ B}
+    {iX : X ⟶ B} {iY : Y ⟶ E} {q : Y ⟶ X} [IsFinite p] {k l : ℕ}
+    {s : Fin k → B.presheaf.obj (op ⊤)} {t : Fin l → E.presheaf.obj (op ⊤)}
+    (hX : IsCutOutBy iX.toLRSHom s) (hY : IsCutOutBy iY.toLRSHom t)
+    (hq : q ≫ iX = iY ≫ p) : IsFinite q :=
+  isFinite_of_comp_eq_of_isClosedEmbedding hX.isClosedEmbedding.injective hY.isClosedEmbedding hq
 
 /-- **A closed embedding followed by a map that is closed and has finite fibres over the image of
 that embedding is finite.**
