@@ -8,7 +8,7 @@ import Mathlib.Topology.IsLocalHomeomorph
 import Oka.Geometry.RingedSpace.PresheafedSpace.Gluing
 
 /-!
-# The coproduct of locally ringed spaces is covered by its inclusions
+# The coproduct of locally ringed spaces is covered by its inclusions, and is their disjoint union
 
 Material for two Mathlib files and not one; see `README.md` on the mirror tree, which asks for the
 split by destination.
@@ -93,6 +93,13 @@ fails to synthesise. Everything here is the transport across
   `AlgebraicGeometry.LocallyRingedSpace.isIso_stalkMap_sigmaDesc`: **a descent map is a local
   homeomorphism, and an isomorphism on stalks, as soon as each of its restrictions is.** Neither
   needs the index type finite.
+- `AlgebraicGeometry.LocallyRingedSpace.sigmaEquivSigma`: **the points of a coproduct are the
+  pairs (index, point of that member)**, as an equivalence of types.
+- `AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma`: **and that equivalence is a
+  homeomorphism** — the space underlying a coproduct is the topological disjoint union of the
+  spaces underlying its members. `AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma_symm_apply`
+  and `AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma_sigmaι_base` say it is the
+  identification made by the inclusions and not some other bijection.
 
 ## How the index of a point is recovered, and the route this file does not take
 
@@ -124,9 +131,20 @@ finite étale morphism is built from, because those are what has a consumer; eac
 ones is a separate small argument from
 `AlgebraicGeometry.LocallyRingedSpace.fiberSigmaDescEquiv` or from the cover.
 
-**No analogue of `AlgebraicGeometry.sigmaMk`**: the index map built below is not shown to be part
-of a homeomorphism onto a `Sigma` type, only to exist. That statement is true and would need
-exactly the `TopCat.sigmaIsoSigma` chain described above; nothing in this repository asks for it.
+**This section read *No analogue of `AlgebraicGeometry.sigmaMk`: the index map built below is not
+shown to be part of a homeomorphism onto a `Sigma` type, only to exist* until 2026-09-20**, when
+`AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma` was added; taxis #2091 is what asked for it,
+and the whole of what asked was a statement one level up about the connected components of a cover.
+**That sentence went on to say the statement *would need exactly the `TopCat.sigmaIsoSigma` chain
+described above*, and that half was wrong**: the homeomorphism below is built from
+`AlgebraicGeometry.LocallyRingedSpace.sigmaι_base_eq_iff`,
+`AlgebraicGeometry.LocallyRingedSpace.exists_sigma_ι_base_eq` and the open-embedding half of
+`AlgebraicGeometry.LocallyRingedSpace.sigmaι_isOpenImmersion` — this file's own three statements,
+the same three the index map is built from — and inverts nothing. **What the paragraph *How the
+index of a point is recovered* says about that chain is unaffected and was re-run**: with the
+composite spelled out, `rw [ι_preservesColimitIso_hom_assoc]` still reports *did not find an
+occurrence of the pattern* against a goal that displays as that pattern, which is the
+definitional-versus-syntactic seam it describes.
 
 ## Implementation notes
 
@@ -524,5 +542,65 @@ theorem isIso_stalkMap_sigmaDesc (h : ∀ i (x : f i), IsIso ((g i).stalkMap x))
     (x : (∐ f : LocallyRingedSpace.{u})) : IsIso ((Sigma.desc g).stalkMap x) := by
   obtain ⟨i, z, rfl⟩ := exists_sigma_ι_base_eq f x
   exact isIso_stalkMap_of_comp (Sigma.ι f i) (Sigma.desc g) (g i) (Sigma.ι_desc g i) z (h i z)
+
+/-! ### The coproduct's space is the disjoint union of the members' spaces
+
+The index map of the section above says a point of `∐ f` has a well-defined index; this section
+says the pair (index, point of that member) determines it and exhausts it, as a `Homeomorph`. It
+is the conclusion the three statements above are the hypotheses of, and it is stated at the level
+of spaces because that is the only level at which a `Sigma` type is available.
+-/
+
+/-- **The points of a coproduct of locally ringed spaces are the pairs (index, point of that
+member)**, as an equivalence of types.
+
+Injectivity is `AlgebraicGeometry.LocallyRingedSpace.sigmaι_base_eq_iff`, read as the statement
+that the pair is recovered from the point, and surjectivity is
+`AlgebraicGeometry.LocallyRingedSpace.exists_sigma_ι_base_eq`. **Neither half asks the index type
+to be finite** and neither goes through `CategoryTheory.preservesColimitIso`. -/
+noncomputable def sigmaEquivSigma :
+    (Σ i, (f i : Type u)) ≃ ((∐ f : LocallyRingedSpace.{u}) : Type u) :=
+  Equiv.ofBijective (fun p ↦ (Sigma.ι f p.1).base p.2)
+    ⟨fun p q h ↦ by
+        simpa [Sigma.ext_iff] using (sigmaι_base_eq_iff f p.1 q.1 p.2 q.2).mp h,
+      fun x ↦ by
+        obtain ⟨i, y, hy⟩ := exists_sigma_ι_base_eq f x
+        exact ⟨⟨i, y⟩, hy⟩⟩
+
+/-- **And that equivalence is a homeomorphism**: the space underlying a coproduct of locally
+ringed spaces is the topological disjoint union of the spaces underlying its members.
+
+The map out of the `Sigma` type is continuous because each inclusion is (`continuous_sigma`) and
+open because each inclusion is an open embedding (`isOpenMap_sigma` at
+`AlgebraicGeometry.LocallyRingedSpace.sigmaι_isOpenImmersion`), so
+`Equiv.toHomeomorphOfContinuousOpen` upgrades
+`AlgebraicGeometry.LocallyRingedSpace.sigmaEquivSigma` and this is its inverse. **The direction is
+chosen so that the statement reads as an identification of `∐ f`**; it is the inverse that is
+`rfl` on a pair, which is what
+`AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma_symm_apply` records.
+
+**This is `AlgebraicGeometry.sigmaMk`'s analogue at this level**, and the paragraph *How the index
+of a point is recovered* above is why it is not built the way that one is: nothing here inverts
+`TopCat.sigmaIsoSigma` or rewrites across `CategoryTheory.Discrete.natIsoFunctor`. -/
+noncomputable def sigmaHomeoSigma :
+    ((∐ f : LocallyRingedSpace.{u}) : Type u) ≃ₜ Σ i, (f i : Type u) :=
+  ((sigmaEquivSigma f).toHomeomorphOfContinuousOpen
+    (continuous_sigma fun i ↦ (Sigma.ι f i).base.hom.continuous)
+    (isOpenMap_sigma.mpr fun i ↦ (sigmaι_isOpenImmersion f i).base_open.isOpenMap)).symm
+
+/-- **The inverse sends a pair to the image of its second component under the inclusion**, by
+`rfl`: it is `AlgebraicGeometry.LocallyRingedSpace.sigmaEquivSigma`'s own map. -/
+@[simp]
+theorem sigmaHomeoSigma_symm_apply (i : ι) (y : f i) :
+    (sigmaHomeoSigma f).symm ⟨i, y⟩ = (Sigma.ι f i).base y := rfl
+
+/-- **So the homeomorphism sends a point of a member to its own index and itself.**
+
+This is the form a consumer uses: it says that the identification is the one made by the
+inclusions and not some other bijection with the same source and target. -/
+@[simp]
+theorem sigmaHomeoSigma_sigmaι_base (i : ι) (y : f i) :
+    sigmaHomeoSigma f ((Sigma.ι f i).base y) = ⟨i, y⟩ :=
+  (sigmaHomeoSigma f).apply_eq_iff_eq_symm_apply.mpr rfl
 
 end AlgebraicGeometry.LocallyRingedSpace

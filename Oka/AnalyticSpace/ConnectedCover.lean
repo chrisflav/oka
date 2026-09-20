@@ -16,9 +16,16 @@ either direction**. `Oka/AnalyticSpace/FundamentalGroup.lean`'s `## What is not 
 absence in a bullet pinned to the commit that adds that file, and this file is what narrows it:
 over a Hausdorff preconnected base the two conditions **agree**, so every piece of the
 decomposition theorem there has **connected total space**. **That is one step short of the pieces
-being the topological connected components of that total space**, which is a further statement and
-is proved nowhere in this repository; `## What is not here` prices the three steps between and says
-which of their instruments are already in the tree. taxis #2082 is the filing.
+being the topological connected components of that total space**, which is a further statement;
+`## What is not here` prices the three steps between and says which of their instruments are
+already in the tree. taxis #2082 is the filing.
+
+**That sentence ended *and is proved nowhere in this repository*, in the present tense, until
+2026-09-20**, when `Oka/AnalyticSpace/ConnectedComponents.lean` proved it as
+`…SeparatedFiniteEtaleOver.exists_connectedComponent_decomposition`; the dated record is here and
+the bullet below carries what the pricing got wrong. **Nothing else in this file moves with it**:
+the statements here are about an object and the one there is about a space, and that module
+imports this one rather than the other way round.
 
 **The base hypotheses are exactly the ones under which the fibre functor is a fibre functor** —
 `[T2Space X]` and `[PreconnectedSpace X]`, which is what
@@ -185,9 +192,14 @@ lemma, no match lemma, no congruence lemma — and the dump total moves **4949 �
   records the failing
   `#synth` — so the categorical condition has no fibre-functor theory there and neither proof
   below transports. **Both statements are at the separated covers and only there.**
-* **Nothing that makes the pieces of the decomposition the topological connected components of
-  the total space, and the three steps it would take are named rather than gestured at.** What is
-  proved is `…SeparatedFiniteEtaleOver.isConnected_iff_connectedSpace` read at each piece: *every
+* **This bullet opened *Nothing that makes the pieces of the decomposition the topological
+  connected components of the total space* until 2026-09-20**, when
+  `…SeparatedFiniteEtaleOver.exists_connectedComponent_decomposition`
+  (`Oka/AnalyticSpace/ConnectedComponents.lean`, taxis #2091) made that statement; **the three
+  steps below are left as they stood, because they are what the absence was priced at and two of
+  the judgements in them were repaired by the push that closed it** — the paragraph after the
+  census says which. What is proved **here** is
+  `…SeparatedFiniteEtaleOver.isConnected_iff_connectedSpace` read at each piece: *every
   `f i` has connected total space*. `Oka/AnalyticSpace/FundamentalGroup.lean`'s
   `…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` gives an isomorphism `∐ f ≅ A` **in
   the category** and nothing about `A.left` as a space, so *the pieces are the components* needs
@@ -231,6 +243,23 @@ lemma, no match lemma, no congruence lemma — and the dump total moves **4949 �
   proof of this repository — and `≃ₜ` occurs **12** times in **10** files, **none of them about the
   total space of an object of this category**: they are fibres, charts of `ℂ^n`, a cylinder, a
   sheet, and the locally ringed space statement of step 3.
+
+  **What the push that closed this absence found, recorded here because this bullet priced it
+  wrongly.** *This is the expensive step of the three* was said of step 1 and is the judgement
+  that was wrong: the crossing is four lines —
+  `CategoryTheory.Limits.HasColimit.isoOfEquivalence` at
+  `CategoryTheory.Discrete.equivalence Equiv.ulift.symm` and an identity natural isomorphism,
+  which is `…SeparatedFiniteEtaleOver.coprodIsoULift` — and it is the cheapest of the three to
+  write. **Step 2 is where the work was**, exactly as *what no declaration does is conclude from
+  them* says: the conclusion is
+  `AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma`, added by that push to
+  `Oka/Geometry/RingedSpace/LocallyRingedSpace/HasColimits.lean`, and it is **not** built from the
+  four instruments this bullet names but from that file's own
+  `…sigmaι_base_eq_iff`, `…exists_sigma_ι_base_eq` and the open-embedding half of
+  `…sigmaι_isOpenImmersion`. **Step 3 is as priced**, one application of
+  `AlgebraicGeometry.LocallyRingedSpace.homeoOfIso`. **The `≃ₜ` census above is pinned to the
+  commit that adds this file and stays exact there**; past it the count moves, and the module that
+  moves it is the one named above.
 * **No restatement of the decomposition theorem.**
   `…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` is
   `Oka/AnalyticSpace/FundamentalGroup.lean`'s and stays there; what this file changes is what a

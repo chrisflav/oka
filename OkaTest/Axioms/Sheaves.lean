@@ -556,6 +556,13 @@ from: `AlgebraicGeometry.LocallyRingedSpace.isSeparatedMap_base_sigmaDesc`, sinc
 `IsSeparatedMap` is no part of `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` and a descent map can
 be finite étale without it.
 
+**Since 2026-09-20 the last four assertions of this section are of a different kind from the rest
+of it**, and the sentence above does not reach them: they are the identification of the
+coproduct's space with the topological disjoint union of the members' —
+`AlgebraicGeometry.LocallyRingedSpace.sigmaEquivSigma` and `…sigmaHomeoSigma`, with the two
+equations that pin the map against `CategoryTheory.Limits.Sigma.ι`. They are the conclusion the
+cover and the disjointness above are the hypotheses of, and taxis #2091 is what asked for them.
+
 **Every declaration that second file lists under `## Main results` is asserted here, and that is
 still not a complete guard of it.** The sentence that stood here named `sigmaOpenCover` among the
 unasserted ones and it is asserted below; what remains unasserted is what the file does not
@@ -654,6 +661,34 @@ info: 'AlgebraicGeometry.LocallyRingedSpace.disjoint_opensRange_sigmaOpenCover' 
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms AlgebraicGeometry.LocallyRingedSpace.disjoint_opensRange_sigmaOpenCover
+
+/--
+info: 'AlgebraicGeometry.LocallyRingedSpace.sigmaEquivSigma' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms AlgebraicGeometry.LocallyRingedSpace.sigmaEquivSigma
+
+/--
+info: 'AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma
+
+/--
+info: 'AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma_symm_apply' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma_symm_apply
+
+/--
+info: 'AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma_sigmaι_base' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma_sigmaι_base
 
 /-! ### The inverse image of a locally ringed space along a continuous map
 
@@ -765,6 +800,21 @@ info: 'IsLocalHomeomorph.sSup_sheetOpens' depends on axioms:
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms IsLocalHomeomorph.sSup_sheetOpens
+
+
+/-! ### The connected component of a point of a disjoint union
+
+`Oka/Topology/Connected/Clopen.lean`. Pure topology, and the guard sits here for the reason the
+sheets above do: beside the material of the same kind, and not beside its consumer, which is
+`Oka/AnalyticSpace/ConnectedComponents.lean` and is guarded in `OkaTest/Axioms/Morphisms.lean`.
+**One declaration, and it is the whole of that file.** -/
+
+/--
+info: 'connectedComponent_sigmaMk' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms connectedComponent_sigmaMk
 
 
 /-! ### Over a sheet, the inverse image is the base

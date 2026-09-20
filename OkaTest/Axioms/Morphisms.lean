@@ -1434,6 +1434,28 @@ this one follows; the published check on the statements of a pullback square ret
 figures at both of that push's ends, **no name of the eight carrying** *isPullback* **or**
 *hasPullback*. **This clause and the section it names were added by one push**, 2026-09-20.
 
+**Appended after that one is the first section of this file whose module concludes about a total
+space as a space.** `### The total space of a cover is the disjoint union of its connected
+components` guards the six declarations of `Oka/AnalyticSpace/ConnectedComponents.lean`, which
+carries `…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` across to a `Homeomorph`
+`A.left ≃ₜ Σ i, (g i).left` and reads the connected components of the total space off it — the
+step the section above's module records as absent in its own `## What is not here`, pinned to the
+commit that adds it. **Five of the six bind no hypothesis on the base at all and the sixth binds
+all three**, which is a `#check` run over the six and is the reverse of the preceding section's
+four-and-four split; **one of the six binds its index type in `Type`**, which is the universe
+crossing and is what that absence was priced at. **Two further declarations of the same push are
+not guarded here**, being mirror-tree material:
+`AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma` and `connectedComponent_sigmaMk`, both in
+`OkaTest/Axioms/Sheaves.lean`.
+
+**The two counts named two clauses above are unmoved by this push too, and so are the nine guards
+and the eight**: `git diff` against the commit this section is cut from touches no line of any
+section of this file, the section being appended past the last guard of the one before it. The
+published check on the statements of a pullback square returns the same four figures at both of
+this push's ends — **nine and eight unfiltered and eight and six with the exclusion** — and **no
+name of the six carries** *isPullback* **or** *hasPullback*. **This clause and the section it names
+were added by one push**, 2026-09-20.
+
 **Named rather than counted from the end**, which is the repair and not the description. **The
 sentence this replaces called them *the last two***; they stopped being that when two further
 sections were appended past them — and one of those two was written across two lines, so no
@@ -10226,3 +10248,87 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected_of_
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isPreconnected_of_isConnected
+/-! ### The total space of a cover is the disjoint union of its connected components
+
+`Oka/AnalyticSpace/ConnectedComponents.lean`, the whole of it. **Six names**: the space underlying
+a disjoint union of analytic spaces as a topological disjoint union,
+`ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma`; an isomorphism of separated covers as a
+homeomorphism on total spaces, `…SeparatedFiniteEtaleOver.homeoLeftOfIso`; the categorical
+coproduct of separated covers as their disjoint union, `…SeparatedFiniteEtaleOver.coprodIsoSigma`,
+and the universe crossing that makes it applicable to the decomposition theorem's index type,
+`…SeparatedFiniteEtaleOver.coprodIsoULift`; the three together,
+`…SeparatedFiniteEtaleOver.coprodLeftHomeoSigma`; and the theorem they are for,
+`…SeparatedFiniteEtaleOver.exists_connectedComponent_decomposition`.
+
+**This section's module is the first on this line to conclude about a total space as a space**,
+which is what separates it from the section above: that one settles that the two readings of
+*connected* agree at an object, and this one carries the decomposition of
+`…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` across to a `Homeomorph` and reads the
+connected components off it. **The step that was missing was not analytic and is not here**: it is
+`AlgebraicGeometry.LocallyRingedSpace.sigmaHomeoSigma`, added by the same push to
+`Oka/Geometry/RingedSpace/LocallyRingedSpace/HasColimits.lean` and guarded in
+`OkaTest/Axioms/Sheaves.lean`, together with `connectedComponent_sigmaMk` of
+`Oka/Topology/Connected/Clopen.lean`, guarded in that same file.
+
+**What the six telescopes bind, by `#check` over the six and not by reading the file.** **Five of
+the six bind no hypothesis on the base at all** — not `[T2Space]`, not `[PreconnectedSpace]`, not
+`[Nonempty]` — because the five definitions are transports and identifications and no covering
+theory is spent in any of them; **the sixth binds all three**, and they are
+`…SeparatedFiniteEtaleOver.exists_isConnected_decomposition`'s own and are added to nothing.
+**One of the six does not mention the covers at all**,
+`ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma`, whose statement is about
+`ComplexAnalytic.AnalyticSpace.sigma` at an arbitrary family of analytic spaces. **One of the six
+binds its index type in `Type` rather than in `Type u`**,
+`…SeparatedFiniteEtaleOver.coprodIsoULift`, and that is the whole of what it is for: every other
+statement here takes the index in `Type u`,
+which is where `ComplexAnalytic.AnalyticSpace.sigma` takes its own. **`connectedComponent` appears
+in the conclusion of one of the six** and nowhere else in this file, that one being the theorem.
+
+**The routing.** The topic table at the head of `OkaTest/Axioms.lean` routes *morphisms of analytic
+spaces* here, and the covers separated over a base are where every section of this neighbourhood
+sits; the two declarations of this push that are **not** about them are in
+`OkaTest/Axioms/Sheaves.lean`, which is the file for mirror-tree material, and the split is by what
+the statement is about and not by which push wrote it. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.homeoLeftOfIso' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.homeoLeftOfIso
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.coprodIsoSigma' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.coprodIsoSigma
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.coprodIsoULift' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.coprodIsoULift
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.coprodLeftHomeoSigma' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.coprodLeftHomeoSigma
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_connectedComponent_decomposition'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_connectedComponent_decomposition

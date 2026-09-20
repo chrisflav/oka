@@ -43,6 +43,7 @@ import Oka.AnalyticSpace.Basic
 import Oka.AnalyticSpace.Clopen
 import Oka.AnalyticSpace.ClopenEqLocus
 import Oka.AnalyticSpace.Coherent
+import Oka.AnalyticSpace.ConnectedComponents
 import Oka.AnalyticSpace.ConnectedCover
 import Oka.AnalyticSpace.Continuity
 import Oka.AnalyticSpace.CoveringMap
@@ -236,6 +237,7 @@ import Oka.Statement
 import Oka.StructureSheaf
 import Oka.Topology.Algebra.Polynomial
 import Oka.Topology.Category.TopCat.Opens
+import Oka.Topology.Connected.Clopen
 import Oka.Topology.Covering.Basic
 import Oka.Topology.Covering.Quotient
 import Oka.Topology.IsLocalHomeomorph
