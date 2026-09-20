@@ -805,9 +805,13 @@ info: 'IsLocalHomeomorph.sSup_sheetOpens' depends on axioms:
 /-! ### The connected component of a point of a disjoint union
 
 `Oka/Topology/Connected/Clopen.lean`. Pure topology, and the guard sits here for the reason the
-sheets above do: beside the material of the same kind, and not beside its consumer, which is
-`Oka/AnalyticSpace/ConnectedComponents.lean` and is guarded in `OkaTest/Axioms/Morphisms.lean`.
-**One declaration, and it is the whole of that file.** -/
+sheets above do: beside the material of the same kind, and not beside its consumer.
+**One declaration, and it is the whole of that file.**
+
+**That consumer read `Oka/AnalyticSpace/ConnectedComponents.lean`, guarded in
+`OkaTest/Axioms/Morphisms.lean`, until 2026-09-20**, when taxis #2094 put
+`Oka/Topology/Homeomorph/Lemmas.lean` between the two; the declaration below is now read by the
+section directly after this one, and the analytic module reads it only through that file. -/
 
 /--
 info: 'connectedComponent_sigmaMk' depends on axioms:
@@ -815,6 +819,44 @@ info: 'connectedComponent_sigmaMk' depends on axioms:
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms connectedComponent_sigmaMk
+
+
+/-! ### What a homeomorphism does to connected components
+
+`Oka/Topology/Homeomorph/Lemmas.lean`. Pure topology again, and the whole of that file: the image
+of a connected component under a homeomorphism, the components of a space homeomorphic to a
+disjoint union of connected spaces, and the finiteness of those components at a finite index type.
+**Three declarations, and each is built from the one before it.**
+
+**The split between this section's module and the one above's is by upstreaming destination and
+is measured**: `Mathlib.Topology.Connected.Clopen` is already in the closure of
+`Mathlib.Topology.Homeomorph.Lemmas`, so the file below costs its target nothing, while the
+statements below put in the file above's target would cost that one ten Mathlib modules. Both
+modules' docstrings publish the runs. **What reads both is
+`Oka/AnalyticSpace/ConnectedComponents.lean`**, guarded in `OkaTest/Axioms/Morphisms.lean` — the
+section above's module directly here and only through this one there — and neither of these two
+files mentions anything analytic. -/
+
+/--
+info: 'Homeomorph.image_connectedComponent' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms Homeomorph.image_connectedComponent
+
+/--
+info: 'Homeomorph.connectedComponent_sigma' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms Homeomorph.connectedComponent_sigma
+
+/--
+info: 'Homeomorph.finite_connectedComponents_of_sigma' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms Homeomorph.finite_connectedComponents_of_sigma
 
 
 /-! ### Over a sheet, the inverse image is the base

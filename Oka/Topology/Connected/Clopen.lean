@@ -48,6 +48,13 @@ and `sigma_mk_injective` from that module, in `Sigma.isConnected_iff`'s own proo
   set, and a reader who wants the quotient identified with the index type would have to say what
   happens over an empty member — a member with empty carrier is excluded here by
   `ConnectedSpace`, which is why the set-level statement needs no such case.
+  **This bullet is about this file and was never a claim about the tree**, and since 2026-09-20 it
+  would be false as one: `Oka/Topology/Homeomorph/Lemmas.lean`, which reads the statement below,
+  concludes `Finite (ConnectedComponents X)` for a space homeomorphic to a disjoint union of
+  finitely many connected spaces. **It is still not an identification of the quotient with the
+  index type**, for the reason this bullet gives, and that file's own `## What is not here` says
+  so. The split is by destination: nothing there goes to
+  `Mathlib/Topology/Connected/Clopen.lean`, because every statement in it names a homeomorphism.
 -/
 
 open Set

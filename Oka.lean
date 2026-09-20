@@ -240,6 +240,7 @@ import Oka.Topology.Category.TopCat.Opens
 import Oka.Topology.Connected.Clopen
 import Oka.Topology.Covering.Basic
 import Oka.Topology.Covering.Quotient
+import Oka.Topology.Homeomorph.Lemmas
 import Oka.Topology.IsLocalHomeomorph
 import Oka.Topology.Maps.Proper.Basic
 import Oka.Topology.SeparatedMap

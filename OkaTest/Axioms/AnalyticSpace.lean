@@ -972,7 +972,17 @@ info: 'ComplexAnalytic.AnalyticSpace.ιCLinear' depends on axioms:
 
 `Oka/AnalyticSpace/Sigma.lean`. The object, its inclusions, the descent map, the non-vacuity
 statements — the disjoint union is empty at an empty index type and at empty members, and an
-inclusion is not surjective — and that an inclusion is not an isomorphism. -/
+inclusion is not surjective — and that an inclusion is not an isomorphism.
+
+**And, since 2026-09-20, that its underlying space is the topological disjoint union of the
+members' underlying spaces**: `ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma` with the two lemmas
+beside it, `…sigmaHomeoSigma_symm_apply` and `…sigmaHomeoSigma_preimage_range`. **Those three
+are this section's only assertions over a statement about the topology**; every other one here is
+about the carrier, the `ℂ`-algebra structure or the universal property. **The first of them was
+guarded in `OkaTest/Axioms/Morphisms.lean` until that date**, beside the covers that consume it,
+which is a routing this file's own rule does not support: the statement is about
+`ComplexAnalytic.AnalyticSpace.sigma` at an arbitrary family of analytic spaces and mentions no
+cover. taxis #2094 moved the declaration and its guard together and wrote the other two. -/
 
 /--
 info: 'ComplexAnalytic.AnalyticSpace.sigma' depends on axioms:
@@ -994,6 +1004,27 @@ info: 'ComplexAnalytic.AnalyticSpace.sigmaι' depends on axioms:
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.sigmaι
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma_symm_apply' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma_symm_apply
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma_preimage_range' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma_preimage_range
 
 /--
 info: 'ComplexAnalytic.isCLinearHom_sigmaDesc' depends on axioms:
