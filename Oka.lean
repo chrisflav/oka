@@ -114,6 +114,7 @@ import Oka.AnalyticSpace.SimpleZeroPolynomial
 import Oka.AnalyticSpace.SimpleZeroStalk
 import Oka.AnalyticSpace.SimpleZeroTopology
 import Oka.AnalyticSpace.SimplyConnected
+import Oka.AnalyticSpace.SimplyConnectedCriterion
 import Oka.AnalyticSpace.StalkLocalInverse
 import Oka.AnalyticSpace.ZeroLocus
 import Oka.Analytification.AffineCover

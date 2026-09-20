@@ -10428,3 +10428,84 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_iso_coprod_
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_iso_coprod_id
+
+/-! ### That hypothesis is a property of the base and not of the point
+
+`Oka/AnalyticSpace/SimplyConnectedCriterion.lean`, the whole of it. **Four names, and all four are
+theorems**: the hard direction of the criterion,
+`…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_iso_id`; the criterion itself,
+`…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_iff`; and the two transports between
+points it buys, `…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_congr` and
+`…SeparatedFiniteEtaleOver.nontrivial_fundamentalGroup_congr`.
+
+**This section is the converse of the one above it and nothing else is new in it.** The section *A
+base whose fundamental group is trivial has only trivial covers* guards the implication from a
+trivial group at a named point to an isomorphism `A ≅ …SeparatedFiniteEtaleOver.id X` for every
+connected cover; what is guarded here is that implication run backwards, and the consequence that
+falls out of having both — the right-hand side of the criterion names no point, so the left-hand
+side cannot depend on which point is named.
+
+**What the telescopes bind, by `#check` over the four and not by reading the file.** **All four
+bind `[T2Space]`, `[PreconnectedSpace]` and `[Nonempty]` of the base and no other instance
+argument**, which is the whole of the section variable of that module; **not one of the four binds
+`[Subsingleton (…SeparatedFiniteEtaleOver.fundamentalGroup x)]` and not one binds
+`[CategoryTheory.PreGaloisCategory.IsConnected A]`.** Both absences are the point rather than an
+economy: in the section above, three of the four bind the first and two of the four bind the
+second, because there the trivial group is a hypothesis and the connected cover is a fixed object.
+Here the first is a *conclusion* and the second is quantified over inside one, so neither can be an
+instance argument of a telescope. **Two of the four take one point of the base and two take two**,
+the two-point ones being the transports.
+
+**No `def` and no `noncomputable` name**, which is the other difference from the section above:
+that one's `…SeparatedFiniteEtaleOver.isTerminalFintypeFiber` is data and is the only
+`noncomputable` of its four. **All four lists below are the standard three and none of the four is
+itself data**, which is not in tension with the first: the proofs reach choice through Mathlib's
+`CategoryTheory.PreGaloisCategory.autMulEquivAutGalois`, a `noncomputable def`, and through the
+`Nonempty.some` that opens the criterion's hypothesis, and a `theorem` may use either.
+
+**At the commit this section is written at, the four names occur in the comment-stripped code of
+exactly two modules — the one that declares them and this file — and no statement of this
+repository consumes any of them.** That is the position
+`…SeparatedFiniteEtaleOver.fundamentalGroup` was in until the section directly above this one was
+written, and it is said here rather than left to be discovered: **the transports have nothing to
+carry yet**, because the only base at which this repository computes anything about this group is
+`OkaTest/FundamentalGroup.lean`'s punctured line, whose `nontrivial_fundamentalGroup` is already
+proved at every point of it directly and needs no transport from one. What the criterion is for is
+the other direction, and that is a base this repository does not yet have.
+
+**The routing.** The topic table at the head of `OkaTest/Axioms.lean` routes *morphisms of analytic
+spaces* here and these are statements about the covers of a base, which is where the four sections
+above this one are; the group of `OkaTest/Axioms/Analysis.lean`'s row — *`π₁(ℂ ∖ {0})`* — is
+`Oka/Analysis/Complex/FundamentalGroup.lean`'s and no name of this push belongs there. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_iso_id'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_iso_id
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_iff'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_iff
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_congr'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_congr
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nontrivial_fundamentalGroup_congr'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nontrivial_fundamentalGroup_congr
