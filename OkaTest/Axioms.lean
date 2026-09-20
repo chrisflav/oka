@@ -389,6 +389,13 @@ lana-agents/oka#492, where a reviewer verified the cited declaration through
 `scripts/DumpOkaDecls.lean`'s `module<TAB>name` rows, correctly, and the false clause was the one
 beside it.
 
+**Since 2026-09-20 one script does join two paths of this repository to each other**, and it is
+`scripts/module_graph.py`; the paragraph opening *The instrument this rule has asked for* says what
+it reads, what it was run against before being believed, and what it still cannot decide. **Neither
+pinned sentence above is retired by it**: each is a measurement at `5a525bc`, neither was written in
+the present tense, and the hole the second of them names — that no script joins a backticked *name*
+to the *path* beside it — is still open, this one joining paths to paths and nothing else.
+
 **The two failure modes, and each has cost this repository a push.** The first is **inferring the
 relation from the file names or from `Oka.lean`'s ordering**, and that ordering is not the graph:
 the list is alphabetical, and at `ca96745` **117 of its 214 adjacent pairs are
@@ -810,6 +817,157 @@ to the commit instead**, because the phrase is inherited by every later push to 
 measurement is not: the push repairing the instrument paragraph above re-derived it and it is still
 **42 / 22** over **324**, but that is a second run and not the same claim. A fifth sweep should
 re-derive its own figure at its own head and should expect to have raised it again.
+
+**The instrument this rule has asked for since `5a525bc` is now a script, and the clause saying it
+is not is retired here.** `scripts/module_graph.py` is the walk: it reads
+`scripts/import_cost.py`'s `IMPORT` over that module's own nesting-aware `strip_comments`, closes
+the repository-internal edges in both directions, and answers the three questions of a pair, the
+downstream set, the upstream set and the direct importers, with `--grep` and `--word` over the
+comment-stripped **code** of a set. `README.md` names it, it has a `--self-test` that plants the
+four hazards this paragraph already records — an `import` line inside a comment, a `public import`,
+a pair whose names look
+ordered and is not, and an aggregator that conducts — and it is a tool and not a gate, for the
+reason `README.md` gives of the other three. **That sentence read *at `5a525bc` no script in this
+repository measures it* and is kept above as the pin it always was**: it is exact at `5a525bc` and
+this push is what makes it a fact about a commit rather than about the tree.
+
+**The script is not evidence about itself, so it was run against the figures this file already
+carries.** At `ca96745` it returns **787** repository-internal import edges, **30** of them written
+`public import` in **13** files, and **117** of `Oka.lean`'s **214** adjacent pairs incomparable —
+the three figures the paragraphs above state at that commit, each reproduced without being read off
+them. The `Oka/Analytification/StandardEtaleFiniteness.lean` and
+`…/StandardEtaleLocalIso.lean` closures come back **88** and **90** at that commit on the
+self-inclusive count those paragraphs use. **A walk that agreed with nothing already published
+would be the thing to distrust**, which is why this control is here and not in the pull request.
+
+**The fifth sweep, at `0b2759b`, is the first to run a pattern *inside* the column the second sweep
+left unread.** Same population rule — every tracked `.lean` under `Oka/` and `OkaTest/` together
+with `Oka.lean` and `OkaTest.lean`, now **355** files — comment content alone, whitespace-normalised
+and cut into sentences, with a fourth splitter: **702** sentences carry a dependency token, **338**
+name a second module of this repository in the sentence, **167** name one in a neighbouring
+sentence and **197** name none in either. **Those figures are not comparable with 402 / 180 / 90 /
+132**, for the reason the paragraph opening *The two splitters do not agree* gives, and this one
+counts `importer` and `importing` as tokens where the description of the earlier runs names four
+words; the three columns of a run are comparable with each other and with nothing else.
+
+**Of the 197, thirty-six match one of the two narrow patterns and a hundred and sixty-one match
+neither and are still unread.** The third sweep's published downstream-set pattern matches **17**
+of them, none in this file; a second pattern for the *importer* shape — a quantifier immediately
+before `imports`, or `imports` immediately before *it*, *this*, *them*, *either* or *both*, or the
+word `importer`, or `imported by`, or `is not imported` — matches **20**, one of them in this file,
+with one sentence matching both. **The importer shape had never been run as a pattern**, and the
+paragraph opening *What the sweep did not reach* is why it was run here: the cheapest member of this
+column that anybody has ever checked was false, and it was found by a reviewer looking at a file for
+another reason.
+
+**Over the whole population, not only the residue, the downstream-set pattern returns 44, of which
+22 are in this file.** The **22** outside it are the twenty the paragraph opening *The fourth sweep,
+at `7a99bfc`* accounts for, plus exactly **two** written since, and both are in
+`Oka/AnalyticSpace/`.
+
+* `Oka/AnalyticSpace/GaloisCategory.lean`'s *"The class can now be cited by name from any module
+  downstream of this one, and only from there"* — **true, in both directions and with no
+  exception.** The modules of this repository whose import closure contains
+  `Mathlib/CategoryTheory/Galois/Basic.lean` are **104**, and that set is exactly this file, its
+  **101** downstream modules and the two aggregators: **0** modules can name the class without being
+  downstream of it and **0** downstream modules cannot. **The walk is half of this measurement and
+  not the whole of it** — the other half is a Mathlib closure per module, which is
+  `scripts/import_cost.py`'s graph and not this one, and a verdict of the form *only from there*
+  needs both because the *only* is a claim about what is **not** reachable by the other route.
+* `Oka/AnalyticSpace/ConnectedComponents.lean`'s *"without this nothing downstream elaborates at
+  all"*, of the universe crossing — **not a claim of this class**, in the way
+  `Oka/Analytification/CoverIndependence.lean`'s above is not: its *downstream* is of the
+  construction and not of the import graph, and under the import-graph reading it is plainly false,
+  that file having **97** downstream modules of which nearly all are test modules that name the
+  crossing nowhere. **The reading that makes it checkable is the file's own declaration order, and
+  under that one it is false by one**: `…SeparatedFiniteEtaleOver.coprodLeftHomeoSigma`, the
+  declaration immediately below it, neither names it nor needs it, and only the theorem after *that*
+  does. **It is recorded and not repaired**, because the reading its own sentence supports — the
+  steps that consume the decomposition — is true, and a sweep that repaired on the weaker of two
+  readings would be claiming the stronger.
+
+**The importer column's other decidable members are four, and all four are true.** Each is a binary
+claim about a **Mathlib** file rather than a size, so `scripts/import_cost.py` decides it and the
+carve-out for *closure-size figures against Mathlib* does not reach it:
+`Oka/Analytification/LocalisationIndependence.lean`'s *"`Cover/Directed.lean` is not imported"*;
+`Oka/Analytification/OpenBaseFiniteness.lean`'s *"this file does not import it"*, of algebraic
+closedness, which holds for `Mathlib/Analysis/Complex/Polynomial/Basic.lean` and for
+`Mathlib/FieldTheory/IsAlgClosed/Basic.lean` alike;
+`Oka/RingTheory/MvPolynomial/Localization.lean`'s *"that file is not imported"*, of
+`Mathlib/RingTheory/Extension/Presentation/Basic.lean`; and
+`OkaTest/FiniteMorphism.lean`'s *"`Mathlib.Analysis.Complex.Polynomial.Basic` is imported by this
+file for `Complex.isAlgClosed` alone, and `Oka` does not bring it in"*, whose second half is the one
+worth running — it is in that file's closure of **3557** and not in `Oka`'s of **3513**. The rest of
+the 20 are marginal-cost sentences already pinned to a commit, this file's own text, or statements
+of the rule rather than claims about the tree.
+
+**The five grep-decidable verdicts of the third and fourth sweeps were re-run at `0b2759b`, and
+all five reproduce with their sets grown.** `Oka/Analytification/AffineCover.lean`: the four
+tokens in the code of **0** of **130** downstream modules, against 124 then.
+`OkaTest/CoherentFree.lean`: neither spelling in the code of its **3**, so still true and still
+vacuous. `Oka/Analytification/UniversalProperty.lean`: `zeroLocusSubspaceι` in **7** of **153**,
+`restrictTopIso` in **3**, `ComplexAnalytic.toAmbient` in **0**, which is the token that settles it.
+`Oka/Algebra/Category/ModuleCat/Sheaf/Quasicoherent.lean`: `relations.s ≫` in **1** of **101**, and
+it is `Oka/Analytification/SheafCoherent.lean`. `Oka/AnalyticSpace/Finite.lean`: `IsProper` as a
+whole word in the code of **0** of **226**.
+
+**That last one is where a substring test and a token test part, and the script carries both because
+of it.** `--grep IsProper` returns **3** at `0b2759b` — `OkaTest/Axioms/Morphisms.lean`,
+`OkaTest/CoveringBaseChange.lean` and `OkaTest/FiniteMorphism.lean` — and every one of the three is
+`IsProperMap`, which is a different class and is in the code of **6** modules. A verdict taken from
+the wrong one of the two reads *the class this file declines to declare is consumed downstream* off
+the class it declines in favour of. **Say which of the two a figure is**, which is the same
+instruction the paragraph opening *And pick the token that is unique to the spelling being denied*
+gives about which token, one level down.
+
+**The decidable pair column was re-run mechanically at `0b2759b`, and it is clean.** Of the **338**
+sentences naming a second module in the sentence, **213** name exactly one, which is where a pairing
+can be made without reading; each was given to the walk together with a direction read off the
+sentence — *which imports this file*, *this file imports*, *is downstream of this one*, *neither
+imports it nor is imported by it*, *is not in this file's import closure* — and the two compared.
+**17 disagreed and all 17 are false positives of the direction reader**, each read at its site: a
+quotation of a clause this file or another already retired, a *neither … nor* whose negation the
+reader inverted, an *imports `Oka` and not `OkaTest`* about the two aggregators, or a pointer at a
+third file's claim. **No false pair claim is on `0b2759b`** under that reader, which is a statement
+about a heuristic over 213 of 338 sentences and not about the column.
+
+**What this sweep did not read, so that a sixth knows where to start: the 161.** They are the
+sentences of the residue that match neither narrow pattern, and they were not opened. The shapes
+visible in a sample of them are marginal import costs against Mathlib, *upstreaming this costs*
+figures on mirror paths, and *cannot be cited by name here* clauses about a namespace; the first two
+are `scripts/import_cost.py`'s graph and out of this class, and **the third is not** — it is the
+shape `Oka/AnalyticSpace/GaloisCategory.lean`'s push had to repair across the tree, and a sixth
+sweep that
+took only that shape would be taking the part of the 161 with a known live history.
+
+**Every figure of this sweep is pinned to `0b2759b`, and this block raises two of them, which is
+said here rather than left to be found.** The block matches its own patterns, as the paragraph
+opening *The 21 is `d2ae161`'s* predicted of any sweep that quotes what it swept. **At `0b2759b`
+with this block applied** the three-column partition is **719 / 344 / 170 / 205** against
+`0b2759b`'s **702 / 338 / 167 / 197**, and the downstream-set pattern over the whole population
+is **46 / 24** against **44 / 22** — **per-file identical in every other file of the 355**, the
+whole of both deltas being
+this file's own count going **62 → 79** and **22 → 24**. **The residue's two narrow columns are
+`0b2759b`'s 17 and 20**; at `0b2759b` with this block applied the importer one is **25**, the
+added ones being this block's quotations, and the downstream-set one is unmoved at **17**, because
+what this block adds to that pattern names a module in the sentence and so is not in the residue
+at all. **A sixth sweep should
+take 44 as `0b2759b`'s**, re-derive its own in its own tree, and expect to have raised it again.
+
+**The figures this block raises are indexed to a tree and not to a head, and that is the whole of
+what the paragraph opening *This block is matched by the pattern it reports on* asks of a sweep
+that quotes what it sweeps.** *At `0b2759b` with this block applied* describes a tree, and no
+later push can change which tree it describes; *at the head that writes this* is inherited by every
+later push to this file while the measurement is not, which is why that same paragraph pinned its
+own figure to `0c370e5` rather than leaving it in that form. **The difference is not academic on
+a linear history**: a branch lands as a commit whose parent is the tip at the time it lands and
+not the tip
+it was cut from, so a head-indexed figure is a claim about a tree the branch never saw whenever a
+neighbour lands first. Between this block's base and this writing `master` moved from `0b2759b` to
+`e6a49ab`, and the population that rule picks out went **355 → 357** with it; **not one figure in
+this block is a statement about that tree**, and the five sentences that indexed one to *this
+head* or to *the head that writes it* have been re-indexed for that reason rather than
+re-measured.
 
 **Most mirror-tree material is routed by a row, and a small tail of it is deliberately routed by
 none.** `README.md`'s *Layout: the Mathlib mirror tree* defines a mirror-tree file by its path — a

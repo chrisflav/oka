@@ -1079,6 +1079,42 @@ once by the script's own first draft — and there were 472. It carries a tripwi
 case, comparing the number of `#print axioms` commands against the number of names it managed to
 read, so that a layout it cannot parse is reported rather than silently dropped.
 
+A fourth tool, and also a tool and not a gate, is `python3 scripts/module_graph.py`, which
+answers a dependency question about **this repository's own** import graph:
+
+```sh
+python3 scripts/module_graph.py Oka/A.lean Oka/B.lean       # upstream, downstream or incomparable
+python3 scripts/module_graph.py --downstream Oka/A.lean --word --grep Token
+python3 scripts/module_graph.py --importers Oka/A.lean
+python3 scripts/module_graph.py --self-test
+```
+
+`OkaTest/Axioms.lean`'s sixth object says that a clause asserting a dependency relation between
+two named files has to be **measured** and names a graph walk as the instrument; until this script
+that walk was written from scratch in the session that needed it and thrown away afterwards, which
+is the same history `import_cost.py`'s docstring records of the Mathlib-side one. **The two are
+different graphs and the confusion between them is a recorded failure mode**: `import_cost.py`
+prices a mirror file against its Mathlib target, `module_graph.py` says which of two modules of
+this repository is above the other. It imports `import_cost.py`'s `IMPORT` and `strip_comments`
+rather than reimplementing them, so the two cannot disagree about what an `import` line is.
+
+**Both aggregators conduct and neither is tallied, and how much they conduct is a count.** At
+`0b2759b`, of the 100 modules under `OkaTest/` **76 import `Oka` directly and 97 have it in
+closure**, the other three reaching the library through named `Oka.*` modules instead; delete both
+roots from the graph and **12 of the 100 are still downstream of some module under `Oka/`, against
+all 100 with them**, while `Oka/Analytification/AffineCover.lean`'s own downstream count goes
+130 → 35 and `OkaTest/CoherentFree.lean`'s does not move at all. The walk therefore runs over the
+whole graph and subtracts the two roots from what it reports; `--include-aggregators` puts them
+back and adds 2 to a subject under `Oka/`, 1 to one under `OkaTest/`, and nothing else.
+
+**`--grep` is a substring test and `--word` is a token test, and which one a figure is taken with
+is part of the figure — as is the set it is taken over.** `--grep` only ever qualifies a
+`--downstream`, `--upstream` or `--importers` answer, so it is never a figure about the repository
+on its own. `OkaTest/Axioms.lean` records that `IsProper` occurs as a whole word in the code of no
+module here; the *substring* is in six, every one of them `IsProperMap`, and the same option over
+the modules downstream of `Oka/AnalyticSpace/Finite.lean` returns three of those six. **Name the
+set beside the count.**
+
 Nothing checks the figures in docstrings against the script, and nothing can: they are English
 prose, phrased twenty different ways. This is for an author to run before writing one and a
 reviewer to run before believing one.
