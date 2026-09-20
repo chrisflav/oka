@@ -103,8 +103,16 @@ theorem reads a `StandardEtalePair`, so appending it there would have turned tha
   local-isomorphism half of that different theorem now exists** —
   `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom`
   (`Oka/Analytification/StandardEtaleLocalIsoBase.lean`), at every `k`, and about the structure
-  map to `X^an` rather than the projection to `ℂ^n`. The finiteness half at `k ≥ 1` is untouched,
-  so this bullet stands for the class as a whole.
+  map to `X^an` rather than the projection to `ℂ^n`. **So does the finiteness half** —
+  `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom`
+  (`Oka/Analytification/StandardEtaleFinitenessBase.lean`) — and so does the class, as
+  `ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom`
+  (`Oka/Analytification/StandardEtaleFiniteEtaleBase.lean`), which is this theorem's counterpart
+  and not its generalisation: the morphism there is the structure map to `X^an` and the morphism
+  here is the composite to `ℂ^n`, which is false at `k ≥ 1`. **This bullet closed on *The
+  finiteness half at `k ≥ 1` is untouched, so this bullet stands for the class as a whole* until
+  2026-09-20**, when that half and that class were written. What it says about *this* file is
+  unchanged: nothing below is at `k ≥ 1`.
 * **Nothing about how large `V` is *here*, and the class is now instantiated elsewhere at a `V`
   that is proper and nonempty.** This bullet said no pair `(F, G)` was exhibited anywhere for
   which `V` is proper *and* nonempty; one is —

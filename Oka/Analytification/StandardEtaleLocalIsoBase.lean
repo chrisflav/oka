@@ -157,8 +157,16 @@ hypersurface `ComplexAnalytic.hypersurfacePresentation g F`.
 
 * **No `ComplexAnalytic.AnalyticSpace.IsFiniteEtale`.** Unrestricted finiteness at `k ≥ 1` is
   false — `Oka/Analytification/MonicHypersurface.lean` carries the counterexample — and over an
-  open subset of the base it is `Oka/Analytification/StandardEtaleFiniteness.lean`'s, at `k = 0`.
-  The local-isomorphism field is what this file supplies and it is only one of the two.
+  open subset of the base it is `Oka/Analytification/StandardEtaleFinitenessBase.lean`'s, at every
+  `k`, with `Oka/Analytification/StandardEtaleFiniteness.lean`'s the `k = 0` statement about the
+  composite to `ℂ^n` instead. The local-isomorphism field is what this file supplies and it is
+  only one of the two; the two together are
+  `ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom`
+  (`Oka/Analytification/StandardEtaleFiniteEtaleBase.lean`), which reads this file's last theorem
+  unchanged. **The second clause of this bullet read *and over an open subset of the base it is
+  `Oka/Analytification/StandardEtaleFiniteness.lean`'s, at `k = 0`* until 2026-09-20**, when the
+  finiteness half at every `k` was written; the absence stated by the first clause is unchanged,
+  and so is the absence this bullet is about, since neither of those two files is below.
 * **Nothing about the projection to `ℂ^n` at `k ≥ 1`**, which is a different statement and is
   false for a proper non-empty `X^an`;
   `Oka/Analytification/StandardEtaleLocalIso.lean` records why and this file does not touch it.

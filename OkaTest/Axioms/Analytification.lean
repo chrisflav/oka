@@ -6141,3 +6141,68 @@ info: 'ComplexAnalytic.exists_refineDatumMemberIota_image_coverOpen' depends on 
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.exists_refineDatumMemberIota_image_coverOpen
+
+/-! ### The finiteness half over a presented base, and the two halves at once
+
+`Oka/Analytification/StandardEtaleFinitenessBase.lean` and
+`Oka/Analytification/StandardEtaleFiniteEtaleBase.lean`, both of them whole, in the order they are
+declared. **Five names and all five are theorems**; neither file declares a `def`, an `instance`
+or a `noncomputable` name.
+
+**This section is the finiteness counterpart of *The local isomorphism over a presented base*
+above, and the `k ≥ 1` counterpart of *The standard étale analytification is finite over an open
+subset of the base* and *Finite étale over an open subset of the base, which is both halves at
+once***. What the first of those two guards is at an **empty** base presentation and about the
+composite to `ℂ^n`; what is guarded here is at **every** `k` and about the structure map to
+`X^an`, which is the morphism a cover is. The two are different theorems and neither subsumes the
+other in its stated form: the `ℂ^n` statement is false at `k ≥ 1`, and the `X^an` statement is not
+what the `k = 0` line was written to give.
+
+**What the telescopes bind, by `#check` over the five and not by reading the files.** All five
+bind `{n k : ℕ}`, the base presentation `g`, and `F G : Polynomial (MvPolynomial (ULift (Fin n))
+ℂ)`; **`k` is free in every one of them**, which is the whole point of the pair of files. Four of
+the five bind `F.Monic` and the containment binds neither monicity nor anything else about the two
+polynomials. **Only the two `…isFiniteEtale…` names bind a `StandardEtalePair`**
+— that is the reason the two files are two and not one, and it is the argument
+`Oka/Analytification/StandardEtaleFiniteEtale.lean` makes for the same split at `k = 0`.
+
+**`Classical.choice` is in all five and none of this section's subject is choice**: the
+analytification is a colimit, the comparison is a `noncomputable def` one file over, and a
+`Polynomial.Monic` hypothesis is decidable in neither direction here. The list below is the
+standard three for every name.
+-/
+
+/--
+info: 'ComplexAnalytic.map_le_localisationOpen_of_subset_compl_base' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.map_le_localisationOpen_of_subset_compl_base
+
+/--
+info: 'ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom
+
+/--
+info: 'ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom_compl' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom_compl
+
+/--
+info: 'ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom
+
+/--
+info: 'ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom_compl' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom_compl

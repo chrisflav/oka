@@ -177,7 +177,9 @@ import Oka.Analytification.SpecTwoData
 import Oka.Analytification.StandardEtale
 import Oka.Analytification.StandardEtaleAnalytification
 import Oka.Analytification.StandardEtaleFiniteEtale
+import Oka.Analytification.StandardEtaleFiniteEtaleBase
 import Oka.Analytification.StandardEtaleFiniteness
+import Oka.Analytification.StandardEtaleFinitenessBase
 import Oka.Analytification.StandardEtaleLocalIso
 import Oka.Analytification.StandardEtaleLocalIsoBase
 import Oka.Analytification.StandardEtaleNotLocalIso

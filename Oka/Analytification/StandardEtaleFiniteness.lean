@@ -124,10 +124,16 @@ was neither of them.
   meet only over `ℂ^n`. `ComplexAnalytic.isFinite_analytification_comp_projRestrict`'s base is
   `ℂ^n` and `ComplexAnalytic.etaleAnalytificationIso`'s is `A^an`, and a statement over a
   presented base is a different theorem rather than a missing hypothesis. **That different theorem
-  now exists for the local-isomorphism half and not for this one**:
+  now exists for both halves, and neither of them is here**:
   `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom`
-  (`Oka/Analytification/StandardEtaleLocalIsoBase.lean`) is about the structure map to `X^an`, and
-  nothing on the finiteness line has moved.
+  (`Oka/Analytification/StandardEtaleLocalIsoBase.lean`) and
+  `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom`
+  (`Oka/Analytification/StandardEtaleFinitenessBase.lean`), both about the structure map to
+  `X^an`. **This bullet read *That different theorem now exists for the local-isomorphism half and
+  not for this one* and closed on *nothing on the finiteness line has moved*, until 2026-09-20**,
+  when the second of those two was written. What it says about *this* file is unchanged, and the
+  theorems below are not subsumed by the `k ≥ 1` ones: those are about the structure map to
+  `X^an` and these are about the composite to `ℂ^n`, which is two morphisms and not one.
 * **No `StandardEtalePair`, and no `StandardEtalePair.cond` is read** — by any theorem below,
   including the instance. **Every theorem below except the instance holds for every monic `F` and
   every `G`** — `G` is read only through the bad set — so nothing here says the source is étale,
