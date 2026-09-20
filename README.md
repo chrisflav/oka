@@ -1119,6 +1119,42 @@ Nothing checks the figures in docstrings against the script, and nothing can: th
 prose, phrased twenty different ways. This is for an author to run before writing one and a
 reviewer to run before believing one.
 
+One more tool, and also a tool and not a gate, is `python3 scripts/mathlib_absence.py`, which
+finds the sentences of this repository's prose that assert **Mathlib** lacks something:
+
+```sh
+python3 scripts/mathlib_absence.py
+python3 scripts/mathlib_absence.py --list
+python3 scripts/mathlib_absence.py --file Oka/Topology/Covering/Basic.lean
+python3 scripts/mathlib_absence.py --mentions
+python3 scripts/mathlib_absence.py --self-test
+```
+
+`OkaTest/Axioms.lean`'s seventh census object is the rule; this is the scan that narrows the tree
+to what that rule asks a reader to look at. **It reports pattern hits and not defects**, and
+nothing here could report defects: the population a verdict would have to quantify over is not in
+this repository. At `a414f61` it returns **34** sentences in **25** files, of which a hand pass put
+**31** in class — **6** carrying an instrument in the same sentence, **1** pinning a Mathlib
+version, and **25** bare.
+
+Why a scan of its own rather than a widening of one already here: the census instruments in this
+section take their population from `Oka/` and `OkaTest/`, so none of them can see a sentence about
+Mathlib at all, and `scripts/import_cost.py`, which does walk Mathlib's graph, prices `import`
+lines rather than reading prose. A claim about Mathlib also rots differently, being falsified by a
+version bump nobody here makes rather than by a commit on this board.
+`scripts/check_docstring_names.py` is the opposite polarity and cannot be pressed into service —
+it checks that a name **resolves**, so it is blind to a claim that something is *absent*, and a
+name that stops resolving after a bump fails it for the wrong reason. Every run prints the version
+and rev `lake-manifest.json` pins, because a hit list is a statement about the Mathlib on disk and
+is worth nothing without one.
+
+`--mentions` is the denominator — **1112** sentences naming Mathlib in **215** files at that same
+commit — and it exists because the six shapes the scan matches are spellings and not meanings: a
+negative carried by *none*, by a noun, or by a sentence that never writes the word is invisible to
+it, and the ratio of the two figures is what says how much room that leaves. The `--self-test`
+pins both readings of a file (comment content alone for `.lean`, the whole of it otherwise), the
+nesting of block comments, and the whitespace normalisation, each with a near-miss control.
+
 **The same holds, and more sharply, for the *mechanism* claims — the paragraphs this repository
 calls seams.** *This spelling does not elaborate*, *instance search does not cross this*, *`rw`
 fails here*: nothing in `validation.sh` exercises one, `lake lint` does not read it, and the name

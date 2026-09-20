@@ -969,6 +969,176 @@ this block is a statement about that tree**, and the five sentences that indexed
 head* or to *the head that writes it* have been re-indexed for that reason rather than
 re-measured.
 
+**The rule has a seventh object, and it is the fifth one with its domain outside this
+repository.** A clause asserting that **Mathlib** lacks something — *Mathlib does not have this*,
+*nothing in Mathlib says that*, *no declaration under `Mathlib/…/` binds two of them*, *that
+statement is absent from Mathlib* — has the fifth object's grammar, the fifth object's consumers
+and the fifth object's failure mode, with the quantifier pointed at a library nobody on this board
+commits to. **The three census instruments this file names take their population from `Oka/` and
+`OkaTest/`** — `scripts/guard_coverage.py` reads `## Main results` sections,
+`scripts/check_docstring_names.py` resolves a name against the environment of `Oka` + `OkaTest`,
+and `scripts/module_graph.py`, the sixth object's walk, follows the `import` lines of these
+modules and of Mathlib's only in order to close them — **so none of the three can reach a sentence
+of this class**, which is why it is an object of its own and not a note under the fifth.
+`scripts/import_cost.py`, also named here, *does* walk Mathlib's own graph and is priced against
+it, and it is the exception that says where the difficulty is: it prices an `import`, which is a
+fact about files, where a sentence of this class is about what Mathlib **states**, and no walk of
+import lines decides one of those.
+
+**And it rots by a mechanism the fifth object does not have.** A claim about this tree is falsified
+by a commit on this board and can be re-checked by reading one; a claim about Mathlib is falsified
+by a **version bump nobody here makes**, and `bash .orchestra/validation.sh` will not say a word.
+`scripts/check_docstring_names.py` cannot be pressed into service for it, because it is the
+opposite polarity: it checks that a backticked name **resolves**, so it cannot see a claim that
+something is *absent*, and a name that stops resolving after a bump fails it for the wrong reason.
+**The principle is written down here, in a script docstring, about that script's own figure** —
+`scripts/import_cost.py:71`: *"It is a fact about Mathlib at a version and it will drift; the
+masking is what does not."* **At `a414f61` no file under `Oka/`, `OkaTest/` or `scripts/` and not
+`README.md` cited that line**, which is a claim about a literal string and so is one `grep`; whether
+the principle is stated a second time somewhere in other words is not something a `grep` decides
+and is not claimed here.
+
+**What such a sentence owes is a version, and then one of three forms.** The version is
+`lakefile.toml`'s `rev`, which is `v4.32.0` at `a414f61`, or `lake-manifest.json`'s resolved `rev`,
+which at that commit is `81a5d257c8e410db227a6665ed08f64fea08e997`; name one, and prefer the second
+where the claim is fine enough that a patch release could move it.
+
+* **(a) a quoted instrument, run at that version.** `Oka/Topology/Connected/Clopen.lean` is the
+  worked example and, of the thirty-one sentences the hand pass below leaves in class at
+  `a414f61`, the only one that pins a version at all: *"at `v4.32.0` no statement in Mathlib
+  mentions `connectedComponent` together with a disjoint union at all: `grep -rn
+  'connectedComponent' Mathlib/ | grep -iE 'sigma|Sum\.|coprod'` returns **nothing**, against
+  **56** occurrences of `connectedComponent` in the destination file itself."* A command, a
+  verdict, a control and a version, in one sentence.
+* **(b) a pointer to the sibling sentence that carries (a)**, for a claim repeated across files.
+  At `a414f61` *`CategoryTheory.GlueData.ofGlueData'` has no projection lemmas in Mathlib* is
+  **seven** sentences in seven files — `Oka/Analytification/AffineCover.lean`,
+  `Oka/Analytification/ComparisonSquare.lean`, `Oka/Analytification/SpecAffineCover.lean`,
+  `Oka/CategoryTheory/GlueData.lean`, `Oka/Geometry/RingedSpace/PresheafedSpace/Double.lean`,
+  `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean` and `README.md` — of which **two**, the
+  fourth and the sixth, say what was run (*`grep` finds it only in its own defining file*). **Five
+  sites inherit an instrument they do not print**, which is neither bare nor (a); what such a site
+  owes is the pointer.
+* **(c) a bounded restatement that is not a universal at all.**
+  *`Mathlib/Topology/Covering/Basic.lean` has only conjugation by a homeomorphism* is settled by
+  reading one file; *any cancellation lemma for `IsCoveringMap` is absent from Mathlib* is not
+  settled by reading anything.
+
+**The fourth form is not honest, and it is worse than carrying no instrument: a scan whose spelling
+cannot in principle decide the claim.** Its exactness is read as evidence, and the reader who would
+otherwise have gone and looked does not. Round 1 of lana-agents/oka#597 was rejected on exactly one
+ground and the ground was one of these: *"no declaration under `Mathlib/CategoryTheory/Galois/`
+binds two fibre functors of one category — its **eleven** files carry **37** occurrences of `⥤
+FintypeCat` between them … no one line has two, every `variable` line among them binds exactly
+one"*. **Every numeral in it was exact and the claim was false**, because the second such functor
+is spelled `F ⋙ E` or inherited from a `variable` block a hundred lines above;
+`CategoryTheory.PreGaloisCategory.FiberFunctor.comp_right` and
+`CategoryTheory.PreGaloisCategory.autEquivAutWhiskerRight` are two of the three counterexamples,
+and that branch's round 2 dropped the scan rather than keeping it. **The test to apply before
+publishing one is three questions**: can the thing being denied be spelled another way, can it be
+inherited from a binder the scan does not read, and can it be generated? A *yes* to any of the
+three means the scan narrows and does not decide, and the sentence has to say so instead of
+reporting a number.
+
+**A second instance of that shape is live in this tree and is repaired in the push that writes
+this, and it is worth having because the escape is a spelling and not a telescope.**
+`Oka/Topology/Covering/Basic.lean` read *"the direction Mathlib does not have in any form: across
+`Mathlib/Topology/Covering/`, `isClosedMap` occurs only inside proofs"*. At `v4.32.0` the exact
+token `isClosedMap` occurs **once** in that directory and it is inside a proof, so the clause is
+true of what it wrote; `IsClosedMap`, which is the predicate it means, stands in the **statements**
+of `IsClosedMap.isEvenlyCovered_of_openPartialHomeomorph` and
+`IsClosedMap.isCoveringMapOn_of_isLocalHomeomorphOn` and in the `alias` beside the second. **A
+capital letter is the whole of the difference**, and the headline the scan was offered for is true
+for a reason the scan never touched: those three occurrences are the hypothesis and not the
+conclusion.
+
+**And the environment is not Mathlib.** `scripts/DumpEnvNames.lean` dumps the environment of `Oka`
++ `OkaTest`, which imports some of Mathlib and not all of it — the rework of lana-agents/oka#597
+measured **ten** of `Mathlib/CategoryTheory/Galois/`'s **eleven** modules in that dump at its own
+head, and the same two counts hold at `a414f61` on a run of this block's — so an absence measured
+in that dump is an absence from **this build's imports**, which is a weaker statement standing one
+word away from the one that will be read.
+
+**The scan is `python3 scripts/mathlib_absence.py`, and it reports pattern hits rather than
+defects.** Six spellings, over the comment content of every tracked `.lean` under `Oka/` and
+`OkaTest/` and over the whole of every tracked `.md`, `.py`, `.sh`, `.yml` and `.toml` under those
+and under `scripts/`, plus the three root files, **whitespace-normalised before matching** because
+a hard wrap at column 100 is where a clause of this class hides — the failure mode taxis #1712
+records of `git log -S`. Every run prints the version and rev `lake-manifest.json` pins, because a
+hit list is worth nothing without one. **At `a414f61` it returns 34 sentences in 25 files, against
+a denominator of 1112 sentences naming Mathlib at all in 215 files**, which `--mentions` reports
+and which exists because the six shapes are spellings and not meanings: the clause
+*`Mathlib/Topology/Covering/Basic.lean` has only conjugation by a homeomorphism* is the same claim
+as *Mathlib has no cancellation lemma* and matches nothing, and neither does a negative carried by
+*none*, by a noun, or by a sentence that never writes the word. **Do not read the 34 as a count
+of the class.**
+
+**Classification is a hand pass, and three of those 34 are out of class**, each for a reason no
+pattern sees: two in `Oka/AnalyticSpace/FundamentalGroup.lean` are about **that file's own
+contents** with Mathlib as the yardstick — *"none proves anything Mathlib does not"* — and are
+already acquitted by the fifth object's self-limiting spelling; one in
+`scripts/check_docstring_names.py` is a universal about Mathlib namespaces that the next clause
+**retracts** — *"that is false"* — and then refutes with four counterexamples. Of the **31** left,
+**6** carry an instrument in the same sentence, **1** pins a version, and **25** are bare. Those
+four figures are `a414f61`'s and a later sweep should re-take them at its own head rather than
+inherit them.
+
+**Swept at `a414f61`: one file of the twenty-three, and the bound is chosen rather than
+reached.** (The 31 in-class sentences are in 23 files: `Oka/AnalyticSpace/FundamentalGroup.lean`
+and `scripts/check_docstring_names.py` drop out of the 25 with the three out-of-class ones.)
+`Oka/Topology/Covering/Basic.lean` carries **six** of the 31, more than any other file at that
+commit, and its claims are about `Mathlib/Topology/Covering/` and
+`Mathlib/Topology/SeparatedMap.lean`, which are three files and one file and can be read out.
+All six are repaired into (a) or (c), each with the retired wording kept as a dated record and
+nothing struck. **One of the six was false**:
+*"Mathlib has no cancellation lemma for `IsCoveringMap` at all"*, where
+`IsCoveringMap.comp_homeomorph_iff` is `IsCoveringMap (f ∘ g) ↔ IsCoveringMap f` at a homeomorphism
+`g` and its forward direction cancels one — and the clause offered in support named
+`comp_homeomorph` and `homeomorph_comp` and not the two `_iff` lemmas standing beside them in the
+same namespace. **The *at all* makes it false a second way**, since
+`IsCoveringMap.eq_of_comp_eq` and its three companions cancel the covering map out of an equality
+of composites at merely continuous companions.
+
+**The remaining 25 of the 31 are untouched**, and **the two nearest are named rather than left to
+be found**. `Oka/Analysis/Complex/FundamentalGroup.lean` and
+`Oka/AnalyticSpace/FiniteEtaleOver.lean` each say that Mathlib has no composition or cancellation
+lemma for `IsCoveringMap`, in a clause bounded to one file —
+*`Mathlib/Topology/Covering/Basic.lean` has only conjugation by a homeomorphism* — and
+**both stand, on a reading this push pins instead of assuming**: a composition
+or cancellation lemma *for `IsCoveringMap`* is one that writes `IsCoveringMap` of a composite, and
+the four in that file that do are the two builders and their two `_iff` forms, every one of them at
+a homeomorphism. **Under a wider reading of *cancellation* neither would stand**, because those
+four `_of_comp` lemmas cancel `f` out of an equality of composites; they write `IsCoveringMap` only
+as a hypothesis on `f` alone and conclude that two companions agree, which is what puts them
+outside the bounded reading and what makes saying so worth a clause. That is this object's own
+first question — *can the thing being denied be spelled another way?* — asked of a phrase rather
+than of a token, and the swept paragraph in `Oka/Topology/Covering/Basic.lean` now carries both
+halves of the split so that neither site rests on a reading nobody wrote down. **That is what form
+(c) buys**: each of the two clauses is settled by reading one named file, where the enumeration
+next door was not, and it is why the two sites are named here instead of being left in the 25 in
+silence.
+
+**Two figures that sweep leaves behind, and both are about the instrument rather than about the
+file.** `Oka/Topology/Covering/Basic.lean` carries **19** sentences naming Mathlib at `a414f61`
+and the scan matches **6** of them; read by hand, three of the other thirteen are negatives too —
+*Mathlib has the relative form and not this one*, *`IsSeparatedMap.t2Space` in
+`Oka/Topology/SeparatedMap.lean`, which is not*, *which Mathlib also does not have* — and **each
+is about a named declaration**, which is what makes a negative bounded in the sense of (c) and is
+why the six shapes did not have to reach them. And the file's raw count goes **6 → 8** across the
+push that sweeps it, not 6 → 0, because **a dated record quotes the wording it retires**: repairing
+into an exempt spelling *raises* the number a scan of this class returns, exactly as the fifth
+object's sweeps found of theirs. **Neither figure is a defect count**, and a later sweep that
+reports a rise should first check whether it is reading its own records.
+
+**This block is matched by the scan it publishes, as the fifth object's is matched by its own.**
+The **34 / 25** above is `a414f61`'s and does not include what the push writing this adds; at
+`a414f61` with that push applied the scan returns **53** over **27** files, and the whole of the
+rise is in three files — `OkaTest/Axioms.lean` **0 → 9**, this block's quotations of the sentences
+it decides; `scripts/mathlib_absence.py` **0 → 8**, its docstring's worked examples together with
+its self-test fixtures; and `Oka/Topology/Covering/Basic.lean` **6 → 8**. **No other file's count
+moves.** A later sweep should re-derive its own figure at its own head, and should expect to have
+raised it again.
+
 **Most mirror-tree material is routed by a row, and a small tail of it is deliberately routed by
 none.** `README.md`'s *Layout: the Mathlib mirror tree* defines a mirror-tree file by its path — a
 file under `Oka/` mirroring a path under `Mathlib/`, holding no complex-analytic mathematics and

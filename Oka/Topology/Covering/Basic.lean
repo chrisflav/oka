@@ -50,10 +50,32 @@ keep true.
 
 ## A covering map with finite fibres is a closed map
 
-The converse of the criterion above, and the direction Mathlib does not have in any form: across
-`Mathlib/Topology/Covering/`, `isClosedMap` occurs only inside proofs. `IsCoveringMap.isClosedMap`
-below is what makes a finite covering space *finite* in the sense a morphism of complex analytic
-spaces is asked to be: it supplies the closed base map that
+The converse of the criterion above, and the direction Mathlib does not have. **At `v4.32.0` — the
+revision `lakefile.toml` pins, resolved by `lake-manifest.json` to
+`81a5d257c8e410db227a6665ed08f64fea08e997` — no declaration of Mathlib concludes `IsClosedMap`
+from `IsCoveringMap`**, and the population that has to be read to say so is small enough to name:
+such a declaration has to write `IsCoveringMap` in its statement, so `grep -rl IsCoveringMap
+Mathlib/` is the whole of it and it returns **seven** files. In those seven the only statements
+naming `IsClosedMap` are `IsClosedMap.isEvenlyCovered_of_openPartialHomeomorph`
+(`Mathlib/Topology/Covering/Basic.lean:509`), `IsClosedMap.isCoveringMapOn_of_isLocalHomeomorphOn`
+(`:558`) and the `alias` beside it (`:568`) — **all three with `IsClosedMap` as a hypothesis**,
+which is the criterion above and not this. **The predicate is what that clause quantifies over and
+not the word *closed***: `IsCoveringMap.mk'` (`:322`) asks `IsClosed (Set.range f)`, which is
+closedness of a set rather than of a map, and it concludes `IsCoveringMap` rather than starting
+from one, so it is neither a counterexample nor a member of the three.
+
+**Until 2026-09-20 that clause read *the direction Mathlib does not have in any form: across
+`Mathlib/Topology/Covering/`, `isClosedMap` occurs only inside proofs*, and the scan in it could
+not decide what it was offered for.** The exact token `isClosedMap` does occur only inside a proof
+in that directory — once, at `Mathlib/Topology/Covering/Basic.lean:578` — so the clause was true of
+the spelling it wrote; `IsClosedMap`, which is the predicate it meant, stands in the *statements* of
+the two theorems named above and in the `alias`. A capital letter is the whole of the difference,
+and the headline is true for a reason the scan never touched. **The claim is unchanged and only its
+warrant is**, which is why the retired wording is kept here rather than struck;
+`OkaTest/Axioms.lean`'s seventh census object is the rule and taxis #2108 is the filing.
+
+`IsCoveringMap.isClosedMap` below is what makes a finite covering space *finite* in the sense a
+morphism of complex analytic spaces is asked to be: it supplies the closed base map that
 `ComplexAnalytic.AnalyticSpace.IsFinite` asks for and that finite fibres do not give.
 
 **That half is what it is the only input for, and not the construction.**
@@ -80,9 +102,62 @@ index type is `U` itself, which is the right answer, since `f ⁻¹' U` is then 
 ## Closedness cancels along a covering map, with no separation axiom
 
 `IsCoveringMap.isClosedMap_of_comp`: if `f` is a covering map and `f ∘ u` is closed then `u` is
-closed, for a `u` asked only to be continuous. **Mathlib has no cancellation lemma for
-`IsCoveringMap` at all** — `comp_homeomorph` and `homeomorph_comp` conjugate by a homeomorphism,
-and there is no composition lemma either.
+closed, for a `u` asked only to be continuous. **What Mathlib transports along a composite at
+`v4.32.0` is a homeomorphism and nothing weaker; what it cancels a covering map out of is an
+equality of composites, and the conclusion there is uniqueness of the companion and not a property
+of it.** The instrument is a namespace and a count, and **both halves of it are printed, because a
+figure whose counting rule is unstated is not reproducible**. The namespace is cut with
+`sed -n '/^namespace IsCoveringMap$/,/^end IsCoveringMap$/p'` over
+`Mathlib/Topology/Covering/Basic.lean`, and the count is
+
+`grep -cE '^(@\[[^]]*\] *)?(private |protected |noncomputable )*(theorem|lemma|def|alias)'`
+
+whose alternation is the declaration keywords that file uses and whose modifiers are the ones it
+writes before them. **Both optional branches of it are load-bearing, and which one carries the
+figure differs by namespace**, which is why the pattern is printed whole rather than simplified.
+Over the three namespaces this docstring counts it gives **18 / 12 / 18** at `IsEvenlyCovered`
+(`:44–193`), `IsCoveringMapOn` (`:200–283`) and `IsCoveringMap` (`:308–408`); dropping the
+attribute branch gives **16 / 10 / 18**, and dropping the modifiers with it gives **12 / 7 / 14**.
+So what a count anchored on `^theorem` loses first is the one-line `@[simp] theorem`, of which that
+file carries exactly four — **two in `IsEvenlyCovered` (`:176`, `:188`), two in `IsCoveringMapOn`
+(`:269`, `:278`), and none at all in `IsCoveringMap`**, where the eighteen below is unchanged by
+dropping that branch and it is the `protected ` modifier that buys the four instead
+(`IsCoveringMap.continuous` at `:336`, `IsCoveringMap.isLocalHomeomorph` at `:339`,
+`IsCoveringMap.isOpenMap` at `:342` and `IsCoveringMap.isSeparatedMap` at `:348`).
+
+Of those **eighteen** in `namespace IsCoveringMap`, **eight** write a composite, and they are two
+different things:
+
+* **Four conclude `IsCoveringMap` of a composite, and every one of the four is at a
+  homeomorphism.** `IsCoveringMap.comp_homeomorph` (`:388`) and `IsCoveringMap.homeomorph_comp`
+  (`:392`) build one, and `IsCoveringMap.comp_homeomorph_iff` (`:398`) and
+  `IsCoveringMap.homeomorph_comp_iff` (`:403`) are their two-way forms, whose forward directions
+  cancel one. **This is the half the headline above is about.**
+* **Four cancel `f` itself out of an equality of composites**, at companions asked only to be
+  continuous over a preconnected source: `IsCoveringMap.eq_of_comp_eq` (`:367`),
+  `IsCoveringMap.const_of_comp` (`:371`), `IsCoveringMap.eqOn_of_comp_eqOn` (`:375`) and
+  `IsCoveringMap.constOn_of_comp` (`:379`). **These are lifting-uniqueness statements**: what they
+  conclude is that two companions agree, not that a companion inherits a property of the composite,
+  and two of the four spell the composite by application (`f (g a)`) rather than with `∘`, which is
+  itself the *can it be spelled another way?* question `OkaTest/Axioms.lean`'s seventh census object
+  asks of a scan.
+
+**Neither half is the statement below**, which carries a property of `f ∘ u` — closedness — back to
+`u`, and no declaration of that namespace carries any property of a composite back to a factor.
+The same instrument at `namespace IsCoveringMapOn` (`:200–283`) gives **twelve**: the same two
+builders, and two `_iff` lemmas as well, `IsCoveringMapOn.comp_homeomorph_iff` (`:269`) and
+`IsCoveringMapOn.homeomorph_comp_iff` (`:278`), both `@[simp] theorem …` on one line.
+
+**Until 2026-09-20 this read *Mathlib has no cancellation lemma for `IsCoveringMap` at all —
+`comp_homeomorph` and `homeomorph_comp` conjugate by a homeomorphism, and there is no composition
+lemma either*, and it was false at that same `v4.32.0`.** `IsCoveringMap.comp_homeomorph_iff` is
+`IsCoveringMap (f ∘ g) ↔ IsCoveringMap f` at a homeomorphism `g`, which is a cancellation lemma for
+`IsCoveringMap`; the enumeration offered in support named the two lemmas without the `_iff` and not
+the two with it, which stand ten and eleven lines below them in the same namespace. **What the
+statement below is, and what the retired clause was reaching for, is the cancellation of a
+*property* along a `u` asked only to be continuous** — not the cancellation of `f` out of an
+equality, which the four `_of_comp` lemmas above do — and that is what the count says Mathlib does
+not have.
 
 The classical statement of this shape asks the second map to be **separated** and factors the
 first through its graph in a fibre product. Neither is used below. A covering map instead
@@ -99,7 +174,26 @@ asks the **middle space to be Hausdorff**. Where a Hausdorff middle space is ava
 one is both shorter and more general than this — it asks nothing whatever of the second map —
 and it is what `Oka/AnalyticSpace/Finite.lean` uses for the analytic statement of this shape.
 `IsCoveringMap.isClosedMap_of_comp` is what is left when no separation axiom is available at all,
-and Mathlib has nothing there, not even at `IsSeparatedMap`, which a covering map satisfies.
+and **at `v4.32.0` `IsSeparatedMap` does not reach that case either**, which is worth saying
+because a covering map satisfies it (`IsCoveringMap.isSeparatedMap`) and so it is the first place
+to look. `grep -rl IsSeparatedMap Mathlib/` returns **three** files, and the other two consume the
+predicate rather than adding to it — `Mathlib/Topology/Homotopy/Lifting.lean` binds it on one
+`variable` line and `Mathlib/Topology/Covering/Basic.lean` declares `IsCoveringMap.isSeparatedMap`
+and nothing else about it. That leaves `Mathlib/Topology/SeparatedMap.lean`, whose **seventeen**
+declarations about the predicate are the definition, six characterisations,
+`T2Space.isSeparatedMap`, `Function.Injective.isSeparatedMap`, `IsSeparatedMap.pullback`,
+`IsSeparatedMap.comp_left`, `IsSeparatedMap.comp_right`, `IsSeparatedMap.isClosed_eqLocus` and
+the four lifting-uniqueness
+statements in its own namespace. **`comp_left` and `comp_right` conclude `IsSeparatedMap` of a
+composite rather than cancelling anything, and none of the seventeen concludes that a factor of a
+closed composite is closed**, which is the statement below.
+
+**Until 2026-09-20 the second half of that sentence read *and Mathlib has nothing there, not even
+at `IsSeparatedMap`, which a covering map satisfies*.** It was true and it was bare: a universal
+over a library this repository does not commit to, with no instrument and no version beside it, of
+the class `OkaTest/Axioms.lean`'s seventh census object is the rule for. The enumeration replacing
+it is the same claim bounded to what can be read, and the neighbouring sentence about proper maps —
+three cancellations, in one named file — is the form it is copied from.
 
 **Nothing in this repository consumes it**, and that is said rather than left to be discovered: it
 is mirror-tree material stated for its own sake, in a file whose other statements about closedness
@@ -114,7 +208,30 @@ an evenly covered neighbourhood, with the fibre over that point as the index typ
 nothing at all relating the index types at two different points.
 
 The argument is the usual clopen one and the whole of its content is **local constancy**, which in
-turn rests on one observation Mathlib does not state:
+turn rests on one observation. **At `v4.32.0` the whole of `IsEvenlyCovered`'s Mathlib API is one
+file and twenty declarations, and none of them has, for the same `f`, an `IsEvenlyCovered`
+hypothesis at one point and an `IsEvenlyCovered` conclusion at another**: `grep -rl IsEvenlyCovered
+Mathlib/` returns `Mathlib/Topology/Covering/Basic.lean` alone, whose `IsEvenlyCovered` namespace
+(`:44–193`) holds **eighteen** by the count printed in
+`## Closedness cancels along a covering map, with no separation axiom` above, with
+`IsClosedMap.isEvenlyCovered_of_openPartialHomeomorph` (`:509`) and
+`IsEvenlyCovered.of_openPartialHomeomorph` (`:574`) declared outside it — twenty-one if the
+definition (`:40`) is counted, which this sentence does not. That list fits on a screen and reading
+it is the instrument; a grep for a *word* would not have been one, since what is being denied here
+is a shape and not a spelling.
+
+**The *same `f`* is what the claim rests on and it is not a hedge.** Two of the eighteen do move
+the point: `IsEvenlyCovered.homeomorph_comp` (`:181`) takes a hypothesis at `x` to a conclusion at
+`g x`, and `IsEvenlyCovered.homeomorph_comp_iff` (`:188`) is its two-way form. **Both move the map
+with it**, from `f` to `g ∘ f` at a homeomorphism `g` of the base, so the point they conclude at is
+the same point transported and not a second point of one base. The statement below holds `f` fixed
+and moves `y` inside `𝓝 x`, and nothing in those twenty does that.
+
+**Until 2026-09-20 that sentence ended *which in turn rests on one observation Mathlib does not
+state*, with nothing beside it.** It was true and it was bare — a universal over a library this
+repository does not commit to, with no version and no instrument, of the class
+`OkaTest/Axioms.lean`'s seventh census object is the rule for — and the enumeration above is the
+same claim bounded to what can be read.
 
 **`IsEvenlyCovered f x I` mentions `x` only through `x ∈ U`.** Unfolded it is a `U`, its openness,
 the openness of `f ⁻¹' U`, a homeomorphism `f ⁻¹' U ≃ₜ U × I` and a compatibility, and none of the
@@ -294,10 +411,23 @@ homeomorphism.
 not Hausdorff.** That is not an accident, and it means this lemma is *not* the cheapest route to
 any statement in which `E` is known to be Hausdorff. There `isProperMap_of_comp_of_t2` applies —
 Mathlib's proper-map cancellation, whose separation hypothesis is on `E` and which asks nothing at
-all of the first map — and it is both shorter and more general. This lemma is what remains when no
-separation axiom is available, which is the case Mathlib does not cover, at `IsCoveringMap` or at
+all of the first map — and it is both shorter and more general. **This lemma is what remains when
+no separation axiom is available at all, and the module docstring is where that case is measured
+against Mathlib** — `## Closedness cancels along a covering map, with no separation axiom` counts
+the `IsCoveringMap` and `IsSeparatedMap` APIs at `v4.32.0` and names the version, and this
+paragraph points at it rather than restating it, a claim about a library nobody here commits to
+being worth one site and not two.
+
+**Until 2026-09-20 this ended *which is the case Mathlib does not cover, at `IsCoveringMap` or at
 `IsSeparatedMap`; `IsCoveringMap.comp_homeomorph` and `IsCoveringMap.homeomorph_comp` are
-conjugation by a homeomorphism and there is no composition lemma either.
+conjugation by a homeomorphism and there is no composition lemma either*.** That was the module
+docstring's clause said a second time, and it inherited its defect: `IsCoveringMap`'s namespace has
+four lemmas concluding `IsCoveringMap` of a composite at that version and not two, the other two
+being `IsCoveringMap.comp_homeomorph_iff` and `IsCoveringMap.homeomorph_comp_iff` — and four more
+cancelling `f` out of an equality of composites, which conclude that two companions agree and say
+nothing about the covering property of a factor. **A claim whose
+evidence lives in another paragraph is not bare, but it owes the pointer**, which is what replaces
+it here.
 
 **Nothing in this repository consumes this**; see the module docstring. -/
 theorem IsCoveringMap.isClosedMap_of_comp {W : Type*} [TopologicalSpace W] {u : W → E}
@@ -368,7 +498,15 @@ Note that the index type is the *same* `I`, which is what makes this usable: app
 `IsCoveringMap f` at `x`, whose index type is `f ⁻¹' {x}`, it says every nearby point has fibre
 `f ⁻¹' {x}` — not merely that every nearby point is evenly covered by something.
 
-Mathlib does not have this; it sits with `IsEvenlyCovered.of_fiber_homeomorph`. -/
+Its Mathlib destination is beside `IsEvenlyCovered.of_fiber_homeomorph`, and the module docstring's
+`## The fibres of a covering map over a preconnected base` is where the absence it fills is
+measured — twenty declarations at `v4.32.0`, none of them evenly covered at one point and
+concluding it at another **for the same `f`**.
+
+**Until 2026-09-20 this read *Mathlib does not have this; it sits with
+`IsEvenlyCovered.of_fiber_homeomorph`*.** It was true and it was bare, and it was the module
+docstring's claim said a second time; a claim about a library nobody here commits to is worth one
+instrumented site and a pointer, not two assertions. -/
 theorem IsEvenlyCovered.eventually {x : X} (h : IsEvenlyCovered f x I) :
     ∀ᶠ y in 𝓝 x, IsEvenlyCovered f y I := by
   obtain ⟨inst, U, hxU, hU, hfU, H, hH⟩ := h
