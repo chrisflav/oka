@@ -169,13 +169,33 @@ in both its figures — this file opens no gap, and now that is a reading and no
 ## What is not here
 
 * **No comparison between `CategoryTheory.PreGaloisCategory.IsConnected` and `ConnectedSpace` of a
-  cover's total space.** The three results above whose statement carries that condition are about
-  the **categorical** one, which is a condition on an object of this category — not initial, and
-  every monomorphism into it either initial or an isomorphism — and **nothing in this repository
-  relates it to connectedness of the space.** At the commit this file is cut from no declaration
-  under `Oka/` states an implication either way. A reader who takes the decomposition result for
-  a statement about the topological connected components of the total space is reading something
-  that is not proved here.
+  cover's total space is made in this module, and since 2026-09-20 one is made in the tree.** The
+  three results above whose statement carries that condition are about the **categorical** one,
+  which is a condition on an object of this category — not initial, and every monomorphism into it
+  either initial or an isomorphism. **At the commit this file is cut from no declaration under
+  `Oka/` states an implication either way**: that clause is pinned to a commit that has passed and
+  stays exact where it stands. **What the tree does past that commit is another matter, and this
+  bullet is narrowed rather than retired.**
+  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isConnected_iff_connectedSpace`
+  (`Oka/AnalyticSpace/ConnectedCover.lean`, taxis #2082) proves the two conditions **equivalent**
+  over a Hausdorff preconnected base, which is a pair of hypotheses every statement here already
+  carries — so **every piece `…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` produces
+  has connected total space**, which is that equivalence read at each `f i` and is the whole of
+  what this narrowing buys. **It does not make the pieces the topological connected components of
+  the total space**: that reading needs the categorical coproduct's total space to be the
+  topological disjoint union of the pieces' and needs an isomorphism of this category to be a
+  homeomorphism on total spaces, and **neither is stated in this repository** — that module's
+  `## What is not here` names the three steps and says which of their instruments are already in
+  the tree. **So the misreading this bullet exists to stop is still a misreading, and what has
+  changed is that the true statement one step short of it is now a theorem.** **The clause this
+  bullet carried until 2026-09-20 was *nothing in this repository relates it to connectedness of
+  the space*, in the present tense, and the push that adds that module is what falsified it**; the
+  dated record is here rather than at the pinned sentence beside it, which needed none. **What is
+  still not proved is the comparison over a base that is not Hausdorff or not preconnected**, and
+  that module's own `## What is not here` says so and says that neither hypothesis is shown to be
+  needed. **That module neither imports
+  this one nor is imported by it** — both are cut from `Oka/AnalyticSpace/GaloisCategory.lean` —
+  so nothing above depends on it and no statement here is restated there.
 * **No comparison with the topologist's fundamental group.** The group below is the automorphism
   group of a fibre functor, which is profinite — `Mathlib/CategoryTheory/Galois/Topology.lean`
   declares `CompactSpace`, `T2Space`, `TotallyDisconnectedSpace` and `IsTopologicalGroup` at
@@ -311,8 +331,18 @@ theorem SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup (x : X)
 connected ones.**
 
 *Connected* is `CategoryTheory.PreGaloisCategory.IsConnected`, a condition on an **object of this
-category**; the module docstring's `## What is not here` records that nothing in this repository
-relates it to connectedness of the cover's total space.
+category**, and over this statement's own hypotheses it is equivalent to `ConnectedSpace` of the
+cover's total space —
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isConnected_iff_connectedSpace` of
+`Oka/AnalyticSpace/ConnectedCover.lean`, a module this one neither imports nor is imported by. **So
+every piece this theorem produces has connected total space.** **It does not follow that the pieces
+are the topological connected components of `A.left`**, and that step is not taken anywhere in this
+repository: it asks for the total space of `∐ f` to be the topological disjoint union of the
+`(f i).left` and for the isomorphism above to be a homeomorphism, which are two further statements
+— the second cheap and the first not — and that module's `## What is not here` prices both. This
+sentence read *the module docstring's `## What is not here` records that nothing in this repository
+relates it to connectedness of the cover's total space* until 2026-09-20, when that comparison
+landed; the bullet it named carries the dated record and the pin beside it.
 
 **No point of the base appears in the statement.** Mathlib's
 `CategoryTheory.PreGaloisCategory.has_decomp_connected_components'` takes the Galois category and
