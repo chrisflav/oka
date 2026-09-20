@@ -46,7 +46,7 @@ Three steps, and only the middle one is about `F` and `G` at all.
   projection as the isomorphism, the inclusion of `D(G)`, and the hypersurface's own projection —
   the same factorisation `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_comp` uses,
   regrouped so that the first two are one morphism. Restricting that composite over `V` splits it
-  by `restrictHom_comp`, and the first factor is finite by
+  by `ComplexAnalytic.AnalyticSpace.restrictHom_comp`, and the first factor is finite by
   `ComplexAnalytic.AnalyticSpace.isFinite_restrictHom_of_subset_range`.
 
 ## What the two obstacles on record turned out to be

@@ -957,7 +957,10 @@ where `scripts/check_docstring_names.py` pins **207** at `daeb942`, the base thi
 cut from. **Both numerals name a commit that has already happened, which is what makes them
 checkable**: a count named at the commit that lands it has to be measured before that commit
 exists, and any push landing in between falsifies it. The occurrence count moves with `master`
-and the 29 does not.
+and the 29 does not. **A run with no `…` at all — a declaration cited by its last component
+alone — is in none of the three populations and no run of this script can report it**, which is
+what `### How a declaration is cited, and the one form no check can see` is the rule for; taxis
+#2069.
 
 `scripts/docstring-names-ignore.txt` is the escape hatch, for a name that is correct, cited on
 purpose, and resolves nowhere only because this build does not import the declaration it names;
@@ -2351,6 +2354,206 @@ if it is the **second** push to a file, run the scan over that file, because tha
 which the first push's indexicals go wrong. **It is a command and not a gate** — **32 of the 48 raw
 hits at `51edff7` are the base of a morphism or a base point**, and the lookahead that excludes
 them is a list of the spellings seen so far and not a decision procedure.
+
+### How a declaration is cited, and the one form no check can see
+
+**Cite a declaration in a form `scripts/check_docstring_names.py` can read: the whole name, or the
+`…Ns.decl` elision with at least one namespace component before the last. Never the last component
+alone — except where the enclosing `namespace` already resolves it, which is the house form and
+stays.** A backticked run with no dot is not name-shaped —
+
+```python
+def is_name_shaped(s: str) -> bool:
+    parts = s.split(".")
+    if len(parts) < 2:
+        return False
+```
+
+— so it is never a candidate, is in none of that script's three populations, and **cannot be
+reported by any run of it, before taxis #2056 or after**. That branch added the `` `…Ns.decl` ``
+population and a third for the dotless `` `…decl` ``; the form with no `…` at all was in neither
+and is what this section is about. taxis #2069 is the filing.
+
+**The worked example cost no round only because its author caught it.** A draft of
+`Oka/AnalyticSpace/GaloisCategory.lean`'s *No limit or colimit that was not already there* bullet
+wrote `` `instHasEqualizers` ``. Two declarations end in that component —
+`CategoryTheory.Over.instHasEqualizers` and `CategoryTheory.PreGaloisCategory.instHasEqualizers` —
+and the bullet's whole subject is **which** instance discharges a goal, so the wrong one is not a
+cosmetic slip. It is repaired to the whole name in `ee8fc2d`. **Nothing in CI would have said so at
+any round**, and nothing will say so about the next one.
+
+**One script sees a slice of this class, and which slice is worth knowing.**
+`scripts/guard_coverage.py` reports *abbreviated citations, not counted* — backticked tokens
+inside a `## Main results` section of a **module** docstring that are a proper suffix of some
+declaration of this repository. At the commit that writes this section it is **30**, four of them
+dotted, and `--by-file` names each with the declaration it would resolve to and whether that is
+ambiguous. **It is a count and not a finding**: nothing fails on it and
+`.orchestra/validation.sh` does not run the script. And the population is that one heading — the
+`instHasEqualizers` draft was under `## What is not here`, which the script's `MAIN_RESULTS`
+pattern does not match and whose bullets it says in terms it leaves alone, so not even that number
+would have moved. **The push that writes this section takes it from 32 to 30**: `` `hom_ext` `` and
+`` `ι_glueMorphisms` `` in `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean`, each of which
+the script listed as ambiguous over three declarations.
+
+**This is a rule and not a gate, and the figures are the argument rather than a preference.** Over
+the walk the checker already performs — `prose_files` plus `comment_regions`, so exactly the text it
+reads — a *bare one-component backticked identifier* occurs **14956** times in **1681** distinct
+forms at the commit that writes this section, and **12078** of those occurrences, in **1348**
+forms, **are** the last component of some **declaration**. `` `A` ``, `` `f` ``, `` `X` ``,
+`` `simp` `` and `` `rfl` `` are in that number, and each of the five is ordinary prose. A gate
+keyed on *resolves* would pass almost everything and a gate keyed on *is backticked* would report
+almost everything.
+
+**That pair is over declarations alone, which is not the same population as declarations and
+modules, and saying which is part of the figure.** `scripts/DumpEnvNames.lean` tags every row
+`decl` or `module` — **332537** against **5679** here — and taxis #1326 added that column because
+field notation is on a declaration and not on a module. Counted over both kinds the same walk gives
+**12268** occurrences in **1367** forms; the difference is **190** occurrences in **19** forms, and
+those nineteen are module tails that are the last component of no declaration at all —
+`` `Oka` `` (88) and `` `OkaTest` `` (17) are most of it, with `` `Prop` `` (50), `` `Type` `` (11)
+and fifteen more at five or fewer. **A section about how a *declaration* is cited may not be the
+one place that merges the two**; the argument above holds at either number, which is why this is a
+figure to state exactly and not a paragraph to rewrite.
+
+**Use the checker's own character test and not an ASCII regex.** `is_name_shaped` asks
+`str.isalnum`, which is true of `Uᵢ`, `ℂ²` and `𝒪_Z`; `[A-Za-z0-9_'!?]` is not. At this commit the
+ASCII spelling of the population above returns **12861** in **1529** forms — **2095 occurrences and
+152 forms short** — and a delivery that publishes it as the population has published a figure for a
+different set.
+
+**The tractable sub-shape, which is where a sweep starts.** At that same commit, restrict to runs
+containing `_` or beginning `inst`, which in this tree are declaration names rather than English:
+**1545** occurrences in **621** forms, of which **1205** in **560** are the last component of some
+declaration and **338** in **86** are **ambiguous** — more than one declaration ends in that
+component. **340** occurrences in **61** forms are the last component of *no* declaration, and that
+row is why this is not a gate either: it holds `OKA_DECL_DUMP` and `OKA_ENV_NAME_DUMP`
+(environment variables this repository's own scripts read), `MAX_LOCAL_HEAD` and
+`GENERATED_COMPONENT` (Python constants), and `A_f`, `X_j` and `R_p` (mathematical notation). A
+check that reported them would be reporting six kinds of correct prose.
+
+**Four things a bare component is, that are not citations, and a sweep that repairs them is
+vandalism.** They are what the 338 are mostly made of.
+
+* **Lean syntax** — `` `instance` `` (52 occurrences), `` `instances` `` (the transparency level,
+  37), `` `set_option` ``, `` `by_cases` ``. A keyword, attribute, tactic or option name is not a
+  citation even when some declaration happens to end in it.
+* **A generated component named as a kind** — `` `congr_simp` ``, `` `eq_1` ``, `` `match_` ``.
+  These name what Lean generates rather than any one of the declarations carrying it: **2570**
+  declarations end in `congr_simp` at this commit and **9023** in `eq_1`, while **nothing at all**
+  ends in the bare `match_`, which is a kind named by its prefix. `GENERATED_COMPONENT` in the
+  checker is the pattern for this kind and not this list — it matches `congr_simp` and `eq_1`, and
+  the bare `match_` matches nothing in it.
+* **A structure field named as a field of a structure the sentence names** —
+  *the `f_open` field of an `AlgebraicGeometry.LocallyRingedSpace.GlueData`*, *`t_fac` reads
+  `t' i j k ≫ pullback.snd _ _ = …`*. The namespace is in the sentence.
+* **The token itself, under discussion** — *the token that would have caught these two is the bare
+  final component `pullback_snd`*, in `OkaTest/Axioms/Morphisms.lean`. Replacing it with the whole
+  name would falsify the sentence.
+
+**Those four are the kinds inside the 338 and are not a taxonomy of the population above them.** A
+bare component can also name something no declaration of any environment carries: `` `Pex` `` in
+`OkaTest/StandardEtaleAnalytification.lean` is the `StandardEtalePair` taxis #1112 exhibited, cited
+as an *issue's* notation, and nothing in the dump ends in it. Such a form is in neither the 338 nor
+the **340**, having no `_` and not beginning `inst`, so it is outside every row the predicate below
+runs over; it is a reason the sample further down has a first row and not a reason to widen this
+list.
+
+**What separates the rest is whether the enclosing namespace or the enclosing block fixes the
+referent, and that is a run rather than a reading — so the predicate is printed and not
+described.** A figure of this shape is worth nothing without the code that produced it: an earlier
+draft of this section gave the rule in prose with the decision in comments, two graders implemented
+it nine ways between them, and the nine answers spanned a hundred occurrences. **This is the
+predicate, and the split beneath it is what it returns.**
+
+```python
+# In a built checkout, with `scripts/check_docstring_names.py` imported as `m` and `cands` the
+# declarations of the environment whose last component is the bare run `s`.  The population is
+# every ambiguous occurrence of the sub-shape above — `len(cands) > 1` — over `m.prose_files`
+# and `m.comment_regions`, with `m`'s own backtick regex.
+NS = re.compile(r"^(namespace|end)\s+(\S+)", re.M)
+
+def enclosing_namespace(text, off):
+    stack = []
+    for mo in NS.finditer(text[:off]):
+        if mo.group(1) == "namespace":
+            stack.append(mo.group(2))
+        elif stack and stack[-1] == mo.group(2):
+            stack.pop()
+    return ".".join(stack)
+
+def fixed(text, block, off, s, cands):
+    parts = [p for p in enclosing_namespace(text, off).split(".") if p]
+    for k in range(len(parts), 0, -1):            # a sibling: the namespace, or a prefix of it
+        if ".".join(parts[:k]) + "." + s in cands:
+            return True                           # Lean resolves it and so does the reader
+    named = {mo.group(1).lstrip("…") for mo in re.finditer(r"`([^`\s]+)`", block)}
+    if any(c in named for c in cands):
+        return True                               # one candidate is named in full in the block
+    return len({c.rsplit(".", 1)[0] for c in cands} & named) == 1   # ...or its namespace is
+```
+
+**At this commit the 338 split 147 fixed and 191 not**, the 147 being 21 siblings, 98 blocks naming
+a candidate in full and 28 naming exactly one candidate namespace. **The 191 is an upper bound on
+what is owed a repair and not an estimate of it**, because the four kinds above are inside it and
+this predicate cannot see them: **131 of the 191** are one of the seven forms those bullets name by
+name — `instance` (52), `instances` (37), `t_fac` (17), `set_option` (8), `congr_simp` (7),
+`f_open` (6) and `eq_1` (4) — and none of the seven is a citation at all.
+
+**And the 147 is a lower bound in the same way, which is the other half of the same sentence and is
+named because this section's whole argument rests on this predicate.** Its last two tests read the
+backticked tokens of the block, so a block that names a *declaration of* a candidate's namespace
+rather than the namespace itself is a false negative: `OkaTest/Factorisation.lean:57` and `:554`
+cite `` `hom_ext` `` in blocks naming `ComplexAnalytic.IsCutOutBy.existsUnique_lift` in full, which
+fixes the referent for a reader and which the third test — keyed on the bare
+`ComplexAnalytic.IsCutOutBy` — does not see. **Both bounds are why the split is published beside
+the code and not instead of it.**
+
+**How many of the 14956 are citations at all is a sample and not a census, and the sample is
+published rather than described.** Sort the population by file, then by line, then by offset, take
+`STEP = len(occurrences) // 50` and the slice `occurrences[::STEP]`, and hand-classify what comes
+back. **That slice is the sample and it has 51 members, not 50**: `STEP` is **299** here and
+`299 × 50 = 14950` is short of `14956`, so a fifty-first index survives, and the table below is *of
+51*. The spelling is written out because the other reading of *every 299th* — `[occ[i * STEP] for i
+in range(50)]` — returns a different set, and a table headed *of 50* beside a slice that returns 51
+is a figure no reader can reconcile with the instrument above it.
+
+| class | of 51 |
+|---|---|
+| not a citation — variable, hypothesis, notation, tactic, keyword, field, token named | **39** |
+| a citation whose whole name *is* one component | **5** |
+| **a citation by last component alone** | **7** |
+
+The five of the middle row are `AddCommGrpCat`, `analyticAt_of_shift`, `TopCat`, `FintypeCat` and
+`map_add` — **nothing to repair, each being a declaration of the root namespace**, which is what
+the middle row means and why it is not the last row. The seven of the last are `ofIsIso`,
+`FiberFunctor`, `quotientSheafifyToPushforward`, `mem_maximalIdeal_pow_iff`, `renameEmb`,
+`IsFiniteEtale` and `maximalIdeal_stalk_eq_span_stalkCoord`.
+
+**One of that seven is a sibling reference** — `` `mem_maximalIdeal_pow_iff` `` inside `namespace
+LocalOkaRing`, where `LocalOkaRing.mem_maximalIdeal_pow_iff` is one of its two candidates — **and
+six are in the root namespace**, where nothing fixes them; two of those six — `` `ofIsIso` `` over
+four declarations and `` `renameEmb` `` over two — are ambiguous besides. **`7 / 51` is 13.7 % of a
+fifty-one-occurrence sample and is not a tree figure**, and the number of citations of this class in
+the tree is not measured here; what the sample settles is that the class is neither empty nor most
+of the population, which is what decides between a rule and a gate.
+
+**One occurrence of the 51 is a judgement and is named rather than buried.**
+`Oka/AnalyticSpace/OpenSubspace.lean:76` writes *the `local_model` field of
+`AnalyticSpace.restrict`*, and `ComplexAnalytic.AnalyticSpace.local_model` is the one declaration
+ending in it. It is counted in the first row, as a structure field named as a field of a structure
+the sentence names — the third kind above. Counted in the last row instead the table is 38 / 5 / 8.
+
+**Every figure in this section is over `.lean` files only, and this file is not one of them.**
+`prose_files` walks `Oka/`, `OkaTest/` and `scripts/` and the two library roots; `README.md` is in
+none of them, so the exhibits written out above — `` `A_f` ``, `` `X_j` ``, `` `instance` ``,
+`` `congr_simp` `` and the rest — do not move any population counted here. **A later seat who
+copies one of them into a `.lean` docstring does move it**, and nothing mechanical would say so.
+
+**What a push owes**: write the whole name, or the `…Ns.decl` elision. If the enclosing
+`namespace` already fixes it, the bare form is the house form and stays. **Before repairing one,
+check it is not one of the four kinds above** — and if it is ambiguous, say which declaration you
+mean rather than which you assume: the `instHasEqualizers` draft was wrong about that and its
+author, not a check, is what caught it.
 
 ### Declaration docstrings, and why `docBlameThm` is off
 

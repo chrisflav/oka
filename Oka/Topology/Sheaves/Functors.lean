@@ -52,7 +52,7 @@ statement is read off from it.
 
 - `TopCat.Presheaf.coimageOpens`: the right adjoint of `Opens.map i`.
 - `TopCat.Presheaf.pushforwardFullyFaithful` and `TopCat.Presheaf.pushforwardHomEquiv`, whose
-  forward map is the pushforward itself (`pushforwardHomEquiv_apply`).
+  forward map is the pushforward itself (`TopCat.Presheaf.pushforwardHomEquiv_apply`).
 - `TopCat.Sheaf.pushforwardFullyFaithful` and `TopCat.Sheaf.pushforwardHomEquiv`.
 
 ## Main results

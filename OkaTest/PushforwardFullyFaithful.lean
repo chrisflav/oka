@@ -15,9 +15,9 @@ sections, whose `IsClosedEmbedding` is `isClosedEmbedding_zeroLocusι` — and a
 `{z ∈ ℂ² | z₀ z₁ = 0}`, where the sheaves involved are the structure sheaves of a genuine
 singular complex analytic space rather than variables.
 
-The `simp` lemma `pushforwardHomEquiv_apply` in the library already rules out the other way this
-could be vacuous: the equivalence's forward map is the pushforward itself, not some unrelated
-bijection between hom-sets that happen to have the same cardinality.
+The `simp` lemma `TopCat.Presheaf.pushforwardHomEquiv_apply` in the library already rules out the
+other way this could be vacuous: the equivalence's forward map is the pushforward itself, not some
+unrelated bijection between hom-sets that happen to have the same cardinality.
 -/
 
 open CategoryTheory Limits TopologicalSpace Opposite AlgebraicGeometry ComplexAnalytic

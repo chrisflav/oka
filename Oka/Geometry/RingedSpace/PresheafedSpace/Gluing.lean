@@ -77,7 +77,7 @@ with one `Iso.trans` removed.
   for.
 - `AlgebraicGeometry.LocallyRingedSpace.OpenCover.existsUnique_glueMorphisms`: **morphisms out of
   the members of an open cover which agree on the overlaps glue to a unique morphism out of the
-  whole space**, with `ι_glueMorphisms` and `hom_ext` as the two halves.
+  whole space**, with `…OpenCover.ι_glueMorphisms` and `…OpenCover.hom_ext` as the two halves.
 - `AlgebraicGeometry.LocallyRingedSpace.GlueData.vIsoPullback`: the overlap `V (i, j)` of a glue
   data is the categorical pullback of the two inclusions into the gluing, and
   `AlgebraicGeometry.LocallyRingedSpace.GlueData.pullback_condition_of_comm` is what that buys: a

@@ -88,8 +88,9 @@ faithful, and every statement below is that functor's ambient counterpart read a
   it unchanged.
 
 **The instance arguments are passed positionally and that is deliberate.**
-`Oka/AnalyticSpace/FiniteEtaleOver.lean`'s `faithful_fiberFunctor` docstring records the seam: the
-comma category's `A.left` and `((…toFiniteEtaleOver X).obj A).left` are the same by `rfl` and not
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.faithful_fiberFunctor`'s docstring
+(`Oka/AnalyticSpace/FiniteEtaleOver.lean`) records the seam: the comma category's `A.left` and
+`((…toFiniteEtaleOver X).obj A).left` are the same by `rfl` and not
 reducibly so, so instance search does not cross between them and a `haveI` does not repair it.
 Every `@`-application below is that, and none of them is a mathematical step.
 

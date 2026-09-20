@@ -116,8 +116,8 @@ open embedding to a smaller open is again one.
 
   **The last clause read *the two halves of this file do not meet* until 2026-09-14**, when a third
   part was appended and *two halves* stopped naming the file. Nothing about the base change is
-  retired by it: the relation it denies between `sheetOpens` and `pullback_snd` is the same
-  relation and is still not stated.
+  retired by it: the relation it denies between `sheetOpens` and `IsLocalHomeomorph.pullback_snd`
+  is the same relation and is still not stated.
 * **Nothing about a restriction over an arbitrary subset of the target.**
   `IsLocalHomeomorph.restrictPreimage_of_isOpen` asks its subset to be open and spends that
   hypothesis twice, once at each subtype inclusion. **The statement without it is true and is

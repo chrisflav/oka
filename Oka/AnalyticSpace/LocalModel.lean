@@ -15,8 +15,9 @@ import Oka.StalkEquiv
 of the structure sheaf of an arbitrary locally ringed space `Y` into a locally ringed space, and
 establishes the four properties of its inclusion — closed embedding, range, surjectivity on
 stalks, kernels of the stalk maps — that `ComplexAnalytic.IsCutOutBy` packages. Assembling them
-into that predicate is `isCutOutBy_zeroLocusSubspaceι` below, which lives here rather than in the
-mirror tree because `IsCutOutBy` is analytic-space vocabulary. Here we then specialise `Y` to an
+into that predicate is `AlgebraicGeometry.LocallyRingedSpace.isCutOutBy_zeroLocusSubspaceι`
+below, which lives here rather than in the mirror tree because `IsCutOutBy` is analytic-space
+vocabulary. Here we then specialise `Y` to an
 open subset of `ℂ^n` and read off the two consequences the definitions of
 `Oka/AnalyticSpace/Basic.lean` were designed for: such a zero locus is a
 `ComplexAnalytic.IsLocalModel`, and it is a `ComplexAnalytic.AnalyticSpace`.
@@ -126,7 +127,8 @@ theorem isCutOutBy_zeroLocusSubspaceι {k : ℕ} (g : Fin k → Y.presheaf.obj (
 end AlgebraicGeometry.LocallyRingedSpace
 
 -- `ComplexAnalytic.IsCutOutBy.pushforwardIso`, the converse of
--- `isCutOutBy_zeroLocusSubspaceι`, used to live here. It moved to
+-- `AlgebraicGeometry.LocallyRingedSpace.isCutOutBy_zeroLocusSubspaceι`, used to live here. It
+-- moved to
 -- `Oka/AnalyticSpace/Factorisation.lean`, which is its only consumer, and this file dropped the
 -- `Oka.Geometry.RingedSpace.CutOut` import with it.
 

@@ -109,10 +109,10 @@ general, over nothing larger. Two seams follow, and they are not symmetric.
   comparison morphism and `AlgebraicGeometry.LocallyRingedSpace.Γ_map_over_ambient` computes its
   action on sections. No isomorphism is needed — only a morphism over `X`.
 * **The chart's sheaf map has to be evaluated on a section that does not extend.**
-  `restrictHom_fac` computes `Γ.map (restrictHom i A).op` only on sections pulled back from the
-  global sections of the chart target, and `restrictHom` is an `IsOpenImmersion.lift`, so its
-  sheaf map is not otherwise computable. `ComplexAnalytic.Γ_map_restrictHom_toRestrictΓ` is what
-  closes this, entirely on stalks.
+  `ComplexAnalytic.restrictHom_fac` computes `Γ.map (restrictHom i A).op` only on sections pulled
+  back from the global sections of the chart target, and `restrictHom` is an
+  `IsOpenImmersion.lift`, so its sheaf map is not otherwise computable.
+  `ComplexAnalytic.Γ_map_restrictHom_toRestrictΓ` is what closes this, entirely on stalks.
 
 **Neither needed an equation of opens.** The obvious plan is to reach for
 `U.isOpenEmbedding.isOpenMap.functor.obj ⊤ = U` and transport along it. Getting that equation is
