@@ -41,7 +41,12 @@ Invertibility is checked on stalks, and the two cases are genuinely different.
 
 The mapping property of a subspace cut out by global sections — that a morphism `φ : Z ⟶ Y`
 killing the `f j` factors through `i` — needs one more ingredient beyond the isomorphism proved
-here: that `i_*` is **fully faithful**. That is not in Mathlib; it is
+here: that `i_*` is **fully faithful**. **At `v4.32.0` — the revision `lakefile.toml` pins,
+resolved by `lake-manifest.json` to `81a5d257c8e410db227a6665ed08f64fea08e997` — that is not in
+Mathlib, under that name or any other**: over the environment of `import Mathlib` at that rev,
+**197** non-internal declarations have a type mentioning `TopCat.Presheaf.pushforward` and
+**1348** have one mentioning `CategoryTheory.Functor.Full`, `CategoryTheory.Functor.Faithful` or
+`CategoryTheory.Functor.FullyFaithful`, and **none mentions both**. It is
 `TopCat.Presheaf.pushforwardFullyFaithful` in `Oka/Topology/Sheaves/Functors.lean`, and with it
 the chain `Hom(𝒪_X, ψ_*𝒪_Z) ≅ Hom(i_*𝒪_X, φ_*𝒪_Z) ≅ Hom(𝒪_Y ⧸ (f), φ_*𝒪_Z)` closes, the last
 step because `φ.c` also kills the `f j`. The assembly is analytic-side vocabulary and lives in
@@ -49,6 +54,43 @@ step because `φ.c` also kills the `f j`. The assembly is analytic-side vocabula
 here into "any two closed immersions cutting out the same sections are isomorphic", since the
 isomorphism of structure sheaves is available *after* pushing forward and descending it along
 `i_*` is exactly full faithfulness.
+
+**The environment scan is what decides that claim and a `grep` is what would only narrow it**,
+which is the distinction `Oka/AlgebraicGeometry/OpenImmersion.lean` draws in its own dated record:
+a scan keyed on a **name** cannot see a lemma that states the same thing under another one.
+`grep -rn "pushforwardFullyFaithful" Mathlib/`, run over `.lake/packages/mathlib` at that rev,
+returns **0** occurrences in **0** files — but that token is *this repository's own name for the
+statement*, and Mathlib is under no obligation to have picked it. What a statement of full
+faithfulness cannot avoid is naming the functor and the property in its own type, whatever
+namespace is open and whatever the lemma is called, and the **0** above is a count of exactly
+that. **The first residue, named rather than left for a reader to find**: a lemma phrased as
+injectivity or surjectivity of the action on hom-sets need not write `Full` or `Faithful` at all —
+so I asked that too, and of the **197**, exactly **one** has a type also mentioning
+`Function.Injective`, `Function.Bijective` or `Function.Surjective`
+(`AlgebraicGeometry.Scheme.Hom.stalkFunctor_toImage_injective`, which is about stalks), and only
+**three** have names writing *full*, *faith*, *inj* or *bij*, the other two being the generated
+`AlgebraicGeometry.PresheafedSpace.Hom.mk.inj` and
+`AlgebraicGeometry.PresheafedSpace.Hom.mk.injEq`. **The second residue is the other functor of
+that name**: `TopCat.Sheaf.pushforward` (`Mathlib/Topology/Sheaves/Functors.lean:62`) is the
+nearest thing Mathlib has to the functor this claim is about and the claim does not name it, so I
+asked the same question of it — **17** declarations have a type mentioning it and **none** of
+them mentions `CategoryTheory.Functor.Full`, `CategoryTheory.Functor.Faithful` or
+`CategoryTheory.Functor.FullyFaithful` either.
+
+**Two positive controls, because a scan that finds nothing is worth nothing without one.** The
+**197** and the **1348** are the first: both halves of the question are pointed at something Mathlib
+has in quantity. In source, `grep -rn "Presheaf.pushforward" Mathlib/` returns **20** occurrences in
+**7** files, and `fullyFaithfulSheafToPresheaf` — an `abbrev` declared at
+`Mathlib/CategoryTheory/Sites/Sheaf.lean:341`, a fully-faithful statement about a *different*
+functor — is used in the very file this claim is about, at
+`Mathlib/Topology/Sheaves/Functors.lean:146`, so the shape of statement is one Mathlib does write.
+**The population of every command here is `Mathlib/` and not this tree**, and at this site that is
+the whole trap: the name denied is declared under `Oka/`, so the same `grep` run over this
+repository returns the declaration it names and decides nothing.
+
+**That clause read *That is not in Mathlib* until 2026-09-21**, with no version, no instrument and
+no verdict beside it; `git show c6bfc1f:Oka/Geometry/RingedSpace/CutOut.lean` carries the retired
+wording at `:44`, wrapped after *is*. **The claim is unchanged and only its warrant is.**
 
 ## Main definitions
 

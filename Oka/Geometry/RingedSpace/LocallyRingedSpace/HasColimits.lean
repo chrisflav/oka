@@ -14,14 +14,50 @@ Material for two Mathlib files and not one; see `README.md` on the mirror tree, 
 split by destination.
 
 **The cover goes to `Mathlib/Geometry/RingedSpace/PresheafedSpace/Gluing.lean`**, because it is
-stated in terms of `AlgebraicGeometry.LocallyRingedSpace.OpenCover`, and Mathlib has no such
-structure: this repository's is in `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean`, proposed
-for the Mathlib file of that name, and that file is *not* in the closure of the one below.
+stated in terms of `AlgebraicGeometry.LocallyRingedSpace.OpenCover`, and **at `v4.32.0` — the
+revision `lakefile.toml` pins, resolved by `lake-manifest.json` to
+`81a5d257c8e410db227a6665ed08f64fea08e997` — Mathlib has no such structure**:
+`grep -rn "LocallyRingedSpace.OpenCover" Mathlib/`, run over `.lake/packages/mathlib` at that
+rev, returns **0** occurrences in **0** files, and over the environment of `import Mathlib` at
+that rev the constant does not exist. This repository's is in
+`Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean`, proposed for the Mathlib file of that
+name, and that file is *not* in the closure of the one below.
 `scripts/import_cost.py` prices it at **3** modules against that target
 (`Mathlib.CategoryTheory.GlueData`, `Mathlib.Geometry.RingedSpace.PresheafedSpace.Gluing`,
 `Mathlib.Topology.Gluing`), while the dependency in the other direction costs **0** — so upstream
 the cover sits beside `OpenCover` and nothing pays anything. It is in this file rather than in the
 gluing one only because that file is an import of this one.
+
+**Two independent commands agree, and that is what makes this a decision rather than a spelling
+accident.** The first is the token above. The second asks it the other way round:
+`grep -rn "LocallyRingedSpace" Mathlib/ | grep -ic cover` returns **2**, and neither hit declares
+a structure: `Mathlib/AlgebraicGeometry/Gluing.lean:771` is a rewrite inside a `by` block, and
+`Mathlib/AlgebraicGeometry/Cover/Open.lean:59` is the `f x := …` field of the structure *instance*
+in the body of `def affineCover … := by … exact { … }`, which is a definition written in tactic
+mode rather than a proof. The environment says the
+same pair: of the **380** non-internal declarations whose type mentions
+`AlgebraicGeometry.LocallyRingedSpace`, exactly **two** write *Cover* in their name and both are
+about `Scheme`, and of the **21** structures of that environment whose name writes *Cover* not
+one is at `LocallyRingedSpace`. **The control says the notion is there in quantity and is there
+elsewhere**: `grep -rn "OpenCover" Mathlib/` returns **433** occurrences in **59** files, and
+`AlgebraicGeometry.Scheme.OpenCover` and `AlgebraicGeometry.Scheme.Cover` both exist.
+
+**Here the token grep decides rather than narrows**, which is the verdict the three questions
+`OkaTest/Axioms.lean`'s seventh census object puts to a scan offered in support of an absence
+exist to reach: a declaration stated *in terms of* a cover of locally ringed spaces has to write
+that structure's name in its own statement, whatever namespace is open; a `variable` binder
+introducing a cover leaves the name still to be written, so nothing is inherited from a binder
+the scan does not read; and a structure is declared and not generated, so there is no
+elaborator-produced spelling to miss. **What is deliberately not claimed is that the notion is
+unreachable**: `AlgebraicGeometry.Scheme.Cover` is an `abbrev` over a `CategoryTheory.Precoverage`
+(`Mathlib/AlgebraicGeometry/Cover/MorphismProperty.lean:50`), and whether it specialises to
+locally ringed spaces is a question this file does not ask and does not need.
+
+**That clause read *Mathlib has no such structure* until 2026-09-21**, with no version and no
+instrument beside it;
+`git show c6bfc1f:Oka/Geometry/RingedSpace/LocallyRingedSpace/HasColimits.lean` carries the
+retired wording at `:17–18`, wrapped after *no such*. **The claim is unchanged and only its
+warrant is.**
 
 **What decides is the statement**, which is `README.md`'s *split by destination, not by subject*:
 a declaration travels with the cover exactly when its own statement mentions `OpenCover`, because
