@@ -52,9 +52,10 @@ completely:
 
 **So the pair whose algebra is not the base is also the pair at which the restriction is
 removable.** The sibling file's reason for having two witnesses — that
-`ComplexAnalytic.sqSubOneRingEquiv` makes `ComplexAnalytic.sqSubOnePair`'s algebra the base — is a
-statement about the algebra; this is a second and independent reason, about the bad set, and it
-points the same way.
+`ComplexAnalytic.sqSubOneRingEquiv` makes `ComplexAnalytic.sqSubOnePair`'s algebra the base
+**wherever `2` is a unit of the base**, free over the `ℂ`-algebras this development instantiates
+at — is a statement about the algebra; this is a second and independent reason, about the bad set,
+and it points the same way. **That clause carried no hypothesis until 2026-09-21.**
 
 **What keeps the instance below from being a `k ≥ 1` instance of a vacuous statement is the bad
 set and not the algebra**: it is empty, so `V = ⊤` is admissible and the restricted morphism is
@@ -146,11 +147,14 @@ exactly that purpose.
 ## What is not checked here
 
 * **No claim that this cover is non-trivial, and none about how many sheets it has.**
-  `ComplexAnalytic.sqSubOneTwoPair`'s algebra is `R[X]/(X² − 1)`, which is not the base;
+  `ComplexAnalytic.sqSubOneTwoPair`'s algebra is `R[X]/(X² − 1)`, which is not the base over a
+  non-trivial `R` — at the zero ring, which that pair's `variable` line admits, it **is** the base;
   `OkaTest/StandardEtaleLocalIsoBase.lean`'s own `## What is not checked here` says in terms that
   nothing there proves the cover is anything other than the base, and nothing here proves it
   either. **What is below is that the class holds**, not that the cover is connected, not that it
-  has two sheets, and not that it is or is not an isomorphism.
+  has two sheets, and not that it is or is not an isomorphism. **That clause read *which is not
+  the base* until 2026-09-21 — corrected rather than dated, because it was false at an `R` the
+  pair admits.**
 * **Nothing at `k ≥ 2`, and nothing uniform in `k`.** One presentation, one relation, one pair, as
   in the file this one imports.
 * **Nothing about the composite with `ComplexAnalytic.analytificationInclHom`**, which is a

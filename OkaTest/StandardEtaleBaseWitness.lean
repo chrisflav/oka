@@ -32,10 +32,12 @@ and they are three different things:
 
 * `ComplexAnalytic.sqSubOnePair` (`OkaTest/OpenBaseFiniteness.lean`), `f = X² − 1`, `g = X − 1`.
   **Degenerate**: `ComplexAnalytic.sqSubOnePair_X` pins the class of `X` to `−1` and
-  `ComplexAnalytic.sqSubOneRingEquiv` identifies its standard étale algebra with the base, so
-  `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_node_sqSubOne` fires the theorem at
-  an isomorphism — deliberately, since that is the route
-  `Oka/Analytification/StandardEtaleLocalIsoBase.lean` named as cheapest.
+  `ComplexAnalytic.sqSubOneRingEquiv` identifies its standard étale algebra with the base
+  **wherever `2` is a unit of the base**, which is free at the `ℂ`-algebra that witness is fired
+  over, so `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_node_sqSubOne` fires the
+  theorem at an isomorphism — deliberately, since that is the route
+  `Oka/Analytification/StandardEtaleLocalIsoBase.lean` named as cheapest. **That clause carried no
+  hypothesis until 2026-09-21.**
 * `ComplexAnalytic.sqSubOneTwoPair` (`OkaTest/StandardEtaleLocalIsoBase.lean`), `f = X² − 1`,
   `g = 2`. Not degenerate, and over a commutative ring rather than a `ℂ`-algebra — which is what
   the `g` buys: `g = 2` puts the `2` on the right of `cond`, where the `g = X` below needs it
@@ -300,11 +302,15 @@ theorem hasMap_two_sqrtCoverPair_four : (sqrtCoverPair (4 : ℂ)).HasMap (2 : �
 /-- **And so is `−2`**, which is the point of stating either.
 
 `ComplexAnalytic.sqSubOnePair_X` pins the class of `X` in that pair's standard étale algebra to
-`−1` — both relations are used and the algebra collapses onto the base. Here two distinct elements
-of the same `ℂ` satisfy `StandardEtalePair.HasMap`, so no relation pins the class of `X` down and
-the same collapse cannot happen. **That is a statement about `ComplexAnalytic.sqrtCoverPair` at one
-`ℂ`-algebra and one `a`**, which is all that is needed to separate it from the degenerate pair,
-and it is not a statement about the cover of any particular base. -/
+`−1` — both relations are used, and where `2` is a unit of the base the algebra collapses onto it,
+which is `ComplexAnalytic.sqSubOneRingEquiv`'s hypothesis and not this lemma's. Here two distinct
+elements of the same `ℂ` satisfy `StandardEtalePair.HasMap`, so no relation pins the class of `X`
+down and the same collapse cannot happen. **That is a statement about
+`ComplexAnalytic.sqrtCoverPair` at one `ℂ`-algebra and one `a`**, which is all that is needed to
+separate it from the degenerate pair, and it is not a statement about the cover of any particular
+base.
+
+**That clause read *the algebra collapses onto the base* with no hypothesis until 2026-09-21.** -/
 theorem hasMap_neg_two_sqrtCoverPair_four : (sqrtCoverPair (4 : ℂ)).HasMap (-2 : ℂ) := by
   refine ⟨?_, ?_⟩
   · rw [sqrtCoverPair_f]; norm_num

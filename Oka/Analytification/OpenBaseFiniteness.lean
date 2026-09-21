@@ -306,14 +306,20 @@ and this file declares none: `ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubO
 on the whole hypersurface, so nothing survives the inversion and a reader may take a bad set of
 `ℂ^n` for a symptom of that; at `ComplexAnalytic.sqSubOnePair` the bad set is still everything and
 plenty survives. **Both algebras are theorems in that file and not readings of a picture**:
-`ComplexAnalytic.sqSubOneRingEquiv` makes the standard étale algebra of that pair the base itself,
-`ComplexAnalytic.moduleFinite_sqSubOnePair` records it finite over the base, and
+`ComplexAnalytic.sqSubOneRingEquiv` makes the standard étale algebra of that pair the base itself
+**wherever `2` is a unit of the base**, `ComplexAnalytic.moduleFinite_sqSubOnePair` records it
+finite over the base under that same hypothesis — `ComplexAnalytic.isUnit_two_of_sqSubOneRingEquiv`
+proves the first cannot drop it and `ComplexAnalytic.isUnit_two_mvPolynomial` discharges it over
+the polynomial base this file works at — and
 `ComplexAnalytic.subsingleton_xPairRing` makes the algebra of `ComplexAnalytic.xPair` — the pair
 behind `ComplexAnalytic.hypersurfaceCommonZeroImage_X` — the zero ring. **So "the bad set is all
 of `ℂ^n`" is not by itself a statement that the pair is degenerate**, and
 `Oka/Analytification/StandardEtaleFiniteness.lean`'s main theorem docstring is where that
 distinction is spent. What is **not** proved anywhere is the step from either algebra to what
-survives in the *analytification*, which is the reading the sentence above is written in.
+survives in the *analytification*, which is the reading the sentence above is written in. **The
+first two of those three citations carried no hypothesis until 2026-09-21**, in a sentence whose
+own lead is that they are theorems and not readings; the claims are unchanged and only their
+warrant was missing.
 
 **A fifth is elsewhere too and it is the fourth's mirror**, added 2026-09-20 and named here
 because leaving this enumeration at four would make it short of the tree:

@@ -183,10 +183,12 @@ hypersurface `ComplexAnalytic.hypersurfacePresentation g F`.
   is `ComplexAnalytic.sqSubOnePair` (`OkaTest/OpenBaseFiniteness.lean`) instantiated, an
   instantiation and not a construction. **What it did not say is that that pair's cover is an
   isomorphism** — `ComplexAnalytic.sqSubOneRingEquiv` identifies its standard étale algebra with
-  the base — so the cheapest witness is a local isomorphism for a reason this theorem does not
-  need, and `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_node` is a second witness
-  at a pair whose algebra is not the base. The base and both witnesses' sources are exhibited
-  non-empty there; **how many sheets either cover has is proved nowhere**.
+  the base **wherever `2` is a unit of the base**, free over the node's presented algebra, which
+  is a `ℂ`-algebra — so the cheapest witness is a local isomorphism for a reason this theorem does
+  not need, and `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_node` is a second
+  witness at a pair whose algebra is not the base. The base and both witnesses' sources are
+  exhibited non-empty there; **how many sheets either cover has is proved nowhere**. **That clause
+  carried no hypothesis until 2026-09-21.**
 * **Nothing below is uniform in the base, and the test library now is.** Both witnesses above are
   at one presentation with one relation, so they say the theorem is instantiable and not that it
   is instantiable uniformly. `OkaTest/StandardEtaleBaseWitness.lean` closes that with

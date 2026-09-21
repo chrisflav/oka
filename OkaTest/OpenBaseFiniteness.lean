@@ -84,8 +84,10 @@ only that it cannot be dropped. Over a `ℂ`-algebra — which is every base in 
 - `ComplexAnalytic.isUnit_two_sqSubOnePairRing` and
   `ComplexAnalytic.isUnit_two_of_sqSubOneRingEquiv`: **`2` is a unit of the algebra over every
   base, so the equivalence's hypothesis cannot be dropped.**
-- `ComplexAnalytic.moduleFinite_sqSubOnePair`: the algebra is **finite** over the base. It is also
+- `ComplexAnalytic.moduleFinite_sqSubOnePair`: the algebra is **finite** over the base, given that
+  `2` is a unit — the hypothesis is `ComplexAnalytic.sqSubOneRingEquiv`'s, transported. It is also
   étale, but that is Mathlib's instance for *every* pair and is not evidence about this one.
+  **This row carried no hypothesis until 2026-09-21**, immediately under the row that prices one.
 - `ComplexAnalytic.subsingleton_xPairRing`: **the algebra of `f = g = X` is the zero ring**, which
   is what makes the witness already on record degenerate and this one not.
 - `ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOnePair`: **the bad set of this pair is all of
@@ -189,8 +191,8 @@ theorem sqSubOnePair_hasMap_neg_one (h2 : IsUnit (2 : R)) :
     rw [h]
     exact h2.neg
 
-/-- **The standard étale algebra of `ComplexAnalytic.sqSubOnePair` is the base itself**, so the
-morphism it names is an isomorphism.
+/-- **The standard étale algebra of `ComplexAnalytic.sqSubOnePair` is the base itself wherever `2`
+is a unit of the base**, which is `h2`, so the morphism it names is an isomorphism there.
 
 Both directions are forced. Out of the algebra there is exactly one map sending the class of `X`
 to `−1`, which is `StandardEtalePair.lift`; into it there is exactly one `R`-algebra map, the
@@ -198,7 +200,10 @@ structure map. That they are inverse is `StandardEtalePair.hom_ext` in one direc
 composite fixes the class of `X` because `ComplexAnalytic.sqSubOnePair_X` says that class **is**
 `−1` — and, in the other, that an `R`-algebra endomorphism of `R` is the identity.
 
-`h2` is not removable: over `ℤ` the algebra is `ℤ[1/2]`. -/
+`h2` is not removable: over `ℤ` the algebra is `ℤ[1/2]`.
+
+**This head carried no hypothesis until 2026-09-21**, two paragraphs above the sentence that
+prices one. The claim is unchanged and only its warrant was missing. -/
 def sqSubOneRingEquiv (h2 : IsUnit (2 : R)) : (sqSubOnePair R).Ring ≃ₐ[R] R :=
   AlgEquiv.ofAlgHom ((sqSubOnePair R).lift (-1 : R) (sqSubOnePair_hasMap_neg_one h2))
     (Algebra.ofId R _) (AlgHom.ext fun x ↦ by simp)
@@ -227,11 +232,14 @@ theorem isUnit_two_of_sqSubOneRingEquiv (e : (sqSubOnePair R).Ring ≃ₐ[R] R) 
   have h := (isUnit_two_sqSubOnePairRing (R := R)).map e.toAlgHom
   rwa [map_ofNat] at h
 
-/-- **The algebra is finite over the base**, transported along the equivalence.
+/-- **The algebra is finite over the base wherever `2` is a unit of it**, transported along
+`ComplexAnalytic.sqSubOneRingEquiv` and carrying that equivalence's hypothesis, which is `h2`.
 
 Étaleness is *not* proved here and is not evidence about this pair: `Algebra.Etale R P.Ring` is a
 Mathlib instance for **every** `StandardEtalePair`, so it holds at `F = G = X` and at the zero
-ring just as much. Finiteness is the half that sees which pair this is. -/
+ring just as much. Finiteness is the half that sees which pair this is.
+
+**This head carried no hypothesis until 2026-09-21.** -/
 theorem moduleFinite_sqSubOnePair (h2 : IsUnit (2 : R)) :
     Module.Finite R (sqSubOnePair R).Ring :=
   Module.Finite.equiv (sqSubOneRingEquiv h2).symm.toLinearEquiv
