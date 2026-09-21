@@ -1024,7 +1024,9 @@ where the claim is fine enough that a patch release could move it.
   not see that sweep** — every one of its per-file rows is unmoved across it, because a pointer is
   not one of the six spellings and the universal it points at stays where it was; `--list` diffed
   between the two commits is what shows it, and a sweep of form (b) owes that diff rather than the
-  headline.
+  headline. **That flatness is one case of an arithmetic and not a rule about the form**, and the
+  close of *This block is matched by the scan it publishes* below is where the arithmetic is and
+  where the sweep that comes out the other way is named.
 * **(c) a bounded restatement that is not a universal at all.**
   *`Mathlib/Topology/Covering/Basic.lean` has only conjugation by a homeomorphism* is settled by
   reading one file; *any cancellation lemma for `IsCoveringMap` is absent from Mathlib* is not
@@ -1142,8 +1144,42 @@ The **34 / 25** above is `a414f61`'s and does not include what the push writing 
 rise is in three files — `OkaTest/Axioms.lean` **0 → 9**, this block's quotations of the sentences
 it decides; `scripts/mathlib_absence.py` **0 → 8**, its docstring's worked examples together with
 its self-test fixtures; and `Oka/Topology/Covering/Basic.lean` **6 → 8**. **No other file's count
-moves.** A later sweep should re-derive its own figure at its own head, and should expect to have
-raised it again.
+moves.** A later sweep should re-derive its own figure at its own head, and **what it should
+expect is arithmetic rather than a property of the repair's form**: the headline moves by the
+number of sentences the push *adds* that match one of the six shapes, minus the number it
+*removes* that did.
+
+**Two later sweeps have now tested that, and they come out opposite ways.**
+`lana-agents/oka#605` — taxis #2118, a sweep of form (b) — is `ae732d9` → `d4c49af`, and it is
+**53 over 27 files at both ends with the per-file table byte-identical, every row**; `--list`
+diffed is **6 out and 6 in**, because a (b) repair keeps the universal in a spelling the scan
+still matches and adds the pointer beside it, and because the dated records it writes say *what
+the clause carried* rather than re-quoting the absence. The one clause those records do quote,
+*`grep` finds `ofGlueData'` only in its own defining file*, matches none of the six either.
+`lana-agents/oka#606` — taxis #2127, a sweep of form (a) — is `a3d656d` → `57e5a1a`, and it is
+**53 → 55 in 27 files at both ends**; `--list` diffed is **2 out and 4 in**, the two retired
+clauses against the two repaired sentences and the two dated records quoting them, so the
+headline moves by `4 − 2`.
+
+**Neither the form nor the phrase *repairs into an exempt spelling* predicts either figure**, and
+`#606` is what shows it: it repairs into a spelling that is **still matched** — *Mathlib has no
+lemma about the `hom` or the `inv` of …* and *Mathlib has no statement of it and no instance that
+yields it* are both hits — so the whole of its rise is its two records, and a repair that did
+reach an exempt spelling would *lower* the figure by one per site with only a quoting record to
+put it back. **So count your own added and removed hits before reading the headline**, and where
+the two are equal expect it flat and diff `--list` instead.
+
+**That clause read *and should expect to have raised it again* until 2026-09-21**, with no
+qualification — `git show 57e5a1a:OkaTest/Axioms.lean` carries it at `:1145–1146`, wrapped after
+*have*. It was written at `ae732d9`, by the push that wrote this whole block, on the only instance
+it had: that push's own **34 → 53**. `lana-agents/oka#605` was the first later sweep to test it
+and came out flat, which is what taxis #2129 was filed on; `lana-agents/oka#606` was the second
+and raised it. **The prediction was wrong and the mechanism *Two figures that sweep leaves
+behind* gives is not** — *a dated record quotes the wording it retires* — and both of `#606`'s
+do, which is the whole of its `4 − 2`. **The push writing this repair is the third data point and
+is its own**: `57e5a1a` → here is **55 → 56 in 27 files**, `--list` **1 in and 0 out**, and the
+one is the sentence in the paragraph above that quotes what `#606` repaired into; the clause
+retired here was never a hit, so `1 − 0` is the whole of it.
 
 **Most mirror-tree material is routed by a row, and a small tail of it is deliberately routed by
 none.** `README.md`'s *Layout: the Mathlib mirror tree* defines a mirror-tree file by its path — a
