@@ -165,10 +165,19 @@ the same declaration.
 * **Nothing at `k ≥ 2`, and nothing about a general `k`.** Both witnesses are at one presentation
   with one relation. The theorem is general in `k` and this file is evidence that it is
   instantiable, not that it is instantiable uniformly.
-* **No finiteness, and so no `ComplexAnalytic.AnalyticSpace.IsFiniteEtale`.** The finiteness half
-  at `k ≥ 1` does not exist — `Oka/Analytification/StandardEtaleFiniteEtale.lean` and
-  `Oka/Analytification/StandardEtaleFiniteness.lean` both record it absent — and unrestricted
-  finiteness is false, with the counterexample in `Oka/Analytification/MonicHypersurface.lean`.
+* **No finiteness *here*, and so no `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` below.** Neither
+  witness above has a finiteness field and nothing in this file supplies one. **This bullet read
+  *The finiteness half at `k ≥ 1` does not exist —
+  `Oka/Analytification/StandardEtaleFiniteEtale.lean` and
+  `Oka/Analytification/StandardEtaleFiniteness.lean` both record it absent* until 2026-09-20**,
+  and all three clauses of that were falsified the same day by `5888ddb`: the half exists, as
+  `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom`
+  (`Oka/Analytification/StandardEtaleFinitenessBase.lean`), and both of the files it named now
+  carry dated records saying so instead. **The class is instantiated at
+  `ComplexAnalytic.sqSubOneTwoPair` in `OkaTest/StandardEtaleFiniteEtaleBase.lean`**, which
+  imports this file. Unrestricted finiteness quantified over pairs is still false, with the
+  counterexample in `Oka/Analytification/MonicHypersurface.lean`; what that instance turns on is
+  that `g = 2` inverts nothing, which is the one thing a reader should carry away from it.
 * **No `#print axioms` guard.** `OkaTest/Axioms/` guards declarations of the `Oka` library;
   nothing below is one. `ComplexAnalytic.condPair` and `ComplexAnalytic.sqSubOnePair`, the two
   standard étale pairs this repository already has, are unguarded for the same reason.

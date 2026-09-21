@@ -56,11 +56,20 @@ unrestricted finiteness is false at `k = 0` already.
   is false, `Oka/Analytification/MonicHypersurface.lean` carries the witness and
   `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`)
   compiles it.
-* **No instance of the class below at any `k ≥ 1` pair.** `OkaTest/StandardEtaleLocalIsoBase.lean`
-  exhibits pairs at which the local-isomorphism half is instantiated at `k = 1`; nothing here
-  instantiates the conjunction, and the reason is that the second hypothesis of the finiteness
-  half — an open subset of `ℂ^n` avoiding the bad set — is a condition on the pair that nothing
-  below bounds. **Whether that open subset is non-empty at any `k ≥ 1` pair is proved nowhere.**
+* **No instance of the class below *here*, and the absence this bullet recorded is retired.**
+  Nothing in this file instantiates anything — the second hypothesis of the finiteness half, an
+  open subset of `ℂ^n` avoiding the bad set, is a condition on the pair that nothing below bounds
+  — but `OkaTest/StandardEtaleFiniteEtaleBase.lean` now instantiates the conjunction at `k = 1`,
+  over the node and at `ComplexAnalytic.sqSubOneTwoPair`. **This bullet closed on *Whether that
+  open subset is non-empty at any `k ≥ 1` pair is proved nowhere* until 2026-09-20**, when
+  `ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOneTwoPair` made the bad set of that pair
+  **empty**, so that the open subset is not merely non-empty but everything and the restriction
+  comes off by `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_restrictHom_top`. **That is not an
+  exception to the bullet above**: `g = 2` inverts nothing over a `ℂ`-algebra, so there is no
+  localisation at that pair for the restriction to be necessary for, and the unrestricted class
+  quantified over pairs is still false. What is still proved nowhere is a `k ≥ 1` pair at which
+  the open subset is **proper** and non-empty, which is the only case in which the restriction
+  both removes something and leaves something.
 * **No comparison functor and no Riemann existence theorem.** Taxis #1113's functor consumes the
   statement below and is not here.
 * **Nothing about a general étale morphism**, for the reason

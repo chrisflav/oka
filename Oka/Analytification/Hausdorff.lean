@@ -57,7 +57,27 @@ are, and nothing about whether the base is nonempty; the last of those is a live
   is preconnected or even nonempty. That is a second hypothesis and a second deliverable.
 * **Nothing at `k ≥ 1`.** These are corollaries of
   `ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom_comp` and inherit its
-  `g : Fin 0 → …`; the finiteness half over a presented base does not exist, so neither does this.
+  `g : Fin 0 → …`, and nothing below is stated at a presented base. **The reason given for that
+  read *the finiteness half over a presented base does not exist, so neither does this* until
+  2026-09-20**, when `5888ddb` wrote that half and
+  `ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom`
+  (`Oka/Analytification/StandardEtaleFiniteEtaleBase.lean`) with it. **The absence is unchanged
+  and the ingredient the retired reason named is not.** What that half and that class are about is
+  the structure map to `X^an`, and the two corollaries below are about the composite to `ℂ^n` —
+  **two morphisms and not one**, in `Oka/Analytification/StandardEtaleFiniteness.lean`'s words,
+  with `Oka/Analytification/StandardEtaleFiniteEtale.lean` saying the same of the same two
+  morphisms. So what is now reachable and unstated is the `k ≥ 1` counterpart **over `X^an`**,
+  which is a different statement from the two below rather than their generalisation, and stating
+  it is a deliverable. **Over `ℂ^n` at `k ≥ 1` the statement is not merely unstated**: the
+  *unrestricted* composite is not a local isomorphism — and so, by
+  `ComplexAnalytic.AnalyticSpace.IsFiniteEtale.isLocalIso`, not finite étale — as soon as some
+  `g j` is nonzero and the source has a point, by
+  `ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp`
+  (`Oka/Analytification/StandardEtaleNotLocalIso.lean`), and that is instantiated at the node as
+  `ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp_node`
+  (`OkaTest/StandardEtaleNotLocalIso.lean`) — **at the same pair at which the `k ≥ 1` instance of
+  the class exists**, `OkaTest/StandardEtaleFiniteEtaleBase.lean`'s. So the two morphisms are not
+  merely different in general: they are separated at one pair by two compiled theorems.
 * **Nothing about the unrestricted morphism.** It is not finite étale —
   `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`) — so
   there is no covering-map statement to make about it, and the restriction to `V` is not an

@@ -95,6 +95,7 @@ import OkaTest.SpecCoherent
 import OkaTest.StandardEtaleAnalytification
 import OkaTest.StandardEtaleBaseWitness
 import OkaTest.StandardEtaleCond
+import OkaTest.StandardEtaleFiniteEtaleBase
 import OkaTest.StandardEtaleLocalIsoBase
 import OkaTest.StandardEtaleNotFinite
 import OkaTest.StandardEtaleNotLocalIso

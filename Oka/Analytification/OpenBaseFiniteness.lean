@@ -313,7 +313,18 @@ behind `ComplexAnalytic.hypersurfaceCommonZeroImage_X` — the zero ring. **So "
 of `ℂ^n`" is not by itself a statement that the pair is degenerate**, and
 `Oka/Analytification/StandardEtaleFiniteness.lean`'s main theorem docstring is where that
 distinction is spent. What is **not** proved anywhere is the step from either algebra to what
-survives in the *analytification*, which is the reading the sentence above is written in. -/
+survives in the *analytification*, which is the reading the sentence above is written in.
+
+**A fifth is elsewhere too and it is the fourth's mirror**, added 2026-09-20 and named here
+because leaving this enumeration at four would make it short of the tree:
+`ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOneTwoPair`
+(`OkaTest/StandardEtaleFiniteEtaleBase.lean`) makes the bad set **empty** at
+`ComplexAnalytic.sqSubOneTwoPair`, which is `ComplexAnalytic.sqSubOnePair`'s `f = X² − 1` with
+`g = 2` in place of `g = X − 1`. **So the two pairs have the same hypersurface and land at the two
+extremes**, which is the sharpest form of the paragraph above: the bad set is a statement about
+what is inverted and not about `F`. It is also the only one of the five at which the finite étale
+class is instantiated with the restriction removed — that is the point of the file it is in, and
+it turns on `2` being a unit and on nothing else. -/
 
 /-- **With nothing inverted the bad set is empty**, so the open subset of the base may be all of
 `ℂ^n`.
