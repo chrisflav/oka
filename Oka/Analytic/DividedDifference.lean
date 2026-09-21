@@ -29,8 +29,8 @@ turns on whether Hartogs' theorem is available anywhere.
 
 **The clause asserting its absence from Mathlib is retired rather than instrumented, because no
 scan decides it.** At `v4.32.0` — the revision `lakefile.toml` pins, resolved by
-`lake-manifest.json` to `81a5d257c8e410db227a6665ed08f64fea08e997` — **0** of the **470435**
-non-internal names in the environment of `import Mathlib` write *hartogs* in any case. That
+`lake-manifest.json` to `81a5d257c8e410db227a6665ed08f64fea08e997` — **0** names in the
+environment of `import Mathlib` write *hartogs* in any case. That
 narrows and does not decide: the implication can be stated without the name, and the first of the
 three questions `OkaTest/Axioms.lean`'s seventh census object puts to an instrument — *can the
 thing being denied be spelled another way?* — is answered **yes** here. What the rule prescribes

@@ -52,6 +52,15 @@ concludes `T2Space` of the source of a separated map**, the only two that write 
 being `T2Space.isSeparatedMap`, where it is a hypothesis, and the biconditional above, whose
 `IsSeparatedMap` is at a map that forgets its source.
 
+**An enumeration keyed on a constant closes the name escape and not the characterisation escape,
+and here the residue is measured rather than argued.** `IsSeparatedMap` is a `def` and the five
+characterisations above are published equivalent forms, so a lemma could carry one of the three
+directions through one of them and mention the constant nowhere — *if the diagonal of the pullback
+is closed and `Y` is `T2Space` then `X` is* would serve a consumer perfectly and no scan keyed on
+`IsSeparatedMap` would see it. Of the **35** non-internal declarations of that environment whose
+type mentions `Function.pullbackDiagonal` or `Function.Pullback`, **none** mentions `T2Space`, so
+that route is empty too and the nineteen decide the claim after all.
+
 **That opening read *The first three are directions Mathlib lacks; the fourth is a conjunction
 Mathlib forms and does not name, and the difference is worth stating rather than hiding.* until
 2026-09-21**, with no version and no instrument for its first half; `git show

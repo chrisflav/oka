@@ -67,7 +67,8 @@ exactly **nine** of them are of that shape, all nine in that namespace:
 `SheafOfModules.LocalGeneratorsData.IsFiniteType`, and — two names the environment of `import Oka`
 does not reach, so written with their namespace separate — `SheafOfModules`'s `IsLocallyFree` and
 `SheafOfModules.LocalGeneratorsData`'s `IsLocallyFreeData`. **Not one of them is coherence**, and
-the two nearest are the two that write no form of the word: `SheafOfModules.IsFiniteType` is
+**seven of the nine write no form of the word at all**, the two nearest among them:
+`SheafOfModules.IsFiniteType` is
 coherence's first half, and `SheafOfModules.IsFinitePresentation` asks for one local presentation
 where coherence asks that the kernel of *every* map from a finite free sheaf be of finite type.
 
