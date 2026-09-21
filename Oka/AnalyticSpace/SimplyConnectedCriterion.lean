@@ -165,10 +165,25 @@ ends of this push.
 * **The coproduct form of the criterion is not here.**
   `…SeparatedFiniteEtaleOver.exists_iso_coprod_id` says a trivial group makes every cover a finite
   coproduct of copies of the base over itself; the converse of *that* — from every cover being such
-  a coproduct to the group being trivial — is neither stated nor refuted below. What it needs and
-  this file does not have is that a connected object isomorphic to a finite coproduct of copies of
-  a terminal object has a one-element index type. **It is not obtained by composing anything here**
-  with that statement, because the criterion's hypothesis is about connected covers one at a time.
+  a coproduct to the group being trivial — is neither stated nor refuted below. **It is not
+  obtained by composing anything here**, because the criterion's hypothesis is about connected
+  covers one at a time, and the step that gets from the one to the other is
+  `…SeparatedFiniteEtaleOver.nonempty_iso_id_of_iso_coprod_id` in
+  `Oka/AnalyticSpace/SimplyConnectedCoprod.lean`, where both directions and the second criterion
+  are.
+
+  **Until 2026-09-21 this bullet priced that step at one statement, and named the wrong one**: it
+  read *what it needs and this file does not have is that a connected object isomorphic to a finite
+  coproduct of copies of a terminal object has a one-element index type.* That statement is true
+  and **is not what the step needs**; the index type is never counted. A coprojection into a
+  coproduct is a monomorphism — `CategoryTheory.Limits.MonoCoprod.mono_ι`, at the
+  `CategoryTheory.Limits.MonoCoprod` instance `Mathlib/CategoryTheory/Galois/Basic.lean` declares
+  for every `CategoryTheory.GaloisCategory` — so one coprojection composed with the given
+  isomorphism is a mono into the connected object and
+  `CategoryTheory.PreGaloisCategory.IsConnected.noTrivialComponent` makes it an isomorphism
+  outright. **A count of the index type is a consequence of that conclusion and not a step towards
+  it**, and the retired clause is kept here rather than struck because a prescription that was
+  acted on is worth a record.
 * **Nothing relates the groups at two different points.** The transports below carry the
   *triviality* of the group from one point to another, and its *failure* back, through a condition
   that mentions neither point; whether `…SeparatedFiniteEtaleOver.fundamentalGroup x` and

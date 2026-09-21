@@ -10733,3 +10733,143 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nontrivial_fundame
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nontrivial_fundamentalGroup_congr
+
+/-! ### The coproduct form of that criterion, and the index type is never counted
+
+`Oka/AnalyticSpace/SimplyConnectedCoprod.lean`, the whole of it. **Five names, four of them
+theorems and one a `noncomputable def`**: the empty coproduct's initiality,
+`…SeparatedFiniteEtaleOver.isInitialCoprodId`, which is the data; the base over itself is not
+initial, `…SeparatedFiniteEtaleOver.not_isInitial_id`; the step from a coproduct decomposition to
+the base over itself at a connected cover,
+`…SeparatedFiniteEtaleOver.nonempty_iso_id_of_iso_coprod_id`; and the two halves of the second
+criterion, `…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_coprod` and
+`…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_coprod_iff`.
+
+**This section is the section above it with the connectedness taken out of the right-hand side.**
+There the condition equivalent to a trivial fundamental group is an isomorphism `A ≅
+…SeparatedFiniteEtaleOver.id X` at every cover carrying
+`CategoryTheory.PreGaloisCategory.IsConnected`; here it is a finite index type and an isomorphism
+with a coproduct at every cover whatever, with no instance for a consumer to discharge.
+
+**What the telescopes bind, by `#check` over the five and not by reading the file.** **Four of the
+five bind `[T2Space]` and `[PreconnectedSpace]` of the base**, and of those four,
+`…SeparatedFiniteEtaleOver.not_isInitial_id` is the one that does **not** bind `[Nonempty]` — its
+point of the base supplies it and the module omits it explicitly. **The fifth,
+`…SeparatedFiniteEtaleOver.isInitialCoprodId`, binds none of the three**: it takes the base
+explicitly and asks nothing of it, which is what makes it the only name of the five that is not
+about this repository's covers at all. **One of the five binds
+`[CategoryTheory.PreGaloisCategory.IsConnected A]` and `[Finite ι]`** — the middle step, and it is
+the only one of the five with a cover as a fixed object. **Two of the five mention the fundamental
+group and one of those is an `Iff`**; **none of the five binds `[Subsingleton
+(…SeparatedFiniteEtaleOver.fundamentalGroup x)]`**, for the reason the section above gives of its
+own four.
+
+**One `noncomputable def` and four theorems**, which is the difference from the section directly
+above and the likeness to the one above that: `…SeparatedFiniteEtaleOver.isInitialCoprodId` is a
+`CategoryTheory.Limits.IsColimit` and so is data, as that section's
+`…SeparatedFiniteEtaleOver.isTerminalFintypeFiber` is a `CategoryTheory.Limits.IsLimit` and so is
+data. **All five lists below are the standard
+three**, which is not in tension with that: the proofs reach choice through the coproduct itself,
+through Mathlib's `CategoryTheory.PreGaloisCategory.autMulEquivAutGalois` behind the criterion they
+compose with, and through the `Nonempty.some` that opens the hypothesis.
+
+**This push is the first consumer of one name it does not declare and the second consumer of
+another.** The population is every tracked `.lean` under `Oka/` and `OkaTest/` with the two root
+modules, the stripper is `scripts/import_cost.py`'s `strip_comments`, and the token is the name
+not preceded or followed by a letter, a digit or `_`; **what decides a consumer is the occurrence
+and not the module it is in**, which is the whole of the difference between the two rows. Line
+numbers are `6e0c610`'s, the commit this branch is cut from, and they were `ae732d9`'s and
+`66cf643`'s while it was cut from those: `Oka/AnalyticSpace/SimplyConnectedCriterion.lean` and
+`Oka/AnalyticSpace/SimplyConnected.lean` are the **same blobs** at all three commits — `499daf2c`
+and `896d5aaf` — so no landing in between could have moved a line of either. This branch itself
+makes the first of those files fifteen lines longer above them, so they must be re-taken and not
+copied.
+
+* `…SeparatedFiniteEtaleOver.exists_iso_coprod_id` occurred **once** in
+  `Oka/AnalyticSpace/SimplyConnected.lean`, at `:241`, and that occurrence is its own declaration;
+  its only other occurrence was in this file, as a guard. **This push is its first consumer.**
+* `…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_iso_id` occurred **twice** in
+  `Oka/AnalyticSpace/SimplyConnectedCriterion.lean` — its declaration at `:234` and a **use** at
+  `:262`, in the proof term of `…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_iff` —
+  and once in this file, as a guard. **This push is its second consumer**, and a count of modules
+  would have returned *two* for both names and decided neither.
+
+**Those two rows are not everything this push consumes**, and the sentence above them is about
+the first-and-second-consumer relation and not about consumption. Joining this module's
+comment-stripped tokens against `scripts/DumpOkaDecls.lean`'s dump — the instrument that carries
+the declaring module of every name this repository owns, each matched as
+`Oka/AnalyticSpace/SimplyConnectedCoprod.lean` spells it inside its own namespace — gives
+**eight** names it consumes and does not declare. The other six are
+`…SeparatedFiniteEtaleOver.id`, `…SeparatedFiniteEtaleOver.fundamentalGroup`,
+`…SeparatedFiniteEtaleOver.fintypeFiberFunctor` and
+`…SeparatedFiniteEtaleOver.isTerminalFintypeFiberId`, together with the two types those are named
+in, `ComplexAnalytic.AnalyticSpace` and `…SeparatedFiniteEtaleOver`. **None of the six is a row
+because nothing about any of them moves**: under the rule above the four occur, at `ae732d9`,
+**17**, **18**, **42** and **4** times in **7**, **5**, **13** and **3** modules, every one of
+them with a use outside the module that declares it, and the two types occur in the hundreds — so
+of those six this push is neither the first consumer nor the second.
+
+**The sentence in the section above that used to say no statement of this repository consumes any
+of that section's four names was corrected before this branch was replayed onto its present
+base**: `a3d656d` (taxis #2120) rewrote its second half to *nothing outside the module that
+declares them consumes any of them*, and that section carries the retirement itself, in the
+paragraph opening *That sentence's second half read*. **Nothing here restates that correction,
+repairs it or rests on it**, and neither that sentence nor its record is touched by this push. What
+this paragraph keeps is the chain, because it is the reason the new occurrence below is the
+**second** consumer of one of those names and not the first: at the commit that sentence pins
+itself to, the four names form a chain in which every link is a consumption — the first consumed at
+`:262`, `…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_iff` at `:277` and `:278`,
+`…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_congr` at `:290` — and only
+`…SeparatedFiniteEtaleOver.nontrivial_fundamentalGroup_congr` is consumed by nothing.
+
+**One figure of that record this push moves, and it is the placement half**: *each of the four
+occurs in that module, in this one, and in no third* holds at `6be2998`, the commit that wrote the
+section, at `ae732d9` and `66cf643`, which were this branch's bases before it was replayed, and at
+`6e0c610`, which is its base now — all four names, **two** modules apiece, re-taken at the last of
+the four — and `Oka/AnalyticSpace/SimplyConnectedCoprod.lean` is a third module for the **first** of
+the four and for that one alone: **2** modules and **3** places at `6e0c610`, **3** and **4** here.
+**`lana-agents/oka#603` (taxis #2119) is in flight and does the same with
+`Oka/AnalyticSpace/SimplyConnectedPoint.lean`, for the same one of the four**, so whichever of the
+two lands second makes a **fourth** module of it rather than a third, and owes that figure rather
+than this one.
+
+**The routing** is the section above's, unchanged: these are statements about the covers of a base
+and the topic table at the head of `OkaTest/Axioms.lean` routes those here. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isInitialCoprodId' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.isInitialCoprodId
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_isInitial_id' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_isInitial_id
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nonempty_iso_id_of_iso_coprod_id'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nonempty_iso_id_of_iso_coprod_id
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_coprod'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_coprod
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_coprod_iff'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_coprod_iff
