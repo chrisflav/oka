@@ -23,7 +23,22 @@ on the open polydisc of the disc on which `h` is holomorphic.
 
 Joint analyticity is what a consumer substituting two holomorphic functions into `dslope` needs,
 and it does not follow from analyticity in each variable separately — that implication is
-Hartogs' theorem, which Mathlib does not have. It is proved here without it.
+Hartogs' theorem, **and nothing below uses it**. It is proved here without it:
+`analyticAt_dslope_pair` goes through the Cauchy formula on a polydisc, so no result in this file
+turns on whether Hartogs' theorem is available anywhere.
+
+**The clause asserting its absence from Mathlib is retired rather than instrumented, because no
+scan decides it.** At `v4.32.0` — the revision `lakefile.toml` pins, resolved by
+`lake-manifest.json` to `81a5d257c8e410db227a6665ed08f64fea08e997` — **0** of the **470435**
+non-internal names in the environment of `import Mathlib` write *hartogs* in any case. That
+narrows and does not decide: the implication can be stated without the name, and the first of the
+three questions `OkaTest/Axioms.lean`'s seventh census object puts to an instrument — *can the
+thing being denied be spelled another way?* — is answered **yes** here. What the rule prescribes
+for a *yes* is a sentence that says so rather than a number, and what is left is the statement
+about this file, which is checkable here. **That clause read *that implication is Hartogs'
+theorem, which Mathlib does not have* until 2026-09-21**; `git show
+c6bfc1f:Oka/Analytic/DividedDifference.lean` carries the retired wording at `:25–26`, wrapped
+after *is*.
 
 ## The argument
 
@@ -73,13 +88,46 @@ once `ComplexAnalytic.AnalyticSpace.restrict` makes a chart overlap an analytic 
 independence argument is needed at all. The analytification programme, the last place a consumer
 could have appeared, does not use it either.
 
-**What is here is nevertheless general one-variable complex analysis that Mathlib does not have.**
-Nothing in this file mentions analytic spaces, sheaves or anything else from this repository;
-`AnalyticAt.dslope_comp` is stated over an arbitrary `ℂ`-normed space. Every `dslope` lemma in
-Mathlib fixes the first argument and varies the second, so the statement about the *pair* is
-absent there — checked by conclusion rather than by name. So the absence of an in-repo consumer is
+**What is here is nevertheless general one-variable complex analysis with no counterpart in
+Mathlib at `v4.32.0`**, and the claim is bounded to the declarations above rather than to a body
+of mathematics. Nothing in this file mentions analytic spaces, sheaves or anything else from this
+repository; `AnalyticAt.dslope_comp` is stated over an arbitrary `ℂ`-normed space.
+
+**The bound is an enumeration, at the rev `lake-manifest.json` resolves that version to,
+`81a5d257c8e410db227a6665ed08f64fea08e997`.** Over the environment of `import Mathlib` there,
+exactly **35** non-internal declarations have a type mentioning the constant `dslope`, and **not
+one of the 35 mentions `AnalyticAt`, `AnalyticOn`, `AnalyticOnNhd` or `AnalyticWithinAt`**. The
+only four whose types mention a power series at all are
+`HasFPowerSeriesAt.has_fpower_series_dslope_fslope`,
+`HasFPowerSeriesAt.has_fpower_series_iterate_dslope_fslope`,
+`HasFPowerSeriesAt.iterate_dslope_fslope_ne_zero` and
+`HasFPowerSeriesAt.eq_pow_order_mul_iterate_dslope`, and every one of the 35 applies `dslope` to a
+function and a **fixed** first argument — which is the reading of *fixes the first argument and
+varies the second* the sentence above used to assert with no run behind it. **A statement about
+the pair has to mention the constant `dslope` in its own type**, whatever it is called, so the
+scan decides rather than narrows; the other half of this file is bounded the same way, no name in
+that environment writing *dividedDifference* in any case.
+
+**The environment dump is the weaker of the two routes and says so here**: six of the 35 — the
+five in the `Complex` namespace and `Real`'s `sinc_eq_dslope` — are absent from the environment of
+`Oka` + `OkaTest` that `scripts/DumpEnvNames.lean` dumps, because this repository imports part of
+Mathlib and not all of it, so a zero in that dump would be a statement about this build's imports
+and not about Mathlib. That is why the figures above are taken over `import Mathlib` instead.
+
+So the absence of an in-repo consumer is
 what an upstreaming candidate looks like, not what dead code looks like, and this paragraph exists
 so that the observation is not re-reported a sixth time in place of a decision.
+
+**That sentence read *What is here is nevertheless general one-variable complex analysis that
+Mathlib does not have.* until 2026-09-21, and the clause warranting it read *Every `dslope` lemma
+in Mathlib fixes the first argument and varies the second, so the statement about the pair is
+absent there — checked by conclusion rather than by name.*** — *pair* italicised there, and the
+italics are dropped inside this quotation because they do not nest. `git show
+c6bfc1f:Oka/Analytic/DividedDifference.lean` carries both at `:76–80`. **The universal is narrowed
+to this file's declarations and the check is now a run**: as published, *general one-variable
+complex analysis* quantified over a body of mathematics that no instrument could have swept, and
+*checked by conclusion* named no command, no version and no figure. The claim about `dslope` is
+unchanged and is now measured.
 
 **For a future upstreaming pass**, the file should be split rather than moved whole:
 `analyticAt_dslope_pair` belongs beside `Mathlib/Analysis/Calculus/DSlope.lean`, and

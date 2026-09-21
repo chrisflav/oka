@@ -22,8 +22,45 @@ statements, and each is a direction that file does not have* and named three, un
 when the fourth was and *direction* stopped being exact of all of them; both records are kept
 because each sentence was exact for the file it described.
 
-**The first three are directions Mathlib lacks; the fourth is a conjunction Mathlib forms and does
-not name, and the difference is worth stating rather than hiding.**
+**The first three are directions Mathlib lacks at `v4.32.0`; the fourth is a conjunction it forms
+and does not name, and the difference is worth stating rather than hiding.** The version is the
+one `lakefile.toml` pins, resolved by `lake-manifest.json` to
+`81a5d257c8e410db227a6665ed08f64fea08e997`, and the first half is decided by an enumeration rather
+than by a `grep`: over the environment of `import Mathlib` at that rev, exactly **19**
+non-internal declarations have a **type** mentioning the constant `IsSeparatedMap`. **A statement
+of any of the three directions has to mention that constant in its own type**, whatever it is
+called and whatever namespace is open, so the nineteen decide the claim where a name-keyed scan
+would only narrow it; they are, in four groups:
+
+* **five characterisations of it** — `isSeparatedMap_iff_nhds`, `isSeparatedMap_iff_disjoint_nhds`,
+  `isSeparatedMap_iff_isClosed_diagonal`, `isSeparatedMap_iff_isClosedMap` and
+  `isSeparatedMap_iff_isClosedEmbedding`, the last two through `toPullbackDiag`;
+* **six concluding it** — `T2Space.isSeparatedMap`, `Function.Injective.isSeparatedMap`,
+  `IsCoveringMap.isSeparatedMap`, and the three transport statements `IsSeparatedMap.comp_left`,
+  `IsSeparatedMap.comp_right` and `IsSeparatedMap.pullback`;
+* **seven consuming it** — `IsSeparatedMap.isClosed_eqLocus`, `IsSeparatedMap.eq_of_comp_eq`,
+  `IsSeparatedMap.eqOn_of_comp_eqOn`, `IsSeparatedMap.const_of_comp`,
+  `IsSeparatedMap.constOn_of_comp`, `IsLocalHomeomorph.continuous_lift` and
+  `IsLocalHomeomorph.monodromy_theorem`;
+* **one biconditional with `T2Space`** — `t2space_iff_isSeparatedMap`, which reads
+  `T2Space X ↔ IsSeparatedMap fun _ ↦ y` for a fixed `y`, at a constant map.
+
+**None of the six that conclude it is either composition direction below**, for the reason the
+paragraph on `IsSeparatedMap.comp_left` and `IsSeparatedMap.comp_right` gives, and
+`IsSeparatedMap.pullback` concludes about `Function.Pullback.snd`; and **not one of the nineteen
+concludes `T2Space` of the source of a separated map**, the only two that write `T2Space` at all
+being `T2Space.isSeparatedMap`, where it is a hypothesis, and the biconditional above, whose
+`IsSeparatedMap` is at a map that forgets its source.
+
+**That opening read *The first three are directions Mathlib lacks; the fourth is a conjunction
+Mathlib forms and does not name, and the difference is worth stating rather than hiding.* until
+2026-09-21**, with no version and no instrument for its first half; `git show
+c6bfc1f:Oka/Topology/SeparatedMap.lean` carries the retired wording at `:25–26`, wrapped after
+*does*. **The claim is unchanged and only its warrant is**, which is why the retired wording is
+kept here rather than struck: the second half was bounded when it was written — the two Mathlib
+declarations are named below, and the `grep` for `isClopen_eqLocus` is quoted — and the first half
+was a universal over *directions* that no `grep` could have reached.
+
 `IsSeparatedMap.isClosed_eqLocus` and `IsLocallyInjective.isOpen_eqLocus` are both Mathlib's, in
 that file, with exactly the binders below; what is not there is the **conjunction under a name**.
 It is formed inline at `Mathlib/Topology/SeparatedMap.lean:206`, the only line of that file

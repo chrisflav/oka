@@ -53,8 +53,35 @@ An earlier draft of this paragraph settled it the same way for a different and f
 `OkaTest/Axioms/Analysis.lean` guards only mirror-tree modules. That file guards
 `Oka.Analytic.DividedDifference` declarations, and `README.md` puts that directory **outside** the
 mirror tree — its worked example of a general file with no single Mathlib counterpart is
-`Oka/Analytic/ParametricCircleIntegral.lean`, the neighbour in the same directory, and Mathlib has
-no Analytic directory for either to mirror. Only the argument changed; no guard moved.
+`Oka/Analytic/ParametricCircleIntegral.lean`, the neighbour in the same directory, and **at
+`v4.32.0` — the revision `lakefile.toml` pins, resolved by `lake-manifest.json` to
+`81a5d257c8e410db227a6665ed08f64fea08e997` — Mathlib has no `Analytic` directory for either to
+mirror**. Only the argument changed; no guard moved.
+
+**That last clause is the one claim of its class a directory test decides outright**, because what
+it denies is a path and not a declaration: `test -d .lake/packages/mathlib/Mathlib/Analytic` fails
+at that rev, and `ls` there returns **33** entries, of which two are files —
+`Mathlib/Init.lean` and `Mathlib/Tactic.lean` — and the other **31** are directories, `Analysis`
+being the only one whose name begins *Analy*. None of the three questions
+`OkaTest/Axioms.lean`'s seventh census object puts to an instrument is answered *yes* here: a
+directory cannot be spelled another way, cannot be inherited from a general statement, and is not
+generated.
+
+**The control is positive, and it is why the clause writes `Analytic` and not *analytic*.**
+`Mathlib/Analysis/Analytic/` does exist at that rev and is not the directory this clause is about:
+`README.md`'s rule is a **path** mirror, so what `Oka/Analytic/X.lean` names upstream is
+`Mathlib/Analytic/X.lean`, and a directory one level down under `Mathlib/Analysis/` is a different
+path. **The absence is not by itself what puts `Oka/Analytic/` outside the mirror tree**, and this
+clause does not claim that it is: `README.md` allows a mirror file at a *proposed* path that does
+not yet exist upstream, and the reason it gives for this directory is that
+`Oka/Analytic/ParametricCircleIntegral.lean` spans several Mathlib files rather than extending one.
+
+**That clause read *and Mathlib has no Analytic directory for either to mirror* until
+2026-09-21**, with no version and no instrument beside it; `git show
+c6bfc1f:OkaTest/Axioms/Weierstrass.lean` carries the retired wording at `:56–57`, wrapped after
+*has*. **The claim is unchanged and only its warrant is**, which is why the retired wording is
+kept here rather than struck. `OkaTest/Axioms.lean`'s seventh census object is the rule and taxis
+#2133 is the enumeration this site is one of fourteen in.
 -/
 
 /-! ### Weierstrass theory -/

@@ -239,7 +239,7 @@ not its transpose. -/
 instance hasPullback_ofRestrict' : HasPullback (Y.ofRestrict V) f :=
   (isPullback_ofRestrict f V).flip.hasPullback
 
-/-! ### That square read as an isomorphism, and the cospan orientation Mathlib does not reach -/
+/-! ### That square read as an isomorphism, and the cospan orientation instance search misses -/
 
 /-- **The pullback of `f` along the inclusion of `V` *is* the open subspace `X|f⁻¹V`**, as an
 isomorphism against the `CategoryTheory.Limits.pullback` notation.
@@ -297,7 +297,31 @@ Mathlib's instance is keyed on the *second* leg of the inner pullback and quanti
 first, and instance search matches a cospan's order and not its transpose, so this orientation is
 the one shape it does not reach — measured at the same commit, where the statement below is
 `failed to synthesize` without this declaration. `CategoryTheory.Limits.hasPullback_symmetry` is
-the whole proof, and it consumes Mathlib's instance rather than anything here. -/
+the whole proof, and it consumes Mathlib's instance rather than anything here.
+
+**The half of that which is a claim about Mathlib is measured away from this category**, in a file
+whose only `import` is `Mathlib`, at `v4.32.0` — the revision `lakefile.toml` pins, resolved by
+`lake-manifest.json` to `81a5d257c8e410db227a6665ed08f64fea08e997`. Under
+`variable {C : Type*} [Category C] {P X Y Z : C} {f : X ⟶ Z} {g : Y ⟶ Z} [HasPullbacksAlong f]`
+and `(h : P ⟶ Y)`, `#synth HasPullback h (pullback.fst g f)` prints
+`IsPullback.instHasPullbackFst h` and `#synth HasPullback (pullback.fst g f) h` is `failed to
+synthesize`. **The control is the positive one and the two lines differ only in the order of the
+cospan**, so what the second measures is the orientation and not an absent limit: the objects,
+the binders and the rev are the same in both. This is a claim about instance **synthesis**, which
+no scan of source can decide — an instance stated at an arbitrary functor with some property would
+carry this cospan without writing `pullback.fst` anywhere — and no `grep` was ever offered for it.
+
+**The section heading above read *### That square read as an isomorphism, and the cospan
+orientation Mathlib does not reach* until 2026-09-21**; `git show
+c6bfc1f:Oka/AnalyticSpace/PullbackOpen.lean` carries it at `:242`. **It was a negative universal
+about Mathlib in a section heading**, which is the one place this tree's rule for such a clause
+cannot be met: a heading has no room for a version or an instrument, and taxis #2118 records that
+a rule stated as a heading is not a rule. **Nothing quoted it**: `git grep` for the retired
+heading over the tree at `c6bfc1f` returns that line and no other, and the nearest thing to a
+quotation — `OkaTest/Axioms/Morphisms.lean`'s *That square read as an identification, and the one
+cospan orientation it makes legal* — names the instance rather than the heading and is unmoved by
+this push. The claim the heading made is the one measured two paragraphs up, which is where it
+belongs. -/
 instance hasPullback_pullbackFst_ofRestrict' {T : AnalyticSpace.{u}} (k : T ⟶ X) :
     HasPullback (pullback.fst f (Y.ofRestrict V)) k :=
   hasPullback_symmetry _ _

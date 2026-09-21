@@ -366,12 +366,39 @@ variable (P : StandardEtalePair (PresentedAlgebra.{u} n k g))
 
 /-- **`ℂ` acts on the standard étale algebra**, through the presented algebra it is built over.
 
-`StandardEtalePair.Ring` derives `Algebra R P.Ring` at its own base ring, and Mathlib has no
-transitive `Algebra`, so without this line the type `… ≃ₐ[ℂ] P.Ring` does not elaborate at all in
-a file importing this one — which is the form the consumers of
+`StandardEtalePair.Ring` derives `Algebra R P.Ring` at its own base ring, and **instance search
+does not compose two `Algebra` instances**, so without this line the type `… ≃ₐ[ℂ] P.Ring` does
+not elaborate at all in a file importing this one — which is the form the consumers of
 `ComplexAnalytic.etalePresentedAlgebraEquivRing` below want. There is no diamond: the structure
 map factors through `A` by `rfl`, which is what
-`ComplexAnalytic.standardEtalePairRingIsScalarTower` records. -/
+`ComplexAnalytic.standardEtalePairRingIsScalarTower` records.
+
+**That first clause is about synthesis, and it is measured rather than argued.** At `v4.32.0` —
+the revision `lakefile.toml` pins, resolved by `lake-manifest.json` to
+`81a5d257c8e410db227a6665ed08f64fea08e997` — in a file whose only `import` is `Mathlib`, under
+`variable (R T S : Type) [CommRing R] [CommRing T] [CommRing S] [Algebra R T] [Algebra T S]`,
+`#synth Algebra R T` and `#synth Algebra T S` each print the binder they find and
+`#synth Algebra R S` is `failed to synthesize`. The two positive lines are the control: what the
+third measures is the composition step and not a missing hypothesis.
+
+**The composite itself is Mathlib's, as a term.** `Algebra.compHom` builds `Algebra S A` out of
+`Algebra R A` and a ring homomorphism `S →+* R`, and `RingHom.toAlgebra` turns a composed
+`algebraMap` into an `Algebra` directly; neither is an instance, and an instance of either shape
+would let search compose algebra structures indefinitely. So what a file importing this one is
+short of is a **search path** and not a construction, and the line above supplies it at one pair
+of rings rather than in general. `IsScalarTower` is not that path either: it takes the composed
+`Algebra` as a hypothesis, which is why `ComplexAnalytic.standardEtalePairRingIsScalarTower` is
+stated below this instance and not in place of it.
+
+**That clause read *and Mathlib has no transitive `Algebra`* until 2026-09-21** — `git show
+c6bfc1f:Oka/Analytification/StandardEtale.lean` carries it at `:369–370`, wrapped after *no*.
+**It is corrected and not merely instrumented, because the reading its words carry was false at
+the commit that wrote it**: `Algebra.compHom` is in `Mathlib/Algebra/Algebra/Defs.lean` at that
+rev, so a reader taking the retired wording at face value would conclude that composing two
+algebra structures is something this repository would have to build. The reading that is true is
+the one above, about what instance search finds, and this is the one site of the fourteen taxis
+#2133 enumerates where those two readings come apart. `OkaTest/Axioms.lean`'s seventh census
+object is the rule. -/
 instance standardEtalePairRingAlgebra : Algebra ℂ P.Ring :=
   inferInstanceAs (Algebra ℂ (Polynomial (Polynomial (PresentedAlgebra.{u} n k g)) ⧸
     Ideal.span {Polynomial.C P.f, Polynomial.X * Polynomial.C P.g - 1}))
@@ -474,10 +501,31 @@ rest, but that is a *consequence* and it is not used below and not stated.
 to take its three steps in order — `Ideal.quotientEquivAlg` computes on a representative,
 `MvPolynomial.pderiv` moves through the reindexing, `MvPolynomial.optionEquivLeft` crosses to
 `Polynomial.derivative`, `Polynomial.derivative_map` commutes the last quotient past it — and it
-works, in one `simp only`. It costs **two new lemmas** (the crossing is not in Mathlib for the
-`Option` splitting, only for `MvPolynomial.sumRingEquiv`) and it plants **three auto-generated
-equation lemmas**, on `ComplexAnalytic.polyRenameEquiv`, `polyOptionEquiv` and `polyCoeffEquiv`,
-because a `simp only` at a definition is what generates one.
+works, in one `simp only`. It costs **two new lemmas** (the crossing is not in Mathlib at
+`v4.32.0` for the `Option` splitting, only for `MvPolynomial.sumRingEquiv`) and it plants **three
+auto-generated equation lemmas**, on `ComplexAnalytic.polyRenameEquiv`, `polyOptionEquiv` and
+`polyCoeffEquiv`, because a `simp only` at a definition is what generates one.
+
+**That parenthesis is measured by a scan of types rather than of names**, at the rev
+`lake-manifest.json` resolves that version to, `81a5d257c8e410db227a6665ed08f64fea08e997`. Over
+the environment of `import Mathlib` there, **43** non-internal declarations have a type mentioning
+`MvPolynomial.pderiv` and **28** have one mentioning `MvPolynomial.optionEquivLeft` or
+`MvPolynomial.optionEquivRight`, and **not one declaration is in both**; crossing
+`Polynomial.derivative` with the same two equivalences returns **0** as well, so neither direction
+of the `Option` crossing is stated there. **The positive control is the half the sentence already
+named**: of the **21** whose type mentions `MvPolynomial.sumRingEquiv` or
+`MvPolynomial.sumAlgEquiv`, **three** also mention `MvPolynomial.pderiv` —
+`MvPolynomial.pderiv_sumRingEquiv`, `MvPolynomial.pderiv_sumAlgEquiv` and the deprecated alias
+`MvPolynomial.pderiv_sumToIter`. **A lemma commuting a derivative past one of these equivalences
+has to mention both constants in its own type**, whatever it is called and whatever namespace is
+open, so the two zeros decide the claim where a name-keyed `grep` would only narrow it.
+
+**That parenthesis read *(the crossing is not in Mathlib for the `Option` splitting, only for
+`MvPolynomial.sumRingEquiv`)* until 2026-09-21**, with no version beside it; `git show
+c6bfc1f:Oka/Analytification/StandardEtale.lean` carries it at `:477–478`, wrapped after *the*.
+**The claim is unchanged and only its warrant is**, and it was the cheapest of the fourteen taxis
+#2133 enumerates for the reason visible here: the positive control was already inside the sentence
+when it was written, and only the run and the version were missing.
 
 What is here instead is `MvPolynomial.induction_on` on `F`, which needs neither: the two
 computation lemmas above — `ComplexAnalytic.polyPresentedAlgebraEquiv_mk_rename` and
