@@ -166,7 +166,10 @@ def doubleGlueData : LocallyRingedSpace.GlueData.{u} where
 
 `rfl`, and stated for the reason `ComplexAnalytic.specGlueData_U` is stated: without it the glue
 datum is a well-typed object with no recorded relation to its input, since
-`CategoryTheory.GlueData.ofGlueData'` has no projection lemmas in Mathlib. -/
+`CategoryTheory.GlueData.ofGlueData'` has no projection lemmas in Mathlib —
+`Oka/CategoryTheory/GlueData.lean` is where that is measured, with the version and the command.
+**This docstring already named a sibling for the reason and restated the absence anyway, and it
+did so until 2026-09-21**, when taxis #2118 gave it the anchor for the evidence. -/
 @[simp]
 theorem doubleGlueData_U (i : ULift.{u} Bool) : (doubleGlueData.{u} X V).U i = X := rfl
 

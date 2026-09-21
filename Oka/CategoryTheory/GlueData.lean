@@ -12,9 +12,46 @@ Material for `Mathlib/CategoryTheory/GlueData.lean`; see `README.md` on the mirr
 
 `CategoryTheory.GlueData'` is the variant of a glue datum that asks for the overlaps only when
 `i ≠ j`, and `CategoryTheory.GlueData.ofGlueData'` turns one into a `CategoryTheory.GlueData` by
-filling the diagonal with `dite`s. **Mathlib has no projection lemmas for it at all** — `grep`
-finds `ofGlueData'` only in its own defining file — so a caller that has to *use* `f` or `t` of
-the result has to unfold a `dite` by hand.
+filling the diagonal with `dite`s. **At `v4.32.0` — the revision `lakefile.toml` pins, resolved by
+`lake-manifest.json` to `81a5d257c8e410db227a6665ed08f64fea08e997` — Mathlib has no projection
+lemmas for it at all**: `grep -rn "ofGlueData'" Mathlib/` returns **two** occurrences in **one**
+file, the definition at `Mathlib/CategoryTheory/GlueData.lean:438` and a cross-reference inside
+another docstring at `:348`. So a caller that has to *use* `f` or `t` of the result has to unfold
+a `dite` by hand.
+
+**Here a `grep` decides the claim rather than narrowing it**, and that is the verdict the three
+questions `OkaTest/Axioms.lean`'s seventh census object puts to a scan offered in support of one
+exist to reach: a *yes* to any of the three means the scan narrows and does not decide, and all
+three are answered below. A projection lemma about `(CategoryTheory.GlueData.ofGlueData' D).f`
+has to write the token `ofGlueData'` in its own statement, whatever namespace is open, so there is
+no second spelling to miss; a `variable` binder introducing the datum leaves the projection still
+to be written, so nothing is inherited from a binder the scan does not read; and the one thing a
+scan of source cannot see — an equation lemma generated on demand for the `def` — would unfold
+the whole structure instance rather than project a field. **The environment agrees and is
+deliberately the weaker of the two routes**: at the commit this paragraph is written at, of the
+names `scripts/DumpEnvNames.lean` dumps exactly **eight** contain `ofGlueData'` — Mathlib's
+definition and the **seven** of this file's ten that carry the token — and none of the **9023**
+generated `.eq_1` names among them is one. `OkaTest/Axioms.lean` says why that route cannot be the
+primary one: that dump is the environment of `Oka` + `OkaTest`, which imports some of Mathlib and
+not all of it, so an absence in it is an absence from this build's imports and not from Mathlib.
+
+**That clause read *`grep` finds `ofGlueData'` only in its own defining file* — no version, no
+command and no control — until 2026-09-21**, and the same universal stood in five further files
+with no instrument at all. **The claim is unchanged and only its warrant is**, which is why the
+retired wording is kept here rather than struck. This file is the anchor the other six sites now
+point at; `OkaTest/Axioms.lean`'s seventh census object is the rule and taxis #2118 is the sweep.
+
+**The three-questions paragraph cited that rule as a `###` heading in round 1 of taxis #2118 and
+by the object's name after it, and what decided the rewording is the rule itself.**
+`OkaTest/Axioms.lean` carries four headings — `# Axiom regression test`, `## Where to put a new
+assertion`, `## What these guards cover, and what they do not`, `## Updating an assertion` — and
+not one `###` among them; the seventh object is the bolded paragraph opening *The rule has a
+seventh object, and it is the fifth one with its domain outside this repository*, under the second
+of the four. A citation is a pointer, and a sweep whose subject is pointers that reach cannot
+publish one that does not: the form the sentence before this one already uses, and which
+`README.md`'s paragraph on that scan has used since it was written, is now the form every site
+uses. That heading string reached `master` in exactly one place,
+`scripts/mathlib_absence.py`, and this push repairs it there and records it in place.
 
 This file supplies ten: two for `CategoryTheory.GlueData'.f'`, two for each of
 `CategoryTheory.GlueData.ofGlueData'`'s `f` and `t`, the composite `t i j ≫ f j i`, the two

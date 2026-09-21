@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """Find the sentences of this repository's prose that assert Mathlib lacks something.
 
-`OkaTest/Axioms.lean`'s `### A negative universal about Mathlib` is the rule; this is the scan
-that narrows the tree to what the rule asks a reader to look at.  **It reports pattern hits and
-not defects.**  Deciding whether a hit is in the class, and then whether it is true, is a human
-step and no run of this prints a verdict.
+`OkaTest/Axioms.lean`'s seventh census object is the rule; this is the scan that narrows the tree
+to what the rule asks a reader to look at.  **It reports pattern hits and not defects.**  Deciding
+whether a hit is in the class, and then whether it is true, is a human step and no run of this
+prints a verdict.
+
+**That citation named a `###` heading of `OkaTest/Axioms.lean` until 2026-09-21, and there is no
+such heading to name.**  That file carries four headings — `# Axiom regression test`, `## Where
+to put a new assertion`, `## What these guards cover, and what they do not`, `## Updating an
+assertion` — and not one `###` among them; the seventh object is the bolded paragraph opening
+*The rule has a seventh object, and it is the fifth one with its domain outside this repository*,
+under the second of the four.  `README.md`'s paragraph on this script has said *seventh census
+object* since it was written, so the repair is that wording and not a new one.
 
 Usage:
 

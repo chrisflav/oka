@@ -1018,7 +1018,13 @@ where the claim is fine enough that a patch release could move it.
   `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean` and `README.md` — of which **two**, the
   fourth and the sixth, say what was run (*`grep` finds it only in its own defining file*). **Five
   sites inherit an instrument they do not print**, which is neither bare nor (a); what such a site
-  owes is the pointer.
+  owes is the pointer. **Swept on 2026-09-21 by taxis #2118, which is why the paragraph above is
+  pinned**: all five now name `Oka/CategoryTheory/GlueData.lean`, which carries the version, the
+  rev and the command as run, and the two instrumented sites carry the version too. **The scan does
+  not see that sweep** — every one of its per-file rows is unmoved across it, because a pointer is
+  not one of the six spellings and the universal it points at stays where it was; `--list` diffed
+  between the two commits is what shows it, and a sweep of form (b) owes that diff rather than the
+  headline.
 * **(c) a bounded restatement that is not a universal at all.**
   *`Mathlib/Topology/Covering/Basic.lean` has only conjugation by a homeomorphism* is settled by
   reading one file; *any cancellation lemma for `IsCoveringMap` is absent from Mathlib* is not

@@ -520,8 +520,11 @@ coherence statement for arbitrary complex analytic spaces:
   The construction goes through `CategoryTheory.GlueData'`, which asks
   for the overlaps only when `i ≠ j` and fills the diagonal with `dite`s;
   `Oka/CategoryTheory/GlueData.lean` unfolds those once — Mathlib has no projection lemma for
-  `CategoryTheory.GlueData.ofGlueData'` at all — so a consumer of `f` or `t` does not meet a
-  dependent `dite` that neither `rw [dif_neg]` nor `split_ifs` will reduce. With them
+  `CategoryTheory.GlueData.ofGlueData'` at all, which that file's module docstring measures at the
+  pinned version with the command as run — so a consumer of `f` or `t` does not meet a dependent
+  `dite` that neither `rw [dif_neg]` nor `split_ifs` will reduce. **That clause carried the
+  universal with no version and no instrument until 2026-09-21**, when taxis #2118 swept the seven
+  sites of this family onto the one that measures it. With them
   `ComplexAnalytic.glueDataCLinear_coverGlueData` shows the transitions are `ℂ`-linear for
   **every** such glue data — the algebra is discharged when `ComplexAnalytic.analytificationFunctor`
   is applied to the given isomorphism of presentations, so what is left is transport — and

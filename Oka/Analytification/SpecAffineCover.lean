@@ -471,7 +471,10 @@ variable (hsymm : ∀ i j : J, glue j i = (glue i j).symm)
 
 `rfl`, and stated for the reason `ComplexAnalytic.coverGlueData_U` is: without it the glue datum
 is a well-typed object with no recorded relation to its input, since
-`CategoryTheory.GlueData.ofGlueData'` has no projection lemmas in Mathlib. -/
+`CategoryTheory.GlueData.ofGlueData'` has no projection lemmas in Mathlib —
+`Oka/CategoryTheory/GlueData.lean` is where that is measured, with the version and the command.
+**The clause carried the universal bare until 2026-09-21**, when taxis #2118 made it a
+pointer. -/
 @[simp]
 theorem specGlueData_U (i : J) :
     (specGlueData.{u} obj poly glue hrange hsymm hcocycle).U i = specSpace.{u} obj i :=

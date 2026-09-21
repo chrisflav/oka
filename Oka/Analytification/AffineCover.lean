@@ -592,7 +592,10 @@ variable (hsymm : ∀ i j : J, glue j i = (glue i j).symm)
 
 `rfl`, and stated because without it `ComplexAnalytic.coverGlueData` is a well-typed object with
 no recorded relation to its input: `CategoryTheory.GlueData.ofGlueData'` has no projection lemmas
-in Mathlib, so nothing else says what `U` is. -/
+in Mathlib, so nothing else says what `U` is. `Oka/CategoryTheory/GlueData.lean` is where that
+absence is measured, with the version, the rev and the command as run; **this clause carried the
+universal with no instrument and no pointer until 2026-09-21**, when taxis #2118 swept the family
+onto the one site that measures it. -/
 @[simp]
 theorem coverGlueData_U (i : J) :
     (coverGlueData.{u} obj poly glue hrange hsymm hcocycle).U i = coverSpace.{u} obj i :=

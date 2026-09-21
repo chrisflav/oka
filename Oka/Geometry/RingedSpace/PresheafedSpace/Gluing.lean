@@ -615,9 +615,14 @@ nothing: on the diagonal `f'` is an `eqToHom`, hence an isomorphism, hence an op
 it, it is an `eqToHom` followed by the given morphism.
 
 **Worth stating because `CategoryTheory.GlueData.ofGlueData'` has no call sites in Mathlib at
-all** — `grep` finds it only in its own defining file — so Mathlib supplies no projection or
-`simp` lemma for any of its fields, and a caller with only Mathlib to read has no way to know in
-advance which of them are cheap to use. This one is, and the route out of here does not ask about
+all at `v4.32.0`** — `grep -rn "ofGlueData'" Mathlib/` returns the definition and one
+cross-reference in a docstring and nothing else, which `Oka/CategoryTheory/GlueData.lean` records
+with the rev and the control — so Mathlib supplies no projection or `simp` lemma for any of its
+fields, and a caller with only Mathlib to read has no way to know in advance which of them are
+cheap to use. **This is not the sentence that file carries**: *no call sites* is about uses and
+*no projection lemmas* is about statements, and here the first gives the second rather than
+repeating it. **The version and the pointer were both absent until 2026-09-21**, when taxis #2118
+swept the family; the claim is unchanged. This one is, and the route out of here does not ask about
 the rest: `AlgebraicGeometry.LocallyRingedSpace.GlueData.openCover` and hence
 `ComplexAnalytic.AnalyticSpace.ofGlueData` read only `U`, `ι` and `glued`. A caller that does ask
 about `t` has a dependent `dite` to unfold, and `CategoryTheory.GlueData.ofGlueData'_t_of_ne` is

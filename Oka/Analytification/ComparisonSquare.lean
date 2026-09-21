@@ -61,7 +61,9 @@ each cost a measured number of attempts:
   as a `∀ i : J` first and the extensionality closed with `fun i ↦ main i`, where the elaborator
   bridges the definitional equality. `ComplexAnalytic.coverGlueData_U` exists for a sibling of
   this reason, which its docstring gives: `CategoryTheory.GlueData.ofGlueData'` has no projection
-  lemmas in Mathlib.
+  lemmas in Mathlib, measured with the version and the command in
+  `Oka/CategoryTheory/GlueData.lean`. **This clause named the sibling for the reason and repeated
+  the universal bare until 2026-09-21**, when taxis #2118 gave it the anchor for the evidence.
 * **`ComplexAnalytic.analytificationFunctor_obj` is what makes the associativity rewrites fire.**
   `(coverIota …).toLRSHom` has domain `(AnalyticSpace.analytification (obj' (σ i)).g)` where the
   composite expects `(analytificationFunctor.obj (obj' (σ i)))`, and until the two spellings are
