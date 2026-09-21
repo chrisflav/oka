@@ -5258,13 +5258,32 @@ info: 'ComplexAnalytic.exists_family_opensRange_presentationRefinedIota_eq' depe
 `Oka/Analytification/Hausdorff.lean`, the whole of it, appended as its own section for the reason
 the sections above give: a section moved is a conflict for somebody else.
 
-**The instance is one `inferInstanceAs` and the two theorems are one `haveI` each**, so every one
-of those axiom lists is a union of lists this file and `OkaTest/Axioms/AnalyticSpace.lean` already
-record — `ComplexAnalytic.t2Space_zeroLocus` for `ComplexAnalytic.t2Space_analytification`, and
-`ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom_comp` together with
-`ComplexAnalytic.AnalyticSpace.isCoveringMap_base_of_isFiniteEtale` for
+**The instance is one `inferInstanceAs`, the first theorem is one `haveI`, and the second is that
+theorem at `subset_rfl`**, so every one of those axiom lists is a union of lists this file,
+`OkaTest/Axioms/AnalyticSpace.lean` and `OkaTest/Axioms/Morphisms.lean` already record —
+`ComplexAnalytic.t2Space_zeroLocus` (`OkaTest/Axioms/AnalyticSpace.lean:1383`) for
+`ComplexAnalytic.t2Space_analytification`, and
+`ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom_comp`
+(`OkaTest/Axioms/Analytification.lean:4471`) together with
+`ComplexAnalytic.AnalyticSpace.isCoveringMap_base_of_isFiniteEtale`
+(`OkaTest/Axioms/Morphisms.lean:2163`) for
 `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_comp` and its
-`_compl` companion. The guards are a check that the third rung introduced nothing, which is what a
+`_compl` companion. **That list read *this file and `OkaTest/Axioms/AnalyticSpace.lean`* until
+2026-09-21**, which put the covering-map rung in the wrong file:
+`git grep -nE '^[ \t]*#print axioms
+ComplexAnalytic\.AnalyticSpace\.isCoveringMap_base_of_isFiniteEtale' -- OkaTest/` returns exactly
+one line and it is in `OkaTest/Axioms/Morphisms.lean`. **The anchor and the escaped dots are what
+make that a check rather than a self-portrait**: unanchored and unescaped, the same pattern matches
+this sentence quoting it, because a `git grep` reads comments — and the sentence this one replaces
+said *exactly one line* of a command that returned two, the first of them being itself.
+**The opening clause of this paragraph also read *the two theorems are one `haveI` each* until
+2026-09-21, and is corrected in place rather than left standing with a date**, because it was false
+of the second theorem at the commit that wrote it: `Oka/Analytification/Hausdorff.lean:175–176` is
+the first theorem at `subset_rfl` and carries no `haveI`.
+**`OkaTest/Axioms/Morphisms.lean` carries the same mistake about the same name**, in the section
+docstring that names `IsCoveringMap.eq_of_comp_eq`, and this push does not touch that file.
+
+The guards are a check that the third rung introduced nothing, which is what a
 corollary of a theorem in another file most plausibly could. **Named and not located**: a section
 appended at the end of this file cannot say which section is above it and stay true, since the next
 branch appends between
@@ -6227,3 +6246,61 @@ info: 'ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom_compl
+
+/-! ### The covering-map rung over a presented base
+
+`Oka/Analytification/HausdorffBase.lean`, the whole of it, appended as its own section for the
+reason the sections above give: a section moved is a conflict for somebody else.
+
+**This is the `k ≥ 1` counterpart of this file's *The analytification is Hausdorff, and the
+standard étale cover is a covering map*, and only of its covering-map half.** That section guards
+three
+names; this one guards two. The missing third is `ComplexAnalytic.t2Space_analytification`, and it
+is missing because it is **not** `k`-restricted: it binds `{n k : ℕ}` with `k` absent from its
+conclusion, it is declared outside its own file's `g : Fin 0 → …` block, and there is nothing at
+`k ≥ 1` for it to have a counterpart in. The file below therefore adds no Hausdorff statement, and
+its separation hypothesis is discharged by instance search through that same instance and
+`ComplexAnalytic.t2Space_restrict`.
+
+**What the telescopes bind, by `#check` over the two and not by reading the file.** Both bind
+`{n k : ℕ}`, the base presentation `g`, `F G : Polynomial (MvPolynomial (ULift (Fin n)) ℂ)`,
+`F.Monic`, a `StandardEtalePair (ComplexAnalytic.PresentedAlgebra n k g)` and the two equations
+identifying that pair with `F` and `G`; **`k` is free in both**, which is what separates them from
+the `k = 0` pair. Only the first binds the open subset `V` and its containment in the
+complement of the bad set, because **the second is that theorem at `subset_rfl` and not a second
+application of the rung** — the same relation
+`ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_comp_compl` has to
+`ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_comp`.
+
+**The first theorem is one `haveI` and the second is that theorem at `subset_rfl`**, so both axiom
+lists are unions of lists already recorded —
+`ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom`, guarded in
+this file's *The finiteness half over a presented base, and the two halves at once*, together with
+`ComplexAnalytic.AnalyticSpace.isCoveringMap_base_of_isFiniteEtale`, guarded at
+`OkaTest/Axioms/Morphisms.lean:2163` and nowhere else — **not** in
+`OkaTest/Axioms/AnalyticSpace.lean`, which two sentences on `master` named until 2026-09-21 and
+one of which is repaired in this file. The guards are a check that the third rung introduced
+nothing,
+which is what a corollary of a theorem in another file most plausibly could. **Named and not
+located**: a section appended at the end of this file cannot say which section is above it and
+stay true, since the next branch appends between them.
+
+**Nothing outside `Oka/Analytification/HausdorffBase.lean` consumes either name**, which is the
+state the `k = 0` pair is in too: the only consumer of anything here is that file's own `_compl`
+theorem, which is the other at `subset_rfl`, and `git grep` over `Oka/` and `OkaTest/` finds no
+third. -/
+
+/--
+info: 'ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom' depends on
+  axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom
+
+/--
+info: 'ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_compl'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms
+  ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_compl

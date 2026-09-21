@@ -179,7 +179,12 @@ exactly that purpose.
 * **Nothing in `Oka/Analytification/Hausdorff.lean` is instantiated.** That file's two
   covering-map corollaries are at `k = 0` and are about the **composite to `ℂ^n`**; what the
   theorems below would let be stated is the `k ≥ 1` counterpart **over `X^an`**, which is a
-  different morphism, and stating it is a separate deliverable that this file does not start.
+  different morphism. **That clause ended *and stating it is a separate deliverable that this file
+  does not start* until 2026-09-21**, when
+  `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom`
+  (`Oka/Analytification/HausdorffBase.lean`) stated it at every `k`. **What this file still does
+  not start is an *instance* of that counterpart at this pair**, which is a third statement again,
+  and the headline of this bullet is unchanged.
   **Its Hausdorff result is not in that position**: `ComplexAnalytic.t2Space_analytification` binds
   `{n k : ℕ}`, is declared above that file's `noncomputable section` and so outside the `Fin 0`
   block its two corollaries live in, and is about a space rather than a morphism — so it is at

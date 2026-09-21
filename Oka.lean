@@ -139,6 +139,7 @@ import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor
 import Oka.Analytification.GlueShape
 import Oka.Analytification.Hausdorff
+import Oka.Analytification.HausdorffBase
 import Oka.Analytification.HypersurfaceFinite
 import Oka.Analytification.LocalRing
 import Oka.Analytification.LocalisationComposite

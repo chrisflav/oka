@@ -100,10 +100,13 @@ only place at which its hypotheses are shown to be satisfiable by anything other
 isomorphism. **This sentence also said *"is the only place it is applied"*, and that clause is now
 false**: `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_comp`
 (`Oka/Analytification/Hausdorff.lean`) is a second application, at a morphism the analytification
-machinery produces rather than one written here by hand. **The two clauses are not the same claim
+machinery produces rather than one written here by hand, and
+`ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom`
+(`Oka/Analytification/HausdorffBase.lean`) is a third since 2026-09-21, the same rung over a
+presented base. **The two clauses are not the same claim
 and only one of them moved**, which is why the other is narrowed rather than deleted:
 `ComplexAnalytic.not_isIso_sq` shows `ComplexAnalytic.sq` is not an isomorphism, and nothing shows
-that of the second application's morphism. **It proves nothing new about `z ↦ z²`** — Mathlib's
+that of either later application's morphism. **It proves nothing new about `z ↦ z²`** — Mathlib's
 `isCoveringMap_npow` already covers that, and is what the local-homeomorphism field above is
 derived from — so read it as a test of the rung and not as a fact about the map.
 
@@ -1148,9 +1151,12 @@ theorem isFiniteEtale_sq : AnalyticSpace.IsFiniteEtale (ComplexAnalytic.sq.{u}) 
 Hausdorff analytic space is a covering map. **This was the only place it is applied until
 `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_comp`
 (`Oka/Analytification/Hausdorff.lean`) landed**, and the sentence is narrowed rather than deleted
-because what it recorded — that the rung had exactly one consumer — is what stopped being true. It
-is still the only application at a morphism this repository proves is not an isomorphism
-(`ComplexAnalytic.not_isIso_sq`).
+because what it recorded — that the rung had exactly one consumer — is what stopped being true.
+**There have been three since 2026-09-21**, the third being
+`ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom`
+(`Oka/Analytification/HausdorffBase.lean`), over a presented base and about the structure map to
+`X^an`. It is still the only application at a morphism this repository proves is not an
+isomorphism (`ComplexAnalytic.not_isIso_sq`).
 
 **Nothing here is new about `ComplexAnalytic.sq`, and the section would be misread if that were
 not said.** That `z ↦ z²` is a covering map of `ℂ ∖ {0}` is Mathlib's `isCoveringMap_npow`, which

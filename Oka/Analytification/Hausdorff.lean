@@ -27,10 +27,15 @@ an application.
 
 ## Why this is the second application of the third rung and the first outside a test file
 
-`ComplexAnalytic.isCoveringMap_base_sq` (`OkaTest/FiniteMorphism.lean`) is the only other one.
-**That file said so three times, in the present tense, and this branch narrows all three rather
-than citing one of them as authority for a count it falsifies** — its module docstring, the section
-docstring of the section that declaration sits in, and that declaration's own docstring. Each keeps
+`ComplexAnalytic.isCoveringMap_base_sq` (`OkaTest/FiniteMorphism.lean`) is the only earlier one.
+**This sentence read *is the only other one* until 2026-09-21**, when
+`Oka/Analytification/HausdorffBase.lean` stated the `k ≥ 1` counterpart over `X^an` and became the
+third application of the rung; **the heading above is unchanged**, because it is a claim about
+where *this* file stands in that order and that is what it still says.
+**`OkaTest/FiniteMorphism.lean` said so three times, in the present tense, and the branch writing
+this paragraph narrowed all three rather than citing one of them as authority for a count it
+falsifies** — its module docstring, the section docstring of the section that declaration sits in,
+and that declaration's own docstring. Each keeps
 the clause that survives, which is that `ComplexAnalytic.isCoveringMap_base_sq` is still the only
 application at a morphism that repository proves is not an isomorphism
 (`ComplexAnalytic.not_isIso_sq`); nothing shows that of the morphism below. **The grep that reaches
@@ -66,9 +71,15 @@ are, and nothing about whether the base is nonempty; the last of those is a live
   the structure map to `X^an`, and the two corollaries below are about the composite to `ℂ^n` —
   **two morphisms and not one**, in `Oka/Analytification/StandardEtaleFiniteness.lean`'s words,
   with `Oka/Analytification/StandardEtaleFiniteEtale.lean` saying the same of the same two
-  morphisms. So what is now reachable and unstated is the `k ≥ 1` counterpart **over `X^an`**,
-  which is a different statement from the two below rather than their generalisation, and stating
-  it is a deliverable. **Over `ℂ^n` at `k ≥ 1` the statement is not merely unstated**: the
+  morphisms. So what was reachable and unstated was the `k ≥ 1` counterpart **over `X^an`**,
+  which is a different statement from the two below rather than their generalisation. **That
+  clause ended *and stating it is a deliverable* until 2026-09-21**, when
+  `Oka/Analytification/HausdorffBase.lean` stated it —
+  `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom` and its
+  `_compl` companion, a sibling module rather than an append because appending would put six
+  modules onto this file's closure, which that file measures. **The absence this bullet records is
+  unchanged**: nothing *below* is stated at a presented base, and that is still what it says.
+  **Over `ℂ^n` at `k ≥ 1` the statement is not merely unstated**: the
   *unrestricted* composite is not a local isomorphism — and so, by
   `ComplexAnalytic.AnalyticSpace.IsFiniteEtale.isLocalIso`, not finite étale — as soon as some
   `g j` is nonzero and the source has a point, by

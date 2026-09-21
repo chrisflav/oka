@@ -38,7 +38,12 @@ source out of polynomials supplies nothing.
 `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_comp` is what that
 buys — the theorem below at the analytification of a standard étale morphism — and it is the
 second application of this rung anywhere, `ComplexAnalytic.isCoveringMap_base_sq`
-(`OkaTest/FiniteMorphism.lean`) being the first. **What stays true is the hypothesis**: `X` is
+(`OkaTest/FiniteMorphism.lean`) being the first and
+`ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom`
+(`Oka/Analytification/HausdorffBase.lean`) the third since 2026-09-21, at the structure map to
+`X^an` over a presented base rather than at the composite to `ℂ^n`. **No wording was retired
+here**: both ordinals were right when written and are right now, and the sentence ended at the
+second only because there was no third. **What stays true is the hypothesis**: `X` is
 arbitrary below and no instance fires at a variable.
 
 **Connectedness of the target is not needed for the rung**, and `Oka/AnalyticSpace/LocalIso.lean`
