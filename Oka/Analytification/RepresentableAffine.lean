@@ -27,17 +27,20 @@ the sense of `ComplexAnalytic.IsAnalytification`: by the Γ-Spec adjunction, a m
 
 open CategoryTheory Opposite AlgebraicGeometry
 
+universe u
+
 namespace ComplexAnalytic
 
 open AnalyticSpace
 
-/-- `Spec R` over `Spec ℂ`, for a ring map `ℂ ⟶ R`. -/
-noncomputable def specOver {R : CommRingCat.{0}} (φ : CommRingCat.of ℂ ⟶ R) : Over specℂ :=
+/-- `Spec R` over `Spec ℂ`, for a ring map `ULift ℂ ⟶ R`. -/
+noncomputable def specOver {R : CommRingCat.{u}} (φ : CommRingCat.of (ULift.{u} ℂ) ⟶ R) :
+    Over specℂ.{u} :=
   Over.mk (Spec.locallyRingedSpaceMap φ)
 
 /-- Composing the morphism `X ⟶ Spec S` of an algebra structure `α` with `Spec ψ` is the
 morphism of the algebra structure `α ∘ ψ`. -/
-theorem toSpecOfAlgMap_comp_locallyRingedSpaceMap {X : LocallyRingedSpace.{0}} {R S : Type}
+theorem toSpecOfAlgMap_comp_locallyRingedSpaceMap {X : LocallyRingedSpace.{u}} {R S : Type u}
     [CommRing R] [CommRing S] (ψ : R →+* S) (α : S →+* X.presheaf.obj (op ⊤)) :
     X.toSpecOfAlgMap α ≫ Spec.locallyRingedSpaceMap (CommRingCat.ofHom ψ) =
       X.toSpecOfAlgMap (α.comp ψ) := by
@@ -47,7 +50,7 @@ theorem toSpecOfAlgMap_comp_locallyRingedSpaceMap {X : LocallyRingedSpace.{0}} {
 
 section Presented
 
-variable {n k : ℕ} (g : Fin k → MvPolynomial (ULift.{0} (Fin n)) ℂ)
+variable {n k : ℕ} (g : Fin k → MvPolynomial (ULift.{u} (Fin n)) ℂ)
 
 /-- The constants of `ℂ[x]/I` act on `X^an` by the constants of `𝒪_{X^an}`. -/
 theorem quotientToGlobal_comp_presentedAlgebraMap :
@@ -60,10 +63,13 @@ theorem quotientToGlobal_comp_presentedAlgebraMap :
 /-- **The comparison morphism `X^an ⟶ Spec (ℂ[x]/I)`, as a morphism over `Spec ℂ`.** -/
 noncomputable def analytificationToSpecOver :
     toOverSpec.obj (AnalyticSpace.analytification g) ⟶
-      specOver (CommRingCat.ofHom (presentedAlgebraMap g)) :=
-  Over.homMk (analytificationToSpec g)
-    ((toSpecOfAlgMap_comp_locallyRingedSpaceMap _ _).trans
-      (congrArg _ (quotientToGlobal_comp_presentedAlgebraMap g)))
+      specOver (CommRingCat.ofHom (uliftAlgMap (presentedAlgebraMap g))) :=
+  Over.homMk (analytificationToSpec g) (by
+    change LocallyRingedSpace.toSpecOfAlgMap _ (quotientToGlobal g) ≫ _ =
+      LocallyRingedSpace.toSpecOfAlgMap _ (uliftAlgMap (AnalyticSpace.analytification g).algebraMap)
+    refine (toSpecOfAlgMap_comp_locallyRingedSpaceMap _ _).trans ?_
+    rw [← quotientToGlobal_comp_presentedAlgebraMap]
+    rfl)
 
 @[simp]
 theorem analytificationToSpecOver_left :
@@ -71,7 +77,7 @@ theorem analytificationToSpecOver_left :
 
 /-- Composing with the comparison morphism is, under the Γ-Spec adjunction, pulling back
 `ComplexAnalytic.quotientToGlobal`. -/
-theorem map_comp_analytificationToSpecOver_left {Z : AnalyticSpace.{0}}
+theorem map_comp_analytificationToSpecOver_left {Z : AnalyticSpace.{u}}
     (ψ : Z ⟶ AnalyticSpace.analytification g) :
     (toOverSpec.map ψ ≫ analytificationToSpecOver g).left =
       Z.toLocallyRingedSpace.toSpecOfAlgMap
@@ -97,12 +103,14 @@ theorem isAnalytification_analytificationToSpec :
     obtain ⟨β, hβ⟩ : ∃ β : PresentedAlgebra n k g →+* Z.presheaf.obj (op ⊤),
         Z.toLocallyRingedSpace.toSpecOfAlgMap β = f.left :=
       LocallyRingedSpace.exists_toSpecOfAlgMap_eq _ f.left
-    have hβc : β.comp (presentedAlgebraMap g) = Z.algebraMap :=
+    have hβc' : β.comp (uliftAlgMap (presentedAlgebraMap g)) = uliftAlgMap Z.algebraMap :=
       LocallyRingedSpace.toSpecOfAlgMap_injective _
         ((toSpecOfAlgMap_comp_locallyRingedSpaceMap _ _).symm.trans
           ((congrArg (· ≫ Spec.locallyRingedSpaceMap
-            (CommRingCat.ofHom (presentedAlgebraMap g))) hβ).trans (Over.w f)))
-    let a : ULift.{0} (Fin n) → Z.presheaf.obj (op ⊤) :=
+            (CommRingCat.ofHom (uliftAlgMap (presentedAlgebraMap g)))) hβ).trans (Over.w f)))
+    have hβc : β.comp (presentedAlgebraMap g) = Z.algebraMap :=
+      RingHom.ext fun c ↦ RingHom.congr_fun hβc' (ULift.up c)
+    let a : ULift.{u} (Fin n) → Z.presheaf.obj (op ⊤) :=
       fun i ↦ β (Ideal.Quotient.mk _ (MvPolynomial.X i))
     have hβ' : β.comp (Ideal.Quotient.mk (presentationIdeal g)) =
         MvPolynomial.eval₂Hom Z.algebraMap a :=
@@ -130,21 +138,22 @@ theorem isAnalytification_analytificationToSpec :
 end Presented
 
 /-- **`Spec R` has an analytification when `R` is of finite type over `ℂ`.** -/
-theorem rightAdjointObjIsDefined_specOver {R : CommRingCat.{0}} (φ : CommRingCat.of ℂ ⟶ R)
-    (hφ : φ.hom.FiniteType) :
+theorem rightAdjointObjIsDefined_specOver {R : CommRingCat.{u}}
+    (φ : CommRingCat.of (ULift.{u} ℂ) ⟶ R) (hφ : φ.hom.FiniteType) :
     AnalyticSpace.toOverSpec.rightAdjointObjIsDefined (specOver φ) := by
-  letI := φ.hom.toAlgebra
-  haveI : Algebra.FiniteType ℂ R := hφ
+  letI := (φ.hom.comp ULift.ringEquiv.symm.toRingHom : ℂ →+* R).toAlgebra
+  haveI : Algebra.FiniteType ℂ R :=
+    hφ.comp (RingHom.FiniteType.of_surjective _ ULift.ringEquiv.symm.surjective)
   obtain ⟨P, ⟨e⟩⟩ := exists_presentation R
   let E : R ≅ CommRingCat.of P.alg := e.symm.toRingEquiv.toCommRingCatIso
   refine rightAdjointObjIsDefined_of_iso
     (Over.isoMk (Spec.toLocallyRingedSpace.mapIso E.op) ?_)
     (isAnalytification_analytificationToSpec P.g).rightAdjointObjIsDefined
   change Spec.locallyRingedSpaceMap E.hom ≫ Spec.locallyRingedSpaceMap φ =
-    Spec.locallyRingedSpaceMap (CommRingCat.ofHom (presentedAlgebraMap P.g))
+    Spec.locallyRingedSpaceMap (CommRingCat.ofHom (uliftAlgMap (presentedAlgebraMap P.g)))
   rw [← Spec.locallyRingedSpaceMap_comp]
   congr 1
   ext c
-  exact e.symm.commutes c
+  exact e.symm.commutes c.down
 
 end ComplexAnalytic

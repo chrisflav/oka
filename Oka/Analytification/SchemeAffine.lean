@@ -17,13 +17,15 @@ compatibly with the comparison morphisms (`ComplexAnalytic.analytificationSpecIs
 
 open CategoryTheory Opposite AlgebraicGeometry
 
+universe u
+
 namespace ComplexAnalytic
 
 open AnalyticSpace
 
 namespace IsAnalytification
 
-variable {Y : Over specℂ} {W W' : AnalyticSpace.{0}} {π : toOverSpec.obj W ⟶ Y}
+variable {Y : Over specℂ} {W W' : AnalyticSpace.{u}} {π : toOverSpec.obj W ⟶ Y}
   {π' : toOverSpec.obj W' ⟶ Y}
 
 /-- **Analytifications are unique**: two analytifications of the same object are isomorphic, by
@@ -51,25 +53,28 @@ end IsAnalytification
 
 /-- `Spec R`, for a `ℂ`-algebra `R` of finite type, as a scheme locally of finite type over
 `ℂ`. -/
-noncomputable def SchemeLFTℂ.spec {R : CommRingCat.{0}} (φ : CommRingCat.of ℂ ⟶ R)
+noncomputable def SchemeLFTℂ.spec {R : CommRingCat.{u}} (φ : CommRingCat.of (ULift.{u} ℂ) ⟶ R)
     (hφ : φ.hom.FiniteType) : SchemeLFTℂ :=
   ⟨Over.mk (Spec.map φ), (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).2 hφ⟩
 
-lemma schemeToOverSpec_obj_spec {R : CommRingCat.{0}} (φ : CommRingCat.of ℂ ⟶ R)
+lemma schemeToOverSpec_obj_spec {R : CommRingCat.{u}} (φ : CommRingCat.of (ULift.{u} ℂ) ⟶ R)
     (hφ : φ.hom.FiniteType) : schemeToOverSpec.obj (SchemeLFTℂ.spec φ hφ).obj = specOver φ :=
   rfl
 
-variable {n k : ℕ} (g : Fin k → MvPolynomial (ULift.{0} (Fin n)) ℂ)
+variable {n k : ℕ} (g : Fin k → MvPolynomial (ULift.{u} (Fin n)) ℂ)
 
 /-- The structure map of a presented algebra is of finite type. -/
-theorem finiteType_presentedAlgebraMap : (presentedAlgebraMap g).FiniteType := by
+theorem finiteType_presentedAlgebraMap : (uliftAlgMap.{u} (presentedAlgebraMap g)).FiniteType := by
+  refine RingHom.FiniteType.comp ?_
+    (RingHom.FiniteType.of_surjective _ ULift.ringEquiv.surjective)
   refine RingHom.FiniteType.comp_surjective ?_ Ideal.Quotient.mk_surjective
   rw [← MvPolynomial.algebraMap_eq, RingHom.finiteType_algebraMap]
   infer_instance
 
 /-- `Spec (ℂ[x] ⧸ (g))` as a scheme locally of finite type over `ℂ`. -/
 noncomputable abbrev SchemeLFTℂ.specPresentation : SchemeLFTℂ :=
-  SchemeLFTℂ.spec (CommRingCat.ofHom (presentedAlgebraMap g)) (finiteType_presentedAlgebraMap g)
+  SchemeLFTℂ.spec (CommRingCat.ofHom (uliftAlgMap (presentedAlgebraMap g)))
+    (finiteType_presentedAlgebraMap g)
 
 /-- **The analytification of `Spec (ℂ[x] ⧸ (g))` is the zero locus of `g`**, the isomorphism being
 compatible with the comparison morphisms to `Spec (ℂ[x] ⧸ (g))`. -/

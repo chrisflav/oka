@@ -37,6 +37,8 @@ preimages of the `U i`, and the local lifts glue; two lifts agree since `P⁻¹(
 
 open CategoryTheory Opposite AlgebraicGeometry TopologicalSpace
 
+universe u
+
 namespace ComplexAnalytic
 
 open AnalyticSpace
@@ -45,7 +47,7 @@ open AnalyticSpace
 
 namespace GlueAnalytification
 
-variable {Y : Over specℂ} {ι : Type} {U : ι → Opens Y.left} {W : ι → AnalyticSpace.{0}}
+variable {Y : Over specℂ} {ι : Type u} {U : ι → Opens Y.left} {W : ι → AnalyticSpace.{u}}
   (π : ∀ i, toOverSpec.obj (W i) ⟶ overRestrict Y (U i))
 
 /-- The composite `W i ⟶ Y|U i ⟶ Y`. -/
@@ -71,18 +73,18 @@ variable {π} (hπ : ∀ i, IsAnalytification (π i))
 include hπ
 
 /-- A morphism from an analytic space to `W i` is determined by its composite to `Y`. -/
-lemma hom_ext_W {Z : AnalyticSpace.{0}} {i : ι} {φ ψ : Z ⟶ W i}
+lemma hom_ext_W {Z : AnalyticSpace.{u}} {i : ι} {φ ψ : Z ⟶ W i}
     (e : toOverSpec.map φ ≫ p π i = toOverSpec.map ψ ≫ p π i) : φ = ψ :=
   (hπ i).hom_ext ((cancel_mono (overRestrictι Y (U i))).1 (by simpa [p] using e))
 
 /-- A morphism from an analytic space to an open subspace of `W i` is determined by its
 composite to `Y`. -/
-lemma hom_ext_V {Z : AnalyticSpace.{0}} {i : ι} {O : (W i).Opens} {φ ψ : Z ⟶ (W i).restrict O}
+lemma hom_ext_V {Z : AnalyticSpace.{u}} {i : ι} {O : (W i).Opens} {φ ψ : Z ⟶ (W i).restrict O}
     (e : toOverSpec.map φ ≫ r π i O = toOverSpec.map ψ ≫ r π i O) : φ = ψ :=
   hom_ext_restrict _ _ _ (hom_ext_W hπ (by simpa using e))
 
 /-- A morphism over `Spec ℂ` from an analytic space to `Y` landing in `U i` lifts to `W i`. -/
-noncomputable def liftW {Z : AnalyticSpace.{0}} (i : ι) (f : toOverSpec.obj Z ⟶ Y)
+noncomputable def liftW {Z : AnalyticSpace.{u}} (i : ι) (f : toOverSpec.obj Z ⟶ Y)
     (hf : ∀ z, f.left.base z ∈ U i) : Z ⟶ W i :=
   (hπ i).lift (Over.homMk (LocallyRingedSpace.liftRestrict f.left (U i) (by
     rintro _ ⟨z, rfl⟩; exact hf z)) (by
@@ -92,7 +94,7 @@ noncomputable def liftW {Z : AnalyticSpace.{0}} (i : ι) (f : toOverSpec.obj Z �
 
 /-- `liftW` is a lift of `f`. -/
 @[reassoc (attr := simp)]
-lemma liftW_fac {Z : AnalyticSpace.{0}} (i : ι) (f : toOverSpec.obj Z ⟶ Y)
+lemma liftW_fac {Z : AnalyticSpace.{u}} (i : ι) (f : toOverSpec.obj Z ⟶ Y)
     (hf : ∀ z, f.left.base z ∈ U i) : toOverSpec.map (liftW hπ i f hf) ≫ p π i = f := by
   rw [p, liftW, (hπ i).lift_fac_assoc]
   ext1
@@ -100,21 +102,21 @@ lemma liftW_fac {Z : AnalyticSpace.{0}} (i : ι) (f : toOverSpec.obj Z ⟶ Y)
   rintro _ ⟨z, rfl⟩; exact hf z
 
 /-- The point of `Y` under the image of `z` by `liftW` is `f z`. -/
-lemma liftW_base {Z : AnalyticSpace.{0}} (i : ι) (f : toOverSpec.obj Z ⟶ Y)
+lemma liftW_base {Z : AnalyticSpace.{u}} (i : ι) (f : toOverSpec.obj Z ⟶ Y)
     (hf : ∀ z, f.left.base z ∈ U i) (z : Z) :
     (p π i).left.base ((liftW hπ i f hf).toLRSHom.base z) = f.left.base z :=
   congrArg (fun m : toOverSpec.obj Z ⟶ Y ↦ m.left.base z) (liftW_fac hπ i f hf)
 
 /-- A morphism over `Spec ℂ` from an analytic space to `Y` landing in `U i` lifts to an open
 subspace `O` of `W i` containing all points over its image. -/
-noncomputable def liftV {Z : AnalyticSpace.{0}} (i : ι) (O : (W i).Opens)
+noncomputable def liftV {Z : AnalyticSpace.{u}} (i : ι) (O : (W i).Opens)
     (f : toOverSpec.obj Z ⟶ Y) (hf : ∀ z, f.left.base z ∈ U i)
     (hO : ∀ z, (liftW hπ i f hf).toLRSHom.base z ∈ O) : Z ⟶ (W i).restrict O :=
   liftOpen (liftW hπ i f hf) O (by rintro _ ⟨z, rfl⟩; exact hO z)
 
 /-- `liftV` is a lift of `f`. -/
 @[reassoc (attr := simp)]
-lemma liftV_fac {Z : AnalyticSpace.{0}} (i : ι) (O : (W i).Opens)
+lemma liftV_fac {Z : AnalyticSpace.{u}} (i : ι) (O : (W i).Opens)
     (f : toOverSpec.obj Z ⟶ Y) (hf : ∀ z, f.left.base z ∈ U i)
     (hO : ∀ z, (liftW hπ i f hf).toLRSHom.base z ∈ O) :
     toOverSpec.map (liftV hπ i O f hf hO) ≫ r π i O = f := by
@@ -183,7 +185,7 @@ lemma cocycle (i j k : ι) : t' hπ i j k ≫ t' hπ j k i ≫ t' hπ k i j = �
   hom_ext_V hπ (by simp)
 
 /-- The gluing datum of the `W i` along the `V i j`. -/
-noncomputable def mkCore : LocallyRingedSpace.GlueData.MkCore.{0} where
+noncomputable def mkCore : LocallyRingedSpace.GlueData.MkCore.{u} where
   J := ι
   U i := (W i).toLocallyRingedSpace
   V := V π
@@ -196,7 +198,7 @@ noncomputable def mkCore : LocallyRingedSpace.GlueData.MkCore.{0} where
   cocycle i j k := congrArg AnalyticSpace.Hom.toLRSHom (cocycle hπ i j k)
 
 /-- The glue data of locally ringed spaces. -/
-noncomputable abbrev D : LocallyRingedSpace.GlueData.{0} := (mkCore hπ).toGlueData
+noncomputable abbrev D : LocallyRingedSpace.GlueData.{u} := (mkCore hπ).toGlueData
 
 /-- The transitions of the glue data are `ℂ`-linear. -/
 lemma glueDataCLinear : GlueDataCLinear (D hπ) (fun i ↦ (W i).algebraMap) :=
@@ -205,7 +207,7 @@ lemma glueDataCLinear : GlueDataCLinear (D hπ) (fun i ↦ (W i).algebraMap) :=
     (fun i j ↦ ((W i).ofRestrict (V π i j)).isCLinear) (fun i j ↦ (t hπ i j).isCLinear)
 
 /-- The glued analytic space. -/
-noncomputable def G : AnalyticSpace.{0} :=
+noncomputable def G : AnalyticSpace.{u} :=
   ofGlueDataCLinear (D hπ) (fun i ↦ (W i).algebraMap) (glueDataCLinear hπ)
     (fun i ↦ (W i).local_model)
 
@@ -266,32 +268,32 @@ instance (i : ι) : LocallyRingedSpace.IsOpenImmersion (ιG hπ i).toLRSHom :=
 
 /-- A morphism into the glued space lying over `U i` factors through `W i`, as a morphism of
 locally ringed spaces. -/
-noncomputable def liftGLRS {Z : AnalyticSpace.{0}} (i : ι) (χ : Z ⟶ G hπ)
+noncomputable def liftGLRS {Z : AnalyticSpace.{u}} (i : ι) (χ : Z ⟶ G hπ)
     (h : ∀ z, (PLeft hπ).base (χ.toLRSHom.base z) ∈ U i) :
     Z.toLocallyRingedSpace ⟶ (W i).toLocallyRingedSpace :=
   LocallyRingedSpace.IsOpenImmersion.lift (ιG hπ i).toLRSHom χ.toLRSHom (by
       rintro _ ⟨z, rfl⟩; exact exists_ιG hπ i _ (h z))
 
 /-- `liftGLRS` is a factorisation. -/
-lemma liftGLRS_fac {Z : AnalyticSpace.{0}} (i : ι) (χ : Z ⟶ G hπ)
+lemma liftGLRS_fac {Z : AnalyticSpace.{u}} (i : ι) (χ : Z ⟶ G hπ)
     (h : ∀ z, (PLeft hπ).base (χ.toLRSHom.base z) ∈ U i) :
     liftGLRS hπ i χ h ≫ (ιG hπ i).toLRSHom = χ.toLRSHom :=
   LocallyRingedSpace.IsOpenImmersion.lift_fac (ιG hπ i).toLRSHom χ.toLRSHom _
 
 /-- A morphism into the glued space lying over `U i` factors through `W i`. -/
-noncomputable def liftG {Z : AnalyticSpace.{0}} (i : ι) (χ : Z ⟶ G hπ)
+noncomputable def liftG {Z : AnalyticSpace.{u}} (i : ι) (χ : Z ⟶ G hπ)
     (h : ∀ z, (PLeft hπ).base (χ.toLRSHom.base z) ∈ U i) : Z ⟶ W i :=
   ⟨liftGLRS hπ i χ h, IsCLinearHom.of_comp (liftGLRS_fac hπ i χ h) χ.isCLinear (ιG hπ i).isCLinear⟩
 
 /-- `liftG` is a factorisation. -/
 @[reassoc (attr := simp)]
-lemma liftG_fac {Z : AnalyticSpace.{0}} (i : ι) (χ : Z ⟶ G hπ)
+lemma liftG_fac {Z : AnalyticSpace.{u}} (i : ι) (χ : Z ⟶ G hπ)
     (h : ∀ z, (PLeft hπ).base (χ.toLRSHom.base z) ∈ U i) : liftG hπ i χ h ≫ ιG hπ i = χ :=
   forgetToLocallyRingedSpace.map_injective (liftGLRS_fac hπ i χ h)
 
 omit hπ in
 /-- Two morphisms over `Spec ℂ` out of an analytic space agreeing on an open cover are equal. -/
-lemma over_hom_ext_of_opens {Z : AnalyticSpace.{0}} {κ : Type} (O : κ → Z.Opens)
+lemma over_hom_ext_of_opens {Z : AnalyticSpace.{u}} {κ : Type u} (O : κ → Z.Opens)
     (hO : ∀ z, ∃ i, z ∈ O i) {Y' : Over specℂ} {a b : toOverSpec.obj Z ⟶ Y'}
     (h : ∀ i, toOverSpec.map (Z.ofRestrict (O i)) ≫ a = toOverSpec.map (Z.ofRestrict (O i)) ≫ b) :
     a = b := by
@@ -301,7 +303,7 @@ lemma over_hom_ext_of_opens {Z : AnalyticSpace.{0}} {κ : Type} (O : κ → Z.Op
 
 omit hπ in
 /-- The preimages of the `U i` cover the source. -/
-lemma exists_mem_of_iSup_eq_top (hU : ⨆ i, U i = ⊤) {Z : AnalyticSpace.{0}}
+lemma exists_mem_of_iSup_eq_top (hU : ⨆ i, U i = ⊤) {Z : AnalyticSpace.{u}}
     (f : toOverSpec.obj Z ⟶ Y) (z : Z) :
     ∃ i, z ∈ (Opens.map f.left.base).obj (U i) := by
   have : f.left.base z ∈ (⊤ : Opens Y.left) := trivial
@@ -311,14 +313,14 @@ lemma exists_mem_of_iSup_eq_top (hU : ⨆ i, U i = ⊤) {Z : AnalyticSpace.{0}}
 
 /-- The composite of `liftG` to `Y`. -/
 @[reassoc (attr := simp)]
-lemma liftG_p {Z : AnalyticSpace.{0}} (i : ι) (χ : Z ⟶ G hπ)
+lemma liftG_p {Z : AnalyticSpace.{u}} (i : ι) (χ : Z ⟶ G hπ)
     (h : ∀ z, (PLeft hπ).base (χ.toLRSHom.base z) ∈ U i) :
     toOverSpec.map (liftG hπ i χ h) ≫ p π i = toOverSpec.map χ ≫ P hπ := by
   rw [← ιG_P, ← Functor.map_comp_assoc, liftG_fac]
 
 /-- A morphism from an analytic space to the glued space is determined by its composite to
 `Y`. -/
-lemma hom_ext_G (hU : ⨆ i, U i = ⊤) {Z : AnalyticSpace.{0}} {φ ψ : Z ⟶ G hπ}
+lemma hom_ext_G (hU : ⨆ i, U i = ⊤) {Z : AnalyticSpace.{u}} {φ ψ : Z ⟶ G hπ}
     (e : toOverSpec.map φ ≫ P hπ = toOverSpec.map ψ ≫ P hπ) : φ = ψ := by
   let O : ι → Z.Opens := fun i ↦ (Opens.map (toOverSpec.map φ ≫ P hπ).left.base).obj (U i)
   refine hom_ext_of_opens O (exists_mem_of_iSup_eq_top hU (toOverSpec.map φ ≫ P hπ)) fun i ↦ ?_
@@ -332,7 +334,7 @@ lemma hom_ext_G (hU : ⨆ i, U i = ⊤) {Z : AnalyticSpace.{0}} {φ ψ : Z ⟶ G
   rw [← liftG_fac hπ i _ h1, ← liftG_fac hπ i _ h2, this]
 section Lift
 
-variable {Z : AnalyticSpace.{0}} (f : toOverSpec.obj Z ⟶ Y)
+variable {Z : AnalyticSpace.{u}} (f : toOverSpec.obj Z ⟶ Y)
 
 omit hπ in
 variable (U) in
@@ -392,9 +394,10 @@ theorem isAnalytification_P (hU : ⨆ i, U i = ⊤) : IsAnalytification (P hπ) 
 end GlueAnalytification
 
 /-- **Having an analytification is local on `Y`.** -/
-theorem rightAdjointObjIsDefined_of_iSup_eq_top (Y : Over specℂ) {ι : Type} (U : ι → Opens Y.left)
-    (hU : ⨆ i, U i = ⊤) (h : ∀ i, toOverSpec.rightAdjointObjIsDefined (overRestrict Y (U i))) :
-    toOverSpec.rightAdjointObjIsDefined Y := by
+theorem rightAdjointObjIsDefined_of_iSup_eq_top (Y : Over specℂ.{u}) {ι : Type u}
+    (U : ι → Opens Y.left) (hU : ⨆ i, U i = ⊤)
+    (h : ∀ i, toOverSpec.{u}.rightAdjointObjIsDefined (overRestrict Y (U i))) :
+    toOverSpec.{u}.rightAdjointObjIsDefined Y := by
   choose W π hπ using fun i ↦ exists_isAnalytification (h i)
   exact (GlueAnalytification.isAnalytification_P hπ hU).rightAdjointObjIsDefined
 

@@ -27,6 +27,10 @@ The functor itself is Mathlib's partial right adjoint of
 `ComplexAnalytic.AnalyticSpace.toOverSpec`, restricted along the inclusion of the schemes
 locally of finite type.
 
+Everything is universe polymorphic: `ComplexAnalytic.SchemeLFTℂ.{u}` is the category of schemes
+in universe `u` locally of finite type over `ComplexAnalytic.Specℂ.{u} = Spec (ULift.{u} ℂ)`, and
+the analytification takes values in `AnalyticSpace.{u}`.
+
 ## Main definitions
 
 - `ComplexAnalytic.SchemeLFTℂ`: the category of schemes locally of finite type over `ℂ`.
@@ -47,36 +51,41 @@ locally of finite type.
 
 open CategoryTheory Opposite AlgebraicGeometry TopologicalSpace
 
+universe u
+
 namespace ComplexAnalytic
 
 open AnalyticSpace
 
+/-- `Spec ℂ` as a scheme in universe `u`: the spectrum of `ULift.{u} ℂ`. -/
+noncomputable abbrev Specℂ : Scheme.{u} := Spec (CommRingCat.of (ULift.{u} ℂ))
+
 /-- The property of a scheme over `ℂ` of being locally of finite type. -/
-def locallyOfFiniteTypeℂ : ObjectProperty (Over (Spec (CommRingCat.of ℂ))) :=
+def locallyOfFiniteTypeℂ : ObjectProperty (Over (Specℂ.{u})) :=
   fun X ↦ LocallyOfFiniteType X.hom
 
 /-- **The category of schemes locally of finite type over `ℂ`**, as a full subcategory of the
 schemes over `Spec ℂ`. -/
-abbrev SchemeLFTℂ : Type 1 := locallyOfFiniteTypeℂ.FullSubcategory
+abbrev SchemeLFTℂ : Type (u + 1) := locallyOfFiniteTypeℂ.FullSubcategory
 
 /-- A scheme over `Spec ℂ`, as a locally ringed space over `Spec ℂ`. -/
-noncomputable def schemeToOverSpec : Over (Spec (CommRingCat.of ℂ)) ⥤ Over specℂ :=
+noncomputable def schemeToOverSpec : Over (Specℂ.{u}) ⥤ Over specℂ :=
   Over.post Scheme.forgetToLocallyRingedSpace
 
 @[simp]
-lemma schemeToOverSpec_obj_left (X : Over (Spec (CommRingCat.of ℂ))) :
+lemma schemeToOverSpec_obj_left (X : Over (Specℂ.{u})) :
     (schemeToOverSpec.obj X).left = X.left.toLocallyRingedSpace := rfl
 
 @[simp]
-lemma schemeToOverSpec_obj_hom (X : Over (Spec (CommRingCat.of ℂ))) :
+lemma schemeToOverSpec_obj_hom (X : Over (Specℂ.{u})) :
     (schemeToOverSpec.obj X).hom = X.hom.toLRSHom := rfl
 
 @[simp]
-lemma schemeToOverSpec_map_left {X Y : Over (Spec (CommRingCat.of ℂ))} (f : X ⟶ Y) :
+lemma schemeToOverSpec_map_left {X Y : Over (Specℂ.{u})} (f : X ⟶ Y) :
     (schemeToOverSpec.map f).left = f.left.toLRSHom := rfl
 
 /-- **A scheme locally of finite type over `ℂ` has an analytification.** -/
-theorem rightAdjointObjIsDefined_schemeToOverSpec (X : Over (Spec (CommRingCat.of ℂ)))
+theorem rightAdjointObjIsDefined_schemeToOverSpec (X : Over (Specℂ.{u}))
     (hX : LocallyOfFiniteType X.hom) :
     toOverSpec.rightAdjointObjIsDefined (schemeToOverSpec.obj X) := by
   let 𝒰 := X.left.affineCover
@@ -92,7 +101,7 @@ theorem rightAdjointObjIsDefined_schemeToOverSpec (X : Over (Spec (CommRingCat.o
     exact Opens.mem_iSup.2 ⟨i, y, rfl⟩
   · refine rightAdjointObjIsDefined_of_iso (isoOverRestrictOfIsOpenImmersion (j i)) ?_
     -- the member is affine, and its structure morphism is `Spec.map φ` up to `isoSpec`
-    let g : Spec Γ(𝒰.X i, ⊤) ⟶ Spec (CommRingCat.of ℂ) := (𝒰.X i).isoSpec.inv ≫ 𝒰.f i ≫ X.hom
+    let g : Spec Γ(𝒰.X i, ⊤) ⟶ Specℂ.{u} := (𝒰.X i).isoSpec.inv ≫ 𝒰.f i ≫ X.hom
     have hg : LocallyOfFiniteType g := by
       haveI := hX
       dsimp [g]; infer_instance
@@ -116,22 +125,22 @@ noncomputable def schemeToPartialRightAdjointSource :
 
 /-- **The analytification functor** from schemes locally of finite type over `ℂ` to complex
 analytic spaces. -/
-noncomputable def analytification : SchemeLFTℂ ⥤ AnalyticSpace.{0} :=
+noncomputable def analytification : SchemeLFTℂ ⥤ AnalyticSpace.{u} :=
   schemeToPartialRightAdjointSource ⋙ toOverSpec.partialRightAdjoint
 
 /-- **The functor of points of a scheme on complex analytic spaces**: `X` goes to the presheaf
 `Z ↦ Hom_ℂ(Z, X)` of morphisms of locally ringed spaces over `Spec ℂ`. -/
-noncomputable def schemePoints : SchemeLFTℂ ⥤ AnalyticSpace.{0}ᵒᵖ ⥤ Type :=
+noncomputable def schemePoints : SchemeLFTℂ ⥤ AnalyticSpace.{u}ᵒᵖ ⥤ Type u :=
   locallyOfFiniteTypeℂ.ι ⋙ schemeToOverSpec ⋙ yoneda ⋙
     (Functor.whiskeringLeft _ _ _).obj toOverSpec.op
 
 @[simp]
-lemma schemePoints_obj_obj (X : SchemeLFTℂ) (Z : AnalyticSpace.{0}ᵒᵖ) :
+lemma schemePoints_obj_obj (X : SchemeLFTℂ) (Z : AnalyticSpace.{u}ᵒᵖ) :
     (schemePoints.obj X).obj Z = (toOverSpec.obj Z.unop ⟶ schemeToOverSpec.obj X.obj) := rfl
 
 /-- **The universal property of the analytification**: morphisms `Z ⟶ X^an` of complex analytic
 spaces are morphisms `Z ⟶ X` of locally ringed spaces over `Spec ℂ`. -/
-noncomputable def analytificationHomEquiv (Z : AnalyticSpace.{0}) (X : SchemeLFTℂ) :
+noncomputable def analytificationHomEquiv (Z : AnalyticSpace.{u}) (X : SchemeLFTℂ) :
     (Z ⟶ analytification.obj X) ≃ (toOverSpec.obj Z ⟶ schemeToOverSpec.obj X.obj) :=
   toOverSpec.partialRightAdjointHomEquiv (Y := schemeToPartialRightAdjointSource.obj X)
 
@@ -140,7 +149,7 @@ noncomputable def analytificationπ (X : SchemeLFTℂ) :
     toOverSpec.obj (analytification.obj X) ⟶ schemeToOverSpec.obj X.obj :=
   analytificationHomEquiv _ X (𝟙 _)
 
-lemma analytificationHomEquiv_apply {Z : AnalyticSpace.{0}} {X : SchemeLFTℂ}
+lemma analytificationHomEquiv_apply {Z : AnalyticSpace.{u}} {X : SchemeLFTℂ}
     (φ : Z ⟶ analytification.obj X) :
     analytificationHomEquiv Z X φ = toOverSpec.map φ ≫ analytificationπ X := by
   have := toOverSpec.partialRightAdjointHomEquiv_comp

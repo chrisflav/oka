@@ -17,6 +17,8 @@ Consequently the domain of the analytification is closed under open immersions.
 
 open CategoryTheory Opposite AlgebraicGeometry TopologicalSpace Topology
 
+universe u
+
 namespace ComplexAnalytic
 
 open AnalyticSpace
@@ -33,7 +35,7 @@ noncomputable def overRestrictι (Y : Over specℂ) (U : Opens Y.left) : overRes
 lemma overRestrictι_left (Y : Over specℂ) (U : Opens Y.left) :
     (overRestrictι Y U).left = Y.left.ofRestrict U.isOpenEmbedding := rfl
 
-variable {Y : Over specℂ} {W : AnalyticSpace.{0}}
+variable {Y : Over specℂ} {W : AnalyticSpace.{u}}
 
 /-- The preimage of an open of `Y` in `W`. -/
 noncomputable abbrev preimageOpens (π : toOverSpec.obj W ⟶ Y) (U : Opens Y.left) : W.Opens :=

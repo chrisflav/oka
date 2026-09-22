@@ -754,7 +754,8 @@ coherence statement for arbitrary complex analytic spaces:
   (`Oka/Analytification/Scheme.lean`). The universal property is
   `ComplexAnalytic.analytificationHomEquiv`, the comparison morphism is
   `ComplexAnalytic.analytificationπ`, and `ComplexAnalytic.analytificationCompYonedaIso` says the
-  functor represents the functor of points `ComplexAnalytic.schemePoints`, naturally in `X`. The
+  functor represents the functor of points `ComplexAnalytic.schemePoints`, naturally in `X`. It is
+  universe polymorphic, the base in universe `u` being `Spec (ULift.{u} ℂ)`. The
   functor itself is Mathlib's `CategoryTheory.Functor.partialRightAdjoint` of
   `ComplexAnalytic.AnalyticSpace.toOverSpec` (`Oka/Analytification/OverSpec.lean`), so what is
   proved is that every such `X` lies in its domain, by dévissage: the spectrum of a `ℂ`-algebra
