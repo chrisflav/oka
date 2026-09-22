@@ -135,6 +135,7 @@ import Oka.Analytification.CrossMemberDatumGlue
 import Oka.Analytification.CrossMemberGlue
 import Oka.Analytification.DiagonalIndependence
 import Oka.Analytification.DistinguishedOpen
+import Oka.Analytification.DistinguishedOpenCover
 import Oka.Analytification.DistinguishedOpenPullback
 import Oka.Analytification.FGAlgFinite
 import Oka.Analytification.Flatness

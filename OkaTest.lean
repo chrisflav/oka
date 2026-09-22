@@ -39,6 +39,7 @@ import OkaTest.CoveringSpace
 import OkaTest.CrossMemberGlue
 import OkaTest.CutOutQuotient
 import OkaTest.CutOutRestrict
+import OkaTest.DistinguishedOpenCover
 import OkaTest.DistinguishedOpenPullback
 import OkaTest.DividedDifference
 import OkaTest.EpiIsLocallySurjective

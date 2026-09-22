@@ -6392,3 +6392,65 @@ info: 'ComplexAnalytic.isFinite_analytificationFGAlg_map_of_isFinite_specMap' de
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.isFinite_analytificationFGAlg_map_of_isFinite_specMap
+
+/-! ### A unit-ideal family is a cover, and local isomorphism descends along it
+
+`Oka/Analytification/DistinguishedOpenCover.lean` turns an algebraic covering condition — the
+classes of a family of polynomials generate the unit ideal of the presented algebra — into a
+`TopologicalSpace.IsOpenCover` of `X^an` by distinguished opens, and composes that with
+`Oka/AnalyticSpace/LocalAtSource.lean` to get descent of
+`ComplexAnalytic.AnalyticSpace.IsLocalIso` along such a family.
+
+**The guard is a check that the covering costs no axiom the ambient development does not already
+carry**, and the three below are the three every theorem on this line reports. **The
+`Classical.choice` does not come from the family being arbitrary**: the covering proof eliminates
+no existential of its own — it is a `by_contra` on a membership, and the span hypothesis is
+consumed by a rewrite — and the source-local descent it feeds reports the same three.
+
+**The `iff` form carries no proof of its own** — its forward direction is
+`ComplexAnalytic.AnalyticSpace.isLocalIso_ofRestrict` and
+`ComplexAnalytic.AnalyticSpace.isLocalIso_comp` read through
+`ComplexAnalytic.localisationIso_hom_ofRestrict` — and it is guarded because a `#print axioms` of
+a theorem does not reach a theorem stated from it.
+
+**Nothing here produces the hypothesis.** The family is given, and the route in taxis #2178 that
+would produce one from étaleness is not started in this repository, so no guard in this section
+is evidence about it.
+
+**The fourth guard is for a definition this file had never reached.**
+`Oka/Analytification/DistinguishedOpenCover.lean`'s `## Main results` is the first place anywhere
+in this repository that advertises `ComplexAnalytic.localisationProj` under that heading, and
+`scripts/guard_coverage.py` counts an advertised declaration nothing guards; its projection is
+what the descent theorem's hypothesis is stated at, so the guard belongs with that theorem rather
+than with the section on `ComplexAnalytic.localisationIso` above, where the definition is made.
+
+**Named and not located**: a section appended at the end of this file cannot say which section is
+above it and stay true, since the next branch appends between them. -/
+
+/--
+info: 'ComplexAnalytic.localisationProj' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.localisationProj
+
+/--
+info: 'ComplexAnalytic.isOpenCover_localisationOpen' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isOpenCover_localisationOpen
+
+/--
+info: 'ComplexAnalytic.isLocalIso_of_localisationProj_comp' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isLocalIso_of_localisationProj_comp
+
+/--
+info: 'ComplexAnalytic.isLocalIso_iff_localisationProj_comp' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isLocalIso_iff_localisationProj_comp
