@@ -87,24 +87,31 @@ theorem IsAnalytification.restrict {π : toOverSpec.obj W ⟶ Y} (h : IsAnalytif
     rw [Category.assoc, restrictπ_comp, ← Category.assoc, ← Functor.map_comp, liftOpen_fac,
       h.lift_fac]
 
+/-- The open of `Y` which is the range of an open immersion `j : U ⟶ Y`. -/
+noncomputable def opensRangeOver {U Y : Over specℂ} (j : U ⟶ Y)
+    [LocallyRingedSpace.IsOpenImmersion j.left] : Opens Y.left :=
+  ⟨Set.range j.left.base,
+    (PresheafedSpace.IsOpenImmersion.base_open (f := j.left.toHom)).isOpenMap.isOpen_range⟩
+
+/-- **The source of an open immersion is the open subspace on its range**, over `Spec ℂ`. -/
+noncomputable def isoOverRestrictOfIsOpenImmersion {U Y : Over specℂ} (j : U ⟶ Y)
+    [LocallyRingedSpace.IsOpenImmersion j.left] : U ≅ overRestrict Y (opensRangeOver j) :=
+  have hV := LocallyRingedSpace.isOpenImmersion_ofRestrict Y.left (opensRangeOver j)
+  have hr : Set.range j.left.base =
+      Set.range (Y.left.ofRestrict (opensRangeOver j).isOpenEmbedding).base := by
+    rw [LocallyRingedSpace.range_ofRestrict]; rfl
+  Over.isoMk (@LocallyRingedSpace.IsOpenImmersion.isoOfRangeEq _ _ _ _ _ _ hV hr) (by
+    change _ ≫ Y.left.ofRestrict (opensRangeOver j).isOpenEmbedding ≫ Y.hom = _
+    exact (Category.assoc _ _ _).symm.trans
+      ((@LocallyRingedSpace.IsOpenImmersion.isoOfRangeEq_hom_fac _ _ _ _ _ _ hV hr =≫
+        Y.hom).trans (Over.w j)))
+
 /-- **The domain of the analytification is closed under open immersions.** -/
 theorem rightAdjointObjIsDefined_of_isOpenImmersion {U Y : Over specℂ} (j : U ⟶ Y)
     [LocallyRingedSpace.IsOpenImmersion j.left] (h : toOverSpec.rightAdjointObjIsDefined Y) :
     toOverSpec.rightAdjointObjIsDefined U := by
-  have hj : IsOpenEmbedding j.left.base :=
-    PresheafedSpace.IsOpenImmersion.base_open (f := j.left.toHom)
-  let V : Opens Y.left := ⟨Set.range j.left.base, hj.isOpenMap.isOpen_range⟩
-  have hV := LocallyRingedSpace.isOpenImmersion_ofRestrict Y.left V
-  have hr : Set.range j.left.base =
-      Set.range (Y.left.ofRestrict V.isOpenEmbedding).base := by
-    rw [LocallyRingedSpace.range_ofRestrict]; rfl
-  let e : U ≅ overRestrict Y V :=
-    Over.isoMk (@LocallyRingedSpace.IsOpenImmersion.isoOfRangeEq _ _ _ _ _ _ hV hr) (by
-      change _ ≫ Y.left.ofRestrict V.isOpenEmbedding ≫ Y.hom = _
-      exact (Category.assoc _ _ _).symm.trans
-        ((@LocallyRingedSpace.IsOpenImmersion.isoOfRangeEq_hom_fac _ _ _ _ _ _ hV hr =≫
-          Y.hom).trans (Over.w j)))
   obtain ⟨W, π, hπ⟩ := exists_isAnalytification h
-  exact rightAdjointObjIsDefined_of_iso e.symm (hπ.restrict V).rightAdjointObjIsDefined
+  exact rightAdjointObjIsDefined_of_iso (isoOverRestrictOfIsOpenImmersion j).symm
+    (hπ.restrict _).rightAdjointObjIsDefined
 
 end ComplexAnalytic
