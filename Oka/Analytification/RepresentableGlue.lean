@@ -136,7 +136,7 @@ lemma ofRestrict_r (i : ι) (O : (W i).Opens) :
 /-- The transition morphism `W i|V i j ⟶ W j|V j i`, compatible with the maps to `Y`. -/
 noncomputable def t (i j : ι) : (W i).restrict (V π i j) ⟶ (W j).restrict (V π j i) :=
   liftV hπ j (V π j i) (r π i (V π i j)) (fun z ↦ z.2) (fun z ↦ by
-    show (p π j).left.base _ ∈ U i
+    change (p π j).left.base _ ∈ U i
     rw [liftW_base]
     exact p_mem π i z.1)
 
@@ -150,10 +150,10 @@ noncomputable def t' (i j k : ι) :
     (W i).restrict (V π i j ⊓ V π i k) ⟶ (W j).restrict (V π j k ⊓ V π j i) :=
   liftV hπ j (V π j k ⊓ V π j i) (r π i (V π i j ⊓ V π i k)) (fun z ↦ z.2.1) (fun z ↦ by
     constructor
-    · show (p π j).left.base _ ∈ U k
+    · change (p π j).left.base _ ∈ U k
       rw [liftW_base]
       exact z.2.2
-    · show (p π j).left.base _ ∈ U i
+    · change (p π j).left.base _ ∈ U i
       rw [liftW_base]
       exact p_mem π i z.1)
 
@@ -354,7 +354,7 @@ lemma lam_compat (i j : ι) :
       Z.restrictLE (inf_le_right : O U f i ⊓ O U f j ≤ O U f j) ≫ lam hπ f j ≫ ιG hπ j := by
   let μ := liftV hπ i (V π i j) (toOverSpec.map (Z.ofRestrict (O U f i ⊓ O U f j)) ≫ f)
     (fun z ↦ z.2.1) (fun z ↦ by
-      show (p π i).left.base _ ∈ U j
+      change (p π i).left.base _ ∈ U j
       rw [liftW_base]
       exact z.2.2)
   have hμ : toOverSpec.map μ ≫ r π i (V π i j) =
