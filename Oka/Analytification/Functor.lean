@@ -81,6 +81,12 @@ functor would be a definition nothing can be computed from.
 - `ComplexAnalytic.analytificationFGAlgObjIso_hom`: the comparison isomorphism is the functor
   applied to the inverse of the unit — the only content in it, and what lets a consumer compose
   with it.
+- `ComplexAnalytic.analytificationFGAlgObjIso_naturality`: **the comparison isomorphism is
+  natural.** This is what a consumer holding a *morphism* needs, and the isomorphism above cannot
+  give it: evaluating a natural isomorphism at one object forgets exactly the square.
+- `ComplexAnalytic.toFGAlg_comp_analytificationFGAlg_map`: **the functor's morphism at a
+  presentation is the presentation-level analytification conjugated by that isomorphism**, which
+  is what any property stable under composing with isomorphisms travels across.
 - `ComplexAnalytic.Presentation.isoOfAlgEquiv_algEquivOfIso` and
   `ComplexAnalytic.Presentation.algEquivOfIso_isoOfAlgEquiv`: **the two constructions above are
   mutually inverse**, both by `rfl`. The first is the one on a consumer's path: a caller who
@@ -423,6 +429,52 @@ theorem analytificationFGAlgObjIso_hom (P : Presentation.{u}) :
     Functor.leftUnitor_hom_app]
   refine (Category.id_comp (obj := AnalyticSpace.{u}) _).trans
     (Category.comp_id (obj := AnalyticSpace.{u}) _)
+
+/-- **The comparison isomorphism is natural**: the square over a morphism of presentations
+commutes.
+
+`ComplexAnalytic.analytificationFGAlgObjIso` compares the two constructions one object at a time,
+and that is all an object-level consumer needs.  A consumer holding a *morphism* needs this, and
+the two are not interchangeable: the object isomorphism is
+`ComplexAnalytic.analytificationFGAlgCompIso` evaluated at one presentation, and evaluating a
+natural isomorphism forgets exactly the square.  So a statement about
+`(toFGAlg ⋙ analytificationFGAlg).map` that cites only the object isomorphism has named an
+ingredient that cannot prove it.
+
+The proof is `CategoryTheory.NatTrans.naturality` and nothing else; what this declaration
+contributes is the statement, in the vocabulary of the object isomorphism and of
+`ComplexAnalytic.analytificationMap`, rather than of the natural isomorphism a consumer would
+otherwise have to unfold to.
+
+**The right-hand factor is written `ComplexAnalytic.analytificationMap` and not
+`analytificationFunctor.map`**, which is not cosmetic.  The codomain of
+`(analytificationFGAlgObjIso P).hom` is spelled `ComplexAnalytic.AnalyticSpace.analytification`,
+the domain of `analytificationFunctor.map` is spelled `analytificationFunctor.obj`, and the two
+are definitionally but not syntactically equal — so the second spelling puts a different implicit
+argument into any class applied to the composite, and instance search, which runs at `instances`
+transparency, will not unfold either one to the other. -/
+theorem analytificationFGAlgObjIso_naturality {P Q : Presentation.{u}} (ψ : P ⟶ Q) :
+    (toFGAlg.{u} ⋙ analytificationFGAlg.{u}).map ψ ≫ (analytificationFGAlgObjIso.{u} Q).hom =
+      (analytificationFGAlgObjIso.{u} P).hom ≫ analytificationMap.{u} ψ :=
+  analytificationFGAlgCompIso.{u}.hom.naturality ψ
+
+/-- **The functor on algebras, read at a presentation, is the presentation-level analytification
+conjugated by the comparison isomorphism.**
+
+This is `ComplexAnalytic.analytificationFGAlgObjIso_naturality` solved for the morphism, and it is
+the form a consumer wants: every property of `ComplexAnalytic.analytificationMap` that is stable
+under composing with isomorphisms transfers to `(toFGAlg ⋙ analytificationFGAlg).map` by
+rewriting with it.  `Oka/Analytification/FGAlgFinite.lean` reads finiteness across it; nothing
+here is about finiteness, and nothing here is about the property.
+
+The composite is written left-associated because that is what
+`CategoryTheory.Iso.eq_comp_inv` produces, and the shape a rewrite leaves behind is part of what a
+consumer has to work with. -/
+theorem toFGAlg_comp_analytificationFGAlg_map {P Q : Presentation.{u}} (ψ : P ⟶ Q) :
+    (toFGAlg.{u} ⋙ analytificationFGAlg.{u}).map ψ =
+      ((analytificationFGAlgObjIso.{u} P).hom ≫ analytificationMap.{u} ψ) ≫
+        (analytificationFGAlgObjIso.{u} Q).inv :=
+  (Iso.eq_comp_inv _).mpr (analytificationFGAlgObjIso_naturality.{u} ψ)
 
 end
 

@@ -135,6 +135,7 @@ import Oka.Analytification.CrossMemberGlue
 import Oka.Analytification.DiagonalIndependence
 import Oka.Analytification.DistinguishedOpen
 import Oka.Analytification.DistinguishedOpenPullback
+import Oka.Analytification.FGAlgFinite
 import Oka.Analytification.Flatness
 import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor

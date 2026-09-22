@@ -56,9 +56,29 @@ change to the theorem it wraps.
   `{u}`-collapsing job `Oka/Analytification/ModuleFiniteAnalytification.lean` names, and it is
   untouched — that file's *No `AlgebraicGeometry.Scheme`* bullet is about its own statement and
   stays true of it.
-* **No choice of presentation.** The theorem is read at a `ComplexAnalytic.PresHom` in hand.
-  Reading it at `ComplexAnalytic.analytificationFGAlg`, where the presentation is gone from the
-  statement, needs `ComplexAnalytic.analytificationFGAlgObjIso` and is not done below.
+* **No choice of presentation, and the functor reading is done elsewhere and not below.** The
+  theorem is read at a `ComplexAnalytic.PresHom` in hand. Read with the morphism the functor
+  produces, at `(toFGAlg ⋙ analytificationFGAlg).map`, it is
+  `Oka/Analytification/FGAlgFinite.lean` — the presentation still indexes the objects there, and
+  the hypothesis is the one taken below. **What that reading turns on is the *naturality* of the
+  comparison, `ComplexAnalytic.analytificationFGAlgObjIso_naturality`, and not
+  `ComplexAnalytic.analytificationFGAlgObjIso`**: the object isomorphism is that natural
+  isomorphism evaluated at one presentation, and evaluating forgets exactly the square that a
+  statement about a *morphism* needs.
+  **This bullet read *Reading it at `ComplexAnalytic.analytificationFGAlg`, where the presentation
+  is gone from the statement, needs `ComplexAnalytic.analytificationFGAlgObjIso` and is not done
+  below* until 2026-09-22.** The clause naming that ingredient is *corrected* rather than
+  retired — it was the wrong one for either reading on the day it was written, and no reader who
+  followed it would have reached the square.
+* **Reading it with no presentation anywhere in the statement is still absent**, and that is what
+  the retired wording was reaching for. For an arbitrary morphism `f` of finitely generated
+  `ℂ`-algebras the conclusion is already `analytificationFunctor.map (inverse.map f)` by
+  definition, since `ComplexAnalytic.analytificationFGAlg` *is*
+  `toFGAlg.asEquivalence.inverse ⋙ analytificationFunctor`, so the whole job is in the
+  hypothesis: carrying `RingHom.Finite` across the equivalence's counit, which
+  `ComplexAnalytic.exists_presentation` builds from `Classical.choice`, with
+  `RingHom.finite_respectsIso` as the Mathlib side of it. Nothing here or in
+  `Oka/Analytification/FGAlgFinite.lean` is evidence about its size.
 -/
 
 open CategoryTheory AlgebraicGeometry

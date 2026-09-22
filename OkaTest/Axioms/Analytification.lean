@@ -6321,3 +6321,48 @@ info: 'ComplexAnalytic.isFinite_analytificationMap_of_isFinite_specMap' depends 
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.isFinite_analytificationMap_of_isFinite_specMap
+
+/-! ### The comparison with the functor on algebras is natural, and the finite half read across it
+
+`Oka/Analytification/Functor.lean` compares `ComplexAnalytic.analytificationFGAlg` with the
+presentation-level construction one object at a time. The two guards below are the *square* and
+the form of it a consumer rewrites with; **the square is `CategoryTheory.NatTrans.naturality` and
+nothing else**, so its guard is a check that stating it in the object isomorphism's vocabulary
+introduces nothing, and the same three axioms are what the object comparison already carries.
+
+**The square's only consumer is the conjugated form beside it**, in its own file, and the only
+place the conjugated form is rewritten with is `Oka/Analytification/FGAlgFinite.lean`. That is
+where the two guards after those come from: the finite half read at
+`(toFGAlg ⋙ analytificationFGAlg).map`, with each of the two hypotheses the presentation-level
+theorems take. **The interest of those two is that they add nothing** — the work is the theorem
+in `Oka/Analytification/ModuleFiniteAnalytification.lean`, guarded above, and what is around it
+is two isomorphisms. **Named and not located**: a section appended at the end of this file cannot
+say which section is above it and stay true, since the next branch appends between them. -/
+
+/--
+info: 'ComplexAnalytic.analytificationFGAlgObjIso_naturality' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.analytificationFGAlgObjIso_naturality
+
+/--
+info: 'ComplexAnalytic.toFGAlg_comp_analytificationFGAlg_map' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.toFGAlg_comp_analytificationFGAlg_map
+
+/--
+info: 'ComplexAnalytic.isFinite_toFGAlg_comp_analytificationFGAlg_map_of_finite' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFinite_toFGAlg_comp_analytificationFGAlg_map_of_finite
+
+/--
+info: 'ComplexAnalytic.isFinite_toFGAlg_comp_analytificationFGAlg_map_of_isFinite_specMap' depends
+  on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFinite_toFGAlg_comp_analytificationFGAlg_map_of_isFinite_specMap
