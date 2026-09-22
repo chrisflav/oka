@@ -6454,3 +6454,113 @@ info: 'ComplexAnalytic.isLocalIso_iff_localisationProj_comp' depends on axioms:
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.isLocalIso_iff_localisationProj_comp
+
+/-! ### The analytification functor on schemes locally of finite type over `ℂ`
+
+`Oka/Analytification/Scheme.lean` and the dévissage it rests on: the affine case, open subspaces,
+gluing along an open cover, and the comparison with the zero locus of a presentation. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.toOverSpec' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.toOverSpec
+
+/--
+info: 'ComplexAnalytic.rightAdjointObjIsDefined_specOver' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.rightAdjointObjIsDefined_specOver
+
+/--
+info: 'ComplexAnalytic.isAnalytification_analytificationToSpec' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isAnalytification_analytificationToSpec
+
+/--
+info: 'ComplexAnalytic.IsAnalytification.restrict' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.IsAnalytification.restrict
+
+/--
+info: 'ComplexAnalytic.rightAdjointObjIsDefined_of_isOpenImmersion' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.rightAdjointObjIsDefined_of_isOpenImmersion
+
+/--
+info: 'AlgebraicGeometry.LocallyRingedSpace.GlueData.MkCore.toGlueData' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms AlgebraicGeometry.LocallyRingedSpace.GlueData.MkCore.toGlueData
+
+/--
+info: 'ComplexAnalytic.rightAdjointObjIsDefined_of_iSup_eq_top' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.rightAdjointObjIsDefined_of_iSup_eq_top
+
+/--
+info: 'ComplexAnalytic.rightAdjointObjIsDefined_schemeToOverSpec' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.rightAdjointObjIsDefined_schemeToOverSpec
+
+/--
+info: 'ComplexAnalytic.analytification' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.analytification
+
+/--
+info: 'ComplexAnalytic.analytificationHomEquiv' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.analytificationHomEquiv
+
+/--
+info: 'ComplexAnalytic.isAnalytification_analytificationπ' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isAnalytification_analytificationπ
+
+/--
+info: 'ComplexAnalytic.analytificationπ_naturality' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.analytificationπ_naturality
+
+/--
+info: 'ComplexAnalytic.analytificationRepresentableBy' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.analytificationRepresentableBy
+
+/--
+info: 'ComplexAnalytic.analytificationCompYonedaIso' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.analytificationCompYonedaIso
+
+/--
+info: 'ComplexAnalytic.analytificationSpecIso' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.analytificationSpecIso

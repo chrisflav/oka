@@ -11,6 +11,7 @@ import OkaTest.AnalytificationExact
 import OkaTest.AnalytificationFlatness
 import OkaTest.AnalytificationFunctor
 import OkaTest.AnalytificationLocalRing
+import OkaTest.AnalytificationScheme
 import OkaTest.AnalytificationSheaf
 import OkaTest.AnalytificationSheafUnit
 import OkaTest.AnalytificationStalk

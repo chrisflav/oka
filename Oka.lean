@@ -152,6 +152,7 @@ import Oka.Analytification.LocalisationIndependence
 import Oka.Analytification.ModuleFiniteAnalytification
 import Oka.Analytification.MonicHypersurface
 import Oka.Analytification.OpenBaseFiniteness
+import Oka.Analytification.OverSpec
 import Oka.Analytification.Presentation
 import Oka.Analytification.PresentationFlatness
 import Oka.Analytification.PresentationStalk
@@ -166,6 +167,11 @@ import Oka.Analytification.RefineDatumToBase
 import Oka.Analytification.RefineDatumTransition
 import Oka.Analytification.RefineDatumUnitFamily
 import Oka.Analytification.RefineDatumWitness
+import Oka.Analytification.RepresentableAffine
+import Oka.Analytification.RepresentableGlue
+import Oka.Analytification.RepresentableOpen
+import Oka.Analytification.Scheme
+import Oka.Analytification.SchemeAffine
 import Oka.Analytification.Sheaf
 import Oka.Analytification.SheafCoherent
 import Oka.Analytification.SpecAffineCover
@@ -215,6 +221,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
 import Oka.Geometry.RingedSpace.OpenImmersion
 import Oka.Geometry.RingedSpace.PresheafedSpace.Double
 import Oka.Geometry.RingedSpace.PresheafedSpace.Gluing
+import Oka.Geometry.RingedSpace.PresheafedSpace.GluingMkCore
 import Oka.Geometry.RingedSpace.ZeroLocus
 import Oka.GermDerivative
 import Oka.LocalOkaRing
