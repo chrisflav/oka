@@ -6304,3 +6304,20 @@ info: 'ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePr
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_compl
+
+/-! ### A finite morphism of spectra analytifies to a finite morphism
+
+`Oka/Analytification/SpecFiniteAnalytification.lean` reads
+`ComplexAnalytic.isFinite_analytificationMap_of_finite`'s hypothesis on the algebraic side, as
+`AlgebraicGeometry.IsFinite` of the morphism of spectra, through Mathlib's affine criterion for
+that class. **The guard is a check that the wrapper introduces nothing**, which is what a
+one-line corollary of a theorem guarded above most plausibly could: the axioms are the same three
+that theorem's are. **Named and not located**: a section appended at the end of this file cannot
+say which section is above it and stay true, since the next branch appends between them. -/
+
+/--
+info: 'ComplexAnalytic.isFinite_analytificationMap_of_isFinite_specMap' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFinite_analytificationMap_of_isFinite_specMap

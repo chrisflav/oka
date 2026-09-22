@@ -167,6 +167,7 @@ import Oka.Analytification.Sheaf
 import Oka.Analytification.SheafCoherent
 import Oka.Analytification.SpecAffineCover
 import Oka.Analytification.SpecDistinguishedOpen
+import Oka.Analytification.SpecFiniteAnalytification
 import Oka.Analytification.SpecFunctoriality
 import Oka.Analytification.SpecMemberChoice
 import Oka.Analytification.SpecMemberSections
