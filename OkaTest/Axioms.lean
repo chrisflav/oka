@@ -160,6 +160,73 @@ a record, quoted and dated where it stood; the other two sentences were rewritte
 figure at all. **Do not answer this with a checker** — it would have to guess which numbers in a
 docstring are censuses, and `scripts/` has no way to tell.
 
+**A second copy of an exempt figure is the one kind that rots silently and forever, and the
+exemption above is its mechanism rather than an exception to it.** *Exempt* means nobody re-reads
+it: a delta of a push — *this push adds so many backticked occurrences* — cannot be falsified by a
+landing, so no sweep on this board revisits it, and a document that states it twice keeps whichever
+of the two copies the next round happens to be thinking about. **So a measured figure is stated
+once in a document, and every other site that needs it cites the site that states it**; the repair
+for a second copy is to drop the numeral and keep the pointer, and never to synchronise the pair,
+which is the repair that puts the round after next back where this one started. **The pointer to
+copy is `Oka/Topology/Covering/Basic.lean`'s**, whose clause about what the `IsEvenlyCovered`
+namespace holds cites *the count printed in* a named section above it rather than re-deriving it —
+and the numeral it carries beside that pointer is the half this rule asks to drop, which there
+cannot be dropped, the two clauses under it adding to it rather than repeating it. **Argued at
+taxis #2171**, whose live site carried a spelled figure beside the digits that had twice superseded
+it, through four rounds in which two verdicts re-ran the digit copy against a fresh build and
+ticked it — because a verdict here checks a figure against a run, and this defect is a figure that
+disagrees with another figure in the same document, which no verdict form on this board compares.
+
+**The spelled form is what makes it silent, and what makes it silent is the instrument a
+*maintaining* round reaches for.** `git log -S` and `git grep` are digit-keyed, so a round taking a
+numeral from one value to the next cannot see a spelled copy of it, and `git log -S` on the digits
+reports that copy as never having existed. **The census sweeps are not the backstop it would be
+natural to assume they are, and the reason is the opposite of digit-keying: they are word-keyed.**
+Taxis #1685's published `7a` and `7b` are built on an alternation of *spelled* numerals — `two`
+through `forty`, with no digit in it anywhere; #1712's `8a`, `8b` and `8c` are built on that same
+alternation; #1677's six spellings before them are word-form too, its first being where #1685's
+thread classifies *would put three sections*; #1709's class carries no numeral at all — *there is
+not even a numeral to anchor a pattern on*, as its own paragraph below says — and #1721's
+proportion carries none either, **so only three of the five were ever candidates.** What put this
+defect outside those three is two things, both measurable rather than arguable: that alternation
+stops at `forty`, so `fifty-seven` is outside it on its value and not on its spelling; and all
+three are fenced to the guard files and not to the rule file that holds them, let alone to `Oka/`,
+where the site was — #1685 publishes its walk as `os.listdir('OkaTest/Axioms')` and records #1677
+as measured *across the twelve guard files*, and #1712 extends #1685's own patterns. **That fence
+is the standing unanswered question on #1685's and #1712's threads, which sweep owns `Oka/`.**
+**The other two are outside for the clause before this one and for nothing else**: carrying no
+numeral, neither the ceiling nor the fence excludes them, and neither is guard-file-keyed in the
+first place. #1709's raw scan reads `Oka/`, `OkaTest/` and `README.md`, each file as one
+whitespace-normalised string, and its own live site is in `README.md`; #1721's filing was fenced
+to the guard files and **its delivery took the fence off**, which is the correction the paragraph
+above carries and the reason that paragraph is there. **The draft that said all five are
+digit-keyed and the draft that said all five read the guard files and nothing else were each
+refuted by a grader, and by the same thing**: these are instruments built by different hands for
+different classes, so a universal over them is a claim about other issues that nothing here
+measures, and the way to state it is the way it is stated above — quantify over the ones that
+share a mechanism, name them, and give the published artefact behind each.
+**Two instruments that look right do not work, and are recorded so that nobody builds them twice.**
+A phrase key — the content words following the numeral — does not reach #2171's own site at
+`3ebc32f`, the round-12 head of lana-agents/oka#603 and the commit where that site is live, because
+the two copies of one figure share no tail there; a sentence-overlap key does reach it, paired with
+a numeral from another measurement entirely, among some hundreds of sites almost none of which is a
+defect. **Neither headline total is reproducible and both of those properties are**: the two keys
+are described in prose and published as no pattern, and a rebuild of them from that prose returns
+**11** and **375** at that commit where #2171 reports **0** and **363** — so a later reader should
+re-run the property and not the totals. **The one that works keys on the file's own testimony.** A
+supersession narration — `A → B`, *from A to B and then to C* — declares every value of its chain
+but the last dead, and a live assertion of a dead value elsewhere in the same file, in either
+spelling, is a defect by the file's own words; read over comment content alone and restricted to
+chains of three and to values the spelled census reaches, it returns **one** site at that commit
+and it is #2171's, and **none at all** over this tree at the commit this paragraph is written on.
+At chains of two it returns **18** there and **17** here and not one of the two sets is a
+supersession, because `A → B` is how this tree writes a *before and after* and the before column is
+a live figure of its base. **Its blind spot is arithmetic**: a second copy that is the maintained
+figure plus or minus something carries a different value, and no scan keyed on equality reaches
+it. The one site of that shape in this sweep read *five of the other twenty-one* against a
+population of twenty-two stated thirty lines above it in the same file, was found by hand and by
+no scan here, and is repaired with the rest.
+
 **A proportion can be spelled as an adverb, and `most`, `bulk` and `largest` are the three tokens
 that spelling does not carry.** *Mostly*, *largely*, *chiefly* attach to the thing selected rather
 than to the population, so they carry no *of them* and no determiner either; a pattern written from
@@ -1040,7 +1107,7 @@ which at that commit is `81a5d257c8e410db227a6665ed08f64fea08e997`; name one, an
 where the claim is fine enough that a patch release could move it.
 
 * **(a) a quoted instrument, run at that version.** `Oka/Topology/Connected/Clopen.lean` is the
-  worked example and, of the thirty-one sentences the hand pass below leaves in class at
+  worked example and, of the sentences the hand pass below leaves in class at
   `a414f61`, the only one that pins a version at all: *"at `v4.32.0` no statement in Mathlib
   mentions `connectedComponent` together with a disjoint union at all: `grep -rn
   'connectedComponent' Mathlib/ | grep -iE 'sigma|Sum\.|coprod'` returns **nothing**, against

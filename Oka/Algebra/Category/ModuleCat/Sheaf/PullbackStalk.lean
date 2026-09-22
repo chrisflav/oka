@@ -77,7 +77,7 @@ decomposes it as a presheaf pullback followed by sheafification and so would dra
 `git show c6bfc1f:Oka/Algebra/Category/ModuleCat/Sheaf/PullbackStalk.lean` carries the retired
 wording at `:33–36`, wrapped after *in this*. **Both claims are unchanged in substance and only
 their warrant is**, save that *only structural description* is now *the one description that
-decomposes the functor*, because five of the other twenty-one describe it too, which is
+decomposes the functor*, because five of the others describe it too, which is
 the count *Decomposes the functor* above names and glosses one by one.
 
 ## Sheaves of *commutative* rings

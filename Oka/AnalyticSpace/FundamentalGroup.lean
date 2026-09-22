@@ -55,7 +55,7 @@ to neither of the other two**, which is why naming the token here is not a forma
 **At the commit this file is cut from**, `import Oka` brings **5512** modules and `import Oka`
 together with `import Mathlib.CategoryTheory.Galois.Equivalence` brings **5532**: **the cost is
 20**, by a set difference over `Lean.Environment.allImportedModuleNames` in a `run_cmd`, which is
-exact where a transitive walk of `import` lines is an estimate. Fourteen of the twenty are
+exact where a transitive walk of `import` lines is an estimate. Fourteen of them are
 `Mathlib.CategoryTheory.Galois.Action`, `…Galois.Decomposition`, `…Galois.Equivalence`,
 `…Galois.EssSurj`, `…Galois.Examples`, `…Galois.Full`, `…Galois.GaloisObjects`,
 `…Galois.Prorepresentability`, `…Galois.Topology`, `Mathlib.CategoryTheory.Action.Basic`,
@@ -68,9 +68,9 @@ exact where a transitive walk of `import` lines is an estimate. Fourteen of the 
 `Mathlib.Topology.Category.TopCat.Limits.Konig`.
 
 **At the commit that adds this file the same pair of runs gives 5533 and 5533, and the cost is
-zero**, this file having paid it: 5512 plus the twenty plus this module. **A marginal import cost
-is a figure about the importer at a commit and is meaningless without one**, which is why both are
-pinned here and neither is written in the present tense.
+zero**, this file having paid it: 5512 plus the cost above plus this module. **A marginal import
+cost is a figure about the importer at a commit and is meaningless without one**, which is why
+both are pinned here and neither is written in the present tense.
 
 ## Two things a caller has to know, and neither of them announces itself
 

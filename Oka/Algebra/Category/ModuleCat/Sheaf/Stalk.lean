@@ -111,7 +111,7 @@ this is a section of its own and no longer a `## What is not here` bullet.**
 `Oka/Algebra/Category/ModuleCat/Sheaf/Colimits.lean` sits on a mirror path whose Mathlib
 target exists, and the scan says the right exactness is not in that target: so the converse
 cannot be written into `Mathlib/Algebra/Category/ModuleCat/Sheaf/Stalk.lean` until that file
-has landed upstream, and the fifteen below are the evidence that the obstruction is real
+has landed upstream, and the list below is the evidence that the obstruction is real
 rather than an oversight. **This passage read *so
 the converse is a theorem someone has to prove and not a transfer* until 2026-09-22**;
 `git show ef9e5d2:Oka/Algebra/Category/ModuleCat/Sheaf/Stalk.lean` carries it at `:84–85`,
@@ -179,10 +179,10 @@ are on the `PresheafOfModules` side of sheafification
 `PresheafOfModules.toPresheaf_map_sheafificationHomEquiv`,
 `PresheafOfModules.toSheaf_map_sheafificationAdjunction_counit_app`). **Nothing about colimits,
 epimorphisms, homology or right exactness**, which is the verdict stated as a list. The grouping
-is a reading of the fifteen and the fifteen are the measurement; a reader who thinks one of them
+is a reading of that list and the list is the measurement; a reader who thinks one of them
 implies right exactness by a route not seen here should say which.
 
-**Two of the fifteen are written elided, the reason is the column limit, and the elision costs
+**Two of them are written elided, the reason is the column limit, and the elision costs
 a check.** Those two generated instance names are **99** and **100** characters long, so a
 backticked one of them on an indented line cannot fit the 100 columns `linter.style.longLine`
 enforces — the second is over the limit before a backtick is added. Each has exactly one dot,
@@ -198,7 +198,7 @@ without the name: the first is finite limits for the composite of `SheafOfModule
 `CategoryTheory.sheafToPresheaf`, the second finite limits for
 `PresheafOfModules.sheafification` composed with `SheafOfModules.toSheaf`. Both statements are
 `PreservesFiniteLimits` of a composite and neither mentions a colimit, which is the only thing
-the verdict needs of them; the other thirteen are written out and every one is checked.
+the verdict needs of them; the others are written out and every one is checked.
 
 **The control's size depends on which names are counted internal and the verdict does not.** The
 **3044** filters with `Lean.Name.isInternalDetail`; filtering with `Lean.Name.isInternal`
@@ -240,7 +240,7 @@ round 2 changed the verdict, for the reason at the head of this section.**
 `SheafOfModules.stalk_exact_of_exact` was proved here and the converse stopped being absent.
 `git show 34f83e4:Oka/Algebra/Category/ModuleCat/Sheaf/Stalk.lean` carries it at
 `:79–221`, opening *The converse of `SheafOfModules.exact_of_stalk_exact`.* and indented
-two columns as a list item. **Nothing measured in it moved with it**: the scan, the fifteen,
+two columns as a list item. **Nothing measured in it moved with it**: the scan, the list,
 the two controls, both of the records above and the census clause are the landing that wrote
 them, reproduced and not re-taken, and a reader can check that by diffing this section against
 that bullet with the two columns stripped.

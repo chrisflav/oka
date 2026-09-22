@@ -29,8 +29,8 @@ one `lakefile.toml` pins, resolved by `lake-manifest.json` to
 than by a `grep`: over the environment of `import Mathlib` at that rev, exactly **19**
 non-internal declarations have a **type** mentioning the constant `IsSeparatedMap`. **A statement
 of any of the three directions has to mention that constant in its own type**, whatever it is
-called and whatever namespace is open, so the nineteen decide the claim where a name-keyed scan
-would only narrow it; they are, in four groups:
+called and whatever namespace is open, so that enumeration decides the claim where a name-keyed
+scan would only narrow it; they are, in four groups:
 
 * **five characterisations of it** — `isSeparatedMap_iff_nhds`, `isSeparatedMap_iff_disjoint_nhds`,
   `isSeparatedMap_iff_isClosed_diagonal`, `isSeparatedMap_iff_isClosedMap` and
@@ -47,7 +47,7 @@ would only narrow it; they are, in four groups:
 
 **None of the six that conclude it is either composition direction below**, for the reason the
 paragraph on `IsSeparatedMap.comp_left` and `IsSeparatedMap.comp_right` gives, and
-`IsSeparatedMap.pullback` concludes about `Function.Pullback.snd`; and **not one of the nineteen
+`IsSeparatedMap.pullback` concludes about `Function.Pullback.snd`; and **not one of them
 concludes `T2Space` of the source of a separated map**, the only two that write `T2Space` at all
 being `T2Space.isSeparatedMap`, where it is a hypothesis, and the biconditional above, whose
 `IsSeparatedMap` is at a map that forgets its source.
@@ -59,7 +59,7 @@ directions through one of them and mention the constant nowhere — *if the diag
 is closed and `Y` is `T2Space` then `X` is* would serve a consumer perfectly and no scan keyed on
 `IsSeparatedMap` would see it. Of the **35** non-internal declarations of that environment whose
 type mentions `Function.pullbackDiagonal` or `Function.Pullback`, **none** mentions `T2Space`, so
-that route is empty too and the nineteen decide the claim after all.
+that route is empty too and the enumeration above decides the claim after all.
 
 **That opening read *The first three are directions Mathlib lacks; the fourth is a conjunction
 Mathlib forms and does not name, and the difference is worth stating rather than hiding.* until
