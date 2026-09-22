@@ -248,6 +248,7 @@ import Oka.RingTheory.LocalProperties.ProjectiveDimension
 import Oka.RingTheory.LocalRing.ResidueField.Basic
 import Oka.RingTheory.Localization.AtPrime.Basic
 import Oka.RingTheory.Localization.Away.Basic
+import Oka.RingTheory.Localization.Cech
 import Oka.RingTheory.Localization.Module
 import Oka.RingTheory.MvPolynomial.HomogeneousLocalization
 import Oka.RingTheory.MvPolynomial.Ideal
