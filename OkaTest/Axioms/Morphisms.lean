@@ -10873,3 +10873,43 @@ info: 'ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_funda
 #guard_msgs (whitespace := lax) in
 #print axioms
   ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_coprod_iff
+
+/-! ### Being a local isomorphism is local on the source
+
+`Oka/AnalyticSpace/LocalAtSource.lean` covers the **source** of a morphism and concludes that it
+is a local isomorphism, which is the other half of the pair whose target side is
+`Oka/AnalyticSpace/LocalAtTarget.lean`. **The guard is a check that covering the source costs no
+axiom the class does not already carry**, and the three axioms below are the three every theorem
+on this line reports. **The `Classical.choice` among them does not come from the cover**: picking
+a member containing a given point is `TopologicalSpace.IsOpenCover.exists_mem`, an existential
+eliminated into a `Prop`, which is why this section's figures sit beside the target-local
+section's unchanged.
+
+**The `iff` form carries no proof of its own** — its forward direction is
+`ComplexAnalytic.AnalyticSpace.isLocalIso_ofRestrict` and
+`ComplexAnalytic.AnalyticSpace.isLocalIso_comp`, both instances and both guarded elsewhere in this
+file — and it is guarded because a `#print axioms` of a theorem does not reach a theorem stated
+from it, which is the reason the target-local section above gives for its own three `iff` guards.
+
+**Nothing here is a source-local statement for `ComplexAnalytic.AnalyticSpace.IsFinite` or for
+`ComplexAnalytic.AnalyticSpace.IsFiniteEtale`**, and the module's docstring says why it declines
+both rather than refuting either.
+
+**Named and not located**: a section appended at the end of this file cannot say which section is
+above it and stay true, since the next branch appends between them. **Appended as its own
+section**, for the reason the sections above give: a section moved is a conflict for somebody
+else. -/
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isLocalIso_of_isOpenCover_source' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isLocalIso_of_isOpenCover_source
+
+/--
+info: 'ComplexAnalytic.AnalyticSpace.isLocalIso_iff_isOpenCover_source' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.AnalyticSpace.isLocalIso_iff_isOpenCover_source
