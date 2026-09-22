@@ -33,6 +33,7 @@ import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.OpenImmersion
 import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
+import Oka.AlgebraicGeometry.ProjectiveSpace.Points
 import Oka.AlgebraicGeometry.Spec
 import Oka.Analysis.Calculus.Implicit
 import Oka.Analysis.Complex.CoveringMap
@@ -146,7 +147,12 @@ import Oka.Analytification.FGAlgFinite
 import Oka.Analytification.Flatness
 import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor
+import Oka.Analytification.GAGA.AffineSpace
+import Oka.Analytification.GAGA.Liouville
+import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ProjectiveSpace
+import Oka.Analytification.GAGA.ProjectiveSpaceAn
+import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
 import Oka.Analytification.GlueShape
 import Oka.Analytification.Hausdorff
 import Oka.Analytification.HausdorffBase
