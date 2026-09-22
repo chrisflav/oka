@@ -37,7 +37,10 @@ import Oka.AlgebraicGeometry.Spec
 import Oka.Analysis.Calculus.Implicit
 import Oka.Analysis.Complex.CoveringMap
 import Oka.Analysis.Complex.FundamentalGroup
+import Oka.Analytic.DifferentiableTsum
 import Oka.Analytic.DividedDifference
+import Oka.Analytic.Laurent.Basic
+import Oka.Analytic.Laurent.Several
 import Oka.Analytic.ParametricCircleIntegral
 import Oka.AnalyticSpace.AffineProduct
 import Oka.AnalyticSpace.AffineProductOpen
