@@ -6366,3 +6366,29 @@ info: 'ComplexAnalytic.isFinite_toFGAlg_comp_analytificationFGAlg_map_of_isFinit
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.isFinite_toFGAlg_comp_analytificationFGAlg_map_of_isFinite_specMap
+
+/-! ### The finite half with the presentations quantified away
+
+`Oka/Analytification/FGAlgFinite.lean` reads the finite half a third time, at
+`ComplexAnalytic.analytificationFGAlg.map` of an arbitrary morphism of finitely generated
+`ℂ`-algebras, where no presentation appears in the statement at all. **The guard is a check that
+choosing the two presentations introduces nothing beyond what the theorem it transports already
+carries**: `CategoryTheory.Functor.objObjPreimageIso` is essential surjectivity and so
+`ComplexAnalytic.exists_presentation` and so `Classical.choice`, which the transported theorem
+already depends on, so the three axioms are unchanged and the guard says the choice is free of
+anything else. **Named and not located**: a section appended at the end of this file cannot say
+which section is above it and stay true, since the next branch appends between them. -/
+
+/--
+info: 'ComplexAnalytic.isFinite_analytificationFGAlg_map_of_finite' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFinite_analytificationFGAlg_map_of_finite
+
+/--
+info: 'ComplexAnalytic.isFinite_analytificationFGAlg_map_of_isFinite_specMap' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isFinite_analytificationFGAlg_map_of_isFinite_specMap

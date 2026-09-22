@@ -70,15 +70,22 @@ change to the theorem it wraps.
   below* until 2026-09-22.** The clause naming that ingredient is *corrected* rather than
   retired — it was the wrong one for either reading on the day it was written, and no reader who
   followed it would have reached the square.
-* **Reading it with no presentation anywhere in the statement is still absent**, and that is what
-  the retired wording was reaching for. For an arbitrary morphism `f` of finitely generated
-  `ℂ`-algebras the conclusion is already `analytificationFunctor.map (inverse.map f)` by
-  definition, since `ComplexAnalytic.analytificationFGAlg` *is*
-  `toFGAlg.asEquivalence.inverse ⋙ analytificationFunctor`, so the whole job is in the
+* **This bullet opened *Reading it with no presentation anywhere in the statement is still absent*
+  until 2026-09-22**, and that is what the wording retired above it was reaching for. It is now
+  `ComplexAnalytic.isFinite_analytificationFGAlg_map_of_finite`
+  (`Oka/Analytification/FGAlgFinite.lean`), and the reason the bullet gave for it being one job
+  held: for an arbitrary morphism `f` of finitely generated `ℂ`-algebras the conclusion is already
+  `analytificationFunctor.map (inverse.map f)` by definition, since
+  `ComplexAnalytic.analytificationFGAlg` *is*
+  `toFGAlg.asEquivalence.inverse ⋙ analytificationFunctor`, so the whole job was in the
   hypothesis: carrying `RingHom.Finite` across the equivalence's counit, which
-  `ComplexAnalytic.exists_presentation` builds from `Classical.choice`, with
-  `RingHom.finite_respectsIso` as the Mathlib side of it. Nothing here or in
-  `Oka/Analytification/FGAlgFinite.lean` is evidence about its size.
+  `ComplexAnalytic.exists_presentation` builds from `Classical.choice`.
+  **The Mathlib ingredient this bullet named is not the one the proof takes.**
+  `RingHom.finite_respectsIso` is usable and one step too abstract: Mathlib proves it *from*
+  `RingHom.Finite.of_surjective` and composition, and the hypothesis travels across a three-fold
+  composite of algebra maps, which wants those two directly. That is a pointer and not a falsity,
+  and the bullet declined to price the transport — *nothing here … is evidence about its size* —
+  which is the clause that makes this a record rather than a correction.
 -/
 
 open CategoryTheory AlgebraicGeometry
