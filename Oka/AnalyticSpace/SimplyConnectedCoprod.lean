@@ -35,8 +35,9 @@ going from the second to the first is the whole of the middle theorem below.
 ## The prescription the sibling published for this, and why it is not what the proof needs
 
 `Oka/AnalyticSpace/SimplyConnectedCriterion.lean`'s `## What is not here` priced this file, until
-2026-09-20, at one statement: *what it needs and this file does not have is that a connected object
-isomorphic to a finite coproduct of copies of a terminal object has a one-element index type.*
+2026-09-21, at one statement: *what it needs and this file does not have is that a connected
+object isomorphic to a finite coproduct of copies of a terminal object has a one-element index
+type.*
 **That statement is true and is not needed, and nothing below counts the index type.** What is used
 instead is that a *coprojection* is a monomorphism: `CategoryTheory.Limits.MonoCoprod.mono_ι` at
 the `CategoryTheory.Limits.MonoCoprod` instance `Mathlib/CategoryTheory/Galois/Basic.lean` declares

@@ -1492,6 +1492,42 @@ register reaches only the records that do not wrap, so the repair is not one `se
 that forced this question, lana-agents/oka#554, that was **24** records of which **19** are
 line-wise and **5** wrap, and a `sed` on the bare date would have reached `master`'s 43 as well.
 
+**A record whose retired wording was falsified earlier, by a named push, is that same row and
+needs two days rather than one.** The numeral is still the landing day — one push cannot land on
+two days — and the push that falsified the wording is a different push with a date of its own that
+a reader can `git show`. **So a bare re-cut is not the repair**: *read `X` until `D`, when
+`abc1234` wrote the half* is false at its *when* clause the moment `D` moves, and the sentence has
+to carry both days, the record's landing and the falsifier's. **Four rows of the register below
+are this shape, and one of them settles it without an argument.** `2e7c3c2` wrote a record in
+`Oka/AnalyticSpace/SimplyConnectedCoprod.lean` dating a retirement **2026-09-20** and a record of
+**that same retirement** in `Oka/AnalyticSpace/SimplyConnectedCriterion.lean` dating it
+**2026-09-21**, the day it landed — one push, one event, two files, two numerals, and only the
+register says which is wrong. `d34b436` wrote the other three, in
+`Oka/Analytification/Hausdorff.lean`, `Oka/Analytification/StandardEtaleFiniteEtaleBase.lean` and
+`OkaTest/StandardEtaleLocalIsoBase.lean`, each dating itself by the day `5888ddb` or a theorem it
+carried falsified the wording and not by its own landing at `04:25:45Z` the next morning.
+
+**All four are corrected here and none is dated**, on this section's own rule that a clause false
+when it was written is corrected rather than recorded. **The corrected form is the one taxis
+#2119's round 11 writes**: the landing day where the numeral goes, and the falsifier's day in a
+clause of its own — *…and it had been false since 2026-09-20, when `5888ddb` wrote that half* —
+which is true whichever way a reader takes the rule and which a bare numeral cannot be. **The
+sweep that found them is the register below run over every record and not a reading**, and **the
+census and the register have to be run over one population or the pairing invents a shortfall that
+is not there**. Over `Oka/`, `OkaTest/` and this file — the census commands' population and the
+one file they leave out that carries records of its own — `2e76dcc` has **329** records by the
+unwrapped census in **99** files and the register returns **329** rows, so nothing wraps and every
+record is reached: **304 matching, 25 behind, 0 ahead**. The two narrower and wider populations
+behave the same way and are given so that no pair of these figures can be read as a reach test
+across populations: `Oka/` and `OkaTest/` alone are **317** in 98 and **317** rows, the whole
+tracked tree **347** in 106 and **347** rows. **Five of the 25 behind carried a numeral earlier
+than their own landing on the day they were written**, which is what the blame commit's parent
+decides: the four corrected here, and this file's own clause dating a script capability to
+2026-08-29 against a landing on the 30th, which retires no wording and is a shape neither register
+is about. **The other twenty are a line since moved or a sentence since edited, and nothing here
+is a command that tells those two apart**, so neither is counted. **A corrected record stays
+`behind` and moves cause**, which is the paragraph above read forward.
+
 **This paragraph enumerated *a later reflow of the line, a merge that crossed midnight, or a
 record dated to the day its retired wording was written* and said *The first two are not defects*,
 until 2026-09-15**, when the boundary was drawn against the crossing, the repaired-record case was

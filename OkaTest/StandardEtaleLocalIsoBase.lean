@@ -169,8 +169,9 @@ the same declaration.
   witness above has a finiteness field and nothing in this file supplies one. **This bullet read
   *The finiteness half at `k ≥ 1` does not exist —
   `Oka/Analytification/StandardEtaleFiniteEtale.lean` and
-  `Oka/Analytification/StandardEtaleFiniteness.lean` both record it absent* until 2026-09-20**,
-  and all three clauses of that were falsified the same day by `5888ddb`: the half exists, as
+  `Oka/Analytification/StandardEtaleFiniteness.lean` both record it absent* until 2026-09-21**,
+  and all three clauses of that had been false since 2026-09-20, when `5888ddb` falsified them:
+  the half exists, as
   `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom`
   (`Oka/Analytification/StandardEtaleFinitenessBase.lean`), and both of the files it named now
   carry dated records saying so instead. **The class is instantiated at

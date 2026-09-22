@@ -61,7 +61,8 @@ unrestricted finiteness is false at `k = 0` already.
   open subset of `ℂ^n` avoiding the bad set, is a condition on the pair that nothing below bounds
   — but `OkaTest/StandardEtaleFiniteEtaleBase.lean` now instantiates the conjunction at `k = 1`,
   over the node and at `ComplexAnalytic.sqSubOneTwoPair`. **This bullet closed on *Whether that
-  open subset is non-empty at any `k ≥ 1` pair is proved nowhere* until 2026-09-20**, when
+  open subset is non-empty at any `k ≥ 1` pair is proved nowhere* until 2026-09-21**, and it had
+  been false since 2026-09-20, when
   `ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOneTwoPair` made the bad set of that pair
   **empty**, so that the open subset is not merely non-empty but everything and the restriction
   comes off by `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_restrictHom_top`. **That is not an

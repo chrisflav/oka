@@ -64,7 +64,7 @@ are, and nothing about whether the base is nonempty; the last of those is a live
   `ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom_comp` and inherit its
   `g : Fin 0 → …`, and nothing below is stated at a presented base. **The reason given for that
   read *the finiteness half over a presented base does not exist, so neither does this* until
-  2026-09-20**, when `5888ddb` wrote that half and
+  2026-09-21**, and it had been false since 2026-09-20, when `5888ddb` wrote that half and
   `ComplexAnalytic.isFiniteEtale_restrictHom_analytificationMap_etalePresHom`
   (`Oka/Analytification/StandardEtaleFiniteEtaleBase.lean`) with it. **The absence is unchanged
   and the ingredient the retired reason named is not.** What that half and that class are about is
