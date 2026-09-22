@@ -71,10 +71,51 @@ docstring is this development's dependency register.
 ## What is not here
 
 * **No classification of the coverings of `ℂ ∖ {0}`.** Knowing `π₁` does not produce them:
-  building a covering space out of a `π₁`-set is absent from Mathlib, as is any composition or
-  cancellation lemma for `IsCoveringMap` — `Mathlib/Topology/Covering/Basic.lean` has only
-  conjugation by a homeomorphism. Everything in `Mathlib/Topology/Homotopy/Lifting.lean` is the
-  uniqueness half of the correspondence.
+  building a covering space out of a `π₁`-set is absent from Mathlib at
+  `81a5d257c8e410db227a6665ed08f64fea08e997` (`v4.32.0`, the revision `lakefile.toml` pins and
+  `lake-manifest.json` resolves), as is any composition or cancellation lemma for
+  `IsCoveringMap` — `Mathlib/Topology/Covering/Basic.lean` has only conjugation by a
+  homeomorphism. **The revision is in that sentence and not in the one after it**, which is the
+  stronger of the two forms this tree uses and the only one a reader who quotes the sentence
+  carries away with it.
+  **The first of the two absences is decided by an enumeration and not by a `grep`.** Over the
+  environment of `import Mathlib` at that revision, **76** non-internal declarations have a
+  **type** mentioning the constant `IsCoveringMap`, and **26** of them mention it in the
+  conclusion once the binders are stripped. **Those 26 are every way the library has of producing
+  a covering map**, whatever each is called and whatever namespace is open, which is the thing a
+  name-keyed scan cannot say. **Two of the 26 mention `FundamentalGroup`,
+  `Path.Homotopic.Quotient` or `MulAction` anywhere in the type, and both are about
+  `IsQuotientCoveringMap`** — `IsQuotientCoveringMap.isCoveringMap` and
+  `isQuotientCoveringMap_iff_isCoveringMap_and` — where the group acts on the **total** space.
+  An action on the total space is the quotient construction and a `π₁`-set is not one, so the
+  absence stands. **The control is the same scan asking for `IsSeparatedMap`, which returns 19**,
+  the figure `Oka/Topology/SeparatedMap.lean` publishes for a claim of its own shape.
+  **One of the 26 is worth naming because a reader who checks this meets it first**: the
+  étale-space construction of `Mathlib/Topology/Sheaves/EtaleSpace.lean` makes a covering map out
+  of a presheaf whose germ maps are bijective on a neighbourhood of each point. That is a locally
+  constant sheaf, which is the *sheaf* avatar of a `π₁`-set and not a `π₁`-set; what stands
+  between the two is an equivalence, and it is the equivalence that is missing here and not the
+  construction. **It is named by its file and not by its declaration**, for the reason the
+  *Nothing about the circle* bullet gives of `Mathlib/Topology/Covering/AddCircle.lean`: that
+  module is in the import closure of nothing here, so its declaration name resolves against
+  nothing and `scripts/check_docstring_names.py` reports it. **The scan does see it**,
+  `import Mathlib` being the whole library — the two populations are different, and this is the
+  sentence where that shows.
+  **The clause carried the universal bare until 2026-09-22**, when this passage gave it the
+  revision and the enumeration.
+* **What is not absent is the fibre functor, and the sentence that used to close the bullet on the
+  classification said it was.** That sentence read *Everything in
+  `Mathlib/Topology/Homotopy/Lifting.lean` is the uniqueness half of the correspondence*, and at
+  the pinned revision that file declares `IsCoveringMap.monodromyPerm` — a monoid hom from
+  `FundamentalGroup X x` to the permutations of the fibre — and
+  `IsCoveringMap.fundamentalGroupMulAction`, the `MulAction` of that group on the fibre which it
+  gives. **That is the fibre of a covering read as a `π₁`-set: the forward direction of the
+  correspondence, and not its uniqueness half.** What that bullet denies is the *reverse*
+  direction, and the two are different statements. **This is corrected and not recorded.**
+  `lakefile.toml`'s `rev` has read `v4.32.0` since this repository's first commit and no push has
+  moved it, so both declarations were in the environment on 2026-08-31, when `ca56617` wrote the
+  sentence; and `README.md`'s rule is that a clause false when it was written is corrected rather
+  than dated.
 * **Nothing about the circle.** `π₁(S¹) ≅ ℤ` is the same theorem through the covering
   `𝕜 → AddCircle p` of `Mathlib/Topology/Covering/AddCircle.lean`, but `Circle` in Mathlib is a
   submonoid of `ℂ` and the transport is a separate measurement that has not been made. It is not
