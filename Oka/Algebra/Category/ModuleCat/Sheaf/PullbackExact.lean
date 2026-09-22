@@ -49,9 +49,44 @@ finite limits (`ModuleCat.preservesFiniteLimits_extendScalars_of_flat`,
 `Mathlib/Algebra/Category/ModuleCat/Descent.lean`).
 
 **The short-complex route is available and is longer.** Concluding from `S.Exact` that the stalks
-are exact needs `SheafOfModules.toSheaf` to be *right* exact as well, which Mathlib does not have
-(recorded in `Sheaf/Stalk.lean`); going through monomorphisms needs only the direction that is
-there.
+are exact needs `SheafOfModules.toSheaf` to be *right* exact as well, which at `v4.32.0` — the
+revision `lakefile.toml` pins, resolved by `lake-manifest.json` to
+`81a5d257c8e410db227a6665ed08f64fea08e997` — Mathlib does not have; going through monomorphisms
+needs only the direction that is there.
+
+**That absence is measured in this repository already, and this sentence points at the run rather
+than repeating the claim.** `Oka/Algebra/Category/ModuleCat/Sheaf/Stalk.lean`'s passage on the
+converse of `SheafOfModules.exact_of_stalk_exact` carries the instrument, the verdict and a
+positive control: Mathlib has `CategoryTheory.Limits.PreservesFiniteLimits` for that functor
+(`Mathlib/Algebra/Category/ModuleCat/Sheaf/Limits.lean`) and `inferInstance` fails on both
+`CategoryTheory.Limits.PreservesFiniteColimits` and `CategoryTheory.Functor.PreservesHomology`.
+**That passage is named here by what it is about and not by where it sits**, because a pointer
+into another file's structure is falsified by any rearrangement of that file; at `6a792ba` it is
+the first bullet of that file's `## What is not here`.
+**That passage carried no version when this sentence was written, on 2026-09-21**, which the rule
+in `OkaTest/Axioms.lean` asks of the sentence that measures as much as of the sentence that
+points; repairing it is a change to a file this push only reads, and is filed as taxis #2152.
+
+**The absence is Mathlib's and not this repository's, and when this sentence was written, on
+2026-09-21, that passage did not say so.**
+`Oka/Algebra/Category/ModuleCat/Sheaf/Colimits.lean` declares
+`SheafOfModules.preservesFiniteColimits_toSheaf`, so `inferInstance` for
+`CategoryTheory.Limits.PreservesFiniteColimits (SheafOfModules.toSheaf R)` **succeeds** under
+`import Oka` and **fails** under `import Mathlib` alone at the revision above; both were run.
+So what makes the short-complex route longer *here* is not that nobody has proved right
+exactness — it is that **this file does not import that module**, while the monomorphism route
+needs no import this file does not already have. **That passage then said *So the converse is a
+theorem someone has to prove and not a transfer*, which a module of this repository two days
+older than the file it sits in refutes**; repairing it is filed as taxis #2152, and that module
+is out of scope here as well. At `6a792ba` that is the fourth of its five sentences and not its
+last, and `git show 6a792ba:Oka/Algebra/Category/ModuleCat/Sheaf/Stalk.lean` carries it at
+`:84–85`, wrapped after *has to*.
+
+**That clause read *which Mathlib does not have (recorded in `Sheaf/Stalk.lean`)* until
+2026-09-22**, with no version and with a pointer naming a file rather than the passage in it;
+`git show c6bfc1f:Oka/Algebra/Category/ModuleCat/Sheaf/PullbackExact.lean` carries the retired
+wording at `:52–53`, wrapped after *does not have*. **The claim is unchanged and only its warrant
+is.**
 
 ## The check this file is built to pass
 

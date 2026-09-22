@@ -30,10 +30,55 @@ adjoints is the presheaf one wrapped in `⟨·⟩`, and
 the two triangle identities are `SheafOfModules.hom_ext` applied to the presheaf ones.
 
 **Nothing here unfolds `SheafOfModules.pullback`**, which is just as well: it is defined as
-`(pushforward φ).leftAdjoint`, and Mathlib's only structural description of it,
-`SheafOfModules.pullbackIso`, decomposes it as a presheaf pullback followed by sheafification and
-so would drag in "sheafification does not change stalks", which Mathlib does not have in this
-generality. The adjoint-uniqueness proof needs neither.
+`(pushforward φ).leftAdjoint`, and the one description of it that decomposes the functor,
+`SheafOfModules.pullbackIso`, writes it as a presheaf pullback followed by sheafification and so
+would drag in "sheafification does not change stalks", which at `v4.32.0` — the revision
+`lakefile.toml` pins, resolved by `lake-manifest.json` to
+`81a5d257c8e410db227a6665ed08f64fea08e997` — Mathlib does not have in this generality. The
+adjoint-uniqueness proof needs neither.
+
+**That is two claims and they take two instruments**, and both are scans of *types* over the
+environment of `import Mathlib` at that rev rather than greps over its source. The reason is
+worth one clause, because it is a trap this neighbourhood sets: the namespace is open throughout
+`Mathlib/Algebra/Category/ModuleCat/Sheaf/`, so the functor is written `pullback` there and
+`grep -rn "SheafOfModules.pullback" Mathlib/` returns **7** occurrences in **1** file where the
+environment has **22** declarations whose type mentions it. The two figures are not a ratio:
+occurrences in source against declarations in an environment, several of the 22 being generated
+lemmas no source line writes. That is the point — the qualified grep is not a short count of the
+population these claims are about, it is a count of a different population.
+
+**Decomposes the functor.** Of those **22**, `SheafOfModules.pullbackIso` is the only one that
+writes the functor as a composite. The near misses are named here rather than left for a reader
+to rediscover, and each of them is a description that does not unfold it:
+`SheafOfModules.sheafificationCompPullback` commutes it past sheafification,
+`SheafOfModules.pullbackObjFreeIso` and `SheafOfModules.freeFunctorCompPullbackIso` give its
+value on free sheaves, and `SheafOfModules.pullbackId` and `SheafOfModules.pullbackComp` are the
+functoriality isomorphisms.
+
+**Does not have it in this generality.** The sheafification `SheafOfModules.pullbackIso` goes
+through is `PresheafOfModules.sheafification`, and of the **21** declarations whose type mentions
+that functor, **none** mentions `TopCat.Presheaf.stalk`, `TopCat.Presheaf.stalkFunctor` or
+`TopCat.Presheaf.germ` — against **544** in that environment whose type mentions one of the
+three, which is the positive control that says the scan is pointed at something Mathlib has in
+quantity. **What Mathlib does have is what makes *in this generality* the load-bearing clause
+rather than hedging**: `TopCat.Presheaf.sheafifyStalkIso`
+(`Mathlib/Topology/Sheaves/Sheafify.lean:124`) for `Type`-valued presheaves, and
+`TopCat.Presheaf.stalkFunctor_map_unit_toSheafify_isIso` (`:137`) for presheaves valued in any
+category with `CategoryTheory.Limits.HasColimits`, `CategoryTheory.Limits.HasTerminal` and
+`CategoryTheory.HasWeakSheafify`. Both are about an `X.Presheaf C` for one fixed `C`, and a
+presheaf of modules is not of that form; Mathlib's stalk API for one,
+`Mathlib/Algebra/Category/ModuleCat/Stalk.lean`, stops at the module structure on
+`TopCat.Presheaf.stalk` and relates it to no sheafification.
+
+**That clause read *Mathlib's only structural description of it, `SheafOfModules.pullbackIso`,
+decomposes it as a presheaf pullback followed by sheafification and so would drag in
+"sheafification does not change stalks", which Mathlib does not have in this generality* until
+2026-09-22**, with no version and no run behind either half;
+`git show c6bfc1f:Oka/Algebra/Category/ModuleCat/Sheaf/PullbackStalk.lean` carries the retired
+wording at `:33–36`, wrapped after *in this*. **Both claims are unchanged in substance and only
+their warrant is**, save that *only structural description* is now *the one description that
+decomposes the functor*, because five of the other twenty-one describe it too, which is
+the count *Decomposes the functor* above names and glosses one by one.
 
 ## Sheaves of *commutative* rings
 
