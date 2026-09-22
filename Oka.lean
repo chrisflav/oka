@@ -3,6 +3,7 @@ import Oka.Algebra.Category.Grp.Sheaf.LocallySurjective
 import Oka.Algebra.Category.ModuleCat.Presheaf.PullbackStalk
 import Oka.Algebra.Category.ModuleCat.Presheaf.Skyscraper
 import Oka.Algebra.Category.ModuleCat.Presheaf.Submodule
+import Oka.Algebra.Category.ModuleCat.ProjectiveDimension
 import Oka.Algebra.Category.ModuleCat.Sheaf.Annihilator
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Basic
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Criterion
@@ -243,6 +244,7 @@ import Oka.RingTheory.Finiteness.Basic
 import Oka.RingTheory.Finiteness.Ideal
 import Oka.RingTheory.Flat.Descent
 import Oka.RingTheory.Flat.Quotient
+import Oka.RingTheory.LocalProperties.ProjectiveDimension
 import Oka.RingTheory.LocalRing.ResidueField.Basic
 import Oka.RingTheory.Localization.AtPrime.Basic
 import Oka.RingTheory.Localization.Away.Basic
@@ -250,6 +252,7 @@ import Oka.RingTheory.Localization.Module
 import Oka.RingTheory.MvPolynomial.HomogeneousLocalization
 import Oka.RingTheory.MvPolynomial.Ideal
 import Oka.RingTheory.MvPolynomial.Localization
+import Oka.RingTheory.Polynomial.ProjectiveDimension
 import Oka.RingTheory.RingHom.FaithfullyFlat
 import Oka.SetTheory.Cardinal.Finite
 import Oka.StalkEquiv
