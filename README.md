@@ -747,6 +747,27 @@ coherence statement for arbitrary complex analytic spaces:
   functors land in locally ringed spaces; **`Scheme` does not appear**, which is why the source
   category needs no passage to affine schemes. The worked instance is the node: its comparison
   morphism in two variables is recovered from the one in three.
+* **The analytification functor on schemes.** For a scheme `X` locally of finite type over `ℂ`,
+  the functor `Z ↦ Hom_ℂ(Z, X)` on complex analytic spaces — morphisms of locally ringed spaces
+  over `Spec ℂ` — is representable, and `ComplexAnalytic.analytification` is the resulting functor
+  from `ComplexAnalytic.SchemeLFTℂ` to `ComplexAnalytic.AnalyticSpace`
+  (`Oka/Analytification/Scheme.lean`). The universal property is
+  `ComplexAnalytic.analytificationHomEquiv`, the comparison morphism is
+  `ComplexAnalytic.analytificationπ`, and `ComplexAnalytic.analytificationCompYonedaIso` says the
+  functor represents the functor of points `ComplexAnalytic.schemePoints`, naturally in `X`. The
+  functor itself is Mathlib's `CategoryTheory.Functor.partialRightAdjoint` of
+  `ComplexAnalytic.AnalyticSpace.toOverSpec` (`Oka/Analytification/OverSpec.lean`), so what is
+  proved is that every such `X` lies in its domain, by dévissage: the spectrum of a `ℂ`-algebra
+  of finite type is handled by the universal property of the zero locus of a presentation
+  (`Oka/Analytification/RepresentableAffine.lean`), an open subspace of something with an
+  analytification has one, namely the preimage (`Oka/Analytification/RepresentableOpen.lean`), and
+  analytifications of the members of an open cover glue along the preimages of the overlaps
+  (`Oka/Analytification/RepresentableGlue.lean`, on the glue data of locally ringed spaces from
+  open subspaces in `Oka/Geometry/RingedSpace/PresheafedSpace/GluingMkCore.lean`). On
+  `Spec (ℂ[x] ⧸ (g))` the functor returns the zero locus of `g`, compatibly with the comparison
+  morphisms (`ComplexAnalytic.analytificationSpecIso` in
+  `Oka/Analytification/SchemeAffine.lean`), and `OkaTest/AnalytificationScheme.lean` runs this on
+  the node.
 * **The analytification of `𝒪_X` is `𝒪_{X^an}`.** The canonical map
   `ComplexAnalytic.analytificationSheafUnitToUnit` is an **isomorphism**
   (`ComplexAnalytic.analytificationSheafUnitIso`), and with it the analytification of a free sheaf
