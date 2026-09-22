@@ -41,16 +41,6 @@ coherence statement for arbitrary complex analytic spaces:
 `freitag_summary.md` contains a write-up of the classical proof of the coherence lemma (following
 Freitag) that the formalization follows.
 
-## Status
-
-The overall architecture is complete: the main theorem is deduced from Oka's coherence lemma,
-which in turn is deduced from Weierstrass preparation and Oka's bounded degree lemma. The
-remaining `sorry`s are confined to the analytic core:
-
-* `localweierstrass_preparation` and `localweierstrass_division` in `Oka/Weierstrass.lean`, plus
-  two auxiliary analyticity lemmas used for them;
-* one step in the Weierstrass case of the bounded degree lemma in `Oka/OkaLemma.lean`.
-
 ## Building
 
 Requires the Lean toolchain pinned in `lean-toolchain` (v4.32.0) and depends on Mathlib v4.32.0.
