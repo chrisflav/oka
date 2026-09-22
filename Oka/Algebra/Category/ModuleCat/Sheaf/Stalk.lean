@@ -77,14 +77,149 @@ elaborates and then fails to find `PreservesZeroMorphisms`.
 ## What is not here
 
 * **The converse of `SheafOfModules.exact_of_stalk_exact`.** It is true, and it needs
-  `SheafOfModules.toSheaf` to be *right* exact as well as left exact. Mathlib has
-  `PreservesFiniteLimits (SheafOfModules.toSheaf R)`
+  `SheafOfModules.toSheaf` to be *right* exact as well as left exact. At `v4.32.0` — the revision
+  `lakefile.toml` pins, resolved by `lake-manifest.json` to
+  `81a5d257c8e410db227a6665ed08f64fea08e997` — **Mathlib has no lemma making it right exact,
+  under any name**; the half it does have is
+  `CategoryTheory.Limits.PreservesFiniteLimits (SheafOfModules.toSheaf R)`
+  (`Mathlib/Algebra/Category/ModuleCat/Sheaf/Limits.lean:118`). **What is missing is missing from
+  Mathlib and not from this repository**: `Oka/Algebra/Category/ModuleCat/Sheaf/Colimits.lean`
+  declares `SheafOfModules.preservesFiniteColimits_toSheaf`, right exactness of the same functor
+  and an instance, under `[CategoryTheory.HasWeakSheafify]` and
+  `[CategoryTheory.GrothendieckTopology.WEqualsLocallyBijective]` hypotheses this file's site
+  satisfies, and has done since `1bc5d33` — two days older than this file. **So the converse is a
+  transfer and not a theorem someone has to prove**, and what keeps it out of *this* file is that
+  this file does not import that one.
+
+  **That makes the measurement below an upstreaming obstruction, which is what a mirror file's
+  `## What is not here` is for.** That file sits on a mirror path whose Mathlib target
+  exists, and the scan says the right exactness is not in that target: so the converse cannot be
+  written into `Mathlib/Algebra/Category/ModuleCat/Sheaf/Stalk.lean` until
+  `Oka/Algebra/Category/ModuleCat/Sheaf/Colimits.lean` has landed upstream, and the fifteen below
+  are the evidence that the obstruction is real rather than an oversight. **This bullet read *so
+  the converse is a theorem someone has to prove and not a transfer* until 2026-09-22**;
+  `git show ef9e5d2:Oka/Algebra/Category/ModuleCat/Sheaf/Stalk.lean` carries it at `:84–85`,
+  wrapped after *has to*. It was written on 2026-08-22 in this file's first commit, two days after
+  the instance that refutes it. **One file points at this bullet** —
+  `Oka/Algebra/Category/ModuleCat/Sheaf/PullbackExact.lean`, whose own paragraph taxis #2135 is
+  repairing in the same direction — and nothing else in this tree leans on the retired sentence.
+  **That last clause has an instrument and here it is**: `grep -rn "someone has to"` over this
+  repository's `.lean` and `.md` files returns **three** matching lines, all in this file and all
+  inside this bullet — the verdict above, this record quoting what it replaced, and this
+  sentence, whose backticked command carries the pattern it publishes. **The sentence publishing
+  the instrument is one of the lines the instrument matches**, and that is why the figure is
+  given in *lines*: `grep -rn` reports matching lines and not occurrences, so a rewrap that moved
+  a second occurrence onto a line of its own would change the number with no word of the prose
+  changing — where a tool is keyed on lines, the wrapping of the file is part of the claim.
+
+  It is not needed by the intended consumer: an argument
+  that a functor preserves kernels compares the canonical map with the kernel and checks it is an
+  isomorphism, which needs the direction proved here plus `PreservesFiniteLimits`, both of which
+  are present.
+
+  **What the `inferInstance` probe decides, and what it does not — starting with the environment
+  it is taken in.** The probe is still run and still fails **under `import Mathlib` at the
+  revision above**, on `CategoryTheory.Limits.PreservesFiniteColimits (SheafOfModules.toSheaf R)`
+  and on `(SheafOfModules.toSheaf R).PreservesHomology`, with the left-exact instance above
+  succeeding beside them as its control. **In this repository's own environment both succeed** —
+  the first from `Oka/Algebra/Category/ModuleCat/Sheaf/Colimits.lean` and the second from
+  Mathlib's `[PreservesFiniteLimits F] [PreservesFiniteColimits F] : F.PreservesHomology`
+  (`Mathlib/Algebra/Homology/ShortComplex/PreservesHomology.lean:61`) once the first is there — so
+  **a probe report that does not name its environment states the opposite of the truth here**, and
+  the environment is part of the instrument in the same way the filter below is. **What it
+  decides is that no `instance` is registered**, which is a fact about how an API is spelled
+  rather than about what is in it: the same statement
+  carried as a `theorem` under any name at all would leave the probe failing exactly as it does,
+  and the bullet's claim is about contents. So the instrument behind the claim is a scan of
+  **types** over the environment of `import Mathlib` at that rev — **15** of its constants have a
+  type mentioning `SheafOfModules.toSheaf`, **3044** have a type mentioning one of
+  `CategoryTheory.Limits.PreservesFiniteColimits`, `CategoryTheory.Limits.PreservesColimit`,
+  `CategoryTheory.Limits.PreservesColimitsOfShape`,
+  `CategoryTheory.Limits.PreservesColimitsOfSize`,
+  `CategoryTheory.Functor.PreservesHomology`, `CategoryTheory.Functor.PreservesEpimorphisms`,
+  `CategoryTheory.Limits.IsColimit` or `CategoryTheory.Limits.HasColimit` — the positive control,
+  which says the scan is pointed at something there is in quantity — and **0** have a type
+  mentioning both.
+
+  **The 15 are few enough to list, and a complete list is a stronger warrant than a zero.** Two
+  are simp lemmas for the functor (`SheafOfModules.toSheaf_obj_obj`,
+  `SheafOfModules.toSheaf_map_hom`) and one names its composite with
+  `CategoryTheory.sheafToPresheaf` (`SheafOfModules.toSheafCompSheafToPresheafIso`); two are
+  faithfulness and additivity
+  (`SheafOfModules.instFaithfulSheafAddCommGrpCatToSheaf`,
+  `SheafOfModules.instAdditiveSheafAddCommGrpCatToSheaf`); three are finite **limits**
+  (`SheafOfModules.instPreservesFiniteLimitsSheafAddCommGrpCatToSheaf`,
+  `…instPreservesFiniteLimitsFunctorOppositeAddCommGrpCatCompSheafToSheafSheafToPresheaf`,
+  `…instPreservesFiniteLimitsSheafAddCommGrpCatCompSheafOfModulesSheafificationToSheaf`); three
+  are reflection
+  (`PresheafOfModules.instReflectsIsomorphismsSheafOfModulesSheafAddCommGrpCatToSheaf`,
+  `PresheafOfModules.instReflectsIsomorphismsSheafOfModulesSheafAddCommGrpCatToSheaf_1`,
+  `PresheafOfModules.instReflectsFiniteLimitsSheafOfModulesSheafAddCommGrpCatToSheaf`); and four
+  are on the `PresheafOfModules` side of sheafification
+  (`PresheafOfModules.sheafificationCompToSheaf`,
+  `PresheafOfModules.toSheaf_map_sheafificationHomEquiv_symm`,
+  `PresheafOfModules.toPresheaf_map_sheafificationHomEquiv`,
+  `PresheafOfModules.toSheaf_map_sheafificationAdjunction_counit_app`). **Nothing about colimits,
+  epimorphisms, homology or right exactness**, which is the verdict stated as a list. The grouping
+  is a reading of the fifteen and the fifteen are the measurement; a reader who thinks one of them
+  implies right exactness by a route not seen here should say which.
+
+  **Two of the fifteen are written elided, the reason is the column limit, and the elision costs
+  a check.** Those two generated instance names are **99** and **100** characters long, so a
+  backticked one of them on an indented line cannot fit the 100 columns `linter.style.longLine`
+  enforces — the second is over the limit before a backtick is added. Each has exactly one dot,
+  so eliding its leading namespace leaves no dot behind, and a dotless `…decl` is in
+  `scripts/check_docstring_names.py`'s **third** population, which that script reads and does not
+  resolve: the two are cited here and **not checked by anything**. **This bullet adds three
+  dotless occurrences and three distinct ones**, and only two of the three are the citations —
+  the third is the shape name in the sentence before this one, which is written in the notation it
+  describes and so is an occurrence of it. That is taxis #2069's class, met here as a
+  consequence of a name length rather than of a style choice. **Both were resolved by hand
+  against `scripts/DumpEnvNames.lean`'s dump before being written**, and what they are is sayable
+  without the name: the first is finite limits for the composite of `SheafOfModules.toSheaf` with
+  `CategoryTheory.sheafToPresheaf`, the second finite limits for
+  `PresheafOfModules.sheafification` composed with `SheafOfModules.toSheaf`. Both statements are
+  `PreservesFiniteLimits` of a composite and neither mentions a colimit, which is the only thing
+  the verdict needs of them; the other thirteen are written out and every one is checked.
+
+  **The control's size depends on which names are counted internal and the verdict does not.** The
+  **3044** filters with `Lean.Name.isInternalDetail`; filtering with `Lean.Name.isInternal`
+  instead, over the same environment, gives **3145**. The **15** and the **0** are the
+  same under either, which is the property that makes the control worth printing.
+
+  **There is no third spelling to chase, and the three that do not exist are written here without
+  backticks.** CategoryTheory.Functor.RightExact, CategoryTheory.Functor.PreservesFiniteColimits
+  and CategoryTheory.Limits.PreservesCokernel are what a reader would try next, and **the three
+  are not in Mathlib at this rev** — the classes that exist are the two spelled above. They are
+  bare because `scripts/check_docstring_names.py` resolves every backticked dotted name against
+  the environment of `Oka` + `OkaTest` and would report all three, correctly: that they resolve to
+  nothing is the content of the sentence, and an entry in `scripts/docstring-names-ignore.txt`
+  would buy silence at the price of the same spelling being exempt tree-wide.
+
+  **Until today this bullet was invisible to `scripts/mathlib_absence.py`, and it is now three of
+  that scan's rows**, all three inside it: the version-bearing claim at the head, the sentence
+  that locates the missing right exactness in Mathlib rather than in this repository, and the one
+  retiring the three spellings that do not exist. `--file` on this module prints those three and
+  nothing else, and this module contributed none before, so the scan's headline gains **three**
+  rows and **one** file. **Naming them by quotation rather than by description would make this
+  sentence a fourth row and false as written** — the scan matches text, so a repair that quotes
+  what it counts is counted. *Mathlib has X and not Y* matches none of the six shapes it looks
+  for, so
+  the strongest absence claim in this directory sat in none of the buckets the census reconciles,
+  while the pointer at it from
+  `Oka/Algebra/Category/ModuleCat/Sheaf/PullbackExact.lean` is itself a row — the census could see
+  the pointer and not its target. The wording above is chosen to match, deliberately; the scan is
+  not changed, and its six shapes are spellings by design.
+
+  **That bullet read *Mathlib has `PreservesFiniteLimits (SheafOfModules.toSheaf R)`
   (`Mathlib/Algebra/Category/ModuleCat/Sheaf/Limits.lean`) and **not**
   `CategoryTheory.Limits.PreservesFiniteColimits` — measured, `inferInstance` fails on both that
-  and `CategoryTheory.Functor.PreservesHomology`. So the converse is a theorem someone has to
-  prove and not a transfer. It is not needed by the intended consumer: an argument that a functor
-  preserves kernels compares the canonical map with the kernel and checks it is an isomorphism,
-  which needs the direction proved here plus `PreservesFiniteLimits`, both of which are present.
+  and `CategoryTheory.Functor.PreservesHomology`* until 2026-09-22**, with no revision named in
+  it and with an instance probe standing as the warrant for a claim about contents;
+  `git show 3f26e9d:Oka/Algebra/Category/ModuleCat/Sheaf/Stalk.lean` carries the retired wording
+  at `:79–87`, wrapped after *on both that*. **Round 1 of this push changed only the warrant;
+  round 2 changed the verdict, for the reason at the head of the bullet.**
+
 * **Isomorphism detected on stalks for sheaves of modules.**
   `TopCat.Presheaf.isIso_of_stalkFunctor_map_iso` plus `SheafOfModules.toSheaf` reflecting
   isomorphisms gives it, and the only obstacle met was naming the underlying presheaf morphism
