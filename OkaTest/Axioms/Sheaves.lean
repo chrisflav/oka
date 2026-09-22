@@ -778,7 +778,16 @@ these lemmas were *written for* — that file's own docstring says so, and names
 beside a consumer, because until now there was none: the sheet material below **deliberately does
 not import** `Oka/Topology/IsLocalHomeomorph.lean`, to keep the `OpenPartialHomeomorph` chain out
 of its closure, and says so in terms. `Oka/AnalyticSpace/CoveringSpace.lean` is the first module
-of the library to import it at all, and **its** guards are in `OkaTest/Axioms/Morphisms.lean`. -/
+**under `Oka/`** to import it — `4025f01`, 2026-08-28 — and `Oka/AnalyticSpace/LocalAtTarget.lean`
+is the second, at `b79ab9b` on 2026-09-14; those two and `Oka.lean` are every module that imports
+it directly at `73176e1`, and **129** have it in import closure. **`Oka.lean`, the aggregator
+`mk_all` generates, imports it as it imports every module of the library and is excluded here**,
+as `OkaTest/Axioms/Morphisms.lean` excludes it from the same kind of grep. **That clause read
+*"the first module of the library to import it at all"*, and it was false at `4025f01`, the
+commit that wrote it**: `7bb98ab`, which added `Oka/Topology/IsLocalHomeomorph.lean`, put the
+line into `Oka.lean` in the same push, so the root has imported that file since it existed. **It
+is corrected here and not dated**, on `README.md`'s rule that a clause false when it was written
+is corrected rather than recorded. **Its** guards are in `OkaTest/Axioms/Morphisms.lean`. -/
 
 /--
 info: 'sheetOpens' depends on axioms:

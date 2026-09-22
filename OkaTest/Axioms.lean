@@ -860,6 +860,42 @@ paragraph opening *What the sweep did not reach* is why it was run here: the che
 column that anybody has ever checked was false, and it was found by a reviewer looking at a file for
 another reason.
 
+**Every branch of that importer pattern anchors on an inflected form, and the sixth sweep is one
+spelling none of them reaches: the bare infinitive after a superlative.** *The first module to
+import both* is the shape, and the branch list above cannot see it — no quantifier stands before
+`imports`, the word is not `importer`, and nothing is `imported by`. **The branch it is missing is
+published here as a literal and not as prose**, because the list above is prose and two
+reconstructions of it disagree: `\bto import\s+(?:both|either|them|it|this)\b`. **Over this
+block's own population — 365 files at `73176e1`, comment content alone, cut at a full stop, a
+question mark or an exclamation mark — the literal returns 5 sentences in 4 files there and a
+reconstruction of the branch list above returns 120 in 63, and the two sets are disjoint.** **At
+the head that writes this, with this block applied**, the literal returns **9** in 5 and the
+branch list **127** in 65, and the two share exactly one sentence: this block's own, which quotes
+`imported by`. **Of the 9, four are live claims — the two in `OkaTest/Axioms/Morphisms.lean` and
+the repaired forms in `Oka/Analytification/FGAlgFinite.lean` and `OkaTest/Axioms/Sheaves.lean` —
+three are this push's quotations of what it repairs, and two are here.** **The disjointness at the
+base is the finding and the totals are the weaker half of it**: the branch list's own figure moves
+with whoever rebuilds it — taxis #2170 read **124** from the same prose at `78a1d11` — and the
+literal's does not, which is why the literal is what a seventh sweep should re-run.
+
+**Five sites carry the infinitive shape at that head and three of them were false.**
+`OkaTest/Axioms/Morphisms.lean` carries the two that are right, and the first of them is the model
+the repairs copy — *the first **under `Oka/`** to import both of those two*, with `Oka.lean`
+named, excluded, and the reason given. The three repaired are
+`Oka/Analytification/StandardEtaleLocalIso.lean`, `OkaTest/Axioms/Sheaves.lean` and
+`Oka/Analytification/FGAlgFinite.lean`, and **every one of them was false at the commit that wrote
+it** — `a01e3c4`, `4025f01` and `da252a7` — since `Oka.lean` imports every module of the library
+and so imports every pair, and the modules under `OkaTest/` that reach the library through it
+inherit both sides. **All three are therefore corrections and none is a dated record**, on
+`README.md`'s rule; `Oka/Analytification/SpecDistinguishedOpen.lean` carries the same repair with a
+date on it, written before that rule was stated, and is left as it stands.
+
+**What this sweep did not decide, so that a seventh knows.** *The only file that imports* in
+`Oka/CategoryTheory/Sites/Over.lean`, *the only module this file imports* in
+`Oka/Topology/Maps/Proper/Basic.lean` and the *already imports both* clause in
+`Oka/RingTheory/Localization/AtPrime/Basic.lean` are a different shape from the superlative and
+**none of them was read here**. The 161 the fifth sweep left unread are still unread.
+
 **Over the whole population, not only the residue, the downstream-set pattern returns 44, of which
 22 are in this file.** The **22** outside it are the twenty the paragraph opening *The fourth sweep,
 at `7a99bfc`* accounts for, plus exactly **two** written since, and both are in

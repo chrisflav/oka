@@ -16,8 +16,29 @@ variable, projects to `ℂ^n` as a local isomorphism of complex analytic spaces
 `Oka/Analytification/StandardEtaleAnalytification.lean` proves that the analytification of a
 standard étale presentation **is** such an open subspace — the distinguished open `D(G)` of the
 hypersurface `{F = 0}` — and that `StandardEtalePair.cond` supplies exactly that derivative
-hypothesis there (`ComplexAnalytic.eval_pderiv_ne_zero_of_mem`). This file joins the two, and it
-is the first module to import both subtrees.
+hypothesis there (`ComplexAnalytic.eval_pderiv_ne_zero_of_mem`). This file joins the two, and
+**every module under `Oka/` with both subtrees in its import closure is this one or downstream of
+it** — seven at `73176e1`, counting itself, the other six being
+`Oka/Analytification/Hausdorff.lean`, `Oka/Analytification/HausdorffBase.lean`,
+`Oka/Analytification/StandardEtaleFiniteEtale.lean`,
+`Oka/Analytification/StandardEtaleFiniteEtaleBase.lean`,
+`Oka/Analytification/StandardEtaleFinitenessBase.lean` and
+`Oka/Analytification/StandardEtaleLocalIsoBase.lean`. **Of the two subtree roots this file
+imports `Oka/AnalyticSpace/SimpleZeroTopology.lean` directly and
+`Oka/Analytification/StandardEtaleAnalytification.lean` not at all**: its two `import` lines are
+that one and `Oka/Analytification/HypersurfaceFinite.lean`, which is what carries the other, one
+edge further up. **So the claim is about closures and is measured over them**, by
+`scripts/module_graph.py` at that commit.
+
+**That clause read *"it is the first module to import both subtrees"*, and it was false at
+`a01e3c4`, the commit that wrote it.** `Oka.lean`, the aggregator `mk_all` generates, imports
+every module of the library and so had both on the day — `OkaTest/Axioms.lean` excludes it from
+the same kind of grep, and the 99 modules under `OkaTest/` that reach the library through it go
+with it: the whole population with both in closure is **108** at `73176e1`, of which 101 are
+those, the root above them and `Oka.lean`. **It is corrected here and not dated**, on
+`README.md`'s rule that a clause false when it was written is corrected rather than recorded.
+**The argument it was making survives the repair and only its scope was wrong**, which is the
+same repair `Oka/Analytification/SpecDistinguishedOpen.lean` records of a clause of this shape.
 
 ## The base is `ℂ^n`, and that is the statement rather than a limitation of the proof
 
