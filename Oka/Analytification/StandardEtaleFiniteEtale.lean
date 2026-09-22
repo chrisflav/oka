@@ -147,8 +147,19 @@ theorem reads a `StandardEtalePair`, so appending it there would have turned tha
   the analytification of a finite étale morphism of **schemes** — is what
   `Oka/AnalyticSpace/LocalIso.lean`, `Oka/AnalyticSpace/CoveringMap.lean` and
   `Oka/AnalyticSpace/SigmaFiniteEtale.lean` record, and nothing here touches it: everything on
-  this line is one standard étale presentation over `ℂ^n`, and the general morphism is a
-  Zariski-local gluing that nothing starts.
+  this line is one standard étale presentation — over `ℂ^n` here, and over a presented base in
+  `Oka/Analytification/StandardEtaleLocalIsoBase.lean`,
+  `Oka/Analytification/StandardEtaleFinitenessBase.lean` and
+  `Oka/Analytification/StandardEtaleFiniteEtaleBase.lean` — and the general morphism is a
+  Zariski-local gluing that nothing starts. **The base is not what separates the two absences**:
+  the broader one asks about a finite étale morphism of schemes where this line asks about a
+  standard étale pair, and it stays absent at every base. **This clause read *everything on this
+  line is one standard étale presentation over `ℂ^n`* until 2026-09-22**, which was true at
+  `868ed5f` and was falsified by `5888ddb` on 2026-09-20 — the landing dated by the bullet headed
+  *Nothing at `k ≥ 1`* above, which put the local-isomorphism half, the finiteness half and the
+  class at a presented base;
+  `git show cb5a40e:Oka/Analytification/StandardEtaleFiniteEtale.lean` carries the retired wording
+  at `:149–150`, wrapped after *everything on*.
 * **No `IsCoveringMap` *here*, and it is no longer absent.** This bullet said
   `ComplexAnalytic.AnalyticSpace.isCoveringMap_base_of_isFiniteEtale` *"needs a Hausdorff source
   and it is not checked here"*. The source of the theorem below is an open subspace of
