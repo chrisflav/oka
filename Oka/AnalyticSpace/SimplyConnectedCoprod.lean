@@ -126,10 +126,20 @@ what the pin is for. **The `scripts/guard_coverage.py` rows came through every r
 that is a fact about what landed in between rather than a property of that script**: **all eight
 rows of that report's table** are byte-identical at `a3d656d`, `57e5a1a`, `d34b436`, `66cf643` and
 `6e0c610` — the whole report is not, differing from the first by **8** lines at `57e5a1a` and by
-**10** at the other three, every one of them a skipped-token line number moved by prose landing
-above it — and the module `lana-agents/oka#601` adds carries no `#print axioms` of its own, so the
-guard row had nothing to miss there. **A row that happens to be flat is not a row that cannot
-move**, and they are pinned with the rest.
+**10** at the other three, **with `--env-dump` given and one dump pair held fixed across the
+five**, every one of them a skipped-token line number moved by prose landing above it — and the
+module `lana-agents/oka#601` adds carries no `#print axioms` of its own, so the guard row had
+nothing to miss there. **Both of those conditions are load-bearing, and the run a reader reaches
+for first satisfies neither.** Without `--env-dump` the skipped-token row prints counts and no
+per-token site, so **no line number appears anywhere in the report**, and the differences this
+sentence reports — every one of them a skipped-token line number — cannot appear in it at all:
+that run answers a different question, and its silence reads as a refutation of this sentence
+rather than as a missing flag. And with each tree's own dumps the reconciliation in that row
+moves with the dump as well as with the prose — the `scripts/DumpOkaDecls.lean` and
+`scripts/DumpEnvNames.lean` figures this section gives for one of these very landings,
+**5003 → 5008** and **338280 → 338286**, are that motion — so the differences stop being *every
+one of them a skipped-token line number*. **A row that happens to be flat is not a row that
+cannot move**, and they are pinned with the rest.
 
 `scripts/DumpOkaDecls.lean` writes **5** rows at this module — the five declarations, with **no**
 equation lemma, match lemma or congruence lemma — and the dump total moves **5003 → 5008**.

@@ -26,6 +26,19 @@ verdict, because the figures live in English prose and nothing can check them me
 Exit is 0 whatever the coverage is, and non-zero only when an argument is wrong, the dump cannot
 be built, or the self-test fails.
 
+## Comparing two reports takes both flags and one dump pair held fixed
+
+Two runs are comparable only if they were handed the **same two dumps**, and the `--env-dump` half
+of that is the one that gets missed.  Without it the skipped-token row prints counts and no
+per-token site, so no line number appears anywhere in the report and a difference confined to
+prose outside a `## Main results` section cannot show up at all: the two reports come out
+byte-identical and the flat result reads like evidence rather than like a missing flag.  With it,
+but with a dump rebuilt per tree, the opposite failure follows: the skipped-token reconciliation
+moves with the dump as well as with the prose, so a difference that does show up is not
+attributable to the prose.  Neither announces itself, so **a replay reporting what moved between
+two trees owes the pair it was given**, and holding one pair fixed across all of them is what
+makes the answer mean anything.
+
 ## The defect this exists to stop
 
 `ComplexAnalytic.AnalyticSpace.sigmaι_sigmaDesc` was added to `Oka/AnalyticSpace/Sigma.lean`'s
