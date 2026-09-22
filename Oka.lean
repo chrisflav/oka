@@ -31,6 +31,7 @@ import Oka.AlgebraicGeometry.Modules.Coherent
 import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.OpenImmersion
+import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
 import Oka.AlgebraicGeometry.Spec
 import Oka.Analysis.Calculus.Implicit
 import Oka.Analysis.Complex.CoveringMap
@@ -141,6 +142,7 @@ import Oka.Analytification.FGAlgFinite
 import Oka.Analytification.Flatness
 import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor
+import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GlueShape
 import Oka.Analytification.Hausdorff
 import Oka.Analytification.HausdorffBase
@@ -245,6 +247,7 @@ import Oka.RingTheory.LocalRing.ResidueField.Basic
 import Oka.RingTheory.Localization.AtPrime.Basic
 import Oka.RingTheory.Localization.Away.Basic
 import Oka.RingTheory.Localization.Module
+import Oka.RingTheory.MvPolynomial.HomogeneousLocalization
 import Oka.RingTheory.MvPolynomial.Ideal
 import Oka.RingTheory.MvPolynomial.Localization
 import Oka.RingTheory.RingHom.FaithfullyFlat
