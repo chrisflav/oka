@@ -29,6 +29,7 @@ import Oka.Algebra.MvPolynomial.PDeriv
 import Oka.Algebra.MvPolynomial.Taylor
 import Oka.AlgebraicGeometry.GammaSpecAdjunction
 import Oka.AlgebraicGeometry.Modules.Coherent
+import Oka.AlgebraicGeometry.Modules.CoherentLocalPresentation
 import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.OpenImmersion
@@ -153,6 +154,9 @@ import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
 import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
+import Oka.Analytification.GAGA.SheafAnalytification
+import Oka.Analytification.GAGA.SheafAnalytificationCoherent
+import Oka.Analytification.GAGA.StalkFlat
 import Oka.Analytification.GlueShape
 import Oka.Analytification.Hausdorff
 import Oka.Analytification.HausdorffBase
@@ -226,10 +230,12 @@ import Oka.Geometry.RingedSpace.Basic
 import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.FaithfullyFlatStalkMap
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.HasColimits
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImage
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImageSheet
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
 import Oka.Geometry.RingedSpace.OpenImmersion
 import Oka.Geometry.RingedSpace.PresheafedSpace.Double
 import Oka.Geometry.RingedSpace.PresheafedSpace.Gluing
