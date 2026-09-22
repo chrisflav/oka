@@ -72,6 +72,48 @@ does not reach, so written with their namespace separate — `SheafOfModules`'s 
 coherence's first half, and `SheafOfModules.IsFinitePresentation` asks for one local presentation
 where coherence asks that the kernel of *every* map from a finite free sheaf be of finite type.
 
+**Which telescope is a parameter of that scan, and the nine above are
+`Lean.Meta.forallTelescope`'s.** `Lean.Meta.forallTelescopeReducing` unfolds before it stops, and
+over the same environment it returns **eleven**: it adds `SheafOfModules.isQuasicoherent` and
+`SheafOfModules.isFinitePresentation`, lower-case `abbrev`s whose type ends in
+`CategoryTheory.ObjectProperty (SheafOfModules R)`, which is `SheafOfModules R → Prop`. Each
+carries `@[inherit_doc]` naming a class that is already among the nine —
+`SheafOfModules.IsQuasicoherent` and `SheafOfModules.IsFinitePresentation` respectively — **so
+what the reducing reading adds is a second exposure of a predicate the nine already hold, and not
+one they missed**. The verdict is therefore invariant under the choice where the enumeration is
+not: of the eleven, three write a form of *coherent* and eight write none, against two and seven
+of the nine, and still not one of the eleven is coherence. The list above is the non-reducing
+reading's and is left as it stands, the extra two being named here rather than folded into a list
+that would then mean two things at once. The filter is `Lean.Name.isInternalDetail`
+under both readings, and both telescopes are run on the whole type rather than on its head, which
+is the only way a type ending in `CategoryTheory.ObjectProperty` is reached at all. This
+repository already names the parameter at another type-keyed scan:
+`Oka/AnalyticSpace/PullbackGlue.lean` takes the head of a codomain under
+`Lean.Meta.forallTelescopeReducing` and says so where it states the scan, which is what the clause
+above brings here.
+
+**A positive control for coherence specifically, which the environment of `import Mathlib` cannot
+supply, the verdict above being that there is nothing there to find.** The one coherence predicate
+for sheaves of modules within this repository's reach is exposed in the same doubled way, and the
+scan does see it: beside the class `SheafOfModules.IsCoherent` sits the `abbrev`
+`SheafOfModules.isCoherent`, which packages it as a `CategoryTheory.ObjectProperty`. Over the
+environment of `import Oka` — a different environment from the `import Mathlib` one every other
+figure in this section is taken in — the same scan returns **634** declarations mentioning
+`SheafOfModules`, **ten** of them Prop-valued under `forallTelescope` and **fourteen** under
+`forallTelescopeReducing`. The ten are the nine above, less `SheafOfModules`'s `IsLocallyFree` and
+`SheafOfModules.LocalGeneratorsData`'s `IsLocallyFreeData`, which that environment does not reach,
+plus this repository's `SheafOfModules.HasFiniteTypeRelations`, `SheafOfModules.IsCoherent` and
+`SheafOfModules.LocallyGeneratesKernel`; the four the reducing reading adds are the two Mathlib
+ones named above and this repository's `SheafOfModules.isCoherent` and
+`SheafOfModules.isFiniteType`. **The class is among the ten and the `abbrev` is not**, so the
+non-reducing walk is not blind to coherence — it holds `SheafOfModules.IsCoherent` — and what it
+cannot see is a `CategoryTheory.ObjectProperty` exposure standing alone. **That is the exact width
+of the gap, and it is narrower than it looks**: all four such exposures across the two environments
+stand beside a class the non-reducing walk already holds, so a Mathlib coherence predicate would
+have had to carry no class at all to escape the nine above. That is a statement about the
+instrument and about these two trees, and it leaves the verdict of this section, which the `import
+Mathlib` runs decide, exactly where it was.
+
 **The name-keyed run agrees with that verdict, and it is here as the narrowing run rather than the
 deciding one — but it has to be asked in both spellings.** Of the **228** non-internal declarations
 of that environment whose name writes some form of *coherent* in **any** case, **five** are
