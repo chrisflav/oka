@@ -139,6 +139,20 @@ info: 'SheafOfModules.exact_of_stalk_exact' depends on axioms:
 #guard_msgs (whitespace := lax) in
 #print axioms SheafOfModules.exact_of_stalk_exact
 
+/--
+info: 'SheafOfModules.stalk_exact_of_exact' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms SheafOfModules.stalk_exact_of_exact
+
+/--
+info: 'SheafOfModules.exact_iff_stalk_exact' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms SheafOfModules.exact_iff_stalk_exact
+
 /-! ### The stalk of a pullback of sheaves of modules is the base change of the stalk
 
 `Oka/Algebra/Category/ModuleCat/Presheaf/Skyscraper.lean`,
