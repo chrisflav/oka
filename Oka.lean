@@ -169,6 +169,7 @@ import Oka.Analytification.GAGA.AffineSpace
 import Oka.Analytification.GAGA.CauchyRectangle
 import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
+import Oka.Analytification.GAGA.ClosedImmersionPushforward
 import Oka.Analytification.GAGA.CohomologyComparison
 import Oka.Analytification.GAGA.Cousin
 import Oka.Analytification.GAGA.CousinCoordinate
@@ -269,6 +270,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.HasColimits
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImage
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImageSheet
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
