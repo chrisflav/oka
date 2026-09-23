@@ -33,6 +33,7 @@ import Oka.AlgebraicGeometry.Modules.Coherent
 import Oka.AlgebraicGeometry.Modules.CoherentLocalPresentation
 import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
+import Oka.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Oka.AlgebraicGeometry.OpenImmersion
 import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
 import Oka.AlgebraicGeometry.ProjectiveSpace.Points
@@ -154,6 +155,7 @@ import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor
 import Oka.Analytification.GAGA.AffineSpace
 import Oka.Analytification.GAGA.CechProjectiveAn
+import Oka.Analytification.GAGA.ClosedImmersion
 import Oka.Analytification.GAGA.Liouville
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ProjectiveSpace
@@ -294,6 +296,7 @@ import Oka.Topology.SeparatedMap
 import Oka.Topology.Sheaves.Cohomology.Basic
 import Oka.Topology.Sheaves.Cohomology.Cech
 import Oka.Topology.Sheaves.Cohomology.CechInjective
+import Oka.Topology.Sheaves.Cohomology.ClosedEmbedding
 import Oka.Topology.Sheaves.Cohomology.Dimension
 import Oka.Topology.Sheaves.Cohomology.Leray
 import Oka.Topology.Sheaves.Cohomology.MayerVietoris
