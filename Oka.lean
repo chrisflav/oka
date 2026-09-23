@@ -76,6 +76,7 @@ import Oka.AnalyticSpace.Basic
 import Oka.AnalyticSpace.Clopen
 import Oka.AnalyticSpace.ClopenEqLocus
 import Oka.AnalyticSpace.Coherent
+import Oka.AnalyticSpace.CohomologyModule
 import Oka.AnalyticSpace.ConnectedComponents
 import Oka.AnalyticSpace.ConnectedCover
 import Oka.AnalyticSpace.Continuity
@@ -182,6 +183,7 @@ import Oka.Analytification.GAGA.ClosedImmersionCohomology
 import Oka.Analytification.GAGA.ClosedImmersionPushforward
 import Oka.Analytification.GAGA.ClosureTheorem
 import Oka.Analytification.GAGA.CohomologyComparison
+import Oka.Analytification.GAGA.CohomologyComparisonLinear
 import Oka.Analytification.GAGA.CompactlyZero
 import Oka.Analytification.GAGA.ComparisonAdditive
 import Oka.Analytification.GAGA.Cousin
@@ -292,6 +294,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyBaseChange
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyModule
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyRestrict
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.FaithfullyFlatStalkMap
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.HasColimits
@@ -359,6 +362,7 @@ import Oka.Topology.SeparatedMap
 import Oka.Topology.Sheaves.Cohomology.BaseChange
 import Oka.Topology.Sheaves.Cohomology.Basic
 import Oka.Topology.Sheaves.Cohomology.Cech
+import Oka.Topology.Sheaves.Cohomology.CechDegreeOne
 import Oka.Topology.Sheaves.Cohomology.CechInjective
 import Oka.Topology.Sheaves.Cohomology.ClosedEmbedding
 import Oka.Topology.Sheaves.Cohomology.Dimension
