@@ -769,6 +769,25 @@ coherence statement for arbitrary complex analytic spaces:
   morphisms (`ComplexAnalytic.analytificationSpecIso` in
   `Oka/Analytification/SchemeAffine.lean`), and `OkaTest/AnalytificationScheme.lean` runs this on
   the node.
+* **GAGA** (`Oka/Analytification/GAGA/`). For a projective scheme `X` over `ℂ`
+  (`ComplexAnalytic.IsProjectiveℂ`: a closed subscheme of some `ℙⁿ`),
+  `ComplexAnalytic.gagaFull` proves Serre's three GAGA theorems: for every coherent `F` the comparison
+  map `ComplexAnalytic.gagaMap : Hᵠ(X, F) → Hᵠ(X^an, F^an)` is bijective in every degree
+  (`ComplexAnalytic.gaga₁`), analytification is fully faithful on coherent sheaves
+  (`ComplexAnalytic.gaga₂`), and every coherent analytic sheaf on `X^an` is the analytification of
+  a coherent algebraic sheaf (`ComplexAnalytic.gaga₃`). The proof follows Serre. On the algebraic
+  side: projective space as `Proj` with twisting sheaves `O(k)` (a general cocycle twist), Serre's
+  affine vanishing (Čech complexes, Leray, Cartan's criterion, in `Oka/Topology/Sheaves/Cohomology/`),
+  the cohomology of `O(k)`, Theorem A, Serre vanishing and Hilbert's syzygy theorem. On the analytic
+  side: Laurent series in several variables, Cousin splitting with parameters and Runge
+  approximation giving Cartan's Theorem B for `𝒪` on `(ℂ^×)^a × ℂ^b` and on boxes, the Čech
+  computation on `ℙⁿ_an`, the analytic syzygy theorem (local free resolutions), Montel's theorem,
+  the Fréchet structure on holomorphic functions, Cartan's closure theorem, the open mapping theorem
+  and Schwartz's finiteness theorem for Fréchet spaces, and from them Cartan–Serre finiteness of
+  `H¹(ℙⁿ_an, M)` (`ComplexAnalytic.projectiveSpaceAn.finiteDimensional_H_one`). GAGA-1 for `O(k)`
+  is a hyperplane induction, for coherent sheaves Serre's descending induction; GAGA-3 is the
+  analytic Theorem A on `ℙⁿ_an` by hyperplane induction plus algebraisation of presentations via
+  GAGA-2.
 * **The analytification of `𝒪_X` is `𝒪_{X^an}`.** The canonical map
   `ComplexAnalytic.analytificationSheafUnitToUnit` is an **isomorphism**
   (`ComplexAnalytic.analytificationSheafUnitIso`), and with it the analytification of a free sheaf

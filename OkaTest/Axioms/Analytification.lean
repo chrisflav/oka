@@ -6564,3 +6564,77 @@ info: 'ComplexAnalytic.analytificationSpecIso' depends on axioms:
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms ComplexAnalytic.analytificationSpecIso
+
+/-! ### GAGA for projective schemes over `ℂ`
+
+`Oka/Analytification/GAGA/`: the three GAGA theorems, and the main analytic and algebraic inputs. -/
+
+/--
+info: 'ComplexAnalytic.gagaFull' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.gagaFull
+
+/--
+info: 'ComplexAnalytic.gaga₁' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.gaga₁
+
+/--
+info: 'ComplexAnalytic.gaga₂' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.gaga₂
+
+/--
+info: 'ComplexAnalytic.gaga₃' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.gaga₃
+
+/--
+info: 'ComplexAnalytic.gaga_projectiveSpace' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.gaga_projectiveSpace
+
+/--
+info: 'ComplexAnalytic.bijective_gagaMap_twistingSheaf' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.bijective_gagaMap_twistingSheaf
+
+/--
+info: 'ComplexAnalytic.projectiveSpaceAn.finiteDimensional_H_one' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.projectiveSpaceAn.finiteDimensional_H_one
+
+/--
+info: 'Complex.TheoremB.subsingleton_H_restrictOpen_structureSheafAb' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms Complex.TheoremB.subsingleton_H_restrictOpen_structureSheafAb
+
+/--
+info: 'AlgebraicGeometry.ProjectiveSpace.exists_H_twist_eq_zero' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms AlgebraicGeometry.ProjectiveSpace.exists_H_twist_eq_zero
+
+/--
+info: 'ModuleCat.hasGlobalDimensionLE_mvPolynomial' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ModuleCat.hasGlobalDimensionLE_mvPolynomial
