@@ -208,6 +208,7 @@ import Oka.Analytification.GAGA.Cousin
 import Oka.Analytification.GAGA.CousinCoordinate
 import Oka.Analytification.GAGA.CousinShrink
 import Oka.Analytification.GAGA.DescendingInduction
+import Oka.Analytification.GAGA.Equivalence
 import Oka.Analytification.GAGA.FiveLemma
 import Oka.Analytification.GAGA.FrameCauchy
 import Oka.Analytification.GAGA.GridMerge

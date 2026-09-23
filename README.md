@@ -775,7 +775,11 @@ coherence statement for arbitrary complex analytic spaces:
   map `ComplexAnalytic.gagaMap : Hᵠ(X, F) → Hᵠ(X^an, F^an)` is bijective in every degree
   (`ComplexAnalytic.gaga₁`), analytification is fully faithful on coherent sheaves
   (`ComplexAnalytic.gaga₂`), and every coherent analytic sheaf on `X^an` is the analytification of
-  a coherent algebraic sheaf (`ComplexAnalytic.gaga₃`). The proof follows Serre. On the algebraic
+  a coherent algebraic sheaf (`ComplexAnalytic.gaga₃`). Together, GAGA-2 and GAGA-3 say that
+  analytification is an **equivalence** between coherent sheaves on `X` and coherent analytic
+  sheaves on `X^an` (`ComplexAnalytic.isEquivalence_coherentAnalytification`, bundled as
+  `ComplexAnalytic.gagaEquivalence` in `Oka/Analytification/GAGA/Equivalence.lean`). The proof
+  follows Serre. On the algebraic
   side: projective space as `Proj` with twisting sheaves `O(k)` (a general cocycle twist), Serre's
   affine vanishing (Čech complexes, Leray, Cartan's criterion, in `Oka/Topology/Sheaves/Cohomology/`),
   the cohomology of `O(k)`, Theorem A, Serre vanishing and Hilbert's syzygy theorem. On the analytic

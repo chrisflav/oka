@@ -6598,6 +6598,13 @@ info: 'ComplexAnalytic.gaga₃' depends on axioms:
 #print axioms ComplexAnalytic.gaga₃
 
 /--
+info: 'ComplexAnalytic.isEquivalence_coherentAnalytification' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ComplexAnalytic.isEquivalence_coherentAnalytification
+
+/--
 info: 'ComplexAnalytic.gaga_projectiveSpace' depends on axioms:
   [propext, Classical.choice, Quot.sound]
 -/
