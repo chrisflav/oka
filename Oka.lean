@@ -23,6 +23,7 @@ import Oka.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 import Oka.Algebra.Category.ModuleCat.Sheaf.Stalk
 import Oka.Algebra.Category.ModuleCat.Sheaf.Submodule
 import Oka.Algebra.Category.ModuleCat.Stalk
+import Oka.Algebra.Homology.DerivedCategory.Ext.MapNatTrans
 import Oka.Algebra.Module.FinitePresentation
 import Oka.Algebra.MvPolynomial.Equiv
 import Oka.Algebra.MvPolynomial.Funext
@@ -174,6 +175,7 @@ import Oka.Analytification.GAGA.AffineSpace
 import Oka.Analytification.GAGA.CauchyRectangle
 import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
+import Oka.Analytification.GAGA.ClosedImmersionCohomology
 import Oka.Analytification.GAGA.ClosedImmersionPushforward
 import Oka.Analytification.GAGA.ClosureTheorem
 import Oka.Analytification.GAGA.CohomologyComparison
@@ -281,6 +283,7 @@ import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyBaseChange
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyRestrict
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.FaithfullyFlatStalkMap
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.HasColimits
@@ -345,6 +348,7 @@ import Oka.Topology.Homeomorph.Lemmas
 import Oka.Topology.IsLocalHomeomorph
 import Oka.Topology.Maps.Proper.Basic
 import Oka.Topology.SeparatedMap
+import Oka.Topology.Sheaves.Cohomology.BaseChange
 import Oka.Topology.Sheaves.Cohomology.Basic
 import Oka.Topology.Sheaves.Cohomology.Cech
 import Oka.Topology.Sheaves.Cohomology.CechInjective
