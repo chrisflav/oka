@@ -18,7 +18,8 @@ We compare sheaf cohomology with Čech cohomology by dimension shifting along
 ## Main results
 
 * `TopCat.Presheaf.exists_lift_of_cech`: for `0 → F → G → Q → 0` exact and a cover `U` of `W`
-  with `Ȟ¹(U, F) = 0`, a section of `Q` over `W` which lifts to `G` on every `U i` lifts over `W`.
+  with Čech `H¹(U, F) = 0`, a section of `Q` over `W` which lifts to `G` on every `U i` lifts
+  over `W`.
 * `TopCat.Sheaf.isCechAcyclic_X₃`: Čech acyclicity passes to quotients `G/F` if the sequence is
   surjective on all finite intersections.
 * `TopCat.Sheaf.H_eq_zero_of_isCechAcyclic` (**Leray**, vanishing form): if `U` covers `X`,
@@ -81,8 +82,8 @@ section Lift
 variable {X : TopCat.{u}} {ι : Type u} (U : ι → Opens X)
 
 /-- **Lifting along a Čech-acyclic kernel.** Let `0 → F → G → Q → 0` be a short exact sequence of
-sheaves and `U` a family of opens covering `W` with `Ȟ¹(U, F) = 0`. A section `s` of `Q` over `W`
-which lifts to `G` on every `U i` lifts to `G` over `W`. -/
+sheaves and `U` a family of opens covering `W` with Čech `H¹(U, F) = 0`. A section `s` of `Q` over
+`W` which lifts to `G` on every `U i` lifts to `G` over `W`. -/
 theorem exists_lift_of_cech {S : ShortComplex (TopCat.AbSheaf X)} (hS : S.ShortExact)
     {W : Opens X} (hW : ∀ i, U i ≤ W) (hcov : W ≤ ⨆ i, U i)
     (h₁ : (cechComplex U S.X₁.obj).ExactAt 1) (s : S.X₃.obj.obj (op W))
@@ -241,8 +242,9 @@ section Leray
 
 variable {ι : Type u} (U : ι → Opens X)
 
-/-- If `F` has vanishing `H¹` on the finite intersections `U_σ` and `Ȟ¹(U, F) = 0`, and `U` covers
-`W`, then `F → I(F)/F` is surjective on sections over `W`, for any injective resolution step. -/
+/-- If `F` has vanishing `H¹` on the finite intersections `U_σ` and Čech
+`H¹(U, F) = 0`, and `U` covers `W`, then `F → I(F)/F` is surjective on sections over `W`, for any
+injective resolution step. -/
 lemma surjective_of_cech {S : ShortComplex (AbSheaf X)} (hS : S.ShortExact)
     {W : Opens X} (hW : ∀ i, U i ≤ W) (hcov : W ≤ ⨆ i, U i)
     (hH : ∀ σ : Fin 1 → ι, ∀ x : H ((restrictOpen (cechOpen U σ)).obj S.X₁) 1, x = 0)

@@ -155,7 +155,7 @@ end Merge
 /-- **The merge lemma.** Let `A, B` be Cousin-shrinkable and `c ∈ H'ᵠ⁺¹(U)` compactly zero on `A`
 and on `B`. Then `c` is compactly zero on `A ∪ B`, provided sections of `F` split (`q = 0`) or
 classes of degree `q` on products of holed rectangles are compactly zero (`q ≥ 1`). -/
-theorem compactlyZero_union [Fintype ι] {q : ℕ} {U : Opens 𝕏}
+theorem compactlyZero_union {q : ℕ} {U : Opens 𝕏}
     {c : CategoryTheory.Sheaf.H'.{u} F (q + 1) U} {A B : Set (ι → ℂ)}
     (hAB : CousinShrinkable A B) (hA : CompactlyZero F c A) (hB : CompactlyZero F c B)
     (hC : q = 0 → CousinSplitting F) (hZ : 0 < q → CompactlyZeroOnProd F q) :

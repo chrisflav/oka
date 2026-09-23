@@ -46,7 +46,7 @@ variable {R n}
 @[simp] lemma killLast_X_last : killLast R n (X (Fin.last n)) = 0 := by simp [killLast]
 @[simp] lemma killLast_X_castSucc (j : Fin n) : killLast R n (X j.castSucc) = X j := by
   simp [killLast]
-@[simp] lemma killLast_C (r : R) : killLast R n (C r) = C r := by simp [killLast]
+lemma killLast_C (r : R) : killLast R n (C r) = C r := by simp [killLast]
 
 /-- `killLast` preserves homogeneity. -/
 lemma killLast_mem_homogeneousSubmodule {m : ℕ} {p : MvPolynomial (Fin (n + 1)) R}

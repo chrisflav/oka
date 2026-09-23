@@ -108,7 +108,7 @@ open HoledRect
 `A ∪ B` is covered by opens `A'' ⋐ A' ⋐ A`, `B'' ⋐ B' ⋐ B` (relatively compact), with `A' ∩ B'` a
 product of holed rectangles, such that every function holomorphic on `A' ∩ B'` is a sum of
 functions holomorphic on `A''` and on `B''`, on `A'' ∩ B''`. -/
-def CousinShrinkable {ι : Type*} [Fintype ι] (A B : Set (ι → ℂ)) : Prop :=
+def CousinShrinkable {ι : Type*} (A B : Set (ι → ℂ)) : Prop :=
   ∀ K : Set (ι → ℂ), IsCompact K → K ⊆ A ∪ B → ∃ A' B' A'' B'' : Set (ι → ℂ),
     IsOpen A' ∧ IsOpen B' ∧ IsOpen A'' ∧ IsOpen B'' ∧
     IsCompact (closure A') ∧ closure A' ⊆ A ∧ IsCompact (closure B') ∧ closure B' ⊆ B ∧
@@ -463,14 +463,15 @@ theorem exists_split_cutIm {σ : HoledRect} {t δ ε : ℝ} (hε : 0 < ε) (hδ 
 
 section Transport
 
-variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι : Type*} [DecidableEq ι]
 
-lemma splitAt_symm_apply_self (i : ι) (p : ℂ × ({j // j ≠ i} → ℂ)) :
+lemma splitAt_symm_apply_self [Fintype ι] (i : ι) (p : ℂ × ({j // j ≠ i} → ℂ)) :
     (splitAt i).symm p i = p.1 :=
   calc (splitAt i).symm p i = (splitAt i ((splitAt i).symm p)).1 := rfl
     _ = p.1 := by rw [ContinuousLinearEquiv.apply_symm_apply]
 
-lemma splitAt_symm_apply_of_ne (i : ι) (p : ℂ × ({j // j ≠ i} → ℂ)) {j : ι} (hj : j ≠ i) :
+lemma splitAt_symm_apply_of_ne [Fintype ι] (i : ι) (p : ℂ × ({j // j ≠ i} → ℂ)) {j : ι}
+    (hj : j ≠ i) :
     (splitAt i).symm p j = p.2 ⟨j, hj⟩ :=
   calc (splitAt i).symm p j = (splitAt i ((splitAt i).symm p)).2 ⟨j, hj⟩ := rfl
     _ = p.2 ⟨j, hj⟩ := by rw [ContinuousLinearEquiv.apply_symm_apply]
@@ -497,12 +498,13 @@ lemma exists_gap {a b r : ℝ} (hab : a ≤ b) (h : Disjoint (Icc a b) (Icc (-r)
 
 /-- **The cut in the real direction of the `i`-th coordinate is Cousin-shrinkable**, provided the
 closed strip `[t - δ, t + δ]` does not contain `±r`. -/
-theorem cousinShrinkable_cutRe (s : ι → HoledRect) (i : ι) {t δ : ℝ} (hδ : 0 < δ)
+theorem cousinShrinkable_cutRe [Finite ι] (s : ι → HoledRect) (i : ι) {t δ : ℝ} (hδ : 0 < δ)
     (h0 : (s i).x₀ ≤ t - δ) (h1 : t + δ ≤ (s i).x₁)
     (hhole : Disjoint (Icc (t - δ) (t + δ)) (Icc (-(s i).r) (s i).r) ∨
       Icc (t - δ) (t + δ) ⊆ Ioo (-(s i).r) (s i).r) :
     CousinShrinkable (prod (Function.update s i ((s i).withX₁ (t + δ))))
       (prod (Function.update s i ((s i).withX₀ (t - δ)))) := by
+  have := Fintype.ofFinite ι
   intro K hK hKAB
   set σ := s i with hσ
   set uA := Function.update s i (σ.withX₁ (t + δ))
@@ -642,12 +644,13 @@ theorem cousinShrinkable_cutRe (s : ι → HoledRect) (i : ι) {t δ : ℝ} (hδ
 
 /-- **The cut in the imaginary direction of the `i`-th coordinate is Cousin-shrinkable**,
 provided the closed strip `[t - δ, t + δ]` does not contain `±r`. -/
-theorem cousinShrinkable_cutIm (s : ι → HoledRect) (i : ι) {t δ : ℝ} (hδ : 0 < δ)
+theorem cousinShrinkable_cutIm [Finite ι] (s : ι → HoledRect) (i : ι) {t δ : ℝ} (hδ : 0 < δ)
     (h0 : (s i).y₀ ≤ t - δ) (h1 : t + δ ≤ (s i).y₁)
     (hhole : Disjoint (Icc (t - δ) (t + δ)) (Icc (-(s i).r) (s i).r) ∨
       Icc (t - δ) (t + δ) ⊆ Ioo (-(s i).r) (s i).r) :
     CousinShrinkable (prod (Function.update s i ((s i).withY₁ (t + δ))))
       (prod (Function.update s i ((s i).withY₀ (t - δ)))) := by
+  have := Fintype.ofFinite ι
   intro K hK hKAB
   set σ := s i with hσ
   set uA := Function.update s i (σ.withY₁ (t + δ))

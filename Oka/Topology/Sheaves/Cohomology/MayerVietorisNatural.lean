@@ -249,11 +249,10 @@ theorem exact_fromProd_δ : Function.Exact (fromProd A B F q) (δ A B F q) := by
 /-- Exactness of `H'ᵠ(A ⊓ B) → H'ᵠ⁺¹(A ⊔ B) → H'ᵠ⁺¹(A) × H'ᵠ⁺¹(B)`. -/
 theorem exact_δ_toProd : Function.Exact (δ A B F q) (toProd A B F (q + 1)) := by
   rw [toProd_eq_comp]
-  exact exact_equiv_comp (biprodEquiv A B F (q + 1)).toEquiv 
+  exact exact_equiv_comp (biprodEquiv A B F (q + 1)).toEquiv
     (biprodEquiv A B F (q + 1)).map_zero (seq_exact A B F q 2)
 
 /-- The composition `H'ᵠ(A) × H'ᵠ(B) → H'ᵠ(A ⊓ B) → H'ᵠ⁺¹(A ⊔ B)` vanishes. -/
-@[simp]
 lemma δ_fromProd
     (p : CategoryTheory.Sheaf.H'.{u} F q A × CategoryTheory.Sheaf.H'.{u} F q B) :
     δ A B F q (fromProd A B F q p) = 0 :=

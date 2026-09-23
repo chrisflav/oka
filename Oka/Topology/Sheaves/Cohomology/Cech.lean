@@ -32,7 +32,7 @@ in `P` (`TopCat.Presheaf.cechComplexFunctor`). The Čech cohomology is
   cochains; `TopCat.Presheaf.IsCechAcyclic U P` says the complex is exact in all positive degrees.
 * `TopCat.Presheaf.cechAugment_injective`, `TopCat.Presheaf.exists_cechAugment_eq`:
   for a sheaf `F` and a family `U` covering `W`, `0 → F(W) → Č⁰ → Č¹` is exact, i.e.
-  `Ȟ⁰(U, F) = F(W)` (`TopCat.Presheaf.cechAugmentAddEquivKer`).
+  Čech `H⁰(U, F) = F(W)` (`TopCat.Presheaf.cechAugmentAddEquivKer`).
 * `TopCat.Presheaf.cechComplex_shortExact`: a short exact sequence of presheaves which is short
   exact on every finite intersection `U_σ` gives a short exact sequence of Čech complexes, hence
   (via `ShortComplex.ShortExact.homology_exact₁` etc.) the long exact sequence of Čech cohomology;
@@ -285,7 +285,7 @@ lemma exists_cechAugment_eq (c : CechCochain U F.obj 0) (hc : cechD U F.obj 0 c 
   obtain ⟨i, rfl⟩ : ∃ i, σ = fun _ => i := ⟨σ 0, fin_one_eq_const σ⟩
   exact hs i
 
-/-- `Ȟ⁰(U, F) = F(W)` for a sheaf `F` and a family `U` covering `W`: the augmentation is an
+/-- Čech `H⁰(U, F) = F(W)` for a sheaf `F` and a family `U` covering `W`: the augmentation is an
 isomorphism of `F(W)` onto the Čech `0`-cocycles. -/
 noncomputable def cechAugmentAddEquivKer : F.obj.obj (op W) ≃+ (cechD U F.obj 0).ker :=
   AddEquiv.ofBijective

@@ -172,7 +172,6 @@ noncomputable def twistUnitToPushforward (h : Cocycle.IsPullback φ e hU c d) :
     (fun V r s ↦ twist_ext (V := φ ⁻¹ᵁ V) fun j ↦ twistPullbackComp_smul (hU := hU) V r s j)
     (fun _ W hW s ↦ twist_ext (V := φ ⁻¹ᵁ W) fun j ↦ twistPullbackComp_res (hU := hU) hW s j)
 
-@[simp]
 lemma twistComp_twistUnitToPushforward_app (h : Cocycle.IsPullback φ e hU c d) (V : X.Opens)
     (s : Γ(twist (SheafOfModules.unit X.ringCatSheaf) c, V)) (j : κ') :
     twistComp (V := φ ⁻¹ᵁ V) ((twistUnitToPushforward φ e hU c d h).app V s) j =

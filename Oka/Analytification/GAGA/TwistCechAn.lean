@@ -36,7 +36,7 @@ exactness of `holD` and Leray's theorem:
 
 - `ComplexAnalytic.projectiveSpaceAn.H_twistingSheafAn_eq_zero`: `Hᵠ(ℙⁿ_an, 𝒪(k)^an) = 0` for
   `q ≥ 1` and `k ≥ -n`.
-- `ComplexAnalytic.projectiveSpaceAn.H_zero_twistingSheafAn_equiv`:
+- `ComplexAnalytic.projectiveSpaceAn.hZeroTwistingSheafAnEquiv`:
   `H⁰(ℙⁿ_an, 𝒪(e)^an) ≃ ℂ[X₀, …, Xₙ]_e` for `e ≥ 0`.
 - `ComplexAnalytic.projectiveSpaceAn.H_zero_twistingSheafAn_eq_zero`: `H⁰(ℙⁿ_an, 𝒪(k)^an) = 0` for
   `k < 0`, `n ≥ 1`.
@@ -493,7 +493,7 @@ noncomputable def homogeneousEquivKerHolD (e : ℕ) :
 variable (n) in
 /-- `H⁰(ℙⁿ_an, 𝒪(k)^an)` is the kernel of the first differential of the analytic Čech
 complex. -/
-noncomputable def H_zero_twistingSheafAn_equivKer (k : ℤ) :
+noncomputable def hZeroTwistingSheafAnEquivKer (k : ℤ) :
     LocallyRingedSpace.H (twistingSheafAn.{u} n k) 0 ≃+
       (CechProjectiveAn.holD k (n := n) 0).toAddMonoidHom.ker :=
   (LocallyRingedSpace.H.equiv₀ _).trans
@@ -504,18 +504,18 @@ noncomputable def H_zero_twistingSheafAn_equivKer (k : ℤ) :
 
 variable (n) in
 /-- **`H⁰(ℙⁿ_an, 𝒪(e)^an) = ℂ[X₀, …, Xₙ]_e`** for `e ≥ 0`. -/
-noncomputable def H_zero_twistingSheafAn_equiv (e : ℕ) :
+noncomputable def hZeroTwistingSheafAnEquiv (e : ℕ) :
     LocallyRingedSpace.H (twistingSheafAn.{u} n e) 0 ≃+
       MvPolynomial.homogeneousSubmodule (Fin (n + 1)) ℂ e :=
-  (H_zero_twistingSheafAn_equivKer n e).trans (homogeneousEquivKerHolD n e).symm
+  (hZeroTwistingSheafAnEquivKer n e).trans (homogeneousEquivKerHolD n e).symm
 
 /-- **`H⁰(ℙⁿ_an, 𝒪(k)^an) = 0` for `k < 0`** (`n ≥ 1`). -/
 theorem H_zero_twistingSheafAn_eq_zero (hn : 1 ≤ n) (k : ℤ) (hk : k < 0)
     (x : LocallyRingedSpace.H (twistingSheafAn.{u} n k) 0) : x = 0 := by
-  apply (H_zero_twistingSheafAn_equivKer n k).injective
+  apply (hZeroTwistingSheafAnEquivKer n k).injective
   rw [map_zero]
   apply Subtype.ext
-  have hx := (H_zero_twistingSheafAn_equivKer n k x).2
+  have hx := (hZeroTwistingSheafAnEquivKer n k x).2
   exact (CechProjectiveAn.holD_zero_injective hk (Or.inl hn)) (hx.trans (map_zero _).symm)
 
 end ComplexAnalytic.projectiveSpaceAn

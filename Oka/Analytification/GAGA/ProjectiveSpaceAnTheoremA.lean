@@ -144,7 +144,7 @@ variable {N : ℕ}
 def HLinearEquivOfIso
     {P Q : SheafOfModules.{u} (projectiveSpaceAn.{u} N).toLocallyRingedSpace.ringSheaf}
     (e : P ≅ Q) (q : ℕ) : H P q ≃ₗ[ℂ] H Q q :=
-  { AnalyticSpace.H_mapₗ e.hom q with
+  { AnalyticSpace.hMapₗ e.hom q with
     invFun := H.map e.inv q
     left_inv := fun x ↦ by
       change H.map e.inv q (H.map e.hom q x) = x
@@ -202,7 +202,7 @@ lemma surjective_H_one_imageι :
 variable (φ) in
 /-- `H¹(M(-1)(m)) → H¹(M(m))` induced by `φ`, as a `ℂ`-linear map. -/
 def twistHOneMap : H (twistMod (twistMod M (-1)) m) 1 →ₗ[ℂ] H (twistMod M m) 1 :=
-  AnalyticSpace.H_mapₗ ((twistModFunctor N m).map φ) 1
+  AnalyticSpace.hMapₗ ((twistModFunctor N m).map φ) 1
 
 lemma twistHOneMap_apply (z : H (twistMod (twistMod M (-1)) m) 1) :
     twistHOneMap φ m z = H.map ((twistModFunctor N m).map (Abelian.image.ι φ)) 1

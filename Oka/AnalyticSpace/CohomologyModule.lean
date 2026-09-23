@@ -54,13 +54,13 @@ lemma H_map_smul (φ : M ⟶ N) {q : ℕ} (c : ℂ) (x : H M q) :
 
 /-- The map `Hᵠ(Z, M) → Hᵠ(Z, N)` induced by a morphism of sheaves of modules, as a `ℂ`-linear
 map. -/
-noncomputable def H_mapₗ (φ : M ⟶ N) (q : ℕ) : H M q →ₗ[ℂ] H N q where
+noncomputable def hMapₗ (φ : M ⟶ N) (q : ℕ) : H M q →ₗ[ℂ] H N q where
   toFun := H.map φ q
   map_add' := map_add _
   map_smul' := H_map_smul φ
 
 @[simp]
-lemma H_mapₗ_apply (φ : M ⟶ N) {q : ℕ} (x : H M q) : H_mapₗ φ q x = H.map φ q x :=
+lemma hMapₗ_apply (φ : M ⟶ N) {q : ℕ} (x : H M q) : hMapₗ φ q x = H.map φ q x :=
   rfl
 
 /-- The connecting homomorphisms are `ℂ`-linear. -/
@@ -70,7 +70,7 @@ lemma H_δ_smul {S : ShortComplex (SheafOfModules.{u} Z.toLocallyRingedSpace.rin
   H.δ_smul hS h (Z.algebraMap c) x
 
 /-- The connecting homomorphism of a short exact sequence, as a `ℂ`-linear map. -/
-noncomputable def H_δₗ {S : ShortComplex (SheafOfModules.{u} Z.toLocallyRingedSpace.ringSheaf)}
+noncomputable def hδₗ {S : ShortComplex (SheafOfModules.{u} Z.toLocallyRingedSpace.ringSheaf)}
     (hS : S.ShortExact) (n₀ n₁ : ℕ) (h : n₀ + 1 = n₁) : H S.X₃ n₀ →ₗ[ℂ] H S.X₁ n₁ where
   toFun := H.δ hS n₀ n₁ h
   map_add' := map_add _

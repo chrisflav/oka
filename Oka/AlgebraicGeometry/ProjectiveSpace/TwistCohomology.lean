@@ -23,7 +23,7 @@ degreewise and compatibly with the differentials, to the Laurent-model complex
 By Leray's theorem, if `O(k)` has no higher cohomology on the affine opens `UI I` (Serre's affine
 vanishing), then `Hᵠ(ℙ(n; R), O(k)) = 0` for `q ≥ 1` and `k ≥ -n`
 (`H_twistingSheafAb_eq_zero`). In degree zero, `H⁰(ℙ(n; R), O(d)) ≅ A_d` for `d ≥ 0`
-(`H_zero_twistingSheafAb_equiv`) and `H⁰(ℙ(n; R), O(k)) = 0` for `k < 0`
+(`hZeroTwistingSheafAbEquiv`) and `H⁰(ℙ(n; R), O(k)) = 0` for `k < 0`
 (`H_zero_twistingSheafAb_eq_zero`), for `n ≥ 1`.
 
 ## Main definitions and results
@@ -35,7 +35,7 @@ vanishing), then `Hᵠ(ℙ(n; R), O(k)) = 0` for `q ≥ 1` and `k ≥ -n`
 - `ProjectiveSpace.exactAt_cechComplex_twistingSheafAb`,
   `ProjectiveSpace.isCechAcyclic_twistingSheafAb`.
 - `ProjectiveSpace.H_twistingSheafAb_eq_zero` (conditional on acyclicity on the `UI I`).
-- `ProjectiveSpace.H_zero_twistingSheafAb_equiv`, `ProjectiveSpace.H_zero_twistingSheafAb_eq_zero`.
+- `ProjectiveSpace.hZeroTwistingSheafAbEquiv`, `ProjectiveSpace.H_zero_twistingSheafAb_eq_zero`.
 - The specialisations to `R = ULift ℂ`.
 -/
 
@@ -183,7 +183,7 @@ theorem H_twistingSheafAb_eq_zero (k : ℤ) (hk : -(n : ℤ) ≤ k)
 
 /-- **`H⁰(ℙⁿ, O(d)) = A_d`**: for `n ≥ 1` and `d ≥ 0`, the global sections of `O(d)` are the
 homogeneous polynomials of degree `d`. -/
-noncomputable def H_zero_twistingSheafAb_equiv (hn : 1 ≤ n) (d : ℕ) :
+noncomputable def hZeroTwistingSheafAbEquiv (hn : 1 ≤ n) (d : ℕ) :
     TopCat.Sheaf.H (twistingSheafAb n R d) 0 ≃+ 𝒜 d :=
   (TopCat.Sheaf.H.equiv₀ _).trans (globalSectionsEquiv hn d)
 
@@ -205,10 +205,10 @@ theorem H_twistingSheafAb_complex_eq_zero (k : ℤ) (hk : -(n : ℤ) ≤ k)
   H_twistingSheafAb_eq_zero k hk hacyc q x
 
 /-- `H⁰(ℙⁿ_ℂ, O(d)) = ℂ[X₀, …, Xₙ]_d` for `n ≥ 1`, `d ≥ 0`. -/
-noncomputable def H_zero_twistingSheafAb_complex_equiv (hn : 1 ≤ n) (d : ℕ) :
+noncomputable def hZeroTwistingSheafAbComplexEquiv (hn : 1 ≤ n) (d : ℕ) :
     TopCat.Sheaf.H (twistingSheafAb n (ULift.{u} ℂ) d) 0 ≃+
       homogeneousSubmodule (Fin (n + 1)) (ULift.{u} ℂ) d :=
-  H_zero_twistingSheafAb_equiv hn d
+  hZeroTwistingSheafAbEquiv hn d
 
 end Complex
 

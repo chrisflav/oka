@@ -19,7 +19,7 @@ and the quotient by it is the germ ring in `n` variables (`LocalOkaRing.quotient
 which is Weierstrass division), so `ModuleCat.HasFGGlobalDimensionLE.of_quotient` applies. In
 `0` variables the germ ring is a field. The coordinates are indexed by `ULift (Fin n)` so that the
 ring, and the modules over it, live in an arbitrary universe; this is the indexing of
-`ComplexAnalytic.complexAffineSpace`.
+`complexAffineSpace`.
 -/
 
 universe u

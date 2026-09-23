@@ -8,8 +8,9 @@ import Oka.Analytification.GAGA.HolomorphicFrechet
 /-!
 # Continuous operations on the Fréchet space of holomorphic functions
 
-For the topology of compact convergence on `OkaRing U` (`HolomorphicFrechet.lean`), the basic
-holomorphic operations are continuous linear maps:
+For the topology of compact convergence on `OkaRing U`
+(`Oka.Analytification.GAGA.HolomorphicFrechet`), the basic holomorphic operations are
+continuous linear maps:
 
 - `OkaRing.mulCLM g : OkaRing U →L[ℂ] OkaRing U`, multiplication by a fixed function;
 - `OkaRing.compCLM φ hφ hmaps : OkaRing U →L[ℂ] OkaRing V`, composition `f ↦ f ∘ φ` with a

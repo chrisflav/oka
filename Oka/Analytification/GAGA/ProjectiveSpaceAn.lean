@@ -21,7 +21,7 @@ images cover `ℙⁿ_an`.
 
 For `v ∈ ℂⁿ⁺¹ ∖ 0` the point `ComplexAnalytic.projectiveSpaceAn.pointOfVec v` is the image under
 the chart `i` of the dehomogenisation `(v_{i.succAbove m} / vᵢ)ₘ`, for any `i` with `vᵢ ≠ 0`
-(`pointOfVec_eq`): this is the chart transition `z ↦ (ẑₖ / ẑⱼ)` in coordinates. Two vectors give
+(`pointOfVec_eq`): this is the chart transition `z ↦ (ẑₖ / ẑⱼ)` in coordinates. Two vectors give
 the same point if and only if they are proportional, and every point arises this way, so the
 points of `ℙⁿ_an` are the lines in `ℂⁿ⁺¹`
 (`ComplexAnalytic.projectiveSpaceAn.projectivizationEquiv`).
@@ -154,7 +154,8 @@ open ProjectiveSpace (dehomogenizeVec)
 
 /-- **Chart transitions in coordinates**: if `vᵢ ≠ 0` and `vⱼ ≠ 0`, the chart `i` at the
 dehomogenisation of `v` at `i` and the chart `j` at its dehomogenisation at `j` are the same
-point; i.e. the transition map sends `z` to `(ẑ_{j.succAbove m} / ẑⱼ)ₘ`, `ẑ = (z with 1 at i)`. -/
+point; i.e. the transition map sends `z` to `(ẑ_{j.succAbove m} / ẑⱼ)ₘ`,
+`ẑ = (z with 1 at i)`. -/
 theorem chart_dehomogenizeVec_eq (i j : Fin (n + 1)) (v : Fin (n + 1) → ℂ) (hi : v i ≠ 0)
     (hj : v j ≠ 0) :
     (projectiveSpaceAnChart.{u} i).toLRSHom.base (ofFin (dehomogenizeVec i v)) =
@@ -366,8 +367,8 @@ lemma continuous_homogCoord (i j : Fin (n + 1)) :
     (continuous_pi fun m ↦ continuous_apply (ULift.up m)))
 
 /-- **`ℙⁿ_an` is Hausdorff.** Two points in a common chart are separated there; otherwise, with
-`x` in the chart `i` and `y` in the chart `j`, the sets `{|ẑⱼ| < 1}` of the chart `i` and
-`{|ŵᵢ| < 1}` of the chart `j` separate them, since on the overlap `ŵᵢ = 1 / ẑⱼ`. -/
+`x` in the chart `i` and `y` in the chart `j`, the sets `{|ẑⱼ| < 1}` of the chart `i` and
+`{|ŵᵢ| < 1}` of the chart `j` separate them, since on the overlap `ŵᵢ = 1 / ẑⱼ`. -/
 instance t2Space : T2Space (projectiveSpaceAn.{u} n) := by
   refine ⟨fun x y hxy ↦ ?_⟩
   by_cases hc : ∃ k, x ∈ Set.range (projectiveSpaceAnChart.{u} k).toLRSHom.base ∧

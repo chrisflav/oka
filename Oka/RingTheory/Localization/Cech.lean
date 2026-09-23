@@ -408,7 +408,6 @@ variable {c : R} (hjc : ∃ k, f j ∣ c ^ k) (hc : ∀ i, ∃ n, c ∣ f i ^ n)
 include hjc
 
 omit hj in
-@[simp]
 lemma cechHtpy₀_cechAugAway (y : LocalizedModule (powers c) M) :
     cechHtpy₀ M hjc (cechAugAway hc y) = y := by
   simp

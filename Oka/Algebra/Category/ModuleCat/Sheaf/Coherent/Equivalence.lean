@@ -206,7 +206,7 @@ theorem isCoherent_pushforward_of_equivalence [IsIso φ]
 include H₁ H₂ in
 /-- **Coherence is reflected by an equivalence of sites**: the converse of
 `SheafOfModules.isCoherent_pushforward_of_equivalence`. -/
-theorem isCoherent_of_isCoherent_pushforward_of_equivalence [IsIso φ] [IsIso ψ]
+theorem isCoherent_of_isCoherent_pushforward_of_equivalence [IsIso ψ]
     (η : (pushforward φ).obj (unit R) ≅ unit S) (M : SheafOfModules.{u} R)
     (hM : ((pushforward φ).obj M).IsCoherent) : M.IsCoherent := by
   let E := pushforwardPushforwardEquivalence eqv φ ψ H₁ H₂

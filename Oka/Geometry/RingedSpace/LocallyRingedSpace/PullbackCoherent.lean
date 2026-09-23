@@ -46,7 +46,7 @@ theorem isCoherent_free_restrict (hZ : Z.IsCoherentStructureSheaf) (W : Opens Z)
 /-- The pullback of a cokernel of finite free sheaves along `f : Z ⟶ Y` is coherent if finite
 free sheaves on `Z` are. -/
 theorem isCoherent_pullbackModules_cokernel_of_isCoherent_free (f : Z ⟶ Y) {I K : Type u}
-    [Finite I] [Finite K] (hK : (SheafOfModules.free (R := Z.ringSheaf) K).IsCoherent)
+    [Finite I] (hK : (SheafOfModules.free (R := Z.ringSheaf) K).IsCoherent)
     (ψ : SheafOfModules.free (R := Y.ringSheaf) I ⟶ SheafOfModules.free K) :
     (f.pullbackModules.obj (cokernel ψ)).IsCoherent := by
   haveI : PreservesColimits f.pullbackModules :=
@@ -65,7 +65,7 @@ theorem isCoherent_pullbackModules_cokernel_of_isCoherent_free (f : Z ⟶ Y) {I 
 /-- The pullback of a sheaf presented by a colimit cokernel cofork of finite free sheaves along
 `f : Z ⟶ Y` is coherent if finite free sheaves on `Z` are. -/
 theorem isCoherent_pullbackModules_of_isColimit_of_isCoherent_free (f : Z ⟶ Y) {I K : Type u}
-    [Finite I] [Finite K] (hK : (SheafOfModules.free (R := Z.ringSheaf) K).IsCoherent)
+    [Finite I] (hK : (SheafOfModules.free (R := Z.ringSheaf) K).IsCoherent)
     (ψ : SheafOfModules.free (R := Y.ringSheaf) I ⟶ SheafOfModules.free K)
     {F : SheafOfModules.{u} Y.ringSheaf} (g : SheafOfModules.free K ⟶ F) (H : ψ ≫ g = 0)
     (hc : IsColimit (CokernelCofork.ofπ g H)) :

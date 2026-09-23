@@ -10,8 +10,9 @@ import Oka.Topology.Sheaves.Cohomology.PullbackZero
 # Čech cohomology in degree one
 
 Let `U : ι → Opens X` be an open cover of `X` and `F` an abelian sheaf. We construct the
-comparison map `Ȟ¹(U, F) → H¹(X, F)` and show that it is always injective, and bijective as soon
-as `H¹(U i, F|_{U i}) = 0` for all `i` (no condition on the intersections).
+comparison map `H¹(U, F) → H¹(X, F)` from Čech to sheaf cohomology and show that it is
+always injective, and bijective as soon as `H¹(U i, F|_{U i}) = 0` for all `i` (no condition on
+the intersections).
 
 The map is the classical one. Embed `F` into an injective sheaf, `0 → F → I → Q → 0`
 (`TopCat.Sheaf.injSES`). A Čech `1`-cocycle `z` of `F` is a coboundary `d t` in `Č•(U, I)` (the
@@ -426,7 +427,7 @@ lemma toCycles_comp_cechCyclesToH (F : AbSheaf X) :
   simp only [hb, cechToH_cechD]
   rfl
 
-/-- **The comparison map `Ȟ¹(U, F) → H¹(X, F)`** for an open cover `U` of `X`. -/
+/-- **The comparison map `H¹(U, F) → H¹(X, F)`** for an open cover `U` of `X`. -/
 noncomputable def cechHomologyToH (F : AbSheaf X) :
     (cechComplex U F.obj).homology 1 →+ H F 1 :=
   (((cechComplex U F.obj).homologyIsCokernel 0 1 (by simp)).desc
@@ -454,7 +455,7 @@ lemma exists_iCycles_eq {P : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} {z : CechCoc
   funext τ
   exact (cechComplex_d_apply U P 1 z τ).trans (congrFun hz τ)
 
-/-- The comparison map `Ȟ¹(U, F) → H¹(X, F)` is injective. -/
+/-- The comparison map `H¹(U, F) → H¹(X, F)` is injective. -/
 theorem cechHomologyToH_injective (F : AbSheaf X) : Function.Injective (cechHomologyToH hU F) := by
   let K := cechComplex U F.obj
   rw [injective_iff_map_eq_zero]
@@ -469,7 +470,7 @@ theorem cechHomologyToH_injective (F : AbSheaf X) : Function.Injective (cechHomo
   rw [← hc, ← ConcreteCategory.comp_apply, HomologicalComplex.toCycles_comp_homologyπ]
   rfl
 
-/-- The comparison map `Ȟ¹(U, F) → H¹(X, F)` is surjective if `H¹(U i, F|_{U i}) = 0` for all
+/-- The comparison map `H¹(U, F) → H¹(X, F)` is surjective if `H¹(U i, F|_{U i}) = 0` for all
 `i`. -/
 theorem cechHomologyToH_surjective (F : AbSheaf X)
     (hH : ∀ i, ∀ x : H ((restrictOpen (U i)).obj F) 1, x = 0) :
@@ -482,7 +483,7 @@ theorem cechHomologyToH_surjective (F : AbSheaf X)
   congr 1
 
 /-- **Čech `H¹` computes sheaf `H¹`**: for an open cover `U` of `X` with
-`H¹(U i, F|_{U i}) = 0` for all `i`, the comparison map `Ȟ¹(U, F) → H¹(X, F)` is an
+`H¹(U i, F|_{U i}) = 0` for all `i`, the comparison map `H¹(U, F) → H¹(X, F)` is an
 isomorphism. -/
 noncomputable def cechH1Equiv (F : AbSheaf X)
     (hH : ∀ i, ∀ x : H ((restrictOpen (U i)).obj F) 1, x = 0) :
@@ -495,7 +496,7 @@ lemma cechH1Equiv_apply (F : AbSheaf X) (hH : ∀ i, ∀ x : H ((restrictOpen (U
     (x : (cechComplex U F.obj).homology 1) : cechH1Equiv hU F hH x = cechHomologyToH hU F x :=
   rfl
 
-/-- The comparison map `Ȟ¹(U, F) → H¹(X, F)` is natural in `F`. -/
+/-- The comparison map `H¹(U, F) → H¹(X, F)` is natural in `F`. -/
 theorem cechHomologyToH_naturality {F G : AbSheaf X} (φ : F ⟶ G)
     (x : (cechComplex U F.obj).homology 1) :
     cechHomologyToH hU G (HomologicalComplex.homologyMap ((cechComplexFunctor U).map φ.hom) 1 x) =
@@ -508,8 +509,8 @@ theorem cechHomologyToH_naturality {F G : AbSheaf X} (φ : F ⟶ G)
   rw [← ConcreteCategory.comp_apply, HomologicalComplex.cyclesMap_i, ConcreteCategory.comp_apply]
   rfl
 
-/-- The comparison map `Ȟ¹(U, F) → H¹(X, F)` is compatible with refinement: for a cover `V`
-with `V k ≤ U (τ k)`, the refinement map `Ȟ¹(U, F) → Ȟ¹(V, F)` commutes with the comparison
+/-- The comparison map `H¹(U, F) → H¹(X, F)` is compatible with refinement: for a cover `V`
+with `V k ≤ U (τ k)`, the refinement map `H¹(U, F) → H¹(V, F)` commutes with the comparison
 maps. -/
 theorem cechHomologyToH_refine {κ : Type u} {V : κ → Opens X} (hV : ⨆ k, V k = ⊤) {τ : κ → ι}
     (hτ : ∀ k, V k ≤ U (τ k)) (F : AbSheaf X) (x : (cechComplex U F.obj).homology 1) :

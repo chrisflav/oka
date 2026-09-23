@@ -14,7 +14,7 @@ For an open immersion `f : Y ⟶ X` of locally ringed spaces the restriction of 
 `𝒪_X` along the open embedding `f` is the structure sheaf `𝒪_Y`, as abelian sheaves
 (`AlgebraicGeometry.LocallyRingedSpace.restrictAbStructureSheafAbIso`). Consequently the
 cohomology of `𝒪_X` on the image `f(V)` of an open `V` of `Y` is the cohomology of `𝒪_Y` on `V`
-(`AlgebraicGeometry.LocallyRingedSpace.H_restrictOpen_structureSheafAb_addEquiv`).
+(`AlgebraicGeometry.LocallyRingedSpace.structureSheafAbImageAddEquiv`).
 -/
 
 universe u
