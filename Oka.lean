@@ -30,6 +30,7 @@ import Oka.Algebra.MvPolynomial.Equiv
 import Oka.Algebra.MvPolynomial.Funext
 import Oka.Algebra.MvPolynomial.PDeriv
 import Oka.Algebra.MvPolynomial.Taylor
+import Oka.AlgebraicGeometry.AlgClosed.Basic
 import Oka.AlgebraicGeometry.GammaSpecAdjunction
 import Oka.AlgebraicGeometry.Modules.AffineVanishing
 import Oka.AlgebraicGeometry.Modules.CocycleTwist
@@ -46,6 +47,7 @@ import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.Modules.TildeExact
 import Oka.AlgebraicGeometry.Morphisms.ClosedImmersion
+import Oka.AlgebraicGeometry.Morphisms.FormallyUnramified
 import Oka.AlgebraicGeometry.OpenImmersion
 import Oka.AlgebraicGeometry.ProjectiveSpace.AwayEval
 import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
@@ -259,7 +261,9 @@ import Oka.Analytification.OverSpec
 import Oka.Analytification.Presentation
 import Oka.Analytification.PresentationFlatness
 import Oka.Analytification.PresentationStalk
+import Oka.Analytification.RET.ClosedPoints
 import Oka.Analytification.RET.EtaleLocalIso
+import Oka.Analytification.RET.Faithful
 import Oka.Analytification.RET.FiniteAnalytification
 import Oka.Analytification.RET.FiniteEtaleFunctor
 import Oka.Analytification.RET.SpecBridge
@@ -404,6 +408,7 @@ import Oka.Topology.Covering.Basic
 import Oka.Topology.Covering.Quotient
 import Oka.Topology.Homeomorph.Lemmas
 import Oka.Topology.IsLocalHomeomorph
+import Oka.Topology.JacobsonSpace
 import Oka.Topology.Maps.Proper.Basic
 import Oka.Topology.SeparatedMap
 import Oka.Topology.Sheaves.Cohomology.BaseChange
