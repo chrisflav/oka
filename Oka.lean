@@ -328,6 +328,7 @@ import Oka.Topology.Sheaves.Cohomology.CechInjective
 import Oka.Topology.Sheaves.Cohomology.ClosedEmbedding
 import Oka.Topology.Sheaves.Cohomology.Dimension
 import Oka.Topology.Sheaves.Cohomology.Leray
+import Oka.Topology.Sheaves.Cohomology.LocalVanishing
 import Oka.Topology.Sheaves.Cohomology.MayerVietoris
 import Oka.Topology.Sheaves.Cohomology.Pullback
 import Oka.Topology.Sheaves.Cohomology.PullbackZero
