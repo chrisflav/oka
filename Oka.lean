@@ -51,6 +51,7 @@ import Oka.AlgebraicGeometry.ProjectiveSpace.AwayEval
 import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
 import Oka.AlgebraicGeometry.ProjectiveSpace.GermChart
 import Oka.AlgebraicGeometry.ProjectiveSpace.Hyperplane
+import Oka.AlgebraicGeometry.ProjectiveSpace.HyperplaneIdeal
 import Oka.AlgebraicGeometry.ProjectiveSpace.HyperplaneSequence
 import Oka.AlgebraicGeometry.ProjectiveSpace.Points
 import Oka.AlgebraicGeometry.ProjectiveSpace.SerreVanishing
@@ -128,6 +129,7 @@ import Oka.AnalyticSpace.OpenBaseProjectionPolynomial
 import Oka.AnalyticSpace.OpenSubspace
 import Oka.AnalyticSpace.ProjectionStalk
 import Oka.AnalyticSpace.PullbackBlock
+import Oka.AnalyticSpace.PullbackCoherent
 import Oka.AnalyticSpace.PullbackGlue
 import Oka.AnalyticSpace.PullbackLimit
 import Oka.AnalyticSpace.PullbackModulesStalk
@@ -158,6 +160,7 @@ import Oka.AnalyticSpace.SimplyConnectedCoprod
 import Oka.AnalyticSpace.SimplyConnectedCriterion
 import Oka.AnalyticSpace.StalkLocalInverse
 import Oka.AnalyticSpace.ZeroLocus
+import Oka.AnalyticSpace.ZeroLocusModules
 import Oka.Analytification.AffineCover
 import Oka.Analytification.AffineSpace
 import Oka.Analytification.ChangeOfVariables
@@ -201,6 +204,7 @@ import Oka.Analytification.GAGA.GridMerge
 import Oka.Analytification.GAGA.HoledRect
 import Oka.Analytification.GAGA.HolomorphicFrechet
 import Oka.Analytification.GAGA.HolomorphicFrechetOps
+import Oka.Analytification.GAGA.HyperplaneModules
 import Oka.Analytification.GAGA.Liouville
 import Oka.Analytification.GAGA.MittagLeffler
 import Oka.Analytification.GAGA.Montel
@@ -302,6 +306,7 @@ import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CocycleTwist
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentLocalPresentation
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModule
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyBaseChange
@@ -315,6 +320,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.LocalFreeResolution
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.LocallyFree
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbedding
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbeddingKilled
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalk
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.OpenImmersionCohomology
