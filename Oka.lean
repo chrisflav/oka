@@ -53,6 +53,7 @@ import Oka.AlgebraicGeometry.ProjectiveSpace.GermChart
 import Oka.AlgebraicGeometry.ProjectiveSpace.Hyperplane
 import Oka.AlgebraicGeometry.ProjectiveSpace.HyperplaneIdeal
 import Oka.AlgebraicGeometry.ProjectiveSpace.HyperplaneSequence
+import Oka.AlgebraicGeometry.ProjectiveSpace.LinearSubst
 import Oka.AlgebraicGeometry.ProjectiveSpace.Points
 import Oka.AlgebraicGeometry.ProjectiveSpace.SerreVanishing
 import Oka.AlgebraicGeometry.ProjectiveSpace.TheoremA
@@ -213,10 +214,15 @@ import Oka.Analytification.GAGA.ParametricIntervalIntegral
 import Oka.Analytification.GAGA.ProjectiveGAGA
 import Oka.Analytification.GAGA.ProjectiveGAGAHom
 import Oka.Analytification.GAGA.ProjectiveSpace
+import Oka.Analytification.GAGA.ProjectiveSpaceAlgebraization
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
 import Oka.Analytification.GAGA.ProjectiveSpaceAnAcyclic
 import Oka.Analytification.GAGA.ProjectiveSpaceAnFunctions
+import Oka.Analytification.GAGA.ProjectiveSpaceAnHyperplaneCover
+import Oka.Analytification.GAGA.ProjectiveSpaceAnTheoremA
+import Oka.Analytification.GAGA.ProjectiveSpaceAnTwistModules
 import Oka.Analytification.GAGA.ProjectiveSpaceCoherentGAGA
+import Oka.Analytification.GAGA.ProjectiveSpaceGAGA3
 import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
 import Oka.Analytification.GAGA.ProjectiveSpaceHom
 import Oka.Analytification.GAGA.ProjectiveSpaceTwistGAGA
@@ -306,6 +312,7 @@ import Oka.Geometry.RingedSpace.Basic
 import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CocycleTwist
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CocycleTwistLocal
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentLocalPresentation
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModule
@@ -324,6 +331,8 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbeddingKilled
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalk
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalkNakayama
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalkSurjective
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.OpenImmersionCohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PullbackModulesUnitHom
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
