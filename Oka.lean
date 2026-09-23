@@ -174,6 +174,7 @@ import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
 import Oka.Analytification.GAGA.ClosedImmersionPushforward
 import Oka.Analytification.GAGA.CohomologyComparison
+import Oka.Analytification.GAGA.CompactlyZero
 import Oka.Analytification.GAGA.ComparisonAdditive
 import Oka.Analytification.GAGA.Cousin
 import Oka.Analytification.GAGA.CousinCoordinate
@@ -190,6 +191,7 @@ import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ParametricIntervalIntegral
 import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
+import Oka.Analytification.GAGA.ProjectiveSpaceAnAcyclic
 import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
 import Oka.Analytification.GAGA.Runge
 import Oka.Analytification.GAGA.RungeFrame
@@ -198,6 +200,7 @@ import Oka.Analytification.GAGA.SheafAnalytification
 import Oka.Analytification.GAGA.SheafAnalytificationCoherent
 import Oka.Analytification.GAGA.SheafAnalytificationIsCoherent
 import Oka.Analytification.GAGA.StalkFlat
+import Oka.Analytification.GAGA.TheoremB
 import Oka.Analytification.GlueShape
 import Oka.Analytification.Hausdorff
 import Oka.Analytification.HausdorffBase
@@ -279,6 +282,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImageSheet
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.OpenImmersionCohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
 import Oka.Geometry.RingedSpace.PresheafedSpace.Double
@@ -344,6 +348,7 @@ import Oka.Topology.Sheaves.Cohomology.Leray
 import Oka.Topology.Sheaves.Cohomology.LocalVanishing
 import Oka.Topology.Sheaves.Cohomology.MayerVietoris
 import Oka.Topology.Sheaves.Cohomology.MayerVietorisNatural
+import Oka.Topology.Sheaves.Cohomology.OpenEmbedding
 import Oka.Topology.Sheaves.Cohomology.Pullback
 import Oka.Topology.Sheaves.Cohomology.PullbackZero
 import Oka.Topology.Sheaves.Cohomology.Restrict
