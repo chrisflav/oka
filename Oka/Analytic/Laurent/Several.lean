@@ -6,6 +6,7 @@ Authors: Christian Merten
 import Oka.Analytic.Laurent.Basic
 import Oka.Analytic.DifferentiableTsum
 import Mathlib.Algebra.MvPolynomial.Basic
+import Oka.Analytic.OkaRingDifferentiable
 
 /-!
 # Laurent expansions in several variables
@@ -128,12 +129,6 @@ lemma differentiable_cons_left (z : Fin n → ℂ) :
   refine differentiable_pi.2 fun i ↦ Fin.cases ?_ (fun j ↦ ?_) i
   · simp
   · simp
-
-/-- The extension by zero of a holomorphic function on an open set `U ⊆ ℂⁿ` is holomorphic on
-`U`; this makes the results of this file available for elements of `OkaRing U`. -/
-lemma _root_.OkaRing.differentiableOn_toGlobalFun {U : TopologicalSpace.Opens (Fin n → ℂ)}
-    (f : OkaRing U) : DifferentiableOn ℂ (f.toGlobalFun _) U := fun _ hx ↦
-  (f.analyticAt_toGlobalFun hx).differentiableAt.differentiableWithinAt
 
 variable {r : Fin n → ℝ} {R : Fin n → ℝ≥0∞} {ρ : Fin n → ℝ}
 
