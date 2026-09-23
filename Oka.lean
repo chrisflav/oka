@@ -157,6 +157,7 @@ import Oka.Analytification.Functor
 import Oka.Analytification.GAGA.AffineSpace
 import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
+import Oka.Analytification.GAGA.CohomologyComparison
 import Oka.Analytification.GAGA.Liouville
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ProjectiveSpace
@@ -238,6 +239,7 @@ import Oka.Geometry.RingedSpace.Basic
 import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.FaithfullyFlatStalkMap
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.HasColimits
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImage
@@ -302,6 +304,7 @@ import Oka.Topology.Sheaves.Cohomology.Dimension
 import Oka.Topology.Sheaves.Cohomology.Leray
 import Oka.Topology.Sheaves.Cohomology.MayerVietoris
 import Oka.Topology.Sheaves.Cohomology.Pullback
+import Oka.Topology.Sheaves.Cohomology.PullbackZero
 import Oka.Topology.Sheaves.Cohomology.Restrict
 import Oka.Topology.Sheaves.Functors
 import Oka.Topology.Sheaves.Presheaf
