@@ -56,6 +56,7 @@ import Oka.Analysis.Calculus.Implicit
 import Oka.Analysis.Complex.CoveringMap
 import Oka.Analysis.Complex.FundamentalGroup
 import Oka.Analysis.LocallyConvex.Schwartz
+import Oka.Analysis.Normed.Operator.Compact.Pi
 import Oka.Analysis.Normed.Operator.Compact.Schwartz
 import Oka.Analytic.DifferentiableTsum
 import Oka.Analytic.DividedDifference
@@ -181,8 +182,10 @@ import Oka.Analytification.GAGA.DescendingInduction
 import Oka.Analytification.GAGA.FrameCauchy
 import Oka.Analytification.GAGA.GridMerge
 import Oka.Analytification.GAGA.HoledRect
+import Oka.Analytification.GAGA.HolomorphicFrechet
 import Oka.Analytification.GAGA.Liouville
 import Oka.Analytification.GAGA.MittagLeffler
+import Oka.Analytification.GAGA.Montel
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ParametricIntervalIntegral
 import Oka.Analytification.GAGA.ProjectiveSpace
