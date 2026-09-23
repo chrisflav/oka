@@ -38,6 +38,7 @@ import Oka.AlgebraicGeometry.OpenImmersion
 import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
 import Oka.AlgebraicGeometry.ProjectiveSpace.Points
 import Oka.AlgebraicGeometry.ProjectiveSpace.Twist
+import Oka.AlgebraicGeometry.ProjectiveSpace.TwistCohomology
 import Oka.AlgebraicGeometry.ProjectiveSpace.TwistSections
 import Oka.AlgebraicGeometry.Spec
 import Oka.AlgebraicTopology.SimplexCochain
