@@ -55,6 +55,8 @@ import Oka.AlgebraicTopology.SimplexCochain
 import Oka.Analysis.Calculus.Implicit
 import Oka.Analysis.Complex.CoveringMap
 import Oka.Analysis.Complex.FundamentalGroup
+import Oka.Analysis.LocallyConvex.Schwartz
+import Oka.Analysis.Normed.Operator.Compact.Schwartz
 import Oka.Analytic.DifferentiableTsum
 import Oka.Analytic.DividedDifference
 import Oka.Analytic.Laurent.Basic
@@ -317,6 +319,9 @@ import Oka.SetTheory.Cardinal.Finite
 import Oka.StalkEquiv
 import Oka.Statement
 import Oka.StructureSheaf
+import Oka.Topology.Algebra.IsUniformGroup.LiftTotallyBounded
+import Oka.Topology.Algebra.Module.OpenMapping
+import Oka.Topology.Algebra.Module.Schwartz.Basic
 import Oka.Topology.Algebra.Polynomial
 import Oka.Topology.Category.TopCat.Opens
 import Oka.Topology.Connected.Clopen
