@@ -171,9 +171,11 @@ import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
 import Oka.Analytification.GAGA.ClosedImmersionPushforward
 import Oka.Analytification.GAGA.CohomologyComparison
+import Oka.Analytification.GAGA.ComparisonAdditive
 import Oka.Analytification.GAGA.Cousin
 import Oka.Analytification.GAGA.CousinCoordinate
 import Oka.Analytification.GAGA.CousinShrink
+import Oka.Analytification.GAGA.DescendingInduction
 import Oka.Analytification.GAGA.FrameCauchy
 import Oka.Analytification.GAGA.GridMerge
 import Oka.Analytification.GAGA.HoledRect
