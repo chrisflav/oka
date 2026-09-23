@@ -206,6 +206,7 @@ import Oka.Analytification.GAGA.SheafAnalytificationCoherent
 import Oka.Analytification.GAGA.SheafAnalytificationIsCoherent
 import Oka.Analytification.GAGA.StalkFlat
 import Oka.Analytification.GAGA.TheoremB
+import Oka.Analytification.GAGA.TheoremBBox
 import Oka.Analytification.GlueShape
 import Oka.Analytification.Hausdorff
 import Oka.Analytification.HausdorffBase
