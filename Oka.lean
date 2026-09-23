@@ -38,6 +38,7 @@ import Oka.AlgebraicGeometry.Modules.CocycleTwistPullbackModules
 import Oka.AlgebraicGeometry.Modules.CocycleTwistPushforward
 import Oka.AlgebraicGeometry.Modules.Coherent
 import Oka.AlgebraicGeometry.Modules.CoherentLocalPresentation
+import Oka.AlgebraicGeometry.Modules.CoherentPushforward
 import Oka.AlgebraicGeometry.Modules.LocallyExact
 import Oka.AlgebraicGeometry.Modules.QuasicoherentCover
 import Oka.AlgebraicGeometry.Modules.QuasicoherentSections
@@ -205,10 +206,12 @@ import Oka.Analytification.GAGA.MittagLeffler
 import Oka.Analytification.GAGA.Montel
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ParametricIntervalIntegral
+import Oka.Analytification.GAGA.ProjectiveGAGA
 import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
 import Oka.Analytification.GAGA.ProjectiveSpaceAnAcyclic
 import Oka.Analytification.GAGA.ProjectiveSpaceAnFunctions
+import Oka.Analytification.GAGA.ProjectiveSpaceCoherentGAGA
 import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
 import Oka.Analytification.GAGA.ProjectiveSpaceHom
 import Oka.Analytification.GAGA.ProjectiveSpaceTwistGAGA
@@ -299,6 +302,7 @@ import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CocycleTwist
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModule
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyBaseChange
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyModule
