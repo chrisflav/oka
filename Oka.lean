@@ -175,6 +175,7 @@ import Oka.Analytification.GAGA.CauchyRectangle
 import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
 import Oka.Analytification.GAGA.ClosedImmersionPushforward
+import Oka.Analytification.GAGA.ClosureTheorem
 import Oka.Analytification.GAGA.CohomologyComparison
 import Oka.Analytification.GAGA.CompactlyZero
 import Oka.Analytification.GAGA.ComparisonAdditive
@@ -186,6 +187,7 @@ import Oka.Analytification.GAGA.FrameCauchy
 import Oka.Analytification.GAGA.GridMerge
 import Oka.Analytification.GAGA.HoledRect
 import Oka.Analytification.GAGA.HolomorphicFrechet
+import Oka.Analytification.GAGA.HolomorphicFrechetOps
 import Oka.Analytification.GAGA.Liouville
 import Oka.Analytification.GAGA.MittagLeffler
 import Oka.Analytification.GAGA.Montel
