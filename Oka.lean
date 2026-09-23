@@ -34,6 +34,7 @@ import Oka.AlgebraicGeometry.GammaSpecAdjunction
 import Oka.AlgebraicGeometry.Modules.AffineVanishing
 import Oka.AlgebraicGeometry.Modules.CocycleTwist
 import Oka.AlgebraicGeometry.Modules.CocycleTwistPullback
+import Oka.AlgebraicGeometry.Modules.CocycleTwistPullbackModules
 import Oka.AlgebraicGeometry.Modules.CocycleTwistPushforward
 import Oka.AlgebraicGeometry.Modules.Coherent
 import Oka.AlgebraicGeometry.Modules.CoherentLocalPresentation
@@ -209,6 +210,7 @@ import Oka.Analytification.GAGA.ProjectiveSpaceAn
 import Oka.Analytification.GAGA.ProjectiveSpaceAnAcyclic
 import Oka.Analytification.GAGA.ProjectiveSpaceAnFunctions
 import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
+import Oka.Analytification.GAGA.ProjectiveSpaceHom
 import Oka.Analytification.GAGA.ProjectiveSpaceTwistGAGA
 import Oka.Analytification.GAGA.ProjectiveSpaceVanishing
 import Oka.Analytification.GAGA.Runge
@@ -279,6 +281,7 @@ import Oka.Analytification.StandardEtaleNotLocalIso
 import Oka.Analytification.SurjectionFinite
 import Oka.Analytification.UniversalProperty
 import Oka.CategoryTheory.Abelian.Basic
+import Oka.CategoryTheory.Functor.MapBijective
 import Oka.CategoryTheory.GlueData
 import Oka.CategoryTheory.Limits.Shapes.KernelBiprod
 import Oka.CategoryTheory.Limits.Shapes.SingleObj
@@ -294,6 +297,7 @@ import Oka.FieldTheory.IsAlgClosed.Basic
 import Oka.Geometry.RingedSpace.Basic
 import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CocycleTwist
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyBaseChange
@@ -310,6 +314,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalk
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.OpenImmersionCohomology
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.PullbackModulesUnitHom
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
 import Oka.Geometry.RingedSpace.PresheafedSpace.Double
