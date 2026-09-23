@@ -39,6 +39,7 @@ import Oka.AlgebraicGeometry.Modules.QuasicoherentCover
 import Oka.AlgebraicGeometry.Modules.QuasicoherentSections
 import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
+import Oka.AlgebraicGeometry.Modules.TildeExact
 import Oka.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Oka.AlgebraicGeometry.OpenImmersion
 import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
@@ -194,6 +195,7 @@ import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
 import Oka.Analytification.GAGA.ProjectiveSpaceAnAcyclic
 import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
+import Oka.Analytification.GAGA.ProjectiveSpaceVanishing
 import Oka.Analytification.GAGA.Runge
 import Oka.Analytification.GAGA.RungeFrame
 import Oka.Analytification.GAGA.RungeSeveral
@@ -276,6 +278,7 @@ import Oka.Geometry.RingedSpace.CutOut
 import Oka.Geometry.RingedSpace.LocallyRingedSpace
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyRestrict
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.FaithfullyFlatStalkMap
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.HasColimits
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImage
@@ -353,6 +356,7 @@ import Oka.Topology.Sheaves.Cohomology.OpenEmbedding
 import Oka.Topology.Sheaves.Cohomology.Pullback
 import Oka.Topology.Sheaves.Cohomology.PullbackZero
 import Oka.Topology.Sheaves.Cohomology.Restrict
+import Oka.Topology.Sheaves.Cohomology.Vanishing
 import Oka.Topology.Sheaves.Functors
 import Oka.Topology.Sheaves.Module
 import Oka.Topology.Sheaves.Presheaf
