@@ -7,6 +7,7 @@ import Oka.Algebra.Category.ModuleCat.ProjectiveDimension
 import Oka.Algebra.Category.ModuleCat.Sheaf.Annihilator
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Basic
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Criterion
+import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Equivalence
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Free
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Locality
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Presentation
@@ -165,6 +166,7 @@ import Oka.Analytification.GAGA.ProjectiveSpaceAn
 import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
 import Oka.Analytification.GAGA.SheafAnalytification
 import Oka.Analytification.GAGA.SheafAnalytificationCoherent
+import Oka.Analytification.GAGA.SheafAnalytificationIsCoherent
 import Oka.Analytification.GAGA.StalkFlat
 import Oka.Analytification.GlueShape
 import Oka.Analytification.Hausdorff
@@ -246,6 +248,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImage
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImageSheet
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
 import Oka.Geometry.RingedSpace.PresheafedSpace.Double
 import Oka.Geometry.RingedSpace.PresheafedSpace.Gluing
@@ -307,6 +310,7 @@ import Oka.Topology.Sheaves.Cohomology.Pullback
 import Oka.Topology.Sheaves.Cohomology.PullbackZero
 import Oka.Topology.Sheaves.Cohomology.Restrict
 import Oka.Topology.Sheaves.Functors
+import Oka.Topology.Sheaves.Module
 import Oka.Topology.Sheaves.Presheaf
 import Oka.Topology.Sheaves.QuotientPresheaf
 import Oka.Topology.Sheaves.Stalks

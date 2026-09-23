@@ -30,10 +30,10 @@ coherence of `F^an` for `F` globally a cokernel of finite free sheaves, and cohe
 - `ComplexAnalytic.exists_isCoherent_restrictModules_analytificationModules`: for `F` coherent,
   `F^an` is coherent on a neighbourhood of every point of `X^an`.
 
-What is not here is the global statement `((analytificationModules X).obj F).IsCoherent` for `F`
-coherent: it follows from the local one by the locality of `SheafOfModules.IsCoherent` for open
-subspaces, which needs a comparison between restriction to an open subspace
-(`AlgebraicGeometry.LocallyRingedSpace.restrictModules`) and `SheafOfModules.over`.
+The global statement `ComplexAnalytic.isCoherent_analytificationModules` is deduced from the
+local one in `Oka/Analytification/GAGA/SheafAnalytificationIsCoherent.lean`, by the locality of
+coherence for open subspaces
+(`AlgebraicGeometry.LocallyRingedSpace.isCoherent_of_isCoherent_restrictModules`).
 -/
 
 open CategoryTheory Limits AlgebraicGeometry TopologicalSpace
