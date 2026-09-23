@@ -211,6 +211,7 @@ import Oka.Analytification.GAGA.Montel
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ParametricIntervalIntegral
 import Oka.Analytification.GAGA.ProjectiveGAGA
+import Oka.Analytification.GAGA.ProjectiveGAGAHom
 import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
 import Oka.Analytification.GAGA.ProjectiveSpaceAnAcyclic
