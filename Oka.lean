@@ -191,6 +191,7 @@ import Oka.Analytification.GAGA.CartanSerre
 import Oka.Analytification.GAGA.CauchyRectangle
 import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
+import Oka.Analytification.GAGA.ClosedImmersionCoherent
 import Oka.Analytification.GAGA.ClosedImmersionCohomology
 import Oka.Analytification.GAGA.ClosedImmersionPushforward
 import Oka.Analytification.GAGA.ClosureTheorem
@@ -215,6 +216,7 @@ import Oka.Analytification.GAGA.Montel
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ParametricIntervalIntegral
 import Oka.Analytification.GAGA.ProjectiveGAGA
+import Oka.Analytification.GAGA.ProjectiveGAGA3
 import Oka.Analytification.GAGA.ProjectiveGAGAHom
 import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAlgebraization
@@ -320,6 +322,8 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.CocycleTwistLocal
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentLocalPresentation
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModule
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModuleSections
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentPushforwardClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyBaseChange
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CohomologyModule
@@ -339,6 +343,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalk
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalkNakayama
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalkSurjective
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.OpenImmersionCohomology
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.PullbackCoherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PullbackModulesUnitHom
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
