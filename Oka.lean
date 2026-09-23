@@ -288,6 +288,13 @@ import Oka.Topology.Homeomorph.Lemmas
 import Oka.Topology.IsLocalHomeomorph
 import Oka.Topology.Maps.Proper.Basic
 import Oka.Topology.SeparatedMap
+import Oka.Topology.Sheaves.Cohomology.Basic
+import Oka.Topology.Sheaves.Cohomology.Cech
+import Oka.Topology.Sheaves.Cohomology.CechInjective
+import Oka.Topology.Sheaves.Cohomology.Leray
+import Oka.Topology.Sheaves.Cohomology.MayerVietoris
+import Oka.Topology.Sheaves.Cohomology.Pullback
+import Oka.Topology.Sheaves.Cohomology.Restrict
 import Oka.Topology.Sheaves.Functors
 import Oka.Topology.Sheaves.Presheaf
 import Oka.Topology.Sheaves.QuotientPresheaf
