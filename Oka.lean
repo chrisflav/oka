@@ -33,6 +33,7 @@ import Oka.AlgebraicGeometry.Modules.AffineVanishing
 import Oka.AlgebraicGeometry.Modules.CocycleTwist
 import Oka.AlgebraicGeometry.Modules.Coherent
 import Oka.AlgebraicGeometry.Modules.CoherentLocalPresentation
+import Oka.AlgebraicGeometry.Modules.QuasicoherentCover
 import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.Morphisms.ClosedImmersion
@@ -42,6 +43,7 @@ import Oka.AlgebraicGeometry.ProjectiveSpace.Points
 import Oka.AlgebraicGeometry.ProjectiveSpace.Twist
 import Oka.AlgebraicGeometry.ProjectiveSpace.TwistCohomology
 import Oka.AlgebraicGeometry.ProjectiveSpace.TwistSections
+import Oka.AlgebraicGeometry.ProjectiveSpace.Vanishing
 import Oka.AlgebraicGeometry.Spec
 import Oka.AlgebraicTopology.SimplexCochain
 import Oka.Analysis.Calculus.Implicit
