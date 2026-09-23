@@ -150,6 +150,7 @@ import Oka.Analytification.Flatness
 import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor
 import Oka.Analytification.GAGA.AffineSpace
+import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.Liouville
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ProjectiveSpace
