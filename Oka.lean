@@ -294,6 +294,7 @@ import Oka.Topology.SeparatedMap
 import Oka.Topology.Sheaves.Cohomology.Basic
 import Oka.Topology.Sheaves.Cohomology.Cech
 import Oka.Topology.Sheaves.Cohomology.CechInjective
+import Oka.Topology.Sheaves.Cohomology.Dimension
 import Oka.Topology.Sheaves.Cohomology.Leray
 import Oka.Topology.Sheaves.Cohomology.MayerVietoris
 import Oka.Topology.Sheaves.Cohomology.Pullback
