@@ -36,6 +36,7 @@ import Oka.AlgebraicGeometry.Modules.Coherent
 import Oka.AlgebraicGeometry.Modules.CoherentLocalPresentation
 import Oka.AlgebraicGeometry.Modules.LocallyExact
 import Oka.AlgebraicGeometry.Modules.QuasicoherentCover
+import Oka.AlgebraicGeometry.Modules.QuasicoherentSections
 import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.Morphisms.ClosedImmersion
@@ -44,6 +45,7 @@ import Oka.AlgebraicGeometry.ProjectiveSpace.Basic
 import Oka.AlgebraicGeometry.ProjectiveSpace.Hyperplane
 import Oka.AlgebraicGeometry.ProjectiveSpace.HyperplaneSequence
 import Oka.AlgebraicGeometry.ProjectiveSpace.Points
+import Oka.AlgebraicGeometry.ProjectiveSpace.TheoremA
 import Oka.AlgebraicGeometry.ProjectiveSpace.Twist
 import Oka.AlgebraicGeometry.ProjectiveSpace.TwistCohomology
 import Oka.AlgebraicGeometry.ProjectiveSpace.TwistSections
