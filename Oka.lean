@@ -14,6 +14,7 @@ import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Presentation
 import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Stability
 import Oka.Algebra.Category.ModuleCat.Sheaf.Colimits
 import Oka.Algebra.Category.ModuleCat.Sheaf.Free
+import Oka.Algebra.Category.ModuleCat.Sheaf.FreeResolution
 import Oka.Algebra.Category.ModuleCat.Sheaf.Generators
 import Oka.Algebra.Category.ModuleCat.Sheaf.LocallySurjective
 import Oka.Algebra.Category.ModuleCat.Sheaf.PullbackExact
@@ -100,6 +101,7 @@ import Oka.AnalyticSpace.FiniteEtaleOver
 import Oka.AnalyticSpace.FiniteEtaleStableUnderBaseChange
 import Oka.AnalyticSpace.FundamentalGroup
 import Oka.AnalyticSpace.GaloisCategory
+import Oka.AnalyticSpace.GermGlobalDimension
 import Oka.AnalyticSpace.Glue
 import Oka.AnalyticSpace.Hausdorff
 import Oka.AnalyticSpace.HolomorphicFamily
@@ -112,6 +114,7 @@ import Oka.AnalyticSpace.InverseImageSheet
 import Oka.AnalyticSpace.Local
 import Oka.AnalyticSpace.LocalAtSource
 import Oka.AnalyticSpace.LocalAtTarget
+import Oka.AnalyticSpace.LocalFreeResolution
 import Oka.AnalyticSpace.LocalIso
 import Oka.AnalyticSpace.LocalModel
 import Oka.AnalyticSpace.MonicProjection
@@ -300,9 +303,12 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.FaithfullyFlatStalkMap
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.HasColimits
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImage
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.InverseImageSheet
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.LocalFreeResolution
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.LocallyFree
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalk
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.OpenImmersionCohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
@@ -342,6 +348,7 @@ import Oka.RingTheory.MvPolynomial.Ideal
 import Oka.RingTheory.MvPolynomial.LaurentAway
 import Oka.RingTheory.MvPolynomial.Localization
 import Oka.RingTheory.Polynomial.ProjectiveDimension
+import Oka.RingTheory.Regular.ChangeOfRings
 import Oka.RingTheory.RingHom.FaithfullyFlat
 import Oka.SetTheory.Cardinal.Finite
 import Oka.StalkEquiv
