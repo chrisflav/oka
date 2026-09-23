@@ -31,11 +31,11 @@ instance : LocallyRingedSpace.IsOpenImmersion (schemeToOverSpec.map f.hom).left 
   (inferInstance : IsOpenImmersion f.hom.left)
 
 /-- The preimage in `Y^an` of the image of an open immersion `f : X ⟶ Y`. -/
-abbrev analytificationPreimage : (analytification.obj Y).Opens :=
+abbrev analytificationOpenImmersionPreimage : (analytification.obj Y).Opens :=
   preimageOpens (analytificationπ Y) (opensRangeOver (schemeToOverSpec.map f.hom))
 
-lemma mem_analytificationPreimage_iff (y : analytification.obj Y) :
-    y ∈ analytificationPreimage f ↔
+lemma mem_analytificationOpenImmersionPreimage_iff (y : analytification.obj Y) :
+    y ∈ analytificationOpenImmersionPreimage f ↔
       (analytificationπ Y).left.base y ∈ Set.range f.hom.left.base :=
   Iff.rfl
 
@@ -54,7 +54,8 @@ lemma isoOverRestrictOfIsOpenImmersion_hom_ι {U Y : Over specℂ} (j : U ⟶ Y)
 /-- **The analytification of an open immersion `f : X ⟶ Y` is the open subspace of `Y^an` over
 the image of `f`.** -/
 def analytificationOpenImmersionIso :
-    analytification.obj X ≅ (analytification.obj Y).restrict (analytificationPreimage f) :=
+    analytification.obj X ≅
+      (analytification.obj Y).restrict (analytificationOpenImmersionPreimage f) :=
   (isAnalytification_analytificationπ X).isoOfIsAnalytification
     (((isAnalytification_analytificationπ Y).restrict _).of_iso
       (isoOverRestrictOfIsOpenImmersion (schemeToOverSpec.map f.hom)).symm)
@@ -84,12 +85,12 @@ instance isOpenImmersion_analytification_map :
     LocallyRingedSpace.IsOpenImmersion (analytification.map f).toLRSHom := by
   rw [← analytificationOpenImmersionIso_hom_ofRestrict]
   haveI : LocallyRingedSpace.IsOpenImmersion
-      ((analytification.obj Y).ofRestrict (analytificationPreimage f)).toLRSHom :=
+      ((analytification.obj Y).ofRestrict (analytificationOpenImmersionPreimage f)).toLRSHom :=
     LocallyRingedSpace.isOpenImmersion_ofRestrict (analytification.obj Y).toLocallyRingedSpace
-      (analytificationPreimage f)
+      (analytificationOpenImmersionPreimage f)
   exact LocallyRingedSpace.IsOpenImmersion.comp
     (analytificationOpenImmersionIso f).hom.toLRSHom
-    ((analytification.obj Y).ofRestrict (analytificationPreimage f)).toLRSHom
+    ((analytification.obj Y).ofRestrict (analytificationOpenImmersionPreimage f)).toLRSHom
 
 /-- The analytification of an open immersion is an open embedding on points. -/
 theorem isOpenEmbedding_analytification_map :
@@ -99,7 +100,7 @@ theorem isOpenEmbedding_analytification_map :
 /-- **The image of the analytification of an open immersion `f` is the preimage of the image
 of `f`.** -/
 theorem range_analytification_map :
-    Set.range (analytification.map f).toLRSHom.base = analytificationPreimage f := by
+    Set.range (analytification.map f).toLRSHom.base = analytificationOpenImmersionPreimage f := by
   rw [← analytificationOpenImmersionIso_hom_ofRestrict]
   have hs := (AnalyticSpace.bijective_base_of_isIso
     (analytificationOpenImmersionIso f).hom).2.range_eq
