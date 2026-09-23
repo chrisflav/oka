@@ -32,6 +32,7 @@ import Oka.Algebra.MvPolynomial.PDeriv
 import Oka.Algebra.MvPolynomial.Taylor
 import Oka.AlgebraicGeometry.AlgClosed.Basic
 import Oka.AlgebraicGeometry.GammaSpecAdjunction
+import Oka.AlgebraicGeometry.IrreducibleChain
 import Oka.AlgebraicGeometry.Modules.AffineVanishing
 import Oka.AlgebraicGeometry.Modules.CocycleTwist
 import Oka.AlgebraicGeometry.Modules.CocycleTwistPullback
@@ -47,6 +48,7 @@ import Oka.AlgebraicGeometry.Modules.Sheaf
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.Modules.TildeExact
 import Oka.AlgebraicGeometry.Morphisms.ClosedImmersion
+import Oka.AlgebraicGeometry.Morphisms.FiniteEtaleIso
 import Oka.AlgebraicGeometry.Morphisms.FormallyUnramified
 import Oka.AlgebraicGeometry.OpenImmersion
 import Oka.AlgebraicGeometry.ProjectiveSpace.AwayEval
@@ -408,6 +410,7 @@ import Oka.Topology.Connected.Clopen
 import Oka.Topology.Covering.Basic
 import Oka.Topology.Covering.Quotient
 import Oka.Topology.Homeomorph.Lemmas
+import Oka.Topology.IrreducibleChain
 import Oka.Topology.IsLocalHomeomorph
 import Oka.Topology.JacobsonSpace
 import Oka.Topology.Maps.Proper.Basic
