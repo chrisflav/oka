@@ -198,10 +198,10 @@ noncomputable abbrev q : d.Y' ⟶ ℙ(d.N; R) := d.c ≫ pullback.snd _ _
 /-- The open immersion `U ⟶ Y'`. -/
 noncomputable abbrev j : d.U.toScheme ⟶ d.Y' := d.Γ.toImage
 
-@[reassoc (attr := simp)]
+@[reassoc]
 lemma j_π : d.j ≫ d.π = d.U.ι := by simp
 
-@[reassoc (attr := simp)]
+@[reassoc]
 lemma j_q : d.j ≫ d.q = d.g := by simp
 
 instance [IsReduced Y] : IsReduced d.Y' := isReduced_graphClosure ..
