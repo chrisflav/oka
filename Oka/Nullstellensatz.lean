@@ -16,13 +16,9 @@ Nullstellensatz** states
 I(V(I)) = √I.
 ```
 
-**Only the inclusion `√I ≤ I(V(I))` is proved in this file.** The reverse inclusion
-`I(V(I)) ≤ √I` is where all the content lies, and it is **not** proved here or anywhere else in
-this development: it needs the *local parametrisation theorem* — that after a change of
-coordinates a germ of an analytic set is a branched cover of a polydisc, obtained by applying
-Weierstrass preparation to the discriminant — and none of that machinery exists in this
-repository. A reader should not take the presence of this file as evidence that the
-Nullstellensatz is available.
+Only the inclusion `√I ≤ I(V(I))` is proved in this file. The hard half, for the zero locus of a
+finite generating family, is `LocalOkaRing.mem_radical_span_of_eventually` in
+`Oka/Nullstellensatz/Germ.lean`.
 
 The easy inclusion is elementary: if `f ^ n ∈ I` then `f` vanishes wherever every element of `I`
 does, because `ℂ` has no nilpotents.
@@ -32,8 +28,7 @@ does, because `ℂ` has no nilpotents.
 There is no notion of a germ of a *subset* of `ℂ^ι` here, and none is introduced. Instead only
 the composite operator `I ↦ I(V(I))` is defined, directly, as `LocalOkaRing.vanishingIdeal`.
 That is all the Nullstellensatz statement needs, it avoids a quotient construction, and it makes
-the easy inclusion nearly immediate. If a later development needs germs of sets in their own
-right — for the hard inclusion, say — this definition should be revisited rather than built on.
+the easy inclusion nearly immediate.
 
 Membership is an eventuality in `𝓝 0`, not a condition on a fixed neighbourhood: a germ has no
 canonical domain, so any formulation over a fixed neighbourhood would depend on a choice of
@@ -160,7 +155,7 @@ theorem isRadical_vanishingIdeal : (vanishingIdeal I).IsRadical := by
     exact pow_eq_zero_iff hn.ne' |>.mp (hpow ▸ hz h)
 
 /-- **The easy half of the Rückert Nullstellensatz**: the radical of `I` vanishes on the zero
-locus of `I`. The reverse inclusion is the hard half and is not proved here. -/
+locus of `I`. For the hard half see `LocalOkaRing.mem_radical_span_of_eventually`. -/
 theorem radical_le_vanishingIdeal : I.radical ≤ vanishingIdeal I :=
   (Ideal.radical_mono (le_vanishingIdeal I)).trans (isRadical_vanishingIdeal I)
 
