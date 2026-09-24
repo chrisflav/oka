@@ -238,6 +238,7 @@ import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
 import Oka.Analytification.GAGA.ProjectiveSpaceHom
 import Oka.Analytification.GAGA.ProjectiveSpaceTwistGAGA
 import Oka.Analytification.GAGA.ProjectiveSpaceVanishing
+import Oka.Analytification.GAGA.Proper.PushforwardComparison
 import Oka.Analytification.GAGA.RationalBox
 import Oka.Analytification.GAGA.Runge
 import Oka.Analytification.GAGA.RungeFrame
@@ -357,6 +358,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalkSurjective
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.OpenImmersionCohomology
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PullbackCoherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PullbackModulesUnitHom
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.PushforwardAcyclic
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
 import Oka.Geometry.RingedSpace.PresheafedSpace.Double
@@ -431,6 +433,7 @@ import Oka.Topology.Sheaves.Cohomology.MayerVietorisNatural
 import Oka.Topology.Sheaves.Cohomology.OpenEmbedding
 import Oka.Topology.Sheaves.Cohomology.Pullback
 import Oka.Topology.Sheaves.Cohomology.PullbackZero
+import Oka.Topology.Sheaves.Cohomology.PushforwardAcyclic
 import Oka.Topology.Sheaves.Cohomology.Restrict
 import Oka.Topology.Sheaves.Cohomology.Vanishing
 import Oka.Topology.Sheaves.Functors
