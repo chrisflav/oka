@@ -1,0 +1,71 @@
+# Backticked dotted names that `scripts/check_docstring_names.py` should not try to resolve.
+#
+# One name per line; `#` starts a comment. Matching is on the whole backticked string and is not
+# scoped to a file, so an entry here exempts that spelling everywhere in the tree.
+#
+# Before adding a line, check that the name is not simply wrong — that is what this checker is
+# for, and every entry here is a place it has been told to stop looking. The rules in the
+# checker's own docstring already cover, without any entry: generalised field notation on a
+# declaration (`restrictTopIso.hom`) or on a local binder (`i.stalkMap`), module names
+# (`Oka.Weierstrass`), and paths to files in the repository (`README.md`). If you have hit a
+# false positive of a shape not on that list, prefer fixing the rule to growing this file.
+#
+# An **elided** citation goes in here with its `…`, as `…Ns.decl` — that spelling is what the
+# checker matches on, and writing the bare `Ns.decl` instead would exempt the written-out name
+# and not the elided one. Since 2026-09-19 and taxis #2056 the checker resolves elided citations
+# too; before that they were outside it by construction and no entry could have been needed.
+# **No elided citation needs one today**: all 107 distinct ones at `daeb942` resolve.
+#
+# How many entries there are is deliberately not stated here. Nothing checks such a count, and
+# this header asserted that the file was empty from 2026-08-22 16:53Z, when the file was created.
+# The entries below were added at 19:49Z the same day and the sentence was not removed; it stood
+# until 2026-08-24. It is quoted, with its dates, in `.orchestra/validation.sh`.
+
+# Real Mathlib declarations that this project does **not** import, so they resolve nowhere in the
+# environment of `Oka` and the checker is right to report them. They are cited in
+# prose as the scheme-level analogues of what
+# `Oka/Geometry/RingedSpace/LocallyRingedSpace/Modules.lean` and
+# `Oka/Analytification/Sheaf.lean` build for locally ringed spaces, and naming them is the point
+# of the sentences they appear in. Both live in `Mathlib/AlgebraicGeometry/Modules/`, which is
+# behind `Mathlib/AlgebraicGeometry/AffineScheme.lean` and is not worth importing for a docstring.
+#
+# This is the first class of false positive found that is not a defect in the prose and not
+# fixable by a rule: the name is correct, the declaration exists, and the only thing wrong is
+# that this build cannot see it. If the checker ever grows a second environment dump covering
+# more of Mathlib, the entries below should go.
+#
+# Both are fully qualified deliberately. An entry for a *short* form — `Scheme.Modules`, say —
+# would silently absorb a future, different declaration with that suffix, which is the opposite
+# of what this checker is for; the prose is written with the full path instead.
+AlgebraicGeometry.Scheme.Hom.toRingCatSheafHom
+AlgebraicGeometry.Scheme.Modules
+
+# Names written as **examples of the rules**, in the prose of the two Lean helpers under
+# `scripts/`. This is the second class, and it arrived on 2026-08-31 with taxis #1337, which put
+# `scripts/*.lean` into the walk for the first time; before that the checker did not read the
+# files that describe it and neither entry was needed.
+#
+# It is a different class from the one above and the difference is worth stating, because the
+# header's opening paragraph describes only the first: those names are *correct* and resolve
+# nowhere because this build does not import them, so a bigger environment would retire them.
+# These two are correct as prose and must **never** resolve — the whole content of the sentences
+# they appear in is that they do not.
+#
+# `head.tail` is the schematic form of the field-notation rule, in `scripts/DumpEnvNames.lean`
+# and twice more in `scripts/check_docstring_names.py`, which is not walked. It is metasyntax and
+# not a citation. It is reported for a reason nobody would guess and which is nothing to do with
+# being schematic: `head` resolves as a declaration, but `Lean.FuzzyMatching.CharRole.head` has a
+# child, so `head` is a namespace and the field-notation rule declines namespaces.
+#
+# `Mathlib.RingTheory.Filtration.someDecl` is the illustrative **bad** citation in that same
+# file's format section — the shape taxis #1326 made the checker reject, exhibited so that a reader
+# can see it. **No rewording repairs it**, and that is the argument for an entry rather than a
+# reword: any name written to show what the rule rejects is a name the rule rejects, and dropping
+# the backticks would leave the two files describing one rule in two notations.
+#
+# Both are exempt tree-wide, as every entry here is, and both are metasyntactic placeholders
+# (`someDecl`, `tail`) that name nothing now and cannot come to name anything. A file-scoped
+# entry would be tighter and is deliberately not built: the mechanism should be added when an
+# unscoped entry is measured to hide something, and neither of these can.
+head.tail
+Mathlib.RingTheory.Filtration.someDecl

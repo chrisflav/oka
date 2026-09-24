@@ -3,15 +3,9 @@ Copyright (c) 2026 Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten. All righ
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
-
-import Oka.OkaRing
-import Oka.LocalOkaRing
 import Oka.Analytic.ParametricCircleIntegral
-import Mathlib.MeasureTheory.Integral.CircleIntegral
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Analytic
-import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
 import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.MvPowerSeries.Inverse
 
 /-!
 # The Weierstrass preparation theorem
@@ -125,9 +119,15 @@ theorem MvPowerSeries.maximalIdeal_eq_span_X {σ : Type*} [Finite σ] [LinearOrd
     rw [constantCoeff_X] at h0
     exact not_isUnit_zero h0
 
-instance instIsAdicCompleteMaximalIdealMvPowerSeries
-    {σ : Type*} [Finite σ] [LinearOrder σ] :
+/-- **The formal power series ring is complete for its maximal-adic topology.**
+
+No order on `σ` is assumed: `MvPowerSeries.maximalIdeal_eq_span_X` needs one to pick a smallest
+variable occurring in a monomial, but its *statement* does not mention the order, so any linear
+order will do and a finite type has one. -/
+instance instIsAdicCompleteMaximalIdealMvPowerSeries {σ : Type*} [Finite σ] :
     IsAdicComplete (IsLocalRing.maximalIdeal (MvPowerSeries σ ℂ)) (MvPowerSeries σ ℂ) := by
+  obtain ⟨n, ⟨e⟩⟩ := Finite.exists_equiv_fin σ
+  letI : LinearOrder σ := LinearOrder.lift' e e.injective
   rw [MvPowerSeries.maximalIdeal_eq_span_X]
   infer_instance
 
@@ -198,11 +198,33 @@ theorem sum_pow_sub_sum_pow_eq (d : ℕ) (c : ℕ → ℂ) (hcd : c d = 1) (ζ t
 namespace MvPowerSeries
 section Curry
 
+/-! ### Currying a power series in a sum of variables
+
+A formal power series in the variables `σ ⊕ τ` is the same thing as a power series in `σ`
+whose coefficients are power series in `τ`: on coefficients this is nothing but
+`Finsupp.sumFinsuppEquivProdFinsupp`, which splits an exponent on `σ ⊕ τ` into its `σ`-part
+and its `τ`-part. `curry` and `uncurry` are the two directions and `curryEquiv` packages them
+as a ring equivalence; `finSuccRingEquiv` specialises it to
+`ℂ⟦x₁, …, x_{n+1}⟧ ≃+* (ℂ⟦x₁, …, x_n⟧)⟦X⟧`, singling out the last variable.
+
+Nothing in this section is used elsewhere in the project: the Weierstrass theorems below reach
+the same "one distinguished variable" viewpoint through `LocalOkaRing.fromPolynomial` and
+`Polynomial` rather than through `PowerSeries`. It is general `MvPowerSeries` API in a Mathlib
+namespace and a Mathlib upstreaming candidate, which is why it is documented and kept rather
+than made `private`.
+-/
+
 variable {σ τ R : Type*} [CommSemiring R]
 
+/-- A power series in the variables `σ ⊕ τ`, read as a power series in `σ` with coefficients
+power series in `τ`. Its `(dσ, dτ)`-coefficient is the coefficient of the exponent on `σ ⊕ τ`
+assembled from `dσ` and `dτ`. Inverse to `uncurry`; packaged as a ring equivalence in
+`curryEquiv`. -/
 noncomputable def curry (f : MvPowerSeries (σ ⊕ τ) R) : MvPowerSeries σ (MvPowerSeries τ R) :=
   fun dσ dτ ↦ coeff (Finsupp.sumFinsuppEquivProdFinsupp.symm (dσ, dτ)) f
 
+/-- A power series in `σ` with coefficients power series in `τ`, read as a power series in the
+variables `σ ⊕ τ`. Inverse to `curry`. -/
 noncomputable def uncurry (g : MvPowerSeries σ (MvPowerSeries τ R)) : MvPowerSeries (σ ⊕ τ) R :=
   fun d ↦ coeff (Finsupp.sumFinsuppEquivProdFinsupp d).2
               (coeff (Finsupp.sumFinsuppEquivProdFinsupp d).1 g)
@@ -286,6 +308,8 @@ lemma curry_mul (f g : MvPowerSeries (σ ⊕ τ) R) : curry (f * g) = curry f * 
     rw [coeff_curry, coeff_curry, symm_prod_eq_sumElim, symm_prod_eq_sumElim]
   rw [hL, hR]
 
+/-- `curry` and `uncurry` as a ring equivalence
+`R⟦σ ⊕ τ⟧ ≃+* (R⟦τ⟧)⟦σ⟧`. -/
 noncomputable def curryEquiv : MvPowerSeries (σ ⊕ τ) R ≃+* MvPowerSeries σ (MvPowerSeries τ R) where
   toFun := curry
   invFun := uncurry
@@ -294,6 +318,11 @@ noncomputable def curryEquiv : MvPowerSeries (σ ⊕ τ) R ≃+* MvPowerSeries �
   map_add' := curry_add
   map_mul' := curry_mul
 
+/-- `Fin (n + 1)` split as its last element and the rest, in the form `Unit ⊕ Fin n` that
+`curryEquiv` consumes: `Fin.last n` goes to `Sum.inl ()` and `Fin.castSucc j` to `Sum.inr j`.
+
+This differs from `finSumFinEquiv` and `Fin.consEquiv` in singling out the **last** variable,
+which is the one the Weierstrass theorems distinguish. -/
 def finLastEquivSum (n : ℕ) : Fin (n + 1) ≃ Unit ⊕ Fin n where
   toFun i := Fin.lastCases (Sum.inl ()) Sum.inr i
   invFun x := Sum.elim (fun _ ↦ Fin.last n) Fin.castSucc x
@@ -306,6 +335,12 @@ def finLastEquivSum (n : ℕ) : Fin (n + 1) ≃ Unit ⊕ Fin n where
     | inl u => simp
     | inr j => simp
 
+/-- Power series in `n + 1` variables, read as power series in the last variable with
+coefficients power series in the first `n`: `ℂ⟦x₁, …, x_{n+1}⟧ ≃+* (ℂ⟦x₁, …, x_n⟧)⟦X⟧`.
+
+This is `curryEquiv` along `finLastEquivSum`, and it is the change of viewpoint that makes the
+Weierstrass division and preparation theorems statements about a polynomial ring in one
+variable. -/
 noncomputable def finSuccRingEquiv (n : ℕ) :
     MvPowerSeries (Fin (n + 1)) ℂ ≃+* PowerSeries (MvPowerSeries (Fin n) ℂ) :=
   (MvPowerSeries.renameEquiv (R := ℂ) (finLastEquivSum n)).toRingEquiv.trans
@@ -428,6 +463,9 @@ end MvPowerSeries
 
 variable {n : ℕ}
 
+/-- The last coordinate `x_{n+1}` as a germ at the origin in `n + 1` variables: the
+distinguished variable of the Weierstrass theorems, and the one variable not in the image of
+`LocalOkaRing.incl`. Local convergence is `MvPowerSeries.locallyConvergent_X`. -/
 noncomputable def LocalOkaRing.lastVar : LocalOkaRing (Fin (n + 1)) :=
   ⟨MvPowerSeries.X (Fin.last n), MvPowerSeries.locallyConvergent_X _⟩
 
@@ -482,6 +520,13 @@ end MvPowerSeries
 instance : Filter.TendstoCofinite (Fin.castSuccEmb : Fin n → Fin (n + 1)) :=
   Filter.tendstoCofinite_of_finite _
 
+/-- A germ at the origin in `n` variables, read as a germ in `n + 1` variables not involving
+the last one: renaming along `Fin.castSuccEmb`, as a morphism of `ℂ`-algebras.
+
+Together with `LocalOkaRing.lastVar` this presents `LocalOkaRing (Fin (n + 1))` over
+`LocalOkaRing (Fin n)`, which is what the induction on the number of variables needs. Local
+convergence is preserved because renaming along an embedding only reindexes the variables
+(`MvPowerSeries.LocallyConvergent.rename`). -/
 noncomputable def LocalOkaRing.incl :
     LocalOkaRing (Fin n) →ₐ[ℂ] LocalOkaRing (Fin (n + 1)) :=
   ((MvPowerSeries.rename (Fin.castSuccEmb : Fin n → Fin (n + 1))).comp
@@ -1375,12 +1420,12 @@ lemma LocallyConvergent.hasFPowerSeriesAt_eval {P : MvPowerSeries ι ℂ}
   obtain ⟨ρ, hρ, h⟩ := hP.hasFPowerSeriesOnBall
   exact h.hasFPowerSeriesAt
 
-set_option linter.unusedFintypeInType false in
 /-- The partial derivatives at the origin of the sum of a locally convergent power series are
 the linear coefficients of the series. -/
-lemma LocallyConvergent.fderiv_eval_zero {P : MvPowerSeries ι ℂ}
-    (hP : P.LocallyConvergent) (j : ι) :
+lemma LocallyConvergent.fderiv_eval_zero {ι : Type*} [Finite ι] [DecidableEq ι]
+    {P : MvPowerSeries ι ℂ} (hP : P.LocallyConvergent) (j : ι) :
     fderiv ℂ P.eval 0 (Pi.single j 1) = coeff (Finsupp.single j 1) P := by
+  haveI : Fintype ι := Fintype.ofFinite ι
   rw [hP.hasFPowerSeriesAt_eval.fderiv_eq]
   have h1 : (continuousMultilinearCurryFin1 ℂ (ι → ℂ) ℂ) (toFPS P 1) (Pi.single j 1) =
       toFPS P 1 (fun _ ↦ Pi.single j 1) := rfl
@@ -1505,7 +1550,7 @@ theorem localweierstrass_division
            (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) q))
       (f : LocalOkaRing (Fin (n + 1))) :
       ∃ (a : LocalOkaRing (Fin (n + 1)))
-        (b : (LocalOkaRing (Fin (n)))[X]) (hd : b.degree < q.degree),
+        (b : (LocalOkaRing (Fin (n)))[X]) (_ : b.degree < q.degree),
       f = a * (LocalOkaRing.fromPolynomial q) + (LocalOkaRing.fromPolynomial b) := by
   classical
   have hqm : IsLocalWeierstrassPolynomial
@@ -2122,9 +2167,9 @@ theorem. -/
 theorem localweierstrass_preparation
     (f : LocalOkaRing (Fin (n + 1)))
     (hf : (f : MvPowerSeries (Fin (n + 1)) ℂ).IsGeneralIn (.last _)) :
-    ∃ (u : LocalOkaRing (Fin (n + 1))) (hu : IsUnit u)
+    ∃ (u : LocalOkaRing (Fin (n + 1))) (_ : IsUnit u)
       (g : (LocalOkaRing (Fin (n)))[X])
-      (hg : IsLocalWeierstrassPolynomial
+      (_ : IsLocalWeierstrassPolynomial
            (Polynomial.map (Subring.subtype (localOkaSubring _).toSubring) g)),
       f = LocalOkaRing.fromPolynomial g * u := by
   classical
@@ -3344,14 +3389,14 @@ theorem MvPowerSeries.exists_direction {p : ℕ}
   rw [← heval]
   exact hvh i
 
-set_option linter.unusedFintypeInType false in
 /-- If the partial evaluation of `P` along the `i`-th axis vanishes, so does the represented
 function along that axis, near the origin. -/
-theorem MvPowerSeries.Represents.eventually_axis_eq_zero [DecidableEq ι]
+theorem MvPowerSeries.Represents.eventually_axis_eq_zero {ι : Type*} [Finite ι] [DecidableEq ι]
     {P : MvPowerSeries ι ℂ}
     {F : (ι → ℂ) → ℂ} (hP : P.Represents F) (i : ι) (h : partialEval i P = 0) :
     ∀ᶠ t : ℂ in nhds 0, F (t • Pi.single i 1) = 0 := by
   classical
+  haveI : Fintype ι := Fintype.ofFinite ι
   have htend : Filter.Tendsto (fun t : ℂ ↦ t • Pi.single i (1 : ℂ)) (nhds 0) (nhds 0) := by
     have h1 : Continuous (fun t : ℂ ↦ t • Pi.single i (1 : ℂ)) :=
       continuous_id.smul continuous_const

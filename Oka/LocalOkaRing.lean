@@ -9,6 +9,9 @@ import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.RingTheory.MvPowerSeries.Inverse
 import Mathlib.RingTheory.MvPowerSeries.Rename
+-- `Mathlib.RingTheory.Polynomial.DegreeLT` is not used in this file, but it supplies the
+-- `R[X]_d` notation that `Oka/OkaLemma.lean` relies on transitively; without it the
+-- statements there fail to parse.
 import Mathlib.RingTheory.Polynomial.DegreeLT
 import Mathlib.RingTheory.PowerSeries.Order
 import Oka.StructureSheaf
@@ -43,6 +46,8 @@ holomorphic functions on `ℂ^ι`.
   constant term is nonzero; hence `LocalOkaRing ι` is a local ring.
 - `LocalOkaRing.exists_okaRing`: every locally convergent power series is the Taylor series of
   a holomorphic function on some open neighbourhood of the origin.
+- `MvPowerSeries.order_partialEval_eq_one_iff`: **a simple zero along the `i`-th axis is the pair
+  of coefficient conditions** `constantCoeff P = 0` and `coeff (Finsupp.single i 1) P ≠ 0`.
 
 ## The analytic dictionary
 
@@ -220,6 +225,11 @@ def Represents (P : MvPowerSeries ι ℂ) (f : (ι → ℂ) → ℂ) : Prop :=
 lemma Represents.congr {P : MvPowerSeries ι ℂ} {f g : (ι → ℂ) → ℂ} (hP : P.Represents f)
     (h : f =ᶠ[𝓝 (0 : ι → ℂ)] g) : P.Represents g := by
   filter_upwards [hP, h] with x hx hx' using hx' ▸ hx
+
+/-- Two functions summed to by the same power series agree near the origin. -/
+lemma Represents.eventuallyEq {P : MvPowerSeries ι ℂ} {f g : (ι → ℂ) → ℂ}
+    (hf : P.Represents f) (hg : P.Represents g) : f =ᶠ[𝓝 (0 : ι → ℂ)] g := by
+  filter_upwards [hf, hg] with x hx hx' using hx.unique hx'
 
 lemma LocallyConvergent.represents_eval {P : MvPowerSeries ι ℂ} (hP : P.LocallyConvergent) :
     P.Represents P.eval := by
@@ -894,6 +904,18 @@ lemma constantCoeff_apply (P : LocalOkaRing ι) :
     constantCoeff P = MvPowerSeries.constantCoeff (P : MvPowerSeries ι ℂ) :=
   rfl
 
+-- Not `@[simp]`: `constantCoeff_apply` is `@[simp]` and rewrites the left-hand side to
+-- `MvPowerSeries.constantCoeff ↑(algebraMap ℂ (LocalOkaRing ι) c)`, which
+-- `Subalgebra.coe_algebraMap` and `MvPowerSeries.constantCoeff_C` then finish, so the attribute
+-- here would never fire.
+/-- A constant power series has that constant as its constant term. -/
+lemma constantCoeff_algebraMap (c : ℂ) :
+    constantCoeff (algebraMap ℂ (LocalOkaRing ι) c) = c := by
+  rw [constantCoeff_apply, show ((algebraMap ℂ (LocalOkaRing ι) c : LocalOkaRing ι) :
+    MvPowerSeries ι ℂ) = algebraMap ℂ (MvPowerSeries ι ℂ) c from rfl,
+    MvPowerSeries.algebraMap_apply, MvPowerSeries.constantCoeff_C]
+  simp
+
 instance : Nontrivial (LocalOkaRing ι) :=
   ⟨0, 1, fun h ↦ by simpa using congrArg constantCoeff h⟩
 
@@ -910,6 +932,17 @@ instance : IsLocalRing (LocalOkaRing ι) := by
   refine IsLocalRing.of_nonunits_add fun P Q hP hQ ↦ ?_
   rw [mem_nonunits_iff, isUnit_iff, not_not] at hP hQ ⊢
   rw [map_add, hP, hQ, add_zero]
+
+omit [Finite ι] in
+/-- A germ in no variables is its own constant term, so it is a unit as soon as it is nonzero:
+`LocalOkaRing ι` is a field for `ι` empty. -/
+theorem isUnit_iff_ne_zero [IsEmpty ι] {P : LocalOkaRing ι} : IsUnit P ↔ P ≠ 0 := by
+  rw [isUnit_iff, constantCoeff_apply, ne_eq, ne_eq, not_iff_not]
+  refine ⟨fun h ↦ ?_, fun h ↦ by rw [h]; simp⟩
+  refine LocalOkaRing.ext (MvPowerSeries.ext fun d ↦ ?_)
+  have hd : d = 0 := by ext i; exact (IsEmpty.false i).elim
+  subst hd
+  simp [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, h]
 
 end LocalOkaRing
 
@@ -1211,6 +1244,26 @@ lemma constantCoeff_partialEval (P : MvPowerSeries σ R) :
     PowerSeries.constantCoeff (partialEval i P) = constantCoeff P := by
   rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, coeff_partialEval,
     ← coeff_zero_eq_constantCoeff_apply, Finsupp.single_zero]
+
+/-- **A simple zero along the `i`-th axis is two coefficients**: `P` restricted to that axis
+vanishes to order exactly one if and only if `P` has no constant term and its `i`-linear
+coefficient is nonzero.
+
+`MvPowerSeries.partialEval` reads the `k`-th coefficient of the restriction off the exponent
+`Finsupp.single i k` (`MvPowerSeries.coeff_partialEval`), so `order = 1` unfolds through
+`PowerSeries.order_eq_nat` into the two exponents `0` and `Finsupp.single i 1` and no others.
+**No derivative appears**, and that is the point: the linear coefficient *is* the first
+derivative along the axis up to nothing at all, so a consumer that has a derivative may use it
+and a consumer that does not need not acquire one. -/
+lemma order_partialEval_eq_one_iff (P : MvPowerSeries σ R) :
+    PowerSeries.order (partialEval i P) = 1 ↔
+      constantCoeff P = 0 ∧ coeff (Finsupp.single i 1) P ≠ 0 := by
+  rw [show (1 : ℕ∞) = ((1 : ℕ) : ℕ∞) from rfl, PowerSeries.order_eq_nat]
+  simp only [coeff_partialEval]
+  refine ⟨fun ⟨h1, h0⟩ ↦ ⟨by simpa using h0 0 (by norm_num), h1⟩, fun ⟨h0, h1⟩ ↦ ⟨h1, ?_⟩⟩
+  intro j hj
+  interval_cases j
+  simpa using h0
 
 /-- Restricting `MvPowerSeries.fromPolynomial i Q` to the `i`-th axis amounts to evaluating the
 coefficients of `Q` at the origin. -/

@@ -69,9 +69,18 @@ lemma evalHom_restrict {U V : Opens (ι → ℂ)} (h : V ≤ U) {x : ι → ℂ}
     OkaRing.evalHom hx (OkaRing.restrict h f) = OkaRing.evalHom (h hx) f :=
   rfl
 
-@[simp]
+-- Not `@[simp]`: `evalHom_apply` is `@[simp]` and unfolds `evalHom` to `toFun`, so the
+-- left-hand side here is never in normal form. `toFun_algebraMap` below is the form `simp`
+-- actually meets.
 lemma evalHom_algebraMap {U : Opens (ι → ℂ)} {x : ι → ℂ} (hx : x ∈ U) (c : ℂ) :
     OkaRing.evalHom hx (algebraMap ℂ (OkaRing U) c) = c :=
+  rfl
+
+/-- `evalHom_algebraMap` in `simp` normal form: a constant function has that constant as its
+value at every point. -/
+@[simp]
+lemma toFun_algebraMap {U : Opens (ι → ℂ)} (c : ℂ) (p : U) :
+    OkaRing.toFun U (algebraMap ℂ (OkaRing U) c) p = c :=
   rfl
 
 end OkaRing
@@ -119,6 +128,20 @@ lemma okaAnalytic_restrict {U : Opens (ι → ℂ)} {g : (ι → ℂ) → ℂ}
 lemma OkaRing.toGlobalFun_apply {U : Opens (ι → ℂ)} (f : OkaRing U) {x : ι → ℂ} (hx : x ∈ U) :
     f.toGlobalFun _ x = f.toFun _ ⟨x, hx⟩ :=
   Subtype.val_injective.extend_apply (f := (Subtype.val : U → ι → ℂ)) _ _ ⟨x, hx⟩
+
+/-- **A holomorphic function is continuous on its domain.** -/
+lemma OkaRing.continuousOn_toGlobalFun {U : Opens (ι → ℂ)} (f : OkaRing U) :
+    ContinuousOn (f.toGlobalFun _) U :=
+  fun x hx ↦ ((okaAnalytic_iff _).1 f.2 x hx).continuousAt.continuousWithinAt
+
+/-- **The value of a holomorphic function depends continuously on the point.**
+
+This is `OkaRing.continuousOn_toGlobalFun` read through `OkaRing.evalHom`, and it is the form
+in which the value map of a complex analytic space is shown to be continuous. -/
+lemma OkaRing.continuous_evalHom {U : Opens (ι → ℂ)} (f : OkaRing U) :
+    Continuous fun x : U ↦ OkaRing.evalHom x.2 f := by
+  refine (continuousOn_iff_continuous_restrict.1 f.continuousOn_toGlobalFun).congr fun x ↦ ?_
+  exact f.toGlobalFun_apply x.2
 
 /-- Holomorphic functions restrict to holomorphic functions. -/
 lemma OkaAnalytic.restrict {U V : Opens (ι → ℂ)} (h : U ≤ V) {f : V → ℂ} (hf : OkaAnalytic f) :
@@ -196,17 +219,30 @@ end Reindex
 
 section Translate
 
+/-- **Precomposing a holomorphic function on `U` with a map which is analytic only on `V` and
+sends `V` into `U` gives a holomorphic function on `V`.**
+
+`ψ` is a map defined on all of `κ → ℂ`, but analyticity is required only at the points of `V`,
+which is all the conclusion can see. That is what makes this usable when `ψ` comes from a
+holomorphic function on a *proper* open subset — extended by zero outside it, as
+`OkaRing.toGlobalFun` does — where analyticity off `V` is false and irrelevant. -/
+lemma OkaAnalytic.comp_analyticOn {κ : Type u} [Fintype κ] {U : Opens (ι → ℂ)}
+    {V : Opens (κ → ℂ)} (ψ : (κ → ℂ) → (ι → ℂ)) (hψ : ∀ y ∈ V, AnalyticAt ℂ ψ y)
+    (h : ∀ y ∈ V, ψ y ∈ U) {f : U → ℂ} (hf : OkaAnalytic f) :
+    OkaAnalytic (fun y : V ↦ f ⟨ψ y, h y y.2⟩) := by
+  have key : ∀ y ∈ V, AnalyticAt ℂ (Function.extend Subtype.val f 0 ∘ ψ) y := fun y hy ↦
+    ((okaAnalytic_iff f).1 hf _ (h y hy)).comp (hψ y hy)
+  refine (funext fun z ↦ ?_ : (fun y : V ↦ f ⟨ψ y, h y y.2⟩) =
+    fun y : V ↦ (Function.extend Subtype.val f 0 ∘ ψ) y) ▸ okaAnalytic_restrict key
+  exact (Subtype.val_injective.extend_apply _ _ ⟨ψ z, h z z.2⟩).symm
+
 /-- Precomposing a holomorphic function on `U` with an entire map sending `V` into `U` gives a
 holomorphic function on `V`. -/
 lemma OkaAnalytic.comp_analytic {κ : Type u} [Fintype κ] {U : Opens (ι → ℂ)} {V : Opens (κ → ℂ)}
     (ψ : (κ → ℂ) → (ι → ℂ)) (hψ : ∀ y, AnalyticAt ℂ ψ y) (h : ∀ y ∈ V, ψ y ∈ U)
     {f : U → ℂ} (hf : OkaAnalytic f) :
-    OkaAnalytic (fun y : V ↦ f ⟨ψ y, h y y.2⟩) := by
-  have key : ∀ y ∈ V, AnalyticAt ℂ (Function.extend Subtype.val f 0 ∘ ψ) y := fun y hy ↦
-    ((okaAnalytic_iff f).1 hf _ (h y hy)).comp (hψ y)
-  refine (funext fun z ↦ ?_ : (fun y : V ↦ f ⟨ψ y, h y y.2⟩) =
-    fun y : V ↦ (Function.extend Subtype.val f 0 ∘ ψ) y) ▸ okaAnalytic_restrict key
-  exact (Subtype.val_injective.extend_apply _ _ ⟨ψ z, h z z.2⟩).symm
+    OkaAnalytic (fun y : V ↦ f ⟨ψ y, h y y.2⟩) :=
+  hf.comp_analyticOn ψ (fun y _ ↦ hψ y) h
 
 namespace TopologicalSpace.Opens
 

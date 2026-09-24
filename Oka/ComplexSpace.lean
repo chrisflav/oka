@@ -26,7 +26,8 @@ at `x`.
 ## Main results
 
 - `isUnit_okaGerm`: a holomorphic function not vanishing at `x` has invertible germ at `x`.
-- `okaCommPresheaf.instIsLocalRing`: the stalks of `𝒪_{ℂ^ι}` are local rings.
+- the stalks of `𝒪_{ℂ^ι}` are local rings. The instance is anonymous, so it has no name to cite;
+  it is `IsLocalRing ((okaCommPresheaf ι).stalk x)`.
 -/
 
 open CategoryTheory TopologicalSpace Opposite AlgebraicGeometry Limits

@@ -172,10 +172,13 @@ lemma isFiniteType_kernel_of_coversTop_of_locally {P Q : SheafOfModules.{u} R} (
 
 variable [HasBinaryProducts C]
 
+/-- A free sheaf of modules on a finite index type is of finite type: the tautological family
+of sections generates it globally. -/
+instance isFiniteType_free (I : Type u) [Finite I] : (free (R := R) I).IsFiniteType :=
+  IsFiniteType.of_generatingSections (freeGeneratingSections I)
+
 instance isFiniteType_unit : (unit R).IsFiniteType :=
-  haveI : (free (R := R) PUnit.{u + 1}).IsFiniteType :=
-    IsFiniteType.of_generatingSections (freeGeneratingSections PUnit.{u + 1})
-  IsFiniteType.of_iso freePUnitIso
+  IsFiniteType.of_iso (M := free (R := R) PUnit.{u + 1}) freePUnitIso
 
 omit [HasSheafify J AddCommGrpCat.{u}] [J.WEqualsLocallyBijective AddCommGrpCat.{u}]
   [HasBinaryProducts C] in

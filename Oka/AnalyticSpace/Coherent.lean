@@ -3,8 +3,10 @@ Copyright (c) 2026 Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten. All righ
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
+import Oka.Algebra.Category.ModuleCat.Sheaf.Coherent.Free
 import Oka.AnalyticSpace.Basic
 import Oka.AnalyticSpace.Relations
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 
 /-!
 # Coherence of the structure sheaf of a complex analytic space
@@ -15,15 +17,15 @@ complex analytic space is coherent.
 ## Strategy
 
 Coherence is reached through the concrete condition
-`AlgebraicGeometry.LocallyRingedSpace.HasLocalRelations` of `Oka.AnalyticSpace.Relations`,
+`AlgebraicGeometry.LocallyRingedSpace.HasLocalRelations` of
+`Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent`,
 which implies coherence and, unlike `SheafOfModules.IsCoherent`, mentions only open subsets,
 sections and restriction maps. It is therefore a local condition
 (`hasLocalRelations_of_openCover`), and no transport of sites is needed anywhere.
 
 Since every point of an analytic space has a neighbourhood which is a local model, it
 remains to see that the structure sheaf of a local model has locally finitely generated
-relations. This is
-`ComplexAnalytic.IsLocalModel.hasLocalRelationsOn`, the one ingredient still open, and it is
+relations. This is `ComplexAnalytic.IsLocalModel.hasLocalRelations`, proved below, and it is
 where Oka's theorem for `ℂ^n` enters: a local model is cut out by finitely many holomorphic
 functions `f₁, …, f_k` inside an open subset `Y` of some `ℂ^n`, and near a point of it a
 relation between sections `s₁, …, s_m` of `𝒪_M` is obtained by lifting the `sᵢ` to sections
@@ -35,6 +37,10 @@ relations between the `sᵢ`.
 
 - `ComplexAnalytic.AnalyticSpace.isCoherentStructureSheaf`: the structure sheaf of any complex
   analytic space is coherent.
+- `ComplexAnalytic.AnalyticSpace.isCoherent_free`: **a finite free sheaf of modules on a complex
+  analytic space is coherent**, which is Oka's theorem in every finite rank rather than in rank
+  one. It is `SheafOfModules.IsCoherent.free` — an induction on the rank with no analysis in it
+  — fed the theorem above.
 
 ## References
 
@@ -238,5 +244,21 @@ theorem AnalyticSpace.isCoherentStructureSheaf (X : AnalyticSpace.{u}) :
       (fun x : X.toLocallyRingedSpace ↦ (U x).1) (fun x ↦ ⟨x, (U x).2⟩) fun x ↦ ?_)
   exact LocallyRingedSpace.HasLocalRelations.hasLocalRelationsOn _
     (IsLocalModel.hasLocalRelations ⟨n x, k x, V x, i x, f x, (h x).1⟩)
+
+/-- **A finite free sheaf of modules on a complex analytic space is coherent.**
+
+`ComplexAnalytic.AnalyticSpace.isCoherentStructureSheaf` is this at rank one, and
+`SheafOfModules.IsCoherent.free` is the induction on the rank, which has no analysis in it. This
+is the form a *presentation* is pushed through: the target of a presentation is a finite free
+sheaf, and `SheafOfModules.IsCoherent.cokernel` needs its target coherent.
+
+`AlgebraicGeometry.LocallyRingedSpace.IsCoherentStructureSheaf` is a `def`, so instance search
+will not unfold it and the coherence of `𝒪_X` has to be introduced in its unfolded form — the
+same step `AlgebraicGeometry.LocallyRingedSpace.isCoherent_idealSheaf` documents. -/
+theorem AnalyticSpace.isCoherent_free (X : AnalyticSpace.{u}) (I : Type u) [Finite I] :
+    (SheafOfModules.free (R := X.toLocallyRingedSpace.ringSheaf) I).IsCoherent :=
+  haveI : (SheafOfModules.unit X.toLocallyRingedSpace.ringSheaf).IsCoherent :=
+    X.isCoherentStructureSheaf
+  SheafOfModules.IsCoherent.free I
 
 end ComplexAnalytic

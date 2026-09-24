@@ -1,1 +1,4 @@
 /.lake
+/env-names.txt
+/oka-decls.txt
+scripts/__pycache__/

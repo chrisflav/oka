@@ -3,6 +3,10 @@ version = "0.1.0"
 keywords = ["math"]
 defaultTargets = ["Oka"]
 
+# `lake lint` runs the environment linters over the `Oka` library.
+lintDriver = "batteries/runLinter"
+lintDriverArgs = ["Oka"]
+
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
 autoImplicit = false

@@ -8,6 +8,33 @@ module
 public import Mathlib.CategoryTheory.Sites.Whiskering
 
 /-!
+# Composing a sheaf with a corepresentable forgetful functor
+
+Material for `Mathlib/CategoryTheory/Sites/Whiskering.lean`; see `README.md` on the mirror tree.
+This file imports its target and nothing else, so upstreaming it adds nothing to that file's
+transitive imports.
+
+`CategoryTheory.GrothendieckTopology.HasSheafCompose F` says that composing a sheaf with `F`
+again yields a sheaf. Mathlib's file supplies two instances of it and both are keyed on `F`
+preserving limits: `CategoryTheory.hasSheafCompose_of_preservesMulticospan` and
+`CategoryTheory.hasSheafCompose_of_preservesLimitsOfSize`. The instance below is keyed on the
+forgetful functor of a concrete category being **corepresentable** instead, and its proof is a
+transport rather than a limit argument: `CategoryTheory.Functor.coreprW` identifies `forget A`
+with a hom-functor, and `CategoryTheory.Presieve.isSheaf_iso` moves the type-valued sheaf
+condition across that isomorphism. Nothing here claims the hypotheses are independent of
+Mathlib's; only that the route is different and shorter at this hypothesis.
+
+**Nothing in this repository imports this file.** `Oka.lean`, which `lake exe mk_all` generates
+and which lists every module of the library, is its only importer, so the instance is in scope
+nowhere and is exercised by nothing here. That is recorded rather than acted on: it is a correct
+statement about Mathlib's own types, it is upstreamable on its own, and whether to keep an
+unexercised instance is not a question a module docstring should decide.
+
+## Main declarations
+
+- an instance of `CategoryTheory.GrothendieckTopology.HasSheafCompose` for the forgetful functor
+  of a concrete category whose `CategoryTheory.Functor.IsCorepresentable` instance is available.
+  It is anonymous and carries no docstring of its own.
 -/
 
 @[expose] public section

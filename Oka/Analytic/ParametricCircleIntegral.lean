@@ -4,22 +4,95 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
 import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Analytic.ChangeOrigin
-import Mathlib.Analysis.Calculus.FDeriv.Analytic
-import Mathlib.Analysis.Normed.Ring.InfiniteSum
-import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.MeasureTheory.Integral.TorusIntegral
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.Data.Finsupp.Fin
 import Mathlib.Data.Finsupp.Encodable
 import Oka.LocalOkaRing
 
 /-!
 # Analyticity of parametric circle integrals
 
-Work in progress: SCV foundations for the local Weierstrass division theorem.
+This file develops the several complex variables analysis that the local Weierstrass division
+theorem of `Oka/Weierstrass.lean` rests on: the Cauchy integral formula on a polydisc, and the
+analyticity in the parameters of a circle integral whose integrand depends holomorphically on
+them.
+
+The route is the classical one. On a polydisc the Cauchy kernel `∏ i, (ζ i - w i)⁻¹` expands as
+a multivariate geometric series indexed by multi-indices `d : Fin m →₀ ℕ`; the expansion may be
+integrated term by term over the distinguished boundary, so a function represented by its Cauchy
+integral is the sum of a convergent power series, hence analytic. Feeding a parametric circle
+integral into that statement, after exchanging the torus and the circle integral by Fubini,
+gives the two results `Oka/Weierstrass.lean` consumes, `analyticAt_circleIntegral` and
+`analyticAt_circleIntegral_snoc`.
+
+## Main definitions
+
+- `finsuppConsEquiv m`: the reindexing `(Fin (m + 1) →₀ ℕ) ≃ ℕ × (Fin m →₀ ℕ)` peeling the
+  `0`-th entry off a multi-index.
+
+## Main results
+
+Convergent power series are analytic:
+
+- `MvPowerSeries.hasFPowerSeriesOnBall_of_summableAt_const`: a formal power series summable at
+  the constant point `ρ` has its evaluation as the sum of its formal multilinear series on the
+  ball of radius `ρ`; `MvPowerSeries.analyticAt_eval_of_summableAt_const` is the pointwise form.
+- `analyticAt_of_represents`: a function represented near the origin by a locally convergent
+  power series is analytic there; `analyticAt_of_shift` moves analyticity at the origin to
+  analyticity at an arbitrary point.
+
+The multivariate geometric series and the Cauchy kernel:
+
+- `summable_norm_multiGeometric` and `hasSum_multiGeometric`: for `‖a i‖ < 1` the family
+  `d ↦ ∏ i, a i ^ d i`, indexed by `d : Fin m →₀ ℕ`, is absolutely summable with sum
+  `∏ i, (1 - a i)⁻¹`.
+- `hasSum_cauchyKernel`: the resulting expansion of `∏ i, (ζ i - w i)⁻¹` in powers of `w`.
+- `hasSum_torusIntegral`: a summable family may be integrated term by term over a torus, with
+  `torusIntegrable_cauchyTerm` and `summable_integral_norm_cauchyTerm` supplying its hypotheses
+  for the terms of the Cauchy expansion.
+
+The Cauchy integral formula on a polydisc:
+
+- `cauchy_torus_formula`: for `f` holomorphic on the closed polydisc of polyradius `R` about `c`
+  and `w` in its interior, `f w = (2 * π * I)⁻¹ ^ m • ∯ ζ in T(c, R), (∏ i, (ζ i - w i)⁻¹) • f ζ`.
+- `analyticAt_of_cauchyRepr`: a continuous function satisfying that representation on a polydisc
+  centred at the origin is analytic at the origin.
+- `analyticAt_of_differentiableOn`: consequently a function differentiable on an open set is
+  analytic at each of its points.
+
+Parametric circle integrals:
+
+- `torusIntegral_circleIntegral_swap`: a torus integral and a circle integral of a jointly
+  continuous function commute.
+- `continuousOn_circleIntegral`: a circle integral depending continuously on a parameter is
+  continuous in the parameter.
+- `analyticAt_circleIntegral`: if `G x ζ` is holomorphic in `x` on a closed polydisc for each `ζ`
+  on the circle of radius `ε`, and jointly continuous, then `x ↦ ∮ ζ in C(0, ε), G x ζ` is
+  analytic at the origin.
+- `analyticAt_circleIntegral_snoc`: the form used downstream, for an integrand
+  `F (Fin.snoc w ζ) / G (Fin.snoc w ζ) * E w ζ` where the circle variable `ζ` is substituted
+  into the *last* coordinate and `G` does not vanish there.
+
+## Implementation notes
+
+The induction proving the multivariate geometric series is on the number of variables, peeling
+off the `0`-th one: `finsuppConsEquiv` and the `Finsupp.cons`/`Finsupp.tail` API are what let a
+sum over `Fin (m + 1) →₀ ℕ` be rewritten as an iterated sum over `ℕ` and `Fin m →₀ ℕ`. The
+equivalence is used only in those two proofs.
+
+The last section instead singles out the *last* variable, because that is the one Weierstrass
+theory distinguishes. Hence the cluster of plumbing lemmas about maps built from `Fin.snoc`:
+each is a routine differentiability, norm or continuity statement, stated separately to keep
+`analyticAt_circleIntegral_snoc` readable. Note that the `Fin.init` variants
+(`differentiable_snocInit`, `norm_snocInit_le`, `continuous_snocInit_circleMap`), and also
+`differentiable_snoc_last`, are not used in this file at all — they are here because they belong
+with their siblings, and are consumed by `Oka/Weierstrass.lean`.
+
+## References
+
+- [Lars Hörmander, *An introduction to complex analysis in several variables*][hormander1990],
+  §2.2
+- [Robert C. Gunning and Hugo Rossi, *Analytic functions of several complex
+  variables*][gunning-rossi1965], §I.A
 -/
 
 open Complex
@@ -103,8 +176,8 @@ noncomputable def finsuppConsEquiv (m : ℕ) : (Fin (m + 1) →₀ ℕ) ≃ ℕ 
 @[simp] lemma finsuppConsEquiv_symm_apply (m : ℕ) (p : ℕ × (Fin m →₀ ℕ)) :
     (finsuppConsEquiv m).symm p = Finsupp.cons p.1 p.2 := rfl
 
-set_option maxHeartbeats 400000 in
--- heavy defeq in the Finsupp/Fin.succ tensor induction
+/-- The multivariate geometric series converges absolutely: if `‖a i‖ < 1` for every `i`, then
+the family `d ↦ ∏ i, a i ^ d i` indexed by multi-indices `d : Fin m →₀ ℕ` is norm-summable. -/
 theorem summable_norm_multiGeometric :
     ∀ (m : ℕ) (a : Fin m → ℂ), (∀ i, ‖a i‖ < 1) →
       Summable (fun d : Fin m →₀ ℕ ↦ ‖∏ i, (a i) ^ (d i)‖) := by
@@ -134,8 +207,8 @@ theorem summable_norm_multiGeometric :
         (f := fun k : ℕ => (a 0) ^ k)
         (g := fun t : Fin m →₀ ℕ => ∏ i, (a (Fin.succ i)) ^ (t i)) hf hg
 
-set_option maxHeartbeats 400000 in
--- heavy defeq in the Finsupp/Fin.succ tensor induction
+/-- The multivariate geometric series: if `‖a i‖ < 1` for every `i`, then the family
+`d ↦ ∏ i, a i ^ d i` indexed by multi-indices `d : Fin m →₀ ℕ` sums to `∏ i, (1 - a i)⁻¹`. -/
 theorem hasSum_multiGeometric :
     ∀ (m : ℕ) (a : Fin m → ℂ), (∀ i, ‖a i‖ < 1) →
       HasSum (fun d : Fin m →₀ ℕ ↦ ∏ i, (a i) ^ (d i)) (∏ i, (1 - a i)⁻¹) := by

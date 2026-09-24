@@ -3,10 +3,9 @@ Copyright (c) 2026 Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten. All righ
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten
 -/
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Analysis.Analytic.Basic
 import Mathlib.Analysis.Analytic.Constructions
 import Mathlib.Analysis.Complex.Basic
+import Oka.Data.Fin.Tuple.Basic
 
 /-!
 # The ring of holomorphic functions on an open subset of `ℂ^ι`
@@ -30,6 +29,15 @@ abbrev linOfFun {R : Type*} [CommRing R]
     (ι → R) →ₗ[R] R :=
   Module.Basis.constr (S := R)
     (Pi.basisFun _ _) f
+
+/-- The value of `linOfFun f` at a tuple `a`, as the sum `∑ i, a i * f i`.
+
+Stated over an arbitrary commutative ring and with no consumer in this repository: it came here
+with `linOfFun`, whose uses are in the statement of Oka's **bounded degree** lemma
+(`Oka/OkaLemma.lean`), plus one inside a proof in `Oka/Statement.lean`. -/
+lemma linOfFun_apply {A : Type*} [CommRing A] {n : ℕ} (f : Fin n → A) (a : Fin n → A) :
+    linOfFun f a = ∑ i, a i * f i := by
+  simp [linOfFun, Module.Basis.constr_apply_fintype, mul_comm]
 
 open TopologicalSpace
 
@@ -169,7 +177,8 @@ lemma TopologicalSpace.Opens.extend'_mono {U V : Opens (Fin n → ℂ)} (h : U �
   rw [mem_extend'] at hx ⊢
   exact h hx
 
-@[simp]
+-- Not `@[simp]`: `mem_extend'` and `Fin.init_zero` are both `@[simp]` and prove this between
+-- them, so the attribute here would only be a duplicate.
 lemma TopologicalSpace.Opens.zero_mem_extend' {U : Opens (Fin n → ℂ)} :
     (0 : Fin (n + 1) → ℂ) ∈ U.extend' ↔ (0 : Fin n → ℂ) ∈ U := by
   rw [mem_extend']
