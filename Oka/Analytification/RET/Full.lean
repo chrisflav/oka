@@ -7,6 +7,7 @@ import Oka.AlgebraicGeometry.IrreducibleChain
 import Oka.AlgebraicGeometry.Morphisms.FiniteEtaleIso
 import Oka.Analytification.RET.Faithful
 import Oka.Analytification.RET.Graph
+import Oka.Analytification.SchemeLFTNoetherian
 
 /-!
 # Fullness of the analytification on finite étale covers, given connectedness
@@ -87,11 +88,6 @@ open AnalyticSpace SchemeLFTℂ
 scheme locally of finite type over `ℂ` is connected. -/
 def AnalytificationPreservesConnected : Prop :=
   ∀ Y : SchemeLFTℂ.{u}, ConnectedSpace Y.obj.left → ConnectedSpace (analytification.obj Y)
-
-/-- A scheme locally of finite type over `ℂ` is locally Noetherian. -/
-instance SchemeLFTℂ.isLocallyNoetherian (Z : SchemeLFTℂ.{u}) : IsLocallyNoetherian Z.obj.left :=
-  haveI : LocallyOfFiniteType Z.obj.hom := Z.property
-  LocallyOfFiniteType.isLocallyNoetherian Z.obj.hom
 
 /-- Under `ComplexAnalytic.AnalytificationPreservesConnected`, the preimage in `Z^an` of a
 connected component of `Z` is preconnected. -/

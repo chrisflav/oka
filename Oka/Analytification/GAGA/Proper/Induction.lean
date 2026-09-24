@@ -9,6 +9,7 @@ import Oka.Analytification.GAGA.ClosedImmersionPushforward
 import Oka.Analytification.GAGA.ComparisonAdditive
 import Oka.Analytification.GAGA.FiveLemma
 import Oka.Analytification.GAGA.Proper.Basic
+import Oka.Analytification.SchemeLFTNoetherian
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbeddingUnit
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PullbackCoherent
 
@@ -113,12 +114,6 @@ lemma SchemeLFTℂ.range_reducedSubschemeι :
     (Scheme.IdealSheafData.coe_support_vanishingIdeal Z)
 
 /-! ### Dévissage along a closed immersion -/
-
-/-- A scheme locally of finite type over `ℂ` is locally noetherian. -/
-instance SchemeLFTℂ.isLocallyNoetherian (Y : SchemeLFTℂ.{u}) : IsLocallyNoetherian Y.obj.left :=
-  haveI : LocallyOfFiniteType Y.obj.hom := Y.property
-  haveI : IsNoetherianRing (ULift.{u} ℂ) := isNoetherianRing_of_ringEquiv ℂ ULift.ringEquiv.symm
-  LocallyOfFiniteType.isLocallyNoetherian Y.obj.hom
 
 variable {X} {Y : SchemeLFTℂ.{u}} (j : Y ⟶ X) [IsClosedImmersion j.hom.left]
 

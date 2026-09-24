@@ -343,6 +343,7 @@ import Oka.Analytification.RepresentableGlue
 import Oka.Analytification.RepresentableOpen
 import Oka.Analytification.Scheme
 import Oka.Analytification.SchemeAffine
+import Oka.Analytification.SchemeLFTNoetherian
 import Oka.Analytification.Sheaf
 import Oka.Analytification.SheafCoherent
 import Oka.Analytification.SpecAffineCover
