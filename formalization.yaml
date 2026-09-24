@@ -1,0 +1,171 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml (v0.4): repo-root metadata for this formalization,
+# following https://github.com/mathlib-initiative/formalization.yaml
+
+version: "v0.4"
+
+project:
+  name: "oka"
+  description: >-
+    A Lean 4 / Mathlib formalization of Oka's coherence theorem and of Serre's GAGA.
+    Complex analytic spaces are defined as locally ringed spaces locally cut out in open subsets
+    of ℂⁿ, and their structure sheaves are proved coherent (Oka). Schemes locally of finite type
+    over ℂ are analytified, and for a proper scheme X over ℂ the three GAGA theorems are proved:
+    the comparison maps Hᵠ(X, F) → Hᵠ(X^an, F^an) are bijective for coherent F, analytification is
+    fully faithful on coherent sheaves, and every coherent analytic sheaf on X^an is algebraic;
+    equivalently analytification is an equivalence Coh(X) ≌ Coh(X^an). Along the way: the ring of
+    convergent power series is a Noetherian regular UFD (Weierstrass preparation and division,
+    Rückert basis theorem), the hard half of Rückert's Nullstellensatz, Cartan's Theorem B on
+    product domains, Cartan–Serre finiteness on ℙⁿ, Chow's lemma, and relative Serre vanishing.
+  authors:
+    - "Claude (Anthropic)"
+    - "Yuichiro Hoshi"
+    - "Junnosuke Koizumi"
+    - "Christian Merten"
+  responsible_maintainers:
+    - "Christian Merten"
+  license: "Apache-2.0"
+
+sources:
+  - title: "Lecture notes on complex analysis in several variables"
+    authors: ["Eberhard Freitag"]
+    type: "lecture notes"
+    location: "Theorem 10.3 (Oka's coherence theorem) and Lemma 10.4"
+    relationship: "adapts"
+    note: >-
+      The proof of Oka's coherence theorem follows these lecture notes. The rest of the
+      development (analytic spaces, analytification, GAGA) follows the classical literature
+      (Serre's GAGA paper, SGA 1 Exposé XII for the proper case) without tracking any single
+      text; see fidelity.divergences.
+    author_endorsement: "not-contacted"
+  - title: "Géométrie algébrique et géométrie analytique"
+    authors: ["Jean-Pierre Serre"]
+    id: "doi:10.5802/aif.59"
+    type: "article"
+    location: "Annales de l'Institut Fourier 6 (1956), 1-42"
+    relationship: "adapts"
+    note: "GAGA for projective schemes follows Serre's proof."
+    author_endorsement: "n/a"
+  - title: "Revêtements étales et groupe fondamental (SGA 1), Exposé XII"
+    authors: ["Alexander Grothendieck", "Michèle Raynaud"]
+    id: "arXiv:math/0206203"
+    type: "book"
+    location: "Exposé XII, §4"
+    relationship: "adapts"
+    note: >-
+      The reduction of GAGA for proper schemes to the projective case via Chow's lemma follows
+      the strategy of SGA 1 XII §4, with the changes listed under fidelity.divergences.
+    author_endorsement: "n/a"
+
+related_formalizations: []
+
+classification:
+  arxiv: ["math.CV", "math.AG"]
+  msc2020: ["32C35", "32J25", "32B05", "14F06"]
+
+status:
+  scope: >-
+    Oka's coherence theorem for arbitrary complex analytic spaces, and Serre's GAGA (all three
+    comparison theorems and the equivalence of categories of coherent sheaves) for proper schemes
+    over ℂ, proved from Lean's three standard axioms. Partial results towards the Riemann
+    existence theorem (analytification of finite étale morphisms) are included.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "oka"
+      file: "Oka/Statement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "ComplexAnalytic.AnalyticSpace.isCoherentStructureSheaf"
+      file: "Oka/AnalyticSpace/Coherent.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "ComplexAnalytic.gagaFull_proper"
+      file: "Oka/Analytification/GAGA/Proper/Equivalence.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "ComplexAnalytic.gagaEquivalenceOfIsProperℂ"
+      file: "Oka/Analytification/GAGA/Proper/Equivalence.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "ComplexAnalytic.gagaFull"
+      file: "Oka/Analytification/GAGA/ProjectiveGAGA3.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "LocalOkaRing.mem_radical_span_of_eventually"
+      file: "Oka/Nullstellensatz/Germ.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "AlgebraicGeometry.exists_chow_of_irreducibleSpace"
+      file: "Oka/AlgebraicGeometry/Chow.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+
+automation:
+  methods:
+    - method: "manual"
+      prompting_notes: >-
+        The statement and the proof of Oka's coherence lemma on open subsets of ℂⁿ (`oka`,
+        Oka/Statement.lean) were written by hand.
+    - method: "agent"
+      models: ["claude-fable-5", "claude-opus-5", "claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: >-
+        Claude Code agents working on the repository with Lean, Lake and the project CI
+        (`lake build --wfail`, Batteries environment linters), with subagents for parallel stages.
+      prompting_notes: >-
+        Apart from Oka's coherence lemma, the formalization was carried out completely by Claude
+        (Fable 5, Opus 5 and Opus 5.5), following lecture notes by Eberhard Freitag for Oka's
+        theorem. Human input consisted of high-level task descriptions and scope decisions.
+  notes: >-
+    Everything except the statement and proof of Oka's coherence lemma was formalised by Claude.
+
+fidelity:
+  divergences: >-
+    Analytic spaces are locally ringed spaces with a ℂ-algebra structure, locally isomorphic to
+    subspaces cut out by finitely many holomorphic functions in open subsets of ℂⁿ; no separation
+    axiom is imposed. Coherence is formulated for sheaves of modules on a site. For GAGA on proper
+    schemes the proof differs from SGA 1 XII in two places: the relative comparison for the Chow
+    morphism is proved directly over boxes using Cartan's Theorem B for 𝒪 on product domains and
+    algebraic syzygies (no Grauert direct image theorem), and essential surjectivity avoids the
+    comparison of Ext¹ groups by an Artin–Rees embedding argument combined with GAGA-2 and
+    Rückert's Nullstellensatz. The Nullstellensatz is proved for the zero locus of a finite
+    generating family of an ideal.
+
+review:
+  status: "unchecked"
+  reviewers: []
+  notes: >-
+    All results are machine-checked by the Lean kernel; the main theorems depend only on propext,
+    Classical.choice and Quot.sound. The formal statements have not been independently reviewed
+    by a human beyond the hand-written statement of Oka's coherence lemma.
+
+alignment:
+  namespace: "ComplexAnalytic"
+  statements:
+    - source: "Freitag, Theorem 10.3 (Oka's coherence theorem, relations are locally finitely generated)"
+      lean: "oka"
+      module: "Oka/Statement.lean"
+      status: "proved"
+    - source: "Oka's coherence theorem for complex analytic spaces"
+      lean: "ComplexAnalytic.AnalyticSpace.isCoherentStructureSheaf"
+      module: "Oka/AnalyticSpace/Coherent.lean"
+      status: "proved"
+    - source: "Serre, GAGA, Théorèmes 1-3 (projective case)"
+      lean: "ComplexAnalytic.gagaFull"
+      module: "Oka/Analytification/GAGA/ProjectiveGAGA3.lean"
+      status: "proved"
+    - source: "SGA 1, Exposé XII, Théorème 4.4 (GAGA for proper schemes)"
+      lean: "ComplexAnalytic.gagaFull_proper, ComplexAnalytic.gagaEquivalenceOfIsProperℂ"
+      module: "Oka/Analytification/GAGA/Proper/Equivalence.lean"
+      status: "proved"
+
+acknowledgements: "Built on Mathlib (Apache-2.0)."
