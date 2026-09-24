@@ -267,6 +267,7 @@ import Oka.Analytification.GAGA.Proper.ChowIrreducible
 import Oka.Analytification.GAGA.Proper.CompactSpace
 import Oka.Analytification.GAGA.Proper.GAGA1
 import Oka.Analytification.GAGA.Proper.GAGA2
+import Oka.Analytification.GAGA.Proper.GAGA3
 import Oka.Analytification.GAGA.Proper.GAGA3Induction
 import Oka.Analytification.GAGA.Proper.HomSheaf
 import Oka.Analytification.GAGA.Proper.Induction
