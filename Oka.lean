@@ -113,6 +113,7 @@ import Oka.AnalyticSpace.ConnectedCover
 import Oka.AnalyticSpace.Continuity
 import Oka.AnalyticSpace.CoveringMap
 import Oka.AnalyticSpace.CoveringSpace
+import Oka.AnalyticSpace.CoveringSpaceHomeomorph
 import Oka.AnalyticSpace.CoveringSpaceMap
 import Oka.AnalyticSpace.CutOutCancel
 import Oka.AnalyticSpace.CutOutCompose
@@ -319,6 +320,8 @@ import Oka.Analytification.PresentationStalk
 import Oka.Analytification.RET.ClosedPoints
 import Oka.Analytification.RET.Connected
 import Oka.Analytification.RET.ConnectedZeroLocus
+import Oka.Analytification.RET.ES.NilThickening
+import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.EtaleLocalIso
 import Oka.Analytification.RET.Faithful
 import Oka.Analytification.RET.FiniteAnalytification
@@ -455,6 +458,7 @@ import Oka.Polynomial.Germ
 import Oka.Regular
 import Oka.RenameIndex
 import Oka.RingTheory.AdicCompletion.Algebra
+import Oka.RingTheory.EtaleNilpotentLift
 import Oka.RingTheory.Filtration
 import Oka.RingTheory.Finiteness.Basic
 import Oka.RingTheory.Finiteness.Ideal
