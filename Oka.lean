@@ -32,6 +32,7 @@ import Oka.Algebra.MvPolynomial.PDeriv
 import Oka.Algebra.MvPolynomial.Taylor
 import Oka.AlgebraicGeometry.AlgClosed.Basic
 import Oka.AlgebraicGeometry.Chow
+import Oka.AlgebraicGeometry.ChowIrreducible
 import Oka.AlgebraicGeometry.GammaSpecAdjunction
 import Oka.AlgebraicGeometry.GraphClosure
 import Oka.AlgebraicGeometry.IrreducibleChain
@@ -259,6 +260,7 @@ import Oka.Analytification.GAGA.ProjectiveSpaceVanishing
 import Oka.Analytification.GAGA.Proper.Basic
 import Oka.Analytification.GAGA.Proper.CechProjectiveBox
 import Oka.Analytification.GAGA.Proper.Chow
+import Oka.Analytification.GAGA.Proper.ChowIrreducible
 import Oka.Analytification.GAGA.Proper.GAGA1
 import Oka.Analytification.GAGA.Proper.Induction
 import Oka.Analytification.GAGA.Proper.PushforwardComparison
