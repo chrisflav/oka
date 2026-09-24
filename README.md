@@ -13,10 +13,11 @@ Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten.
   coherent.
 * **Analytification** (`ComplexAnalytic.analytification`, `Oka/Analytification/Scheme.lean`):
   the functor `X ↦ X^an` from schemes locally of finite type over `ℂ` to complex analytic spaces.
-* **Serre's GAGA** (`ComplexAnalytic.gagaFull`, `Oka/Analytification/GAGA/ProjectiveGAGA3.lean`):
-  for a projective scheme `X` over `ℂ`, `Hᵠ(X, F) ≅ Hᵠ(X^an, F^an)` for coherent `F`, and
-  analytification is an equivalence between coherent sheaves on `X` and coherent analytic
-  sheaves on `X^an` (`ComplexAnalytic.gagaEquivalence`,
-  `Oka/Analytification/GAGA/Equivalence.lean`).
+* **Serre's GAGA for proper schemes** (`ComplexAnalytic.gagaFull_proper`,
+  `Oka/Analytification/GAGA/Proper/Equivalence.lean`): for a proper scheme `X` over `ℂ`,
+  `Hᵠ(X, F) ≅ Hᵠ(X^an, F^an)` for coherent `F`, and analytification is an equivalence between
+  coherent sheaves on `X` and coherent analytic sheaves on `X^an`
+  (`ComplexAnalytic.gagaEquivalenceOfIsProperℂ`). The proof reduces to the projective case via
+  Chow's lemma and uses Rückert's Nullstellensatz.
 * **Towards the Riemann existence theorem** (`Oka/Analytification/RET/`): analytification sends
   finite étale morphisms to finite étale maps and is faithful on finite étale covers.
