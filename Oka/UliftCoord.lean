@@ -60,8 +60,7 @@ one a caller wants.
   not the restriction of an entire function;
   `Oka/AnalyticSpace/OpenBaseProjection.lean` says why. **Nothing here produces such a range
   condition from a germ**, and nothing here is about analytic spaces at all: the results below
-  produce the `P` that theorem asks for and stop. A caller supplies the morphism and its image,
-  as `OkaTest/HolomorphicFamily.lean` does by hand for its curve.
+  produce the `P` that theorem asks for and stop. A caller supplies the morphism and its image.
 * **No control on the neighbourhood.** `V` and `W` are whatever
   `LocalOkaRing.exists_isWeierstrassPolynomial_realize` produces; nothing says they are polydiscs,
   connected, or contained in any given set, and nothing below chooses between two of them.

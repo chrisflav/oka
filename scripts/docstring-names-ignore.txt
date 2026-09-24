@@ -22,7 +22,7 @@
 # until 2026-08-24. It is quoted, with its dates, in `.orchestra/validation.sh`.
 
 # Real Mathlib declarations that this project does **not** import, so they resolve nowhere in the
-# environment of `Oka` + `OkaTest` and the checker is right to report them. They are cited in
+# environment of `Oka` and the checker is right to report them. They are cited in
 # prose as the scheme-level analogues of what
 # `Oka/Geometry/RingedSpace/LocallyRingedSpace/Modules.lean` and
 # `Oka/Analytification/Sheaf.lean` build for locally ringed spaces, and naming them is the point
@@ -57,17 +57,15 @@ AlgebraicGeometry.Scheme.Modules
 # being schematic: `head` resolves as a declaration, but `Lean.FuzzyMatching.CharRole.head` has a
 # child, so `head` is a namespace and the field-notation rule declines namespaces.
 #
-# `OkaTest.FiniteMorphism.someDecl` is the illustrative **bad** citation in that same file's
-# format section — the shape taxis #1326 made the checker reject, exhibited so that a reader can
-# see it. **No rewording repairs it**, and that is the argument for an entry rather than a
-# reword: any name written to show what the rule rejects is a name the rule rejects. Spelling it
-# `OkaTest.SomeFile.someDecl`, as `README.md` does, resolves no better — that head names no module
-# at all — and dropping the backticks would leave the two files describing one rule in two
-# notations.
+# `Mathlib.RingTheory.Filtration.someDecl` is the illustrative **bad** citation in that same
+# file's format section — the shape taxis #1326 made the checker reject, exhibited so that a reader
+# can see it. **No rewording repairs it**, and that is the argument for an entry rather than a
+# reword: any name written to show what the rule rejects is a name the rule rejects, and dropping
+# the backticks would leave the two files describing one rule in two notations.
 #
 # Both are exempt tree-wide, as every entry here is, and both are metasyntactic placeholders
 # (`someDecl`, `tail`) that name nothing now and cannot come to name anything. A file-scoped
 # entry would be tighter and is deliberately not built: the mechanism should be added when an
 # unscoped entry is measured to hide something, and neither of these can.
 head.tail
-OkaTest.FiniteMorphism.someDecl
+Mathlib.RingTheory.Filtration.someDecl

@@ -242,7 +242,7 @@ statement.
 The proof composes two Mathlib lemmas — `AlgebraicGeometry.stalkMap_toStalk` for the `Spec` half
 and `AlgebraicGeometry.LocallyRingedSpace.toStalk_stalkMap_toΓSpec` for the unit half — and never
 unfolds `toΓSpecSheafedSpace`. The final step uses `congrArg` rather than `rw` because the
-rewrite is rejected across the `TopCat.of` transparency seam; see `OkaTest/SimpDiscrTree.lean`. -/
+rewrite is rejected across the `TopCat.of` transparency seam. -/
 theorem toStalk_stalkMap_complexSpaceToSpec (z : ι → ℂ) (p : MvPolynomial ι ℂ) :
     (complexSpaceToSpec ι).stalkMap z
         (toStalk (MvPolynomial ι ℂ) ((complexSpaceToSpec ι).base z) p) =

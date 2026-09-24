@@ -120,41 +120,13 @@ that row was falsified by no replay and no later prose at all. **That is what th
 unpinned pair can be wrong at both ends at once, or right at both and falsified later by a landing
 nobody editing this file touched, and a reader cannot tell which — and the five rows are re-taken
 here at `6e0c610` and at this head, each column a run. **What no replay has moved is a delta**: the
-five rows this module adds to the declaration dump, the six it adds to the environment dump and the
-`5 = 4 + 1` below are properties of this push and are stated without a pin, and that division is
-what the pin is for. **The `scripts/guard_coverage.py` rows came through every replay unmoved, and
-that is a fact about what landed in between rather than a property of that script**: **all eight
-rows of that report's table** are byte-identical at `a3d656d`, `57e5a1a`, `d34b436`, `66cf643` and
-`6e0c610` — the whole report is not, differing from the first by **8** lines at `57e5a1a` and by
-**10** at the other three, **with `--env-dump` given and one dump pair held fixed across the
-five**, every one of them a skipped-token line number moved by prose landing above it — and the
-module `lana-agents/oka#601` adds carries no `#print axioms` of its own, so the guard row had
-nothing to miss there. **Both of those conditions are load-bearing, and the run a reader reaches
-for first satisfies neither.** Without `--env-dump` the skipped-token row prints counts and no
-per-token site, so **no line number appears anywhere in the report**, and the differences this
-sentence reports — every one of them a skipped-token line number — cannot appear in it at all:
-that run answers a different question, and its silence reads as a refutation of this sentence
-rather than as a missing flag. And with each tree's own dumps the reconciliation in that row
-moves with the dump as well as with the prose — the `scripts/DumpOkaDecls.lean` and
-`scripts/DumpEnvNames.lean` figures this section gives for one of these very landings,
-**5003 → 5008** and **338280 → 338286**, are that motion — so the differences stop being *every
-one of them a skipped-token line number*. **A row that happens to be flat is not a row that
-cannot move**, and they are pinned with the rest.
+five rows this module adds to the declaration dump and the six it adds to the environment dump are
+properties of this push and are stated without a pin, and that division is what the pin is for.
 
 `scripts/DumpOkaDecls.lean` writes **5** rows at this module — the five declarations, with **no**
 equation lemma, match lemma or congruence lemma — and the dump total moves **5003 → 5008**.
 `scripts/DumpEnvNames.lean` moves **338280 → 338286**, which is those five declarations and this
 one module and nothing else.
-
-`scripts/guard_coverage.py` moves guards under `OkaTest/Axioms/` **2021 → 2026**, all five in
-`OkaTest/Axioms/Morphisms.lean`; advertised in a `## Main results` **1517 → 1521**, in **233 →
-234** files; and *in both lists* **1375 → 1379**. **`Δguards = Δ(in both) + Δ(nowhere)` closes at
-`5 = 4 + 1`**, and the one is `…SeparatedFiniteEtaleOver.isInitialCoprodId`: it is guarded and it
-is advertised under `## Main definitions`, which that script does not read, so it lands in the
-*guarded and advertised nowhere* row, which goes **646 → 647**. The *unguarded* row is flat at
-**142, in 60 files** — this file opens no gap — *advertised from another file* is flat at **89**,
-*abbreviated citations, not counted* at **30, four of them dotted**, and *backticked tokens that
-resolve to nothing* at **719** with `--env-dump` given at both ends.
 
 `scripts/check_docstring_names.py` goes **18263 → 18317** backticked names (**4432 → 4445**
 distinct) and **367 → 408** elided citations (**169 → 175** distinct), with **0** unresolved at
@@ -163,11 +135,7 @@ both ends, **6** resolving under more than one namespace at both, and dotless **
 
 **Both ends of every figure in this section are runs**, with the base column taken in a
 `git worktree` at the base commit against dumps synthesised from the head ones by deleting this
-module's five declaration rows and its six environment rows. **The worktree's own copy of
-`scripts/guard_coverage.py` is what has to be run there**: that script sets its repository root
-from `os.path.abspath(__file__)`, so invoking the *head* checkout's copy with the worktree as the
-working directory reads the head's guard files and silently reports the head's guard count while
-reporting the base's advertised count — a base column that is neither commit's.
+module's five declaration rows and its six environment rows.
 
 ## Main definitions
 
@@ -191,10 +159,9 @@ reporting the base's advertised count — a base column that is neither commit's
 
 `…SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_of_coprod` is the name the sibling's
 `…subsingleton_fundamentalGroup_of_iso_id` would suggest spelling `…_of_iso_coprod_id`, and that
-spelling is **unwritable in a `## Main results` list**: `scripts/guard_coverage.py` reads a
-backticked token with `` `([^`\s]+)` ``, so a name broken across two lines is not a token at all
-and resolves to nothing, and the whole name plus the list's `- ` and `:` is 106 columns against a
-limit of 100. **Fifty-five of those columns are the namespace**
+spelling is **unwritable in a `## Main results` list**: a name broken across two lines is not a
+backticked token at all and resolves to nothing, and the whole name plus the list's `- ` and `:`
+is 106 columns against a limit of 100. **Fifty-five of those columns are the namespace**
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.`, which leaves forty for the head;
 `…_of_coprod` is thirty-nine and `…_coprod_iff` is forty exactly.
 The list below is written in full for the reason the sibling's heading gives, and this is the other

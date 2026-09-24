@@ -27,8 +27,6 @@ datum beside the first, and the second datum is a family of presentations named 
 `Oka/Analytification/SpecFunctoriality.lean`, `Oka/Analytification/ComparisonSquare.lean`,
 `Oka/Analytification/CoverFunctoriality.lean` — which opens a third — and
 `Oka/Analytification/CoverIndependence.lean`, which opens a second and a third.
-`OkaTest/Axioms/Analytification.lean` has guarded statements about a pair of data since
-`ComplexAnalytic.coverMap`.
 
 **In every one of them the caller matches the members up before anything is proved, and the
 spelling differs.** Three take an index map `σ` together with morphisms

@@ -20,7 +20,7 @@ bijective.
 between that hypothesis and the stalk map, which is what nothing in this repository had.
 Mathlib's `AnalyticAt.analyticAt_localInverse` and `analyticAt_comp_iff_of_deriv_ne_zero`
 (`Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean`) are what produce such a `σ` in
-one variable, and `OkaTest/FiniteMorphism.lean` uses them for `z ↦ z²` on `ℂ ∖ {0}`.
+one variable.
 
 ## Why the two halves are not symmetric
 

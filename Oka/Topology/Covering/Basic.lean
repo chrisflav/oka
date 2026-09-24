@@ -27,26 +27,11 @@ the relative form and not this one. The companion global statement it does have,
 and is therefore not applicable to a non-compact source such as the punctured line.
 
 The Hausdorff hypothesis on the source is Mathlib's and is used to separate the finitely many
-points of a fibre; it is not removable, and
-`LineTwoOrigins.not_isCoveringMap_fold_of_not_t2Space` (`OkaTest/FiniteEtaleCancel.lean`) is a
-compiled witness that it is not. It is the line with two origins folded onto `ℝ`: a closed local
-homeomorphism with finite fibres onto a Hausdorff space, which is every hypothesis of
+points of a fibre; it is not removable: the line with two origins folded onto `ℝ` is a closed
+local homeomorphism with finite fibres onto a Hausdorff space, which is every hypothesis of
 `IsClosedMap.isCoveringMap_of_isLocalHomeomorph` except the separation axiom, and not a covering
 map. The route to that last conjunct is `IsCoveringMap.isSeparatedMap`, which is Mathlib's, and
 `IsSeparatedMap.t2Space` in `Oka/Topology/SeparatedMap.lean`, which is not.
-
-**That clause ended at *it is not removable* until 2026-09-07**, asserting the non-removability
-and citing nothing — where the paragraph on `IsCoveringMap.pullback_snd` cites
-`TwoIndiscrete.not_isCoveringMap_pullback_snd` for its own hypothesis, and has since `24e9179`,
-the push that added both. **The assertion was true and this
-repair adds the citation rather than changing the claim**; the clause is retired as a dated
-record because the sentence around it is rewritten, not because it was wrong.
-
-The same non-removability is asserted a second time, in
-`## A covering map with finite fibres is a closed map`, and **that clause is deliberately
-left as it stands**: its subject is *the criterion above*, so it reaches the witness by naming the
-statement this paragraph is about, and a citation copied to a second site is a second thing to
-keep true.
 
 ## A covering map with finite fibres is a closed map
 
@@ -72,7 +57,7 @@ the spelling it wrote; `IsClosedMap`, which is the predicate it meant, stands in
 the two theorems named above and in the `alias`. A capital letter is the whole of the difference,
 and the headline is true for a reason the scan never touched. **The claim is unchanged and only its
 warrant is**, which is why the retired wording is kept here rather than struck;
-`OkaTest/Axioms.lean`'s seventh census object is the rule and taxis #2108 is the filing.
+taxis #2108 is the filing.
 
 `IsCoveringMap.isClosedMap` below is what makes a finite covering space *finite* in the sense a
 morphism of complex analytic spaces is asked to be: it supplies the closed base map that
@@ -133,14 +118,13 @@ different things:
   (`:392`) build one, and `IsCoveringMap.comp_homeomorph_iff` (`:398`) and
   `IsCoveringMap.homeomorph_comp_iff` (`:403`) are their two-way forms, whose forward directions
   cancel one. **This is the half the headline above is about.**
-* **Four cancel `f` itself out of an equality of composites**, at companions asked only to be
-  continuous over a preconnected source: `IsCoveringMap.eq_of_comp_eq` (`:367`),
+* **Four cancel `f` itself out of an equality of composites**, at companions asked only
+  to be continuous over a preconnected source: `IsCoveringMap.eq_of_comp_eq` (`:367`),
   `IsCoveringMap.const_of_comp` (`:371`), `IsCoveringMap.eqOn_of_comp_eqOn` (`:375`) and
   `IsCoveringMap.constOn_of_comp` (`:379`). **These are lifting-uniqueness statements**: what they
   conclude is that two companions agree, not that a companion inherits a property of the composite,
-  and two of the four spell the composite by application (`f (g a)`) rather than with `∘`, which is
-  itself the *can it be spelled another way?* question `OkaTest/Axioms.lean`'s seventh census object
-  asks of a scan.
+  and two of the four spell the composite by application (`f (g a)`) rather than with `∘`, which
+  is itself the *can it be spelled another way?* question to ask of a scan.
 
 **Neither half is the statement below**, which carries a property of `f ∘ u` — closedness — back to
 `u`, and no declaration of that namespace carries any property of a composite back to a factor.
@@ -188,12 +172,12 @@ statements in its own namespace. **`comp_left` and `comp_right` conclude `IsSepa
 composite rather than cancelling anything, and none of the seventeen concludes that a factor of a
 closed composite is closed**, which is the statement below.
 
-**Until 2026-09-20 the second half of that sentence read *and Mathlib has nothing there, not even
-at `IsSeparatedMap`, which a covering map satisfies*.** It was true and it was bare: a universal
-over a library this repository does not commit to, with no instrument and no version beside it, of
-the class `OkaTest/Axioms.lean`'s seventh census object is the rule for. The enumeration replacing
-it is the same claim bounded to what can be read, and the neighbouring sentence about proper maps —
-three cancellations, in one named file — is the form it is copied from.
+**Until 2026-09-20 the second half of that sentence read *and Mathlib has nothing there, not even at
+`IsSeparatedMap`, which a covering map satisfies*.** It was true and it was bare: a universal over
+a library this repository does not commit to, with no instrument and no version beside it. The
+enumeration replacing it is the same claim bounded to what can be read, and the neighbouring
+sentence about proper maps — three cancellations, in one named file — is the form it is copied
+from.
 
 **Nothing in this repository consumes it**, and that is said rather than left to be discovered: it
 is mirror-tree material stated for its own sake, in a file whose other statements about closedness
@@ -229,8 +213,7 @@ and moves `y` inside `𝓝 x`, and nothing in those twenty does that.
 
 **Until 2026-09-20 that sentence ended *which in turn rests on one observation Mathlib does not
 state*, with nothing beside it.** It was true and it was bare — a universal over a library this
-repository does not commit to, with no version and no instrument, of the class
-`OkaTest/Axioms.lean`'s seventh census object is the rule for — and the enumeration above is the
+repository does not commit to, with no version and no instrument — and the enumeration above is the
 same claim bounded to what can be read.
 
 **`IsEvenlyCovered f x I` mentions `x` only through `x ∈ U`.** Unfolded it is a `U`, its openness,
@@ -264,13 +247,11 @@ type is the same `I`**, which is what leaves the fibre of the base change one ap
 fibres independent of the trivialisation.
 
 **`Continuous g` is a hypothesis of `IsCoveringMap.pullback_snd` and it cannot be dropped.** The
-underlying map of sets needs nothing — that is why `Function.Pullback.finite_fiber_snd` below asks
-for no topology at all — but `g ⁻¹' U` being open is what makes the trivialisation above a
-trivialisation, and the conclusion is false without it:
-`TwoIndiscrete.not_isCoveringMap_pullback_snd` (`OkaTest/CoveringBaseChange.lean`) compiles a
-witness, at the identity of a two-element discrete space base-changed along the identity out of the
-same two points carrying the indiscrete topology, where `Function.Pullback.snd` is a continuous
-bijection and not an open map.
+underlying map of sets needs nothing — that is why `Function.Pullback.finite_fiber_snd` below
+asks for no topology at all — but `g ⁻¹' U` being open is what makes the trivialisation above
+a trivialisation, and the conclusion is false without it: at the identity of a two-element discrete
+space base-changed along the identity out of the same two points carrying the indiscrete topology,
+`Function.Pullback.snd` is a continuous bijection and not an open map.
 
 `Function.Pullback.finite_fiber_snd` is the fibre half and carries neither a covering hypothesis
 nor a topology: `Function.Pullback.fst` is injective on the fibre of `Function.Pullback.snd` over
@@ -282,12 +263,7 @@ hypotheses.
 **Both are statements about continuous maps of topological spaces, and the word *topological* is
 doing work in that sentence.** The `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` just
 cited reads a covering map of underlying spaces as a finiteness statement about a morphism of
-complex analytic spaces, and neither statement below is composed with it in this file. Both are
-guarded in `OkaTest/Axioms/Morphisms.lean` rather than beside a consumer, which is where
-`IsCoveringMap.isClosedMap_of_comp` is guarded and for the reason that section gives; what consumes
-`Function.Pullback.finite_fiber_snd` at the commit that adds it is
-`TwoIndiscrete.not_isCoveringMap_pullback_snd_of_not_continuous`, a declaration of a test file,
-which the guards of this repository's library do not reach.
+complex analytic spaces, and neither statement below is composed with it in this file.
 
 ## Main results
 
@@ -322,13 +298,11 @@ This is `IsClosedMap.isCoveringMapOn_of_isLocalHomeomorphOn` at `Set.univ`. No c
 the target is needed: a point outside the range is evenly covered by the empty index type, which
 is how that proof treats it.
 
-**`[T2Space E]` cannot be dropped**, and the witness is
-`LineTwoOrigins.not_isCoveringMap_fold_of_not_t2Space` (`OkaTest/FiniteEtaleCancel.lean`): the
-line with two origins folded onto `ℝ` is closed, has finite fibres and is a local homeomorphism —
-`hf`, `hfin` and `h` here — onto a Hausdorff target, and is not a covering map. **The separation
-axiom is on the *source* and there is none on the target beyond what the witness happens to
-have** — `ℝ` is Hausdorff there because
-that is the space the witness is built over, not because this statement asks it. -/
+**`[T2Space E]` cannot be dropped**: the line with two origins folded onto `ℝ` is closed, has
+finite fibres and is a local homeomorphism — `hf`, `hfin` and `h` here — onto a Hausdorff
+target, and is not a covering map. **The separation axiom is on the *source* and there is none on
+the target beyond what the witness happens to have** — `ℝ` is Hausdorff there because that is
+the space the witness is built over, not because this statement asks it. -/
 theorem IsClosedMap.isCoveringMap_of_isLocalHomeomorph [T2Space E] (hf : IsClosedMap f)
     (hfin : ∀ x, (f ⁻¹' {x}).Finite) (h : IsLocalHomeomorph f) : IsCoveringMap f := by
   rw [isCoveringMap_iff_isCoveringMapOn_univ]
@@ -402,21 +376,17 @@ proof is that decomposition and nothing else:
 closed local homeomorphism with finite fibres that is not a covering map — the line with two
 origins over the line, whose two origins have no disjoint neighbourhoods and hence no sheet
 containing exactly one of them. `Oka/AnalyticSpace/Finite.lean` records that example as the reason
-this statement is false with `IsCoveringMap f` weakened to *`f` closed with finite fibres*, and
-`TwoIndiscrete.not_isClosedMap_pt_of_isClosedMap_comp` (`OkaTest/FiniteEtaleCancel.lean`)
-compiles a witness for the weakening — a weaker one, since its second map is not a local
-homeomorphism.
+this statement is false with `IsCoveringMap f` weakened to *`f` closed with finite fibres*.
 
-**Note what those two witnesses have in common besides failing to be covering maps: their `E` is
-not Hausdorff.** That is not an accident, and it means this lemma is *not* the cheapest route to
-any statement in which `E` is known to be Hausdorff. There `isProperMap_of_comp_of_t2` applies —
-Mathlib's proper-map cancellation, whose separation hypothesis is on `E` and which asks nothing at
-all of the first map — and it is both shorter and more general. **This lemma is what remains when
-no separation axiom is available at all, and the module docstring is where that case is measured
-against Mathlib** — `## Closedness cancels along a covering map, with no separation axiom` counts
-the `IsCoveringMap` and `IsSeparatedMap` APIs at `v4.32.0` and names the version, and this
-paragraph points at it rather than restating it, a claim about a library nobody here commits to
-being worth one site and not two.
+**Note what that example has besides failing to be a covering map: its `E` is not Hausdorff.** That
+is not an accident, and it means this lemma is *not* the cheapest route to any statement in which
+`E` is known to be Hausdorff. There `isProperMap_of_comp_of_t2` applies — Mathlib's proper-map
+cancellation, whose separation hypothesis is on `E` and which asks nothing at all of the first map
+— and it is both shorter and more general. **This lemma is what remains when no separation axiom
+is available at all, and the module docstring is where that case is measured against Mathlib** —
+`## Closedness cancels along a covering map, with no separation axiom` counts the `IsCoveringMap`
+and `IsSeparatedMap` APIs at `v4.32.0` and names the version, and this paragraph points at it rather
+than restating it, a claim about a library nobody here commits to being worth one site and not two.
 
 **Until 2026-09-20 this ended *which is the case Mathlib does not cover, at `IsCoveringMap` or at
 `IsSeparatedMap`; `IsCoveringMap.comp_homeomorph` and `IsCoveringMap.homeomorph_comp` are
@@ -571,15 +541,13 @@ neighbourhood of `y`, and the part of the pullback lying over it goes to `(g ⁻
 `(e, y') ↦ (y', (H e).2)`. **The index type is the same `I`**, so
 `IsEvenlyCovered.to_isEvenlyCovered_preimage` is all that is left to do.
 
-**`Continuous g` cannot be dropped.** It is used on two facts — for `g ⁻¹' U` to be open, and for
-the continuity of `z ↦ (g z.1 : U)`, which is what `continuous_invFun` composes with `H.symm` — and
-it is not removable: `TwoIndiscrete.not_isCoveringMap_pullback_snd`
-(`OkaTest/CoveringBaseChange.lean`) compiles a witness with `f` the identity of a two-element
-discrete space and `g` the identity out of the same two points carrying the indiscrete topology,
-where `Function.Pullback.snd` is a continuous bijection and not an open map. **The clause read *It
-is used once, for `g ⁻¹' U` to be open, and that one use is not removable* until 2026-09-14**, when
-the second fact was read off `IsCoveringMap.pullback_snd`'s own proof; the same numeral was in
-`OkaTest/CoveringBaseChange.lean`'s module docstring and is repaired there by the same push. -/
+**`Continuous g` cannot be dropped.** It is used on two facts — for `g ⁻¹' U` to be open,
+and for the continuity of `z ↦ (g z.1 : U)`, which is what `continuous_invFun` composes with
+`H.symm` — and it is not removable: with `f` the identity of a two-element discrete space and `g`
+the identity out of the same two points carrying the indiscrete topology, `Function.Pullback.snd`
+is a continuous bijection and not an open map. **The clause read *It is used once, for `g ⁻¹' U`
+to be open, and that one use is not removable* until 2026-09-14**, when the second fact was read off
+`IsCoveringMap.pullback_snd`'s own proof. -/
 theorem IsCoveringMap.pullback_snd (hf : IsCoveringMap f) (hg : Continuous g) :
     IsCoveringMap (Function.Pullback.snd : f.Pullback g → Y) := by
   intro y

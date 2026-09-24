@@ -18,29 +18,25 @@ the two transports at the end of this file are what that observation is worth.
 
 ## What the previous module leaves, and the census is a scan rather than a memory
 
-At the commit this file is cut from, `…SeparatedFiniteEtaleOver.nonempty_iso_id` occurs in the
-comment-stripped code of **three** modules — `Oka/AnalyticSpace/SimplyConnected.lean`, which
-declares it, `OkaTest/Axioms/Morphisms.lean`, the guard file, and `OkaTest/FundamentalGroup.lean`,
-which uses it once, contrapositively, to say the punctured line's group is not trivial — and
-`…SeparatedFiniteEtaleOver.exists_iso_coprod_id` occurs in **two**, the first two of those.
-`…SeparatedFiniteEtaleOver.fundamentalGroup` occurs in **four** modules and **twelve** places.
+At the commit this file is cut from, `…SeparatedFiniteEtaleOver.nonempty_iso_id` and
+`…SeparatedFiniteEtaleOver.exists_iso_coprod_id` occur in the comment-stripped code of **one**
+module, `Oka/AnalyticSpace/SimplyConnected.lean`, which declares them.
 
-**Of those twelve, the three that say the group is trivial are all in one module and all three are
-hypotheses.** At that same commit `Subsingleton (…SeparatedFiniteEtaleOver.fundamentalGroup …)`
+**The places that say `…SeparatedFiniteEtaleOver.fundamentalGroup` is trivial are all in one
+module and all of them are hypotheses.** At that same commit
+`Subsingleton (…SeparatedFiniteEtaleOver.fundamentalGroup …)`
 occurs **three** times in the comment-stripped code of the tree, all in
 `Oka/AnalyticSpace/SimplyConnected.lean` and all as the instance argument of one of its three
 theorems, and **no declaration under `Oka/` concluded it**. At the commit that adds this file it
 occurs **seven** times, the other four being in this file, and the first theorem below is the
 declaration that concludes it — **the sentence before this one is a figure about the base commit,
 and this push is what falsifies it**, which is why it is pinned and not written in the present
-tense. At both commits the one place the tree decides anything about the group with no hypothesis
-left over is `OkaTest/FundamentalGroup.lean`'s `nontrivial_fundamentalGroup`, which concludes the
-*failure* of it at the punctured line; what this file adds is an implication and decides nothing
-about any base on its own. So a consumer that wanted the hypothesis had no way to get it, and one
-that had it at a point had no way to move it.
+tense. What this file adds is an implication and decides nothing about any base on its own. So a
+consumer that wanted the hypothesis had no way to get it, and one that had it at a point had no
+way to move it.
 
 **Which spelling the scan counts is part of its figure.** The population is every tracked `.lean`
-file under `Oka/` and `OkaTest/` together with the two root modules, the stripper is
+file under `Oka/` together with the root module, the stripper is
 `scripts/import_cost.py`'s `strip_comments`, and what is counted is the name **not preceded or
 followed by a letter, a digit or `_`**, with a `.` allowed before it. That is the spelling
 `Oka/AnalyticSpace/SimplyConnected.lean` publishes and the reason it gives holds here unchanged:
@@ -78,11 +74,10 @@ read backwards at the level of proofs; only the statements are converse.
 `Oka/AnalyticSpace/SimplyConnected.lean`'s `## What is not here` says *The converse direction is
 the one this repository can witness, and it is not in this file.* **That is a different converse
 from this one and that bullet is not retired by this file.** What it refers to is a *refutation*:
-a cover that is not isomorphic to the base over itself refutes the hypothesis, and
-`OkaTest/FundamentalGroup.lean` does that at the punctured line. What is below is the *implication*
-run backwards — from the conclusion holding for every connected cover to the hypothesis — and it is
-a statement about the base and not about any one cover. **The refutation is an instance of the
-forward direction and needs nothing here**; nothing in `OkaTest/` is changed by this file.
+a cover that is not isomorphic to the base over itself refutes the hypothesis. What is below is
+the *implication* run backwards — from the conclusion holding for every connected cover to the
+hypothesis — and it is a statement about the base and not about any one cover. **The refutation
+is an instance of the forward direction and needs nothing here.**
 
 ## What the import costs, measured in the environment and not by a scan
 
@@ -111,22 +106,14 @@ equation lemma, match lemma or congruence lemma — and the dump total moves **4
 `scripts/DumpEnvNames.lean` moves **338257 → 338262**, which is those four declarations and this
 one module and nothing else.
 
-`scripts/guard_coverage.py` moves guards under `OkaTest/Axioms/` **2007 → 2011**, all four in
-`OkaTest/Axioms/Morphisms.lean`; advertised in a `## Main results` **1504 → 1508**, in
-**230 → 231** files; and *in both lists* **1362 → 1366**. **`Δguards = Δ(in both) + Δ(nowhere)`
-closes at `4 = 4 + 0`**: this module has no `## Main definitions` section, so no guarded name of it
-lands in the *guarded and advertised nowhere* row, which is flat at **645**. The *unguarded* row is
-flat at **142, in 60 files** — this file opens no gap — *advertised from another file* is flat at
-**86**, and *abbreviated citations, not counted* at **30, four of them dotted**.
-
 `scripts/check_docstring_names.py` goes **17962 → 17990** backticked names (**4374 → 4392**
 distinct) and **332 → 349** elided citations (**160 → 164** distinct), with **0** unresolved at
 both ends, **6** resolving under more than one namespace at both, and **239** dotless at both.
-**Both ends of every figure in this section are runs**: the base column is that script and
-`scripts/guard_coverage.py` run **in a worktree at the base commit** against dumps synthesised
-from the head ones by deleting this module's four rows from the declaration dump and its five —
-four declarations and one module — from the environment-name dump, which is exact because both
-dumps are per-name and both scripts read the prose of the tree they are run in.
+**Both ends of every figure in this section are runs**: the base column is that script run **in a
+worktree at the base commit** against dumps synthesised from the head ones by deleting this
+module's four rows from the declaration dump and its five — four declarations and one module —
+from the environment-name dump, which is exact because both dumps are per-name and that script
+reads the prose of the tree it is run in.
 
 ## Main results
 
@@ -140,19 +127,12 @@ dumps are per-name and both scripts read the prose of the tree they are run in.
 - `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.nontrivial_fundamentalGroup_congr`: the
   same transport in the positive form a consumer states.
 
-## The list above is written in full, and this heading is why it ends where it does
+## The list above is written in full
 
 **Every head in the list above is the whole name**, with the house `…` elision kept for the prose
-outside it, because `scripts/guard_coverage.py` resolves a backticked token of a `## Main results`
-section against the declaration dump and an elided one resolves to nothing. That is the trap
-`Oka/AnalyticSpace/FundamentalGroup.lean` records at length and it is not restated here.
-
-**What is restated is the other half of it, which that module does not have to face**: the same
-tool counts *every* backticked token of a `## Main results` section that resolves to nothing, so a
-paragraph of prose left under that heading raises the *backticked tokens skipped* row even when
-every declaration name in the list is exact. **This heading is what keeps that row flat**: the
-`## Main results` section above is four bullets and nothing else, and the row is **702** at both
-ends of this push.
+outside it, because an elided backticked token of a `## Main results` section resolves to nothing
+against the declaration dump. That is the trap `Oka/AnalyticSpace/FundamentalGroup.lean` records
+at length and it is not restated here.
 
 ## What is not here
 
@@ -202,9 +182,8 @@ ends of this push.
   does not import.**
   `Mathlib/CategoryTheory/Galois/IsFundamentalgroup.lean` makes a compact topological group acting
   suitably on the fibres isomorphic to the automorphism group of the functor, so a single group
-  serving at two points would relate the two; **ten of the eleven modules under
-  `Mathlib/CategoryTheory/Galois/` are in the environment of `Oka` + `OkaTest` at the commit that
-  adds this file and that one is not**, which is why it is cited here by path — its declarations
+  serving at two points would relate the two; **it is not in the environment of `Oka` at the
+  commit that adds this file**, which is why it is cited here by path — its declarations
   resolve to nothing in the dump `scripts/check_docstring_names.py` checks against, so naming one
   would fail that check rather than help a reader. **A transport of a property is not an
   isomorphism of the objects that have it**, and reading the second off the first is the error
@@ -296,8 +275,7 @@ theorem SeparatedFiniteEtaleOver.subsingleton_fundamentalGroup_congr (x y : X) :
 
 The transport above under `not_subsingleton_iff_nontrivial` at each side. `Nontrivial` rather than
 `¬ Subsingleton` because the two are equivalent for a group and the positive form is what a
-consumer states — which is the reading `OkaTest/FundamentalGroup.lean`'s
-`nontrivial_fundamentalGroup` already takes of its own conclusion. -/
+consumer states. -/
 theorem SeparatedFiniteEtaleOver.nontrivial_fundamentalGroup_congr (x y : X) :
     Nontrivial (SeparatedFiniteEtaleOver.fundamentalGroup.{u} x) ↔
       Nontrivial (SeparatedFiniteEtaleOver.fundamentalGroup.{u} y) := by

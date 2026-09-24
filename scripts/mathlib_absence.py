@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
 """Find the sentences of this repository's prose that assert Mathlib lacks something.
 
-`OkaTest/Axioms.lean`'s seventh census object is the rule; this is the scan that narrows the tree
-to what the rule asks a reader to look at.  **It reports pattern hits and not defects.**  Deciding
-whether a hit is in the class, and then whether it is true, is a human step and no run of this
-prints a verdict.
-
-**That citation named a `###` heading of `OkaTest/Axioms.lean` until 2026-09-21, and there is no
-such heading to name.**  That file carries four headings — `# Axiom regression test`, `## Where
-to put a new assertion`, `## What these guards cover, and what they do not`, `## Updating an
-assertion` — and not one `###` among them; the seventh object is the bolded paragraph opening
-*The rule has a seventh object, and it is the fifth one with its domain outside this repository*,
-under the second of the four.  `README.md`'s paragraph on this script has said *seventh census
-object* since it was written, so the repair is that wording and not a new one.
+A sentence asserting that Mathlib lacks something is a claim about a population outside this
+repository, and this is the scan that narrows the tree to the sentences of that class a reader has
+to look at.  **It reports pattern hits and not defects.**  Deciding whether a hit is in the class,
+and then whether it is true, is a human step and no run of this prints a verdict.
 
 Usage:
 
@@ -28,9 +20,9 @@ gate, because the population it would have to quantify over is not in this repos
 
 ## Why this class needs a scan of its own
 
-Every other census instrument on this board walks **this tree**: `scripts/guard_coverage.py`
-reads `## Main results` sections, `scripts/check_docstring_names.py` resolves a backticked name
-against the environment of `Oka` + `OkaTest`, `scripts/module_graph.py` walks the import edges of
+Every other census instrument on this board walks **this tree**:
+`scripts/check_docstring_names.py` resolves a backticked name against the environment of `Oka`,
+`scripts/module_graph.py` walks the import edges of
 these modules.  A sentence of the form *Mathlib does not have X* has the same grammar and the same
 failure mode as *nothing in this repository has X*, and **not one of those instruments can reach
 it**, because what it quantifies over is not in the population they walk.
@@ -52,8 +44,8 @@ nothing without one.
 
 ## The population, and the two readings of a file
 
-Tracked files under `Oka/`, `OkaTest/` and `scripts/` with one of the suffixes `.lean`, `.md`,
-`.py`, `.sh`, `.yml`, `.toml`, together with `Oka.lean`, `OkaTest.lean` and `README.md`.
+Tracked files under `Oka/` and `scripts/` with one of the suffixes `.lean`, `.md`, `.py`, `.sh`,
+`.yml`, `.toml`, together with `Oka.lean` and `README.md`.
 
 For a `.lean` file **only the comment content is read** — the inverse of
 `scripts/import_cost.py`'s `strip_comments`, nesting-aware, with `/-!`, `/--` and `--` all opening
@@ -85,7 +77,7 @@ each is out for a different reason a pattern cannot see:
 * two in `Oka/AnalyticSpace/FundamentalGroup.lean` — *"none proves anything Mathlib does not"*,
   *"nothing is proved below that Mathlib does not prove for a general Galois category"* — are
   claims about **this file's own contents**, with Mathlib as the yardstick rather than the
-  subject.  The self-limiting spelling `OkaTest/Axioms.lean` prescribes covers them already;
+  subject, which is a self-limiting spelling and out of class already;
 * one in `scripts/check_docstring_names.py` is a universal about Mathlib namespaces that the
   paragraph carrying it **retracts in the next clause** — *"that is false"* — and then counts four
   counterexamples.  The class handled correctly, in prose, inside the script that cannot check it.
@@ -104,8 +96,8 @@ import sys
 from pathlib import Path
 
 SUFFIXES = (".lean", ".md", ".py", ".sh", ".yml", ".toml")
-ROOTS = ("Oka/", "OkaTest/", "scripts/")
-FILES = ("Oka.lean", "OkaTest.lean", "README.md")
+ROOTS = ("Oka/", "scripts/")
+FILES = ("Oka.lean", "README.md")
 
 # Six shapes.  Each is a way this tree has actually spelled "Mathlib lacks something"; none of
 # them is a meaning, and the module docstring says what that costs.

@@ -192,8 +192,7 @@ gives — and they are what make the simple-zero hypothesis and the cut-out hypo
   `Polynomial (OkaRing V)`, whose coefficients live on `V` and are required to extend nowhere,
   and it pays for that by taking its hypersurface as a range condition rather than as a
   `ComplexAnalytic.IsCutOutBy` datum, for the reason this bullet gives. **Whether any output of
-  it fails to extend is settled nowhere**: the coefficients of the one such polynomial this
-  repository writes down are entire, which `OkaTest/HolomorphicFamily.lean` records.
+  it fails to extend is settled nowhere.**
 * **No second restriction, and nothing here about a restriction of the *source*.** `V` is
   an open subset of `ℂ^n` and `ComplexAnalytic.cylinder V` is its preimage, so every statement
   below restricts the base and pulls back. There is no statement about restricting `V` further,
@@ -326,8 +325,7 @@ reflects the maximal ideal (`ComplexAnalytic.mem_maximalIdeal_stalkMap_iff`).
 is where it used to live as a `have`. Both directions are consumed: the forward one is what makes
 the vanishing half of the simple-zero hypothesis free — see
 `ComplexAnalytic.evalHom_eq_zero_of_isCutOutBy_resΓ` — and the backward one is what puts a point
-*into* a hypersurface of the cylinder, which is what `OkaTest/OpenBaseProjection.lean` needs to
-exhibit the stalk hypothesis at all.
+*into* a hypersurface of the cylinder.
 
 **The cutting section is `G` restricted and not an arbitrary section of the cylinder.** That is
 not a convenience: the global sections of the cylinder subspace are not `OkaRing (cylinder V)` on

@@ -96,9 +96,7 @@ of `SheafOfModules.Presentation.map` above, because `quasicoherentData` presents
 `P.map` along a pushforward.
 
 It is what makes a theorem stated at `SheafOfModules.IsFinitePresentation` strictly stronger than
-the same theorem stated at a global presentation, rather than merely differently stated — and, in
-this repository, what gives such a theorem a witness at all, since the only sheaf on a `Spec` here
-with any presentation is `OkaTest/AffineSections.lean`'s, and its presentation is global.
+the same theorem stated at a global presentation, rather than merely differently stated.
 
 ## A presentation exhibits its sheaf as a cokernel of free sheaves
 

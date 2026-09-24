@@ -37,7 +37,7 @@ between the statements below and `Oka/Analytification/Hausdorff.lean`'s.
 and its `k` does not occur in its conclusion — it is declared above that file's `noncomputable
 section` and so outside its `g : Fin 0 → …` block, and no morphism occurs in it at all. It is the
 only `T2Space` instance about `ComplexAnalytic.AnalyticSpace.analytification` anywhere under
-`Oka/` or `OkaTest/`. So the separation hypothesis of
+`Oka/`. So the separation hypothesis of
 `ComplexAnalytic.AnalyticSpace.isCoveringMap_base_of_isFiniteEtale` is discharged **by instance
 search at `k ≥ 1` exactly as it is at `k = 0`**, through that instance and
 `ComplexAnalytic.t2Space_restrict`; there is no `haveI` for it below and none is needed.
@@ -85,21 +85,15 @@ than what forces it.
   `Oka/Analytification/Hausdorff.lean` records at `k = 0`, and **at `F = G = X` the open subset is
   empty**, so neither theorem below is on its own evidence that anything is covered.
 * **Nothing about the unrestricted structure map**, whose finiteness is false for the reason
-  `Oka/Analytification/StandardEtaleFiniteEtaleBase.lean` gives —
-  `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`) is the
-  witness — so the restriction is not an artefact of this file.
+  `Oka/Analytification/StandardEtaleFiniteEtaleBase.lean` gives, so the restriction is not an
+  artefact of this file.
 * **Nothing about the composite to `ℂ^n` at `k ≥ 1`**, which is false and not merely unstated, for
   the reason given above. The `k = 0` case of that composite is
   `Oka/Analytification/Hausdorff.lean`'s and stays there.
 * **No claim that the morphism is not an isomorphism**, and so no claim that the rung is
-  non-vacuous at it. `ComplexAnalytic.isCoveringMap_base_sq` (`OkaTest/FiniteMorphism.lean`) is
-  still the only application of the rung at a morphism this repository proves is not an
-  isomorphism (`ComplexAnalytic.not_isIso_sq`); this file adds an application, not a witness of
-  non-triviality.
-* **Nothing at a specific pair.** These are the general `k ≥ 1` statements.
-  `OkaTest/StandardEtaleFiniteEtaleBase.lean` instantiates the finite-étale class at
-  `ComplexAnalytic.sqSubOneTwoPair`, where the bad set is empty; instantiating these there is a
-  separate deliverable and a different statement again.
+  non-vacuous at it: this file adds an application, not a witness of non-triviality.
+* **Nothing at a specific pair.** These are the general `k ≥ 1` statements; instantiating them at
+  a specific pair is a separate deliverable and a different statement again.
 * **No comparison functor and no Riemann existence theorem.** Taxis #1113's functor is not here.
 -/
 

@@ -31,12 +31,10 @@ turns on whether Hartogs' theorem is available anywhere.
 scan decides it.** At `v4.32.0` — the revision `lakefile.toml` pins, resolved by
 `lake-manifest.json` to `81a5d257c8e410db227a6665ed08f64fea08e997` — **0** names in the
 environment of `import Mathlib` write *hartogs* in any case. That
-narrows and does not decide: the implication can be stated without the name, and the first of the
-three questions `OkaTest/Axioms.lean`'s seventh census object puts to an instrument — *can the
-thing being denied be spelled another way?* — is answered **yes** here. What the rule prescribes
-for a *yes* is a sentence that says so rather than a number, and what is left is the statement
-about this file, which is checkable here. **That clause read *that implication is Hartogs'
-theorem, which Mathlib does not have* until 2026-09-21**; `git show
+narrows and does not decide: the implication can be stated without the name, so the thing being
+denied can be spelled another way, and what that calls for is a sentence that says so rather than
+a number. What is left is the statement about this file, which is checkable here. **That clause read
+*that implication is Hartogs' theorem, which Mathlib does not have* until 2026-09-21**; `git show
 c6bfc1f:Oka/Analytic/DividedDifference.lean` carries the retired wording at `:25–26`, wrapped
 after *is*.
 
@@ -74,15 +72,12 @@ several complex variables is analytic. That is why Hartogs does not arise.
 ## Status: no consumer in this repository, and that is expected
 
 **No proof in `Oka/` uses `AnalyticAt.dslope_comp`, and it should not be deleted on that
-account.** It is exercised non-vacuously in `OkaTest/DividedDifference.lean`
-(`analyticAt_dslope_comp_sq`, together with `analyticAt_dslope_comp_sq_eq` naming the resulting
-function as `z + z ^ 3`), and cited in the module docstrings of
-`Oka/AnalyticSpace/HolomorphicMap.lean` and `Oka/AnalyticSpace/HolomorphicMapGeneral.lean`. What
-it has no consumer *for* is a proof in the library. It was built for the
-independence-of-lift step that `Hom(Z, ℂ) ≃ Γ(Z, 𝒪_Z)` was expected to need: two lifts of the
-same section differ by an element of the ideal cutting out the chart, and `h(G) - h(G')` has to
-be shown to lie in that ideal, for which the cofactor `dslope h (G ·) (G' ·)` must be
-holomorphic. **That route was abandoned**:
+account.** It is cited in the module docstrings of `Oka/AnalyticSpace/HolomorphicMap.lean` and
+`Oka/AnalyticSpace/HolomorphicMapGeneral.lean`. What it has no consumer *for* is a proof in the
+library. It was built for the independence-of-lift step that `Hom(Z, ℂ) ≃ Γ(Z, 𝒪_Z)` was expected to
+need: two lifts of the same section differ by an element of the ideal cutting out the chart, and
+`h(G) - h(G')` has to be shown to lie in that ideal, for which the cofactor `dslope h (G ·) (G' ·)`
+must be holomorphic. **That route was abandoned**:
 `ComplexAnalytic.AnalyticSpace.hom_ext_complexAffineSpace` discharges the compatibility directly,
 once `ComplexAnalytic.AnalyticSpace.restrict` makes a chart overlap an analytic space, so no
 independence argument is needed at all. The analytification programme, the last place a consumer
@@ -110,9 +105,9 @@ that environment writing *dividedDifference* in any case.
 
 **The environment dump is the weaker of the two routes and says so here**: six of the 35 — the
 five in the `Complex` namespace and `Real`'s `sinc_eq_dslope` — are absent from the environment of
-`Oka` + `OkaTest` that `scripts/DumpEnvNames.lean` dumps, because this repository imports part of
-Mathlib and not all of it, so a zero in that dump would be a statement about this build's imports
-and not about Mathlib. That is why the figures above are taken over `import Mathlib` instead.
+`Oka` that `scripts/DumpEnvNames.lean` dumps, because this repository imports part of Mathlib and
+not all of it, so a zero in that dump would be a statement about this build's imports and not about
+Mathlib. That is why the figures above are taken over `import Mathlib` instead.
 
 So the absence of an in-repo consumer is
 what an upstreaming candidate looks like, not what dead code looks like, and this paragraph exists
@@ -332,9 +327,8 @@ with `AnalyticAt.pi`, and it is the form in which joint analyticity is consumed:
 one-variable `dslope` lemmas of Mathlib, `G'` would have to be constant.
 
 **No proof in the library uses this, and none is expected to**: the argument it was built for was
-abandoned in favour of a uniqueness argument. It is exercised in `OkaTest/DividedDifference.lean`
-and retained as a Mathlib upstreaming candidate; see `## Status` in the module docstring, which is
-the disposition rather than a fresh observation. -/
+abandoned in favour of a uniqueness argument. It is retained as a Mathlib upstreaming candidate; see
+`## Status` in the module docstring, which is the disposition rather than a fresh observation. -/
 theorem AnalyticAt.dslope_comp {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     {G G' : E → ℂ} {z₀ : E} (hR : 0 < R) (hd : DifferentiableOn ℂ h (closedBall 0 R))
     (hG : AnalyticAt ℂ G z₀) (hG' : AnalyticAt ℂ G' z₀) (hGb : ‖G z₀‖ < R)

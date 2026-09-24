@@ -25,22 +25,14 @@ functions of the first `n`. With it, `ComplexAnalytic.isFinite_comp_proj_of_rang
 the analytification of `ℂ[x₁, …, x_n, X] ⧸ (G)` with no hypothesis left over, which is
 `ComplexAnalytic.isFinite_analytification_comp_proj`. Outside
 `Oka/AnalyticSpace/MonicProjection.lean`, where it is proved and where
-`ComplexAnalytic.isFinite_comp_proj_of_isCutOutBy` is derived from it,
-`ComplexAnalytic.isFinite_comp_proj_of_range_eq` has three consumers, and this is the only one
-that is not in `OkaTest/`: the other two — `ComplexAnalytic.isFinite_parabolaIncl_comp_proj` and
-`ComplexAnalytic.isFinite_parabolaIncl_comp_proj_of_polyFamily` — discharge its closed-embedding
-hypothesis with a morphism assembled by hand, and this one discharges it with
-`ComplexAnalytic.AnalyticSpace.analytification`, which this development constructs.
+`ComplexAnalytic.isFinite_comp_proj_of_isCutOutBy` is derived from it, this is a consumer of
+`ComplexAnalytic.isFinite_comp_proj_of_range_eq` that discharges its closed-embedding hypothesis
+with `ComplexAnalytic.AnalyticSpace.analytification`, which this development constructs.
 
 **Not claimed: that this is the first finiteness statement about a morphism this development
-builds.** It is not. `ComplexAnalytic.AnalyticSpace.isFinite_sigmaDesc` is one, and
-`OkaTest.AnalyticSigma.isFiniteEtale_sigmaFold_line` is a finiteness statement —
-`ComplexAnalytic.AnalyticSpace.IsFiniteEtale` carries
-`ComplexAnalytic.AnalyticSpace.IsFinite` as a field — about the fold map of the trivial cover of
-an `ComplexAnalytic.AnalyticSpace.analytification`, whose **target** is that analytification and
-whose source is a `ComplexAnalytic.AnalyticSpace.sigma` of copies of it. What is new here is that
-the target is `ℂ^n`, which is what makes `ComplexAnalytic.isFinite_comp_proj_of_range_eq` the
-theorem that applies.
+builds.** It is not. `ComplexAnalytic.AnalyticSpace.isFinite_sigmaDesc` is one. What is new here
+is that the target is `ℂ^n`, which is what makes `ComplexAnalytic.isFinite_comp_proj_of_range_eq`
+the theorem that applies.
 
 ## The spelling of "monic in the last variable", and why it is not the obvious one
 
@@ -155,13 +147,7 @@ construction rather than by a compatibility lemma.
   (`Oka/Analytification/StandardEtaleLocalIso.lean`), which landed earlier and which this
   paragraph did not track. `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` of the
   **unrestricted** morphism is still nowhere and is **false**, which is what the counterexample
-  in this file is for and which nothing narrows. **The counterexample is no longer only in this
-  paragraph**: `ComplexAnalytic.not_isFiniteEtale_condEtaleProj`
-  (`OkaTest/StandardEtaleNotFinite.lean`) compiles it at the square-root cover of the line, since
-  2026-09-02. It proves the image misses the origin and reads the rest off connectedness, so what
-  it settles is the two words *"and is **false**"*; the *"image the punctured line"* computation
-  three lines above is still prose here and nowhere else. Of the *restricted* one this
-  paragraph said it
+  in this file is for and which nothing narrows. Of the *restricted* one this paragraph said it
   was *"waiting on a transport of `ComplexAnalytic.AnalyticSpace.IsLocalIso` along a restriction
   that nothing has"*; that transport is
   `ComplexAnalytic.AnalyticSpace.isLocalIso_restrictHom` (`Oka/AnalyticSpace/OpenSubspace.lean`)
@@ -202,11 +188,7 @@ construction rather than by a compatibility lemma.
   `ComplexAnalytic.isFinite_comp_projRestrict_of_range_eq` takes, and a monic polynomial of
   positive degree over `ℂ` has a root. So the image is the open `V`, and an open set closed in the
   connected `ℂ^n` is `∅` or `⊤` — **so for every proper non-empty `V`, which is every case this
-  plan is for, the composite is not finite.** That is the same shape as
-  `ComplexAnalytic.not_isFinite_proj_comp_axisIncl` in `OkaTest/FiniteMorphism.lean`, which is a
-  composite shown non-finite by reading the same cancellation lemma contrapositively:
-  `ComplexAnalytic.AnalyticSpace.isFinite_of_isFinite_comp`, which lives in
-  `Oka/AnalyticSpace/Finite.lean` and not in either file this sentence names.
+  plan is for, the composite is not finite.**
 
   Two degenerate cases sit outside that, and neither rescues the route. `ofRestrict` at `V = ⊤`
   *is* a closed map, being an isomorphism —
@@ -220,7 +202,7 @@ construction rather than by a compatibility lemma.
 
   **What this repository does not have is the surjectivity statement**, and that is worth
   recording — but as the missing *citation* for a settled conclusion, not as an open question.
-  `grep -rn 'surjective.*projRestrict\|range_base_projRestrict' Oka/ OkaTest/` returns **exactly
+  `grep -rn 'surjective.*projRestrict\|range_base_projRestrict' Oka/` returns **exactly
   one hit, and it is the line that prints the pattern**: the first alternative is a regular
   expression, and both of its halves stand in that order on the line quoting it — and the second
   alternative is a bare literal that the same line contains outright, so anchoring only the first

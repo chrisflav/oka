@@ -82,9 +82,8 @@ composition law asks a caller for nothing beyond the two hypotheses its two morp
   are different inputs with no morphism between them until cover independence exists. The two
   laws below are the content a functor instance would carry.
 * **No non-identity instance.** Nothing below exhibits a `σ` and a `ψ` other than the identity.
-  `OkaTest/ProjectiveLine.lean` and `OkaTest/AffineCover.lean` are the two covers this repository
-  has and neither has a map to the other, so the identity law is the only control here — the same
-  gap the analytic file records, and for the same reason.
+  The identity law is the only control here — the same gap the analytic file records, and for the
+  same reason.
 * **No square against the comparison morphism.** That
   `ComplexAnalytic.analytificationToSpecGlued` intertwines `ComplexAnalytic.coverMap` with
   `ComplexAnalytic.specMap` is `Oka/Analytification/ComparisonSquare.lean`, which imports this

@@ -70,19 +70,12 @@ statement is used only where the fibres are finite for a structural reason.
 
 ## No declaration here is advertised, because this file advertises nothing
 
-There is no `## Main results` heading here and none is added. `scripts/guard_coverage.py` reads
-such a heading as the list of what a file advertises, and this file has never had one, so
+There is no `## Main results` heading here and none is added: this file has never had one, so
 `Function.bijective_iff_forall_card_preimage_eq_one` and `Nat.card_preimage_singleton_comp` are
 unadvertised for that reason. **This heading read *Neither declaration is advertised* while the
 file held three declarations**, which is a count of the file written where no count is wanted;
 it is rewritten so that nothing here has to be recounted when a declaration is added or, as now,
-taken away. **Guarding is a separate matter and is not skipped**:
-`OkaTest/Axioms/Morphisms.lean` carries the `#print axioms` guards, beside the `IsCoveringMap`
-guards it already holds for `Oka/Topology/Covering/Basic.lean`, which is the precedent for a
-mirror-tree file's declarations
-being guarded under the topic of the analytic statement that consumes them. **That precedent is
-unaffected by the move**: it is about the topic of the consuming statement and not about which
-mirror file declares what, so `Set.preimageCompEquivSigma`'s guard stays where it is.
+taken away.
 -/
 
 /-- **A map is bijective exactly when every fibre has exactly one point.**

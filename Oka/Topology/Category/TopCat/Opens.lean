@@ -47,15 +47,14 @@ Mathlib's and is named there.
 over all of Mathlib returns nothing* until 2026-09-21** — `git show
 d4c49af:Oka/Topology/Category/TopCat/Opens.lean` carries it at `:21–22`, wrapped after *all*.
 **The figure is right and it is the instrument that is retired**, for two reasons of different
-weight. The `grep` is line-anchored, so a statement wrapped across two source lines is invisible
-to it, which is the failure mode taxis #1712 records of `git log -S`; re-run over the
-whitespace-normalised text of every one of the **8264** tracked `.lean` files under `Mathlib/`,
-with the two tokens allowed 200 characters apart in either order, it still returns **0**, so the
-figure survives the better `grep`. But the better `grep` only narrows. Of the three questions
-`OkaTest/Axioms.lean`'s seventh census object puts to such a scan, two are answered *yes* here —
-the thing denied can be spelled another way, and it can be inherited from a binder the scan does
-not read — and the rule says a scan whose spelling cannot in principle decide the claim is worse
-than carrying no instrument. The two above are what answer them.
+weight. The `grep` is line-anchored, so a statement wrapped across two source lines is
+invisible to it, which is the failure mode taxis #1712 records of `git log -S`; re-run over the
+whitespace-normalised text of every one of the **8264** tracked `.lean` files under `Mathlib/`, with
+the two tokens allowed 200 characters apart in either order, it still returns **0**, so the figure
+survives the better `grep`. But the better `grep` only narrows. Of the three questions put to such
+a scan, two are answered *yes* here — the thing denied can be spelled another way, and it can be
+inherited from a binder the scan does not read — and a scan whose spelling cannot in principle
+decide the claim is worse than carrying no instrument. The two above are what answer them.
 
 ## The content is that `Opens` is filtered
 

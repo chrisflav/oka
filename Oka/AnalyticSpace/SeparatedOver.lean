@@ -136,8 +136,8 @@ is in it. The edge those two would need is the reverse of one that is already th
 
 For the rest it is a measurement rather than a cycle, and it is given with its instrument because a
 dependency relation asserted between two named files is a claim that has to be measured. Over the
-**320** tracked `.lean` files under `Oka/` and `OkaTest/` together with `Oka.lean` and
-`OkaTest.lean` at `f59e304`, walked with `scripts/import_cost.py`'s `IMPORT` pattern over its
+tracked `.lean` files under `Oka/` together with `Oka.lean` at `f59e304`, walked with
+`scripts/import_cost.py`'s `IMPORT` pattern over its
 nesting-aware `strip_comments` and closed transitively, the `Oka`-side import closure of
 `Oka/AnalyticSpace/DirectSummand.lean` is **58** modules and this file's is **71**. Neither
 `Oka/AnalyticSpace/Double.lean`, which

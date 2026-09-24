@@ -50,27 +50,25 @@ import-closure wording passes straight over it. The sentences of that class whic
 are in `Oka/AnalyticSpace/FiniteEtaleOver.lean`, `Oka/AnalyticSpace/SeparatedDirectSummand.lean`,
 `Oka/AnalyticSpace/SeparatedFiberFunctor.lean`,
 `Oka/AnalyticSpace/SeparatedFiberFunctorEpi.lean`,
-`Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean`, `OkaTest/Axioms.lean` and
-`OkaTest/Axioms/Morphisms.lean`, and each is rewritten at its commit here. **Every other sentence
-of that class in the tree already carries a commit or a hash beside it and stays exact**, and
-those seven are where the argument for writing a census *at* a commit rather than in the present
-tense had not been taken. **The enumeration is a scan and not a memory, and it took two widenings
-to become one.** A scan keyed on a repository-wide quantifier and on either class name written
-out returns **five**, and the two it cannot see are the two ways a sentence of this class hides:
-`Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` quantifies as *no module reachable from
-`Oka.lean`* and over *the whole tree* rather than over this repository, and
-`Oka/AnalyticSpace/SeparatedDirectSummand.lean` names the class anaphorically, as *that class*, in
-a declaration docstring rather than in a `## What is not here` bullet. **So the rule this section
-states holds one level out from where it was first applied**: a sweep keyed on the spelling of the
-quantifier, or on the class being named at all, passes over the claim spelled another way. Over
-every tracked `.lean` under `Oka/` and `OkaTest/`, whitespace-flattened because such a sentence
-wraps, the sentences pairing any tree-wide quantifier with either class — named or referred to —
-and carrying neither a date nor a commit beside them are those seven and no others. **And the
-census behind them is the tree and not a wording**: `PreGaloisCategory` occurs in the
-comment-stripped code of **no** module of this repository at the commit this file is cut from and
-of **two** at the commit that adds it,
-this one and `OkaTest/GaloisCategory.lean`, with `scripts/import_cost.py`'s `strip_comments` the
-instrument.
+`Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean` and two files since deleted, and each is
+rewritten at its commit here. **Every other sentence of that class in the tree already carries a
+commit or a hash beside it and stays exact**, and those seven are where the argument for writing a
+census *at* a commit rather than in the present tense had not been taken. **The enumeration is a
+scan and not a memory, and it took two widenings to become one.** A scan keyed on a repository-wide
+quantifier and on either class name written out returns **five**, and the two it cannot see are the
+two ways a sentence of this class hides: `Oka/AnalyticSpace/SeparatedFiniteEtaleLimits.lean`
+quantifies as *no module reachable from `Oka.lean`* and over *the whole tree* rather than over this
+repository, and `Oka/AnalyticSpace/SeparatedDirectSummand.lean` names the class anaphorically, as
+*that class*, in a declaration docstring rather than in a `## What is not here` bullet. **So the
+rule this section states holds one level out from where it was first applied**: a sweep keyed on the
+spelling of the quantifier, or on the class being named at all, passes over the claim spelled
+another way. Over every tracked `.lean` file, whitespace-flattened because such a sentence wraps,
+the sentences pairing any tree-wide quantifier with either class — named or referred to — and
+carrying neither a date nor a commit beside them are those seven and no others. **And the census
+behind them is the tree and not a wording**: `PreGaloisCategory` occurs in the comment-stripped code
+of **no** module of this repository at the commit this file is cut from and of **two** at the commit
+that adds it, this one and a file since deleted, with `scripts/import_cost.py`'s `strip_comments`
+the instrument.
 
 ## What the import costs, measured in the environment and not by a scan
 

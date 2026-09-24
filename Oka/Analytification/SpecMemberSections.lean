@@ -30,7 +30,7 @@ this branch was in review. **A claim about the whole tree, made from a branch, i
 whatever lands next, and this one was.**
 
 The sweep is a `grep` and not a reading, so the pattern rather than the adjective: `grep -rniE`
-over `Oka/` and `OkaTest/` for *no declaration consumes*, *nothing consumes*, *has no consumer*
+over `Oka/` for *no declaration consumes*, *nothing consumes*, *has no consumer*
 and *no consumer of*. Its other hits are `Oka/Analytic/DividedDifference.lean` and
 `Oka/AnalyticSpace/SimpleZeroStalk.lean`, about other objects, and
 `Oka/Analytification/CoverIndependence.lean`'s *"Nothing consumes it yet"*, which is about

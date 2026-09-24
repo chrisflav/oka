@@ -32,11 +32,10 @@ The whole content is `LocalOkaRing.coeff_single_one_ofMvPolynomial`
 germ is `LocalOkaRing.ofMvPolynomial_eq`, which is `rfl`.
 
 **No derivative operator on `LocalOkaRing` is constructed here or anywhere**, and
-`Oka/Regular.lean` and `OkaTest/GermQuotientDegreeOne.lean` still record correctly that there is
-none and that no bridge from one has been built. The derivative below is Mathlib's
-`MvPolynomial.pderiv`, on polynomials, and the route reaches the germ's coefficient without ever
-differentiating a germ — by translating the polynomial to the point and reading a *polynomial*
-coefficient off the shift.
+`Oka/Regular.lean` still records correctly that there is none and that no bridge from one has
+been built. The derivative below is Mathlib's `MvPolynomial.pderiv`, on polynomials, and the
+route reaches the germ's coefficient without ever differentiating a germ — by translating the
+polynomial to the point and reading a *polynomial* coefficient off the shift.
 
 ## Main results
 

@@ -42,16 +42,16 @@ one is at `LocallyRingedSpace`. **The control says the notion is there in quanti
 elsewhere**: `grep -rn "OpenCover" Mathlib/` returns **433** occurrences in **59** files, and
 `AlgebraicGeometry.Scheme.OpenCover` and `AlgebraicGeometry.Scheme.Cover` both exist.
 
-**Here the token grep decides rather than narrows**, which is the verdict the three questions
-`OkaTest/Axioms.lean`'s seventh census object puts to a scan offered in support of an absence
-exist to reach: a declaration stated *in terms of* a cover of locally ringed spaces has to write
-that structure's name in its own statement, whatever namespace is open; a `variable` binder
-introducing a cover leaves the name still to be written, so nothing is inherited from a binder
-the scan does not read; and a structure is declared and not generated, so there is no
-elaborator-produced spelling to miss. **What is deliberately not claimed is that the notion is
-unreachable**: `AlgebraicGeometry.Scheme.Cover` is an `abbrev` over a `CategoryTheory.Precoverage`
-(`Mathlib/AlgebraicGeometry/Cover/MorphismProperty.lean:50`), and whether it specialises to
-locally ringed spaces is a question this file does not ask and does not need.
+**Here the token grep decides rather than narrows**, which is the verdict the three questions put
+to a scan offered in support of an absence exist to reach: a declaration stated *in terms of* a
+cover of locally ringed spaces has to write that structure's name in its own statement, whatever
+namespace is open; a `variable` binder introducing a cover leaves the name still to be written,
+so nothing is inherited from a binder the scan does not read; and a structure is declared and
+not generated, so there is no elaborator-produced spelling to miss. **What is deliberately not
+claimed is that the notion is unreachable**: `AlgebraicGeometry.Scheme.Cover` is an `abbrev`
+over a `CategoryTheory.Precoverage` (`Mathlib/AlgebraicGeometry/Cover/MorphismProperty.lean:50`),
+and whether it specialises to locally ringed spaces is a question this file does not ask and does
+not need.
 
 **That clause read *Mathlib has no such structure* until 2026-09-21**, with no version and no
 instrument beside it;

@@ -110,11 +110,9 @@ was neither of them.
   bullet below says this file reads no `StandardEtalePair`, and the class does read one.
 
   **The unrestricted `IsFiniteEtale` stays false forever** and nothing here bears on it:
-  `Oka/Analytification/MonicHypersurface.lean` carries the counterexample in terms and
-  `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`)
-  compiles it, since 2026-09-02; nothing below narrows either. A **different and broader**
-  absence — *the analytification of a finite étale
-  morphism of schemes*, the other blocker of the Riemann existence theorem — is what
+  `Oka/Analytification/MonicHypersurface.lean` carries the counterexample in terms;
+  nothing below narrows it. A **different and broader** absence — *the analytification of a finite
+  étale morphism of schemes*, the other blocker of the Riemann existence theorem — is what
   `Oka/AnalyticSpace/LocalIso.lean`, `Oka/AnalyticSpace/CoveringMap.lean` and
   `Oka/AnalyticSpace/SigmaFiniteEtale.lean` record, in those words. Nothing below narrows that
   either: everything here is one standard étale presentation over `ℂ^n`, and the general morphism
@@ -179,10 +177,8 @@ was neither of them.
   `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom_comp_parabola`. So the
   quantification is no longer empty of content in the only case it is interesting in. **What is
   still not here is any *general* statement about the size of `V`** — it remains a hypothesis on
-  the pair and not a theorem, and `OkaTest/OpenBaseFiniteness.lean` exhibits a non-degenerate pair
-  at which `V` is empty. Read this file as the transport of a finiteness across
-  `ComplexAnalytic.etaleAnalytificationIso`, and read `OkaTest/OpenBaseFiniteness.lean` for what
-  such a statement buys.
+  the pair and not a theorem. Read this file as the transport of a finiteness across
+  `ComplexAnalytic.etaleAnalytificationIso`.
 * **No stalks, no germs and no derivative.** The local-isomorphism half is
   `Oka/Analytification/StandardEtaleLocalIso.lean` and nothing here is evidence about it.
 -/
@@ -275,24 +271,9 @@ analytification and the hypersurface agree there.
 conclusion fails.** At `F = X² - x` and `G = X` the bad set is the origin of the line, so `V = ⊤`
 meets it, and inverting `G` cuts the point `(0, 0)` out of the parabola; the projection of what is
 left has the punctured line for image, which is not closed, so the morphism is not finite.
-`Oka/Analytification/MonicHypersurface.lean` carries that computation in terms. **This paragraph
-said *"it is not compiled anywhere in this repository"* until 2026-09-02, and it now is**:
-`ComplexAnalytic.not_isFinite_condEtaleProj` and
-`ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`), at
-exactly this pair — `ComplexAnalytic.condPair`, which is `f = X² - C z₀`, `g = X` over the empty
-presentation of the line.
+`Oka/Analytification/MonicHypersurface.lean` carries that computation in terms.
 
-**What is compiled is the conclusion and not the computation above.** That file proves the
-morphism misses **one** point of the base, the origin, and reads the rest off
-`ComplexAnalytic.AnalyticSpace.not_isFinite_of_isLocalIso_of_not_surjective`
-(`Oka/AnalyticSpace/LocalIso.lean`): a local isomorphism has open image, a finite morphism has
-closed image, and the line is connected, so a non-empty source and one missing point are enough.
-**The image is not computed there and nothing says it is the punctured line** — that is a
-strictly stronger statement needing a square root of every non-zero complex number, and this
-sentence's *"has the punctured line for image"* remains uncompiled. What was uncompiled and is no
-longer is *"so the morphism is not finite"*.
-
-**Nothing here says the `hV` hypothesis is irredundant**, and that is a third statement again:
+**Nothing here says the `hV` hypothesis is irredundant**, and that is a separate statement:
 this theorem is about `ComplexAnalytic.AnalyticSpace.restrictHom` of the composite and the
 counterexample is about the composite itself. **This sentence used to end *"and nothing in this
 repository relates the two at `V = ⊤`"*, and that is no longer true**:
@@ -303,27 +284,24 @@ a construction.
 
 **This sentence used to end by generalising that witness, and the generalisation is false.** It
 read *"over a `V` meeting the bad set the conclusion is **false**"*, which as a universal claims
-failure at every pair and every such `V`. `ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOnePair`
-(`OkaTest/OpenBaseFiniteness.lean`) proves the bad set is **all of `ℂ^n`** at `F = X² - 1`,
+failure at every pair and every such `V`. The bad set is **all of `ℂ^n`** at `F = X² - 1`,
 `G = X - 1`, so every non-empty `V` there meets it — and there the inversion removes an entire
 connected component of `{X² = 1}` rather than a point of one, leaving the single sheet `{X = -1}`,
 a graph over the base with no reason for finiteness to fail. **That is the distinction the old
 sentence collapsed**: what breaks finiteness is not that the bad set is met but that the inversion
 punctures a component, and meeting the bad set does not say which of the two happens.
 
-**Three claims have just been made and exactly one of them is a theorem here, so read them
-apart.** *(i)* The bad set is everything at `ComplexAnalytic.sqSubOnePair` — **proved**,
-`ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOnePair`. *(ii)* The restricted morphism is
-finite there — **not proved, in either direction, and nothing below states it**; it is a reading
-of the geometry. *(iii)* The puncture-versus-component criterion of the previous paragraph — **not
-proved either, and it is a universal over every pair, so it is the strongest thing here and the
-least supported.** The criterion is where the geometry says finiteness ought to live: the piece
-kept is open in a hypersurface that is finite over the base, and an open subspace of that is
-finite exactly when it is also closed, which is to say a union of components. **That argument is
-not carried out anywhere in this repository.**
+**Two claims have just been made and neither of them is a theorem here, so read them apart.** *(i)*
+The restricted morphism is finite at that pair — **not proved, in either direction, and nothing
+below states it**; it is a reading of the geometry. *(ii)* The puncture-versus-component criterion
+of the previous paragraph — **not proved either, and it is a universal over every pair, so it
+is the strongest thing here and the least supported.** The criterion is where the geometry says
+finiteness ought to live: the piece kept is open in a hypersurface that is finite over the base,
+and an open subspace of that is finite exactly when it is also closed, which is to say a union of
+components. **That argument is not carried out anywhere in this repository.**
 
 So this paragraph claims that the sentence it retires was **unsupported**, not that its negation
-is established, and it offers *(iii)* as the shape of what a proof would look like rather than as
+is established, and it offers *(ii)* as the shape of what a proof would look like rather than as
 one.
 
 The proof is the factorisation `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_comp`

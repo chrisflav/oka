@@ -165,9 +165,7 @@ For `restrictTopIso` the direction to write the section along is `hom`, because
 for any section whose presentation does not mention the open it lives on — a polynomial, a
 constant, a coordinate — but **not** for a section given abstractly: the two sides then have
 different types, `Γ(X, ⊤)` and `Γ(X, functor.obj ⊤)`, which are not definitionally equal even
-for `X = ℂ^n`. `OkaTest/Factorisation.lean` carries the technique out at `ℂ²`, where
-`nodeSection_eq` is the `rfl` in question, and checks both halves of this paragraph beside
-it. -/
+for `X = ℂ^n`. -/
 lemma Γ_map_inv_hom_apply (e : X ≅ Y) (a : Y.presheaf.obj (op ⊤)) :
     (Γ.map e.inv.op).hom ((Γ.map e.hom.op).hom a) = a :=
   (Γ_map_comp_apply e.inv e.hom a).symm.trans

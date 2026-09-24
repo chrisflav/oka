@@ -117,8 +117,7 @@ of possibly different lengths — therefore give canonically isomorphic analytif
   itself by its defining polynomials** — the zero-locus statement of
   `Oka/AnalyticSpace/LocalModel.lean` at the *other* presentation of `ℂ^n`, which is the one
   every consumer of a cut-out datum takes. (Named by file rather than by declaration on purpose:
-  this heading is what `scripts/guard_coverage.py` reads, and a name backticked here is counted
-  as a result *this* file advertises. The declaration's own docstring names it.)
+  the declaration's own docstring names it.)
 
 ## References
 
@@ -243,10 +242,7 @@ unification does not do that, so the hole is reported as a type mismatch between
 of the same term.
 
 **It is the first cut-out datum this repository produces, rather than assumes, for a morphism of
-complex analytic spaces**, which is a sentence six files carried and
-`OkaTest/FiniteMorphism.lean` owned. What it does *not* do is produce one for a morphism built by
-hand: `ComplexAnalytic.axisIncl` and `ComplexAnalytic.parabolaIncl` are still supplied by
-nothing, and those files' bullets say so in their own terms.
+complex analytic spaces**, which is a sentence six files carried.
 
 The sections are written out rather than given as `ComplexAnalytic.polySection g`, which is the
 same tuple at the other presentation of `ℂ^n` and is a different type. -/
@@ -298,7 +294,7 @@ This is what makes the hypothesis of `ComplexAnalytic.existsUnique_hom_analytifi
 meetable, and it is `ComplexAnalytic.polyToGlobal_apply_eq_zero` — i.e.
 `ComplexAnalytic.IsCutOutBy.c_app_eq_zero` — read through
 `ComplexAnalytic.polyToGlobal_eq_eval₂Hom`. Fed back into the universal property it must return
-the identity, which `OkaTest/AnalytificationUniversalProperty.lean` checks. -/
+the identity. -/
 theorem eval₂_analytificationCoord_eq_zero (j : Fin k) :
     MvPolynomial.eval₂ (AnalyticSpace.analytification.{u} g).algebraMap
       (analytificationCoord.{u} g) (g j) = 0 :=

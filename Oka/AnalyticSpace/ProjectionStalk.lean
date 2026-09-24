@@ -96,9 +96,7 @@ that bridge crossed once.
 
 **Neither `LocalOkaRing.incl` nor `LocalOkaRing.renameEmb` nor `okaStalkEquiv` is named in the
 list above**, though all three are what the results are stated in terms of and all three are
-named in the paragraphs before it. That is deliberate: `scripts/guard_coverage.py` reads a
-backticked name under a `## Main results` heading as a result the file advertises, and none of
-them is a result of this file.
+named in the paragraphs before it. That is deliberate: none of them is a result of this file.
 
 **No `IsIso`.** Assembling this with `ComplexAnalytic.IsCutOutBy`'s `surjective_stalkMap` and
 `ker_stalkMap` into an isomorphism of stalks for a hypersurface with a simple zero is

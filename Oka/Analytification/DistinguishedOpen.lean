@@ -65,17 +65,15 @@ An isomorphism of analytifications is weak evidence on its own —
 `ComplexAnalytic.analytificationIsoOfPresentationIdealEq` already produces plenty, and every
 statement here is satisfied by `D(f) = ⊤` and the identity. What rules that reading out is
 `ComplexAnalytic.localisationOpen_ne_top`: if `f` vanishes at some point of `X^an` then `D(f)` is
-a **proper** open subset. `OkaTest/AnalytificationDistinguishedOpen.lean` runs it at the node,
-where `D(z₀)` is the punctured axis that `OkaTest/OpenSubspace.lean` builds by hand.
+a **proper** open subset.
 
 The three existential statements added later, under
 `### Every distinguished open upstairs comes from one downstairs`, split the same way and it is
 worth saying which is which. `ComplexAnalytic.exists_pow_mul_eq_rename` is an equation in the
 polynomial ring with no point in it, so nothing can make it degenerate. The two about opens are
 equalities of subsets of `(A_f)^an`, and if that space were empty they would hold of nothing.
-`OkaTest.CoverRefinement.exists_over` produces a point of such a space, at the empty base in one
-variable — obtained from `ComplexAnalytic.range_base_localisationProj` rather than by writing a
-coordinate down, which is why it was affordable there.
+A point of such a space can be obtained from `ComplexAnalytic.range_base_localisationProj` rather
+than by writing a coordinate down.
 
 ## Main definitions
 
@@ -642,14 +640,8 @@ statement, proved out of `IsLocalization.atUnits` rather than out of anything he
 both.** A presentation-level isomorphism gives the analytic one by functoriality and nothing else:
 `ComplexAnalytic.analytificationFunctor_map_localisationPresHom`
 (`Oka/Analytification/LocalisationFunctor.lean`) identifies the projection here with the functor's
-value on that morphism, and a functor carries an isomorphism to one. **This repository has been
-running that step since before either statement here existed** —
-`OkaTest.LocalisationFunctor.not_isIso_nodeStructureHom` takes it by `inferInstance`, through one
-further forgetful functor, to carry a non-isomorphism of spaces back to a non-isomorphism of
-algebras at `f = z₀` on the node — and its `OkaTest.LocalisationFunctor.nodeStructureHom` is
-`ComplexAnalytic.localisationHom` at that presentation and that polynomial, so the theorem is
-about this very morphism and not about a cousin of it. **So what is absent here is the
-*reflection* and nothing else** — the analytic-to-presentation direction named above. -/
+value on that morphism, and a functor carries an isomorphism to one. **So what is absent here is
+the *reflection* and nothing else** — the analytic-to-presentation direction named above. -/
 theorem isIso_localisationProj_one : IsIso (localisationProj.{u} g 1) := by
   haveI : IsIso ((AnalyticSpace.analytification.{u} g).ofRestrict
       (localisationOpen.{u} g 1)) := by
@@ -997,8 +989,7 @@ Two seams are crossed by hand rather than by instance search, and neither is avo
 * `ComplexAnalytic.AnalyticSpace.forgetToLocallyRingedSpace` carries the isomorphism, which is
   where `IsIso` comes from; `ComplexAnalytic.AnalyticSpace.Hom.toLRSHom` of a composite is a
   composite by `rfl`, since the category instance is defined that way, and no lemma in `Oka/`
-  states it — `toLRSHom_comp`, in `OkaTest/HomToComplex.lean`, does, and the library cannot
-  import the test library. -/
+  states it. -/
 theorem isOpenImmersion_localisationProj :
     LocallyRingedSpace.IsOpenImmersion (localisationProj.{u} g f).toLRSHom := by
   haveI : LocallyRingedSpace.IsOpenImmersion

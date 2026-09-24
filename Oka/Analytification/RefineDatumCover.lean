@@ -84,9 +84,6 @@ argument, in the exact hypothesis shape a constant `poly` produces;
 `ComplexAnalytic.GlueShape.hCocycle_of_no_three` make two of the three cover-datum laws free below
 three members. So the datum itself costs an `Iso.refl` and one `Iso.refl_symm`.
 
-**Nothing in that section bears on `ComplexAnalytic.lineRefinement`**, in either direction: its
-family is `fam ≡ 1`, which refines nothing.
-
 The per-member form is also the one `Oka/Analytification/CoverRefinement.lean` names, in the
 sentence `Oka/Analytification/RefineDatumToBase.lean` quotes when it declines to state it: *"what
 would make a comparison an isomorphism is the condition … that the refining family covers"*.
@@ -152,8 +149,7 @@ refining family the condition holds as soon as `σ` is **surjective**, by
 `ComplexAnalytic.localisationOpen_one` — `D(1)` is the whole member, so the only thing left to ask
 is that some refined index lie over each original one. So
 `ComplexAnalytic.surjective_base_refineDatumOneToBase`: that witness maps **onto** the cover it
-refines, for every cover datum and every surjective index map. `OkaTest/RefineDatumWitness.lean`
-instantiates it at `σ = id` on a three-element index type.
+refines, for every cover datum and every surjective index map.
 
 **`fam ≡ 1` is a reindexing and not a proper refinement**, which is what
 `Oka/Analytification/RefineDatumWitness.lean` says of it in terms, so this instance is the trivial
@@ -190,16 +186,6 @@ re-measure rather than adding to what is written: that section's import cost **`
 module and `+0` Mathlib roots** measured on the branch that added it, with
 `Oka/Analytification/AffineCover.lean` — already in the closure — quoted as a control reading
 `+0` on both columns, as it must.
-
-**The `## Main results` bullet for `ComplexAnalytic.refineDatumToBase_base_coverIota` names a
-theorem without citing it, and that is deliberate.** `scripts/guard_coverage.py` reads every
-backticked repository name under a `## Main results` heading as a result *that* file advertises,
-so citing
-`ComplexAnalytic.coverIota_comp_refineDatumToBase` there would advertise another file's theorem
-from this one — the live check whose figure has caught a defect on three separate branches.
-`Oka/Analytification/AffineCover.lean` and `Oka/Analytification/CoverRefinement.lean` both record
-the same workaround at bullets of their own: name the law, cite it from the prose above, and the
-count stays a count of this file's results.
 
 The tie is broken by what each candidate is for:
 
@@ -284,9 +270,7 @@ declarations across two files and pays two edges instead of one.
   `ComplexAnalytic.refineDatumCovers_id_iff`: **and conversely, so at an identity index map the
   condition *is* that equation** — a biconditional, and not a collapse asserted in prose.
 - `ComplexAnalytic.not_refineDatumCovers_id_of_ne_top`: **so one member the family cuts down
-  refutes it outright**, which is what a refinement that refines fails on. **Kept as its own name
-  though `ComplexAnalytic.refineDatumCovers_id_iff` now subsumes it**, for the reason the section
-  header gives.
+  refutes it outright**, which is what a refinement that refines fails on.
 - `ComplexAnalytic.surjective_base_refineDatumUnitFamToBase_iff`: **and at a family that is a unit
   on each overlap the morphism down is surjective exactly when the images of the refined members
   are everything**, which is the equivalence above read at the arguments a proper refinement has,
@@ -333,17 +317,12 @@ declarations across two files and pays two edges instead of one.
   sentence was written and is no longer, so it is named here rather than counted:
   its index map is the identity and its `D(z)` is a proper open of its chart, so
   `ComplexAnalytic.not_refineDatumCovers_id_of_ne_top` applies and that refinement does **not**
-  meet `ComplexAnalytic.RefineDatumCovers`. `OkaTest/RefineDatumUnitFamily.lean` is where that is
-  instantiated, and nothing here mentions it.
+  meet `ComplexAnalytic.RefineDatumCovers`.
   **Whether that refinement's `ComplexAnalytic.refineDatumToBase` is surjective is a second
   question and the paragraph above is not evidence about it in either direction** —
   `ComplexAnalytic.dupStrict` is exactly the theorem that the condition is not necessary, so a
-  datum that fails it may still have a surjection down. `OkaTest/RefineDatumUnitFamily.lean`
-  answers that one too, separately and negatively, through
-  `ComplexAnalytic.surjective_base_refineDatumToBase_iff` and a point of the glued space that is in
-  the image of neither refined member. **Neither answer is derived from the other**, and nothing
-  here is a statement about that refinement in either direction: what this file supplies is the
-  general theorem the instance spends.
+  datum that fails it may still have a surjection down. Nothing here is a statement about that
+  refinement in either direction: what this file supplies is the general theorem.
 * **No morphism here is `AlgebraicGeometry.LocallyRingedSpace.OpenCover.fromGlued` of either
   cover.** **This bullet said the open cover here was of `X^an` and not of the refined space, and
   that nothing presented the members of the *refined* datum as a cover of the space they glue to**;
@@ -371,12 +350,7 @@ declarations across two files and pays two edges instead of one.
   about `ComplexAnalytic.refineDatumMemberIota` too, and reads nothing here.
 * **No instance in `Oka/` of `### The instance at a family that is a unit on each overlap`.**
   `ComplexAnalytic.refineDatumUnitFamToBase` and its equivalence are stated for every cover datum
-  and are spent in this library at none. **This bullet said `OkaTest/RefineDatumUnitFamily.lean`
-  still spelled the morphism at fifteen arguments and that re-writing it through this definition
-  was a separate branch**; that branch has happened, so the one instance either has is a test
-  declaration — `ComplexAnalytic.lineRefineToBase` is this definition at ten arguments and
-  `ComplexAnalytic.not_surjective_base_lineRefineToBase` spends the equivalence — and what is still
-  absent is a consumer inside `Oka/`.
+  and are spent in this library at none.
 * **Nothing about `ComplexAnalytic.refineDatumUnitFamGlueData`.** That same section names the
   morphism and not the gluing; that the space sits over that glue data is
   `ComplexAnalytic.refineDatumUnitFamAnalytification_toLocallyRingedSpace`, which is stated where
@@ -645,8 +619,7 @@ for every cover datum and every surjective index map.
 
 The source is `ComplexAnalytic.refineDatumOneAnalytification` — that definition is
 `ComplexAnalytic.refineDatumAnalytificationOfLaws` at these arguments, so the two morphisms are the
-same term and no bridge is needed. `OkaTest/RefineDatumWitness.lean` instantiates this at `σ = id`
-on a three-element index type, where `Function.surjective_id` is the hypothesis. -/
+same term and no bridge is needed. -/
 theorem surjective_base_refineDatumOneToBase (hs : Function.Surjective σ) :
     Function.Surjective
       (refineDatumToBase.{u} obj poly σ (fun _ ↦ 1) (fun x y ↦ poly (σ x) (σ y)) glue
@@ -667,8 +640,7 @@ that misses it still gives a surjection and no longer meets the per-member condi
 no three pairwise distinct members, which is `ComplexAnalytic.GlueShape.hRange_of_no_three` and
 `ComplexAnalytic.GlueShape.hCocycle_of_no_three` — so nothing below is evidence that either law
 holds of anything, and a reader should not take this datum as an instance of them. It is a datum
-because they cannot be tested at this size, which is the honest reason and is the same one
-`OkaTest/ProjectiveLine.lean` gives for its own two-member cover.
+because they cannot be tested at this size, which is the honest reason.
 -/
 
 section Dup
@@ -828,12 +800,6 @@ implication at five sites that read as an equivalence, which is the defect
 `ComplexAnalytic.dupStrict` was written to retire one branch earlier and in this same file; the
 converse costs one term and the sentences are now true rather than nearly true.
 
-**`ComplexAnalytic.not_refineDatumCovers_id_of_ne_top` keeps its own name although the
-equivalence subsumes it**, because it is the form `OkaTest/RefineDatumUnitFamily.lean` spends and
-inlining it would put the negation step in a test file. The bullet for it above says so without
-naming that file, since a backticked path under `## Main results` is read by
-`scripts/guard_coverage.py` as a result this file advertises.
-
 **The three statements below are quantified over `i` rather than proved at an index**, and that is
 not a style choice. `ComplexAnalytic.RefineDatumCovers` is stated across an identification of two
 members, so at a concrete index `subst` has nothing to eliminate and
@@ -953,9 +919,7 @@ needed. Its target is `ComplexAnalytic.coverAnalytification`, which is the cover
 **The equivalence is what pays for the filing.** Without
 `ComplexAnalytic.surjective_base_refineDatumUnitFamToBase_iff` a caller asking whether a proper
 refinement covers has to spell fifteen arguments to state the question, and the first instance to
-ask it did exactly that until this was named. `OkaTest/RefineDatumUnitFamily.lean`'s
-`ComplexAnalytic.not_surjective_base_lineRefineToBase` now asks it at ten placeholders instead, and
-proves the same statement — which is the measurement the readability claim was owed.
+ask it did exactly that until this was named.
 -/
 
 noncomputable section

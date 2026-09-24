@@ -138,10 +138,9 @@ carry the three together, bundle then.
   `ComplexAnalytic.coverGlueData` in `Oka/Analytification/AffineCover.lean` — and so is the
   passage from a glue data to an analytic space, below, and the two are put together **for a
   general cover** in that same file, by `ComplexAnalytic.coverAnalytification`, whose members are
-  open subspaces of it by `ComplexAnalytic.isOpenImmersion_coverIota`; `OkaTest/AffineCover.lean`
-  and `OkaTest/ProjectiveLine.lean` do it at concrete data. The input is still the cover **as
-  data** rather than a scheme, since this repository has no cover API for one. **The reason given
-  here until 2026-09-02 was that it "constructs no `AlgebraicGeometry.Scheme` beyond Mathlib's
+  open subspaces of it by `ComplexAnalytic.isOpenImmersion_coverIota`. The input is still the cover
+  **as data** rather than a scheme, since this repository has no cover API for one. **The reason
+  given here until 2026-09-02 was that it "constructs no `AlgebraicGeometry.Scheme` beyond Mathlib's
   `Spec`", and `Oka/Analytification/SpecScheme.lean` retired that**:
   `ComplexAnalytic.specScheme` is a scheme glued from `Spec`s rather than one of them. It changes
   nothing here — it is an *output* of a cover datum and not an input to one, so what this bullet

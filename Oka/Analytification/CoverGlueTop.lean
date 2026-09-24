@@ -8,21 +8,19 @@ import Oka.Analytification.AffineCover
 /-!
 # A cover whose members overlap in the whole of themselves glues to one member
 
-`Oka/Analytification/AffineCover.lean` glues an affine cover with distinguished overlaps, and
-`OkaTest/AffineCover.lean` checks that the gluing of its three copies of the node is **not** any
-one of them — `ComplexAnalytic.ι_nodeOrigin_ne`, from the origin lying off the punctured axis.
-That check is about a cover whose overlaps are proper. **This file is the opposite extreme**: if
-every off-diagonal `ComplexAnalytic.coverOpen` is `⊤`, then each member's inclusion into the
-gluing is surjective, and — being also an open immersion — an isomorphism.
+`Oka/Analytification/AffineCover.lean` glues an affine cover with distinguished overlaps, which
+are typically proper. **This file is the opposite extreme**: if every off-diagonal
+`ComplexAnalytic.coverOpen` is `⊤`, then each member's inclusion into the gluing is surjective,
+and — being also an open immersion — an isomorphism.
 
 ## Why this is a `⊤` and not a `⊥` statement, and why it is worth having
 
 The two degeneracies this development has already named are about the *refining family*: at
 `fam ≡ 1` the refined cover is the original one reindexed
-(`Oka/Analytification/RefineDatumWitness.lean`), and at `fam ≡ 0` every refined member is empty
-(`OkaTest/CoverRefinement.lean`). **Neither is about the overlaps**, and a cover can be
-non-degenerate in both of those senses and still glue to one member, because what decides that is
-whether the members overlap in the whole of themselves rather than what they are.
+(`Oka/Analytification/RefineDatumWitness.lean`), and at `fam ≡ 0` every refined member is empty.
+**Neither is about the overlaps**, and a cover can be non-degenerate in both of those senses and
+still glue to one member, because what decides that is whether the members overlap in the whole
+of themselves rather than what they are.
 
 `ComplexAnalytic.coverOpen obj poly i j = ⊤` says exactly that, and the argument from it is short:
 the inclusion `f i j` of the overlap into the `i`-th member is `ComplexAnalytic.coverIncl`
@@ -37,20 +35,17 @@ refinement is customarily checked here by two statements about the refined *memb
 `fam ≡ 1`) and that it is not empty (so it is not the family constantly `0`). **A cover can pass
 both and still glue to one member**, because those two say nothing about the *overlaps*; the check
 that would catch it is the third one, that the refined overlap is not the whole refined member,
-and it is a different statement from either. `OkaTest/RefineDatumWitness.lean` states that third
-one at `fam ≡ 1`; the two proper refinements in this repository state the first two and not the
-third, and the theorem below is why.
+and it is a different statement from either.
 
 ## The `eqToHom`, which is where the `CategoryTheory.GlueData'` route shows
 
 `ComplexAnalytic.coverGlueData` is `CategoryTheory.GlueData.ofGlueData'` of
 `ComplexAnalytic.coverGlueData'`, and `ofGlueData'` fills the diagonal with the member itself. So
 `f i j` off the diagonal is `CategoryTheory.GlueData.ofGlueData'_f_of_ne`'s `eqToHom` followed by
-the overlap's inclusion, and `ComplexAnalytic.f_coverGlueData_of_ne` below is the general form of
-what `OkaTest/AffineCover.lean` proves by hand for one cover. That theorem applies to a *refined*
-datum too, since `ComplexAnalytic.refineDatumGlueData` is `coverGlueData` at the refined
-arguments — the `CategoryTheory.GlueData'` it needs is solved from the goal and does not have to
-be named.
+the overlap's inclusion, and `ComplexAnalytic.f_coverGlueData_of_ne` below states this at every
+cover datum. That theorem applies to a *refined* datum too, since
+`ComplexAnalytic.refineDatumGlueData` is `coverGlueData` at the refined arguments — the
+`CategoryTheory.GlueData'` it needs is solved from the goal and does not have to be named.
 
 ## Main results
 
@@ -78,22 +73,11 @@ be named.
   `Oka/Geometry/RingedSpace/LocallyRingedSpace.lean`. **At `3187978`** that file has **210**
   downstream modules in this repository against **95** for this one — a reverse walk of the
   `import` lines with `scripts/import_cost.py`'s `IMPORT` pattern over its nesting-aware
-  `strip_comments`, over the 312 tracked `.lean` files under `Oka/` and `OkaTest/` together with
-  `Oka.lean` and `OkaTest.lean`, with the aggregator `Oka.lean` — which imports every module of
-  the library, and so is downstream of every one of them — excluded from the two counts rather
-  than from the graph — so putting a three-line helper there costs about a hundred and fifteen
+  `strip_comments`, over the tracked `.lean` files of the repository at that commit, with the
+  aggregator `Oka.lean` — which imports every module of the library, and so is downstream of
+  every one of them — excluded from the two counts rather than from the graph — so putting a
+  three-line helper there costs about a hundred and fifteen
   extra module rebuilds. Moving it is a follow-up and this docstring is the record that it is owed.
-
-  **That enumeration read *"together with `OkaTest.lean`, and excluding the aggregator
-  `Oka.lean`"* until 2026-09-08**, which named 311 files for its own numeral of 312: the tracked
-  `.lean` files under `Oka/` and `OkaTest/` are **310** at `3187978`, and 312 needs **both** root
-  modules and not one. It was a transcription slip and not a misunderstanding — the same push's
-  sentence in `OkaTest/Axioms.lean` says *"together with `Oka.lean` and `OkaTest.lean`"*, which is
-  the spelling the rule file uses — and **210** and **95** are what the walk returns either way,
-  since they are downstream counts with `Oka` excluded and the population is the graph the walk
-  runs over. **The reviewer of lana-agents/oka#498 found it, did not reject on it, and left it for
-  a later seat**; the repair is the sentence opening *At `3187978`*, and it separates the
-  population from the tally because conflating them is what made the slip invisible.
 
   **That clause read *"That file has **175 downstream modules** in this repository against **86**
   for a new module under `Oka/Analytification/`, measured by a reverse walk of the `import` lines,
@@ -104,7 +88,7 @@ be named.
   pinned neither. **An unpinned count over
   the whole import graph is falsifiable by any push that adds a module**, which is what happened;
   what does not move is the ordering the argument rests on, and that is the reason the helper stays
-  here rather than the numeral. `OkaTest/Axioms.lean` states the rule this repairs.
+  here rather than the numeral.
 * **No scheme, no `admissible`, and no comparison functor**, as in the files this one sits beside.
 -/
 
@@ -152,10 +136,9 @@ variable {J : Type u} (obj : J → Presentation.{u})
 member itself, so its `V` is a `dite`.
 
 **The `CategoryTheory.GlueData'` is left as `_` and the elaborator solves it from the goal.**
-`OkaTest/AffineCover.lean` names its own because it states `CategoryTheory.GlueData'.f'`, where an
-index would be checked against a projection of a metavariable; that difficulty is at that position
-and not at this one. This is the general form of that file's `ComplexAnalytic.f_nodeTripleGlueData`
-and applies to a **refined** datum as well, since `ComplexAnalytic.refineDatumGlueData` is
+A statement of `CategoryTheory.GlueData'.f'` would have to name it, since an index there would be
+checked against a projection of a metavariable; that difficulty is at that position and not at this
+one. This applies to a **refined** datum as well, since `ComplexAnalytic.refineDatumGlueData` is
 `ComplexAnalytic.coverGlueData` at the refined arguments. -/
 theorem f_coverGlueData_of_ne {i j : J} (hij : i ≠ j) :
     (coverGlueData.{u} obj poly glue hrange hsymm hcocycle).toGlueData.f i j =
@@ -219,10 +202,7 @@ theorem surjective_ι_coverGlueData
 `AlgebraicGeometry.LocallyRingedSpace.IsOpenImmersion.isoOfRangeEq` against the identity: the
 member's inclusion is an open immersion at every cover datum
 (`ComplexAnalytic.coverGlueData_ι_isOpenImmersion`) and the theorem above makes its image the
-whole gluing.
-
-**This is the degeneracy `ComplexAnalytic.ι_nodeOrigin_ne` rules out for the node cover**, stated
-in the direction that exhibits it rather than the direction that forbids it. -/
+whole gluing. -/
 def isoCoverGlued
     (htop : ∀ i j : J, i ≠ j → coverOpen.{u} obj poly i j = ⊤) (i : J) :
     (coverGlueData.{u} obj poly glue hrange hsymm hcocycle).toGlueData.U i ≅

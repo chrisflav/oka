@@ -10,14 +10,10 @@ import Mathlib.CategoryTheory.Quotient
 /-!
 # The two-level index category of a glue data, and the four things a cover still has to supply
 
-`OkaTest/LocalisationRigidity.lean` ends by naming the gap between an ordered family of
-presentations and `ComplexAnalytic.coverGlueData`, and its `## What is not here` says what a
-reader should know before attempting it:
-
-> a glue data's own diagram has **two levels of object** — members `U i` and overlaps `V (i, j)` —
-> and its law is a cocycle on triple overlaps expressed with pullbacks. That is a different law on
-> a different index shape from the `trans_comp` a chain exercises, so choosing witnesses does not
-> turn one into the other and `hcocycle` should be expected **not** to follow.
+A glue data's own diagram has **two levels of object** — members `U i` and overlaps `V (i, j)` —
+and its law is a cocycle on triple overlaps expressed with pullbacks. That is a different law on a
+different index shape from the `trans_comp` a chain of presentations exercises, so choosing
+witnesses does not turn one into the other and `hcocycle` should be expected **not** to follow.
 
 This file builds that two-level shape and settles, one at a time, which of
 `ComplexAnalytic.coverGlueData`'s five inputs a functor out of it produces. Two of them are the
@@ -34,19 +30,17 @@ and an object `ComplexAnalytic.GlueShape.ovl i j` for each **ordered** pair, gen
 `CategoryTheory.Paths` and `CategoryTheory.Quotient`, two `import` lines.
 
 **The move under `Oka/` made this file cheaper rather than dearer, and the figure is the argument
-for the import it now carries.** At `OkaTest/GlueShape.lean` it imported
-`OkaTest/LocalisationRigidity.lean`, which reaches `Oka` whole through
-`OkaTest/LocalisationChain.lean`; it now imports `Oka/Analytification/AffineCover.lean`, which is
-all it ever used. Transitive closure of the import list, from `env.header.moduleNames` under `lake
-env lean` and not from a source parser: **3642 → 3381** counting `Oka` + `OkaTest` + `Mathlib`, of
-which `Oka` **150 → 78**, `OkaTest` **2 → 0** and `Mathlib` **3490 → 3303**; all modules including
-`Lean` and `Batteries`, 5392 → 5131. The two `CategoryTheory` imports are free against that
-baseline and were free against the old one.
+for the import it now carries.** Before the move it imported a module that reaches `Oka` whole;
+it now imports `Oka/Analytification/AffineCover.lean`, which is all it ever used. Transitive
+closure of the import list, from `env.header.moduleNames` under `lake env lean` and not from a
+source parser: `Oka` **150 → 78** and `Mathlib` **3490 → 3303**; all modules including `Lean` and
+`Batteries`, 5392 → 5131. The two `CategoryTheory` imports are free against that baseline and
+were free against the old one.
 
 **The before-column is the tree this file left, and re-measuring it here gives one more.** The old
 import list reaches `Oka` whole — that is the point of the paragraph — so once `Oka.lean` names
 this module, measuring the *old* list on *this* tree closes over the moved file itself and returns
-`Oka` 151, sum 3643, all 5393. The figures above are the ones a reader wants, which is what the
+`Oka` 151 and all 5393. The figures above are the ones a reader wants, which is what the
 move cost, and they are checkable without a build: the `Oka` count is `Oka.lean`'s import lines
 plus one for `Oka` itself, 149 + 1 there against 150 + 1 here.
 
@@ -111,7 +105,7 @@ not that it fails to follow, it is that **it cannot be written down without `hra
 statement is an equation between composites of `ComplexAnalytic.coverTriple`, and `hrange` is an
 argument of `ComplexAnalytic.coverTriple`. So the question *"does `hcocycle` follow from the
 diagram?"* has no formulation until `hrange` is granted, which is a stronger statement than the
-one `OkaTest/LocalisationRigidity.lean` predicted.
+expectation stated at the top of this file.
 
 ## `hrange` really does not follow, and three members is where it is visible
 
@@ -125,13 +119,9 @@ range is not empty and the containment fails.
 
 Three is also the smallest index type that can see it, in both hypotheses:
 `ComplexAnalytic.GlueShape.hRange_of_no_three` and `ComplexAnalytic.GlueShape.hCocycle_of_no_three`
-say that both are automatic on any index type with no three pairwise distinct elements.
-`OkaTest/ProjectiveLine.lean` records the two-member vacuity for **both** — at
-`ComplexAnalytic.hrange_lineCover` and `ComplexAnalytic.hcocycle_lineCover`, each proved from
-`ComplexAnalytic.pair_no_distinct_triple`, whose own docstring says `ℙ¹` needs *"neither a range
-condition nor a cocycle"*. What the two theorems here add is the form that quantifies over the index
-type rather than over one gluing, so that "test at three" is a statement about the index type and
-not about that one cover.
+say that both are automatic on any index type with no three pairwise distinct elements. They
+quantify over the index type rather than over one gluing, so that "test at three" is a statement
+about the index type and not about any one cover.
 
 ## Main definitions
 
@@ -160,12 +150,10 @@ not about that one cover.
 
 ## What is not here
 
-**No `poly`, `glue`, `hrange` or `hcocycle` for an *ordered* cover.** The question
-`OkaTest/LocalisationRigidity.lean` asks is what an ordered family of presentations may be assumed
-to look like; this file answers a different one — what shape a glue data's diagram has — and the
-two are related only in that the second is where the first was heading. Nothing here produces a
-witness polynomial from an arrow of a preorder, and `OkaTest.LocalisationRigidity.ofPreorder` is
-untouched.
+**No `poly`, `glue`, `hrange` or `hcocycle` for an *ordered* cover.** What an ordered family of
+presentations may be assumed to look like is a different question from the one this file answers
+— what shape a glue data's diagram has — and the two are related only in that the second is where
+the first was heading. Nothing here produces a witness polynomial from an arrow of a preorder.
 
 **No two-level shape with the diagonal collapsed.** `CategoryTheory.GlueData` asks for `t i i =
 𝟙` and `CategoryTheory.GlueData'` does not have `V (i, i)` at all;
@@ -178,8 +166,7 @@ accepts. A variant shape with `swap i i = 𝟙` imposed would be a different cat
 `ComplexAnalytic.Presentation`; every statement about the glued space is
 `ComplexAnalytic.coverGlueData`'s and is reached only through
 `ComplexAnalytic.GlueShape.coverGlueDataOfDiagram`. In particular there is no claim here that the
-glued space is anything, and no non-vacuity: `OkaTest/AffineCover.lean` and
-`OkaTest/ProjectiveLine.lean` remain the two instances that check that.
+glued space is anything, and no non-vacuity.
 
 **No split between the shape and the cover, and the case for one is measured rather than
 dismissed.** This file has two halves. Everything from `ComplexAnalytic.GlueShape.Obj` to
@@ -197,13 +184,6 @@ is a design change and this arrival was a move; nothing below depends on the ans
 that names a Mathlib target, and this path does not, so no upstreaming cost is stated and
 `scripts/import_cost.py` has nothing to say about it. The figure in `## The shape` is a transitive
 closure inside this repository, which is a different question with a different baseline.
-
-**No claim that this file is still where it started, and the convention that put it under
-`OkaTest/` is spent rather than restated.** `OkaTest/LocalisationRigidity.lean` states it —
-category theory with no analytic content stays in a test file until something consumes it, and
-`Oka/Analytification/` is its home when something does. `ComplexAnalytic.coverAnalytification` is
-what consumes `ComplexAnalytic.coverGlueData`, so the condition is met and this file moved; the
-bullet that used to stand here promised the move and is gone rather than left promising it.
 -/
 
 universe v w u
@@ -230,12 +210,11 @@ variable (J : Type u)
 /-- **The generating arrows**: an overlap includes into the member it is read from, and the two
 readings of an overlap are exchanged.
 
-There is no arrow between two members, which is the difference between this shape and the ordered
-one `OkaTest.LocalisationRigidity.ofPreorder` is a functor out of — and it is why the counting
-obstruction of `OkaTest.LocalisationRigidity.not_isRigid_of_lt_lt` never fires here. That theorem
-rules out every arrow of a *chain* being a one-step localisation at once; this shape has no chain
-of members to run it along, so a diagram in which every overlap is a one-step localisation of its
-member is exactly what `ComplexAnalytic.coverGlueData` accepts. -/
+There is no arrow between two members, which is the difference between this shape and an ordered
+one such as a preorder — and it is why a counting obstruction ruling out every arrow of a *chain*
+being a one-step localisation at once never fires here: this shape has no chain of members to run
+it along, so a diagram in which every overlap is a one-step localisation of its member is exactly
+what `ComplexAnalytic.coverGlueData` accepts. -/
 inductive Gen : Obj J → Obj J → Type u
   /-- The inclusion of an overlap into the member it is read from. -/
   | incl (i j : J) : Gen (Obj.ovl i j) (Obj.mem i)
@@ -316,10 +295,9 @@ theorem preLift_rel (U : J → C) (V : J → J → C) (f : ∀ i j, V i j ⟶ U 
 /-- **A functor out of the shape**, from members, overlaps, inclusions, transitions, and the one
 law.
 
-This is the two-level analogue of `OkaTest.LocalisationRigidity.ofPreorder`, and the comparison is
-the point: there the laws had to be arguments because an arrow of a preorder carries no data, and
-here there is exactly one law because the free category on two families of generators has exactly
-one relation to impose. `ComplexAnalytic.GlueShape.lift_uniq` says nothing is lost. -/
+Out of a preorder the laws would have to be arguments, because an arrow of a preorder carries no
+data; here there is exactly one law because the free category on two families of generators has
+exactly one relation to impose. `ComplexAnalytic.GlueShape.lift_uniq` says nothing is lost. -/
 def lift (U : J → C) (V : J → J → C) (f : ∀ i j, V i j ⟶ U i)
     (t : ∀ i j, V i j ⟶ V j i) (ht : ∀ i j, t i j ≫ t j i = 𝟙 (V i j)) :
     Shape J ⥤ C :=
@@ -485,13 +463,10 @@ def coverGlueDataOfDiagram (hcocycle : HCocycle.{u} obj poly glue hrange) :
 /-- **Fewer than three members cannot test the range hypothesis**: on an index type with no three
 pairwise distinct elements it is automatic.
 
-The `OkaTest/ProjectiveLine.lean` observation for the range hypothesis, in the form that quantifies
-over the index type rather than over one gluing — the same relation
-`ComplexAnalytic.GlueShape.hCocycle_of_no_three` bears to the cocycle one. That file proves both
-there, at `ComplexAnalytic.hrange_lineCover` and `ComplexAnalytic.hcocycle_lineCover`, from
-`ComplexAnalytic.pair_no_distinct_triple`; what is added here is that it is a statement about the
-index type, so a two-member instance is not evidence about `hrange` any more than about `hcocycle`.
--/
+Stated in the form that quantifies over the index type rather than over one gluing, as
+`ComplexAnalytic.GlueShape.hCocycle_of_no_three` is for the cocycle one: it is a statement about
+the index type, so a two-member instance is not evidence about `hrange` any more than about
+`hcocycle`. -/
 theorem hRange_of_no_three (h3 : ∀ i j k : J, i = j ∨ i = k ∨ j = k) :
     HRange.{u} obj poly glue := by
   intro i j k hij hik hjk
@@ -500,8 +475,7 @@ theorem hRange_of_no_three (h3 : ∀ i j k : J, i = j ∨ i = k ∨ j = k) :
 
 /-- **Fewer than three members cannot test the cocycle hypothesis either.**
 
-The `OkaTest/ProjectiveLine.lean` observation, in the form that quantifies over the index type
-rather than over one gluing. -/
+Stated in the form that quantifies over the index type rather than over one gluing. -/
 theorem hCocycle_of_no_three (h3 : ∀ i j k : J, i = j ∨ i = k ∨ j = k) :
     HCocycle.{u} obj poly glue hrange := by
   intro i j k hij hik hjk
@@ -583,8 +557,8 @@ witnesses out of the zeroth member are `1`, so the triple overlap there is the w
 `ComplexAnalytic.GlueShape.ctPt` is a point of it; the witness from the first member to the second
 is `0`, so the open the image is required to lie in is empty.
 
-This is what `OkaTest/LocalisationRigidity.lean` predicted for the cocycle condition, established
-one hypothesis earlier and as a theorem rather than an expectation. It also fixes the smallest
+This is what the module docstring expects of the cocycle condition, established one hypothesis
+earlier and as a theorem rather than an expectation. It also fixes the smallest
 index type at which the failure is visible: three, by
 `ComplexAnalytic.GlueShape.hRange_of_no_three`. -/
 theorem not_ctHRange : ¬ HRange.{0} ctObj ctPoly ctGlue := by

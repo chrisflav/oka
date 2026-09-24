@@ -128,18 +128,12 @@ it fails.
   above is `ComplexAnalytic.refineDatumAnalytificationOfLaws` at particular arguments, so
   `ComplexAnalytic.refineDatumToBase` (`Oka/Analytification/RefineDatumToBase.lean`) applies to it
   with no work — down to the original cover, in that direction only, and it is not claimed to be an
-  isomorphism anywhere. What *is* known about the refined space at the two instances
-  this construction has is that it is **one of its own refined members**: at both of them the
-  caller's `q` is the datum's own `poly` and the family is that same polynomial, so every refined
-  overlap is the whole refined member and `ComplexAnalytic.isoCoverGlued`
-  (`Oka/Analytification/CoverGlueTop.lean`) applies. That is a fact about those inputs and not
-  about this construction, which says nothing about the overlaps at a family it is not given.
-  **This bullet said "at the two instances" while only one of them had it as a statement about the
-  space**: the node's `ComplexAnalytic.isoNodeRefineGlued` landed on
-  `ComplexAnalytic.nodeRefinement`, and `ComplexAnalytic.isoLineRefineGlued` landed on a glue
-  data's gluing with nothing tying it to `ComplexAnalytic.lineRefinement`. The theorem above is
-  what both now spend, so the sentence is true of both by a theorem rather than of one by a
-  theorem and of the other by a reader composing two definitions.
+  isomorphism anywhere. What *is* known about the refined space when the caller's `q` is the
+  datum's own `poly` and the family is that same polynomial is that it is **one of its own refined
+  members**: every refined overlap is then the whole refined member and
+  `ComplexAnalytic.isoCoverGlued` (`Oka/Analytification/CoverGlueTop.lean`) applies. That is a fact
+  about those inputs and not about this construction, which says nothing about the overlaps at a
+  family it is not given.
 * **No scheme, no `admissible`, and no comparison functor**, as in the files this one sits beside.
 -/
 
@@ -334,10 +328,7 @@ def refineDatumUnitFamGlueData (hσ : Function.Injective σ)
 include hfam in
 /-- **The analytic space that refinement glues to.**
 
-`ComplexAnalytic.refineDatumAnalytificationOfLaws` at the same arguments.
-`OkaTest/RefineDatumUnitFamily.lean` instantiates it at the two-chart cover of `ℙ¹` and the
-coordinate, where the hypotheses are all met and the refined member is a proper non-empty open of
-its member. -/
+`ComplexAnalytic.refineDatumAnalytificationOfLaws` at the same arguments. -/
 def refineDatumUnitFamAnalytification (hσ : Function.Injective σ)
     (hcocycle : ∀ i j k : J, ∀ hij : i ≠ j, ∀ hik : i ≠ k, ∀ hjk : j ≠ k,
       coverTriple.{u} obj poly glue hrange i j k hij hik hjk ≫
@@ -358,13 +349,7 @@ include hfam in
 `ComplexAnalytic.refineDatumAnalytificationOfLaws_toLocallyRingedSpace` at the same arguments, and
 it is here for that theorem's own stated reason: without it the two definitions above are two
 well-typed objects with no recorded relation to each other, and every statement about the gluing
-says nothing about the space.
-
-**It is stated here rather than at each instance, which is where it was missing.**
-`OkaTest/RefineDatumUnitFamilyNode.lean` spelled the general theorem out at fifteen arguments to
-get the node's copy, and shipped the `ℙ¹` half without one at all — so
-`ComplexAnalytic.isoLineRefineGlued` was an isomorphism onto a gluing with nothing tying it to
-`ComplexAnalytic.lineRefinement`. Both instances now spend this. -/
+says nothing about the space. -/
 theorem refineDatumUnitFamAnalytification_toLocallyRingedSpace (hσ : Function.Injective σ)
     (hcocycle : ∀ i j k : J, ∀ hij : i ≠ j, ∀ hik : i ≠ k, ∀ hjk : j ≠ k,
       coverTriple.{u} obj poly glue hrange i j k hij hik hjk ≫

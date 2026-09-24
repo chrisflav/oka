@@ -14,9 +14,7 @@ import Oka.RingTheory.Localization.Module
 
 The algebraic counterpart of Oka's theorem, and the first thing in this repository that proves a
 sheaf on a scheme to be coherent. On `Spec A` for a noetherian ring `A` this is
-`AlgebraicGeometry.isCoherentStructureSheaf_spec`, which is the statement
-`OkaTest/CoherentPresentation.lean` recorded as the missing input on the algebraic side, in a
-paragraph this file's arrival rewrites.
+`AlgebraicGeometry.isCoherentStructureSheaf_spec`.
 
 ## Strategy
 
@@ -215,11 +213,10 @@ end Scheme
 
 /-- **`𝒪_{Spec A}` is coherent for a noetherian ring `A`.**
 
-The corollary the rest of this development wants, and the one three issue bodies and
-`OkaTest/CoherentPresentation.lean` recorded as missing. It is `Scheme.isCoherentStructureSheaf`
-at `Spec A`, using Mathlib's instance `IsLocallyNoetherian (Spec A)`; noetherianity of `A` enters
-only through that instance, that is through noetherianity of `Γ(Spec A, U)` for `U` affine
-open. -/
+The corollary the rest of this development wants, and the one three issue bodies recorded as
+missing. It is `Scheme.isCoherentStructureSheaf` at `Spec A`, using Mathlib's instance
+`IsLocallyNoetherian (Spec A)`; noetherianity of `A` enters only through that instance, that is
+through noetherianity of `Γ(Spec A, U)` for `U` affine open. -/
 theorem isCoherentStructureSheaf_spec (A : CommRingCat.{u}) [IsNoetherianRing A] :
     (Spec A).toLocallyRingedSpace.IsCoherentStructureSheaf :=
   (Spec A).isCoherentStructureSheaf

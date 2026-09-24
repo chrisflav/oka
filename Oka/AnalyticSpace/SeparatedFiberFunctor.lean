@@ -45,9 +45,8 @@ independently of this one, so *two of its six obligations that are reachable wit
 is the claim that is true whichever of the two lands and in whichever order.
 **What the wording had wrong is its scope and not its numeral**: two is still what is reachable
 here, and the bullet below opening *Not the preservation of finite
-coproducts* is where the one that moved is recorded. **The numeral in this file's `#` heading and in
-the heading of the section of `OkaTest/Axioms/Morphisms.lean` that guards this module counts what
-this module carries, which is unmoved at two**, and neither heading is touched.
+coproducts* is where the one that moved is recorded. **The numeral in this file's `#` heading
+counts what this module carries, which is unmoved at two**, and that heading is not touched.
 
 ## The `[T2Space]` that stops being a hypothesis, which is the one thing here that is not transport
 
@@ -158,18 +157,13 @@ Every `@`-application below is that, and none of them is a mathematical step.
   itself at the commit that adds this clause, neither closure holds the other module, and
   `Oka/AnalyticSpace/SeparatedFiniteEtale.lean` is the only `import` line either file has.
   **Measured rather than asserted**: `Function.Pullback`, which is how this repository
-  spells such an identification, occurs in the comment-stripped code of **six** modules at the
-  commit that adds this file — `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`,
-  `Oka/Topology/Covering/Basic.lean`, `Oka/Topology/IsLocalHomeomorph.lean`,
-  `Oka/Topology/Maps/Proper/Basic.lean`, `OkaTest/Axioms/Morphisms.lean` and
-  `OkaTest/CoveringBaseChange.lean` — the first two being the base change of a finite étale
+  spells such an identification, occurs in the comment-stripped code of **four** modules under
+  `Oka/` at the commit that adds this file — `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`,
+  `Oka/Topology/Covering/Basic.lean`, `Oka/Topology/IsLocalHomeomorph.lean` and
+  `Oka/Topology/Maps/Proper/Basic.lean` — the first two being the base change of a finite étale
   morphism over its own cospan and the topological statement it rests on, and the two after them
   the mirror-tree base change of a local homeomorphism and of a proper map at that same fibre
-  product. **`OkaTest/Axioms/Morphisms.lean` is in that list for its single occurrence, the guard
-  `#print axioms Function.Pullback.finite_fiber_snd`, and not for being about a fibre product of
-  covers**: at the commit that adds this clause that file guards **twelve** declarations of
-  `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver` whose names carry `fibreProd`,
-  `…fibreProd` itself among them. **None of the six's `Function.Pullback` occurrences is about
+  product. **None of the four's `Function.Pullback` occurrences is about
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fibreProd`**, and nothing carries
   the identification to it.
 
@@ -189,10 +183,10 @@ Every `@`-application below is that, and none of them is a mathematical step.
   **The rest of this bullet is untouched and none of its figures moves**, which is a reading of
   them and not a re-run: *the obstruction is not a missing instance* and the sibling relation are
   claims about this module and its two neighbours, and that module imports both of them rather
-  than changing either; the **six** `Function.Pullback` modules and the two closures of **75** are
+  than changing either; the **four** `Function.Pullback` modules and the two closures of **75** are
   pinned *at the commit that adds this file* and *at the commit that adds this clause*, and a
-  pinned figure survives a push that moves it. **The live count is seven**, that module being the
-  seventh, and it is given here rather than written over the pinned one.
+  pinned figure survives a push that moves it. **The live count is five**, that module being the
+  fifth, and it is given here rather than written over the pinned one.
 
   **One thing about the instrument, found by getting it wrong.** *A transitive walk of the
   `Oka`-prefixed `import` lines* is exact only if `public import` lines are followed as well: 29 of
@@ -209,18 +203,6 @@ Every `@`-application below is that, and none of them is a mathematical step.
   so the next push that adds a module under `Oka/` owes it nothing. The figures above are right;
   what is under-specified is the phrase, and the check that needs no walk is
   `env.allImportedModuleNames` filtered to the `Oka` prefix in a file importing the module.
-  **That sentence read *None of the six is about* that name, until 2026-09-14, and under the
-  reading its own enumeration invites it was false when written rather than falsified later, so
-  this is a correction and not one of this repository's dated records**: taken as a claim about the
-  six modules, the guard file refutes it, and that file has carried those twelve guards since
-  `4d40d05` on 2026-09-12, two days before the push that wrote the sentence. Taken as a claim about
-  the occurrences the enumeration counts — which is the reading the bullet's argument needs — it is
-  true, and that is what it now says. `OkaTest/Axioms/Morphisms.lean` records the neighbouring
-  rule, *A sentence in a guard file that enumerates where a name occurs must count the guard
-  file*, and that one is scoped to sentences **in** a guard file, which this is not; what the two
-  share is a guard file inside the population being enumerated, and the cost of naming it without
-  saying what it is doing there. The bullet opening *Not the preservation of finite coproducts*
-  names that same file as the one *which guards it* and this one did not.
 * **Not the preservation of finite coproducts, and what is absent is the statement and not the
   colimit.** Finite coproducts of this category are in the tree —
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.hasFiniteCoproducts`, with no hypothesis
@@ -232,9 +214,8 @@ Every `@`-application below is that, and none of them is a mathematical step.
   in this module's closure; what is not here is either that read across the inclusion or an
   identification of the fibre of a disjoint union of separated covers with the disjoint union of
   the fibres. **Measured rather than asserted**: `preservesFiniteCoproducts` occurs in the
-  comment-stripped code of exactly **two** modules at the commit that adds this file —
-  `Oka/AnalyticSpace/FiniteEtaleOver.lean`, which declares it, and `OkaTest/Axioms/Morphisms.lean`,
-  which guards it — and neither is about a functor out of
+  comment-stripped code of exactly **one** module under `Oka/` at the commit that adds this file —
+  `Oka/AnalyticSpace/FiniteEtaleOver.lean`, which declares it — and it is not about a functor out of
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`.
   **Everything in this bullet is still true of this file and the statement it says is absent is no
   longer absent from the tree, since 2026-09-15**: it is
@@ -246,7 +227,7 @@ Every `@`-application below is that, and none of them is a mathematical step.
   across the inclusion, the inclusion itself being shown to preserve finite coproducts there.
   **The two pinned figures above are not retired by that push and are not restated by it**: both
   are read at the commit that adds this file, and a scan of the same token at any later commit is a
-  different measurement — at the commit that adds that module the count is **three**, the third
+  different measurement — at the commit that adds that module the count is **two**, the second
   being the module itself.
   **This paragraph is a pointer and not one of this repository's dated records**, which is why it
   does not use the `until <date>` spelling and why neither census of those records moves for it:
@@ -276,11 +257,7 @@ Every `@`-application below is that, and none of them is a mathematical step.
   here: all three modules spell the class by dot notation on the functor, so the literal
   `CategoryTheory.Functor.PreservesEpimorphisms` occurs in the comment-stripped code of **no**
   module of this repository — **re-run at the commit that adds that third module and not carried
-  across from the commit that adds this file**. **A fourth module names the class and declares no
-  instance of it**, `OkaTest/SeparatedFiberFunctorEpi.lean`, whose four `example`s ask instance
-  search for it twice successfully and twice not; so at that commit the register counting
-  occurrences of the unqualified token returns **four** where the register counting instances
-  returns three, and the sentence above is the second of the two.
+  across from the commit that adds this file**.
   **Everything else in this bullet is still true of this file, and the epimorphisms half of its
   heading is no longer true of the tree, since 2026-09-15**: the preservation is
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesEpimorphisms_fiberFunctor` and
@@ -410,14 +387,9 @@ It is one field of six and this instance supplies none of the other five; the mo
 docstring gives at length: the converter between them is a `lemma` in one direction and an instance
 in the other, so the stronger spelling costs a line here and saves it at every use.
 
-**The name says `preservesTerminal` where the ambient one says `preservesLimitsOfShape_pempty`, and
-the reason is arithmetic and not taste.** `OkaTest/Axioms/Morphisms.lean` guards every declaration
-of this module with a `#print axioms` command, and that command's name has to fit a line: this
-namespace is nine characters longer than
-`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver`, and
-`preservesLimitsOfShape_pempty_fintypeFiberFunctor` under it does not fit even wrapped onto its own
-indented line. **The three instances of this shape are named for what they preserve instead**, which
-is `CategoryTheory.Limits.preservesLimitsOfShape_pempty_of_preservesTerminal`'s own word for it, and
+**The name says `preservesTerminal` where the ambient one says `preservesLimitsOfShape_pempty`.**
+The three instances of this shape are named for what they preserve, which is
+`CategoryTheory.Limits.preservesLimitsOfShape_pempty_of_preservesTerminal`'s own word for it, and
 the statements are unchanged and are the ambient spelling. -/
 instance SeparatedFiniteEtaleOver.preservesTerminal_fiberFunctor (x : X) :
     Limits.PreservesLimitsOfShape (Discrete PEmpty.{1})

@@ -114,7 +114,7 @@ flatness is still open.
 Everything here is in `ComplexAnalytic`, which is the convention across `Oka/AnalyticSpace/`.
 **`Oka/Analytification/AffineSpace.lean`, next door, is not**: `complexSpaceToSpec`,
 `okaGlobalOfMvPolynomial`, `mem_complexSpaceToSpec_base_asIdeal_iff` and their neighbours are
-in the *root* namespace, as their guards in `OkaTest/Axioms/Analytification.lean` show. So a
+in the *root* namespace. So a
 docstring here that reaches for one of them must write it unqualified. That is not a hypothetical
 — this file shipped with two `ComplexAnalytic.`-prefixed references to those names, both
 dangling, and they were found by `#check`ing every backticked name in the file rather than by

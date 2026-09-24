@@ -67,9 +67,8 @@ is the shape a cover datum would consume. **This file states the existential**, 
 worth having on the record rather than in a commit message:
 
 * **Nothing consumes them.** Four `noncomputable` definitions whose value at every point is
-  `Classical.choice` would be four names in the environment, four guards in
-  `OkaTest/Axioms/Analytification.lean`, and no caller. A consumer that wants them recovers them
-  from the statement below with the same one-tactic `choose` that produced it.
+  `Classical.choice` would be four names in the environment and no caller. A consumer that wants
+  them recovers them from the statement below with the same one-tactic `choose` that produced it.
 * **The definitions would not be canonical.** Nothing distinguishes one choice of index and
   polynomial at a point from another, so a `def` would name an arbitrary member of a class and
   every later statement about it would have to carry the arbitrariness anyway.

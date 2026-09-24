@@ -105,8 +105,8 @@ below is said not to be.
   the token this bullet is measured at. `README.md` puts that difference in terms in its account of
   what a re-cut owes, *which spelling a token scan uses is part of the figure*, and the two
   spellings answer differently here; the count above is the qualified one, which is the spelling
-  `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` and `OkaTest/Axioms/Morphisms.lean` measure the
-  same absence at, and it agrees with both.
+  `Oka/AnalyticSpace/SeparatedFiberFunctor.lean` measures the same absence at, and the two
+  agree.
 * **No bridge from a group of automorphisms of the cover to the action taken here**, as the
   paragraph above says at length. A caller holding a homomorphism into
   `CategoryTheory.Aut` of an object has to build the three hypotheses itself, and no declaration

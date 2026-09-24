@@ -31,7 +31,7 @@ over the original overlap — and
 as "what a consumer composes with to push the `a`-side projection down to its member".
 
 **At `46525e6` neither had a consumer.** `git grep` at that commit finds each of them under `Oka/`
-only in the file that proves it, and under `OkaTest/` only in its own axiom guard. This file is
+only in the file that proves it. This file is
 the first consumer of both, and it uses the second at `(b, a)` as well as at `(a, b)` — the
 `b`-side instance is what turns the triangle's left-hand side into the two structure maps a
 transition is stated with.

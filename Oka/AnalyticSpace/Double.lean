@@ -14,18 +14,7 @@ import Oka.Geometry.RingedSpace.PresheafedSpace.Double
 `Oka/AnalyticSpace/Basic.lean` says twice that no separation axiom is imposed on
 `ComplexAnalytic.AnalyticSpace`, and `Oka/AnalyticSpace/Hausdorff.lean` says that an analytic
 space is not Hausdorff in general. **Until this file no declaration of this repository concluded
-`¬ T2Space` of an analytic space.** At `d2ae161` five declarations concluded `¬ T2Space` of
-anything, all five in `OkaTest/FiniteEtaleCancel.lean`: `TwoIndiscrete.not_t2Space` and
-`LineTwoOrigins.not_t2Space`, whose whole conclusion it is, and
-`TwoIndiscrete.not_isClosedMap_pt_of_isClosedMap_comp`,
-`LineTwoOrigins.not_isClosedMap_inc_of_isClosedMap_comp` and
-`LineTwoOrigins.not_isCoveringMap_fold_of_not_t2Space`, which conclude it as one conjunct of a
-conjunction. Each of the five is about `TwoIndiscrete` or `LineTwoOrigins`, bare topological
-spaces which no declaration of this repository makes an analytic space. Two instruments:
-`git grep -nE '¬ *T2Space' -- Oka/ OkaTest/`, which returns six lines at that commit — those five
-conclusions and one line of docstring prose, and not one of them a hypothesis — and
-`git grep -n LineTwoOrigins -- '*.lean'`, whose hits outside the file that declares it are
-all prose.
+`¬ T2Space` of an analytic space.**
 
 This file supplies the witness, and it supplies it in the form the question is actually asked in.
 `ComplexAnalytic.AnalyticSpace.double X V` glues two copies of an analytic space `X` along an open
@@ -54,13 +43,6 @@ settles**, which is about the target's and is stated at one object.
 cannot be discharged from a hypothesis on the base: **there is an
 object of `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver (ℂ¹)` whose total space is not
 Hausdorff**, and `ℂ¹` is Hausdorff by `ComplexAnalytic.t2Space_complexAffineSpace`.
-
-That is an improvement on the argument the tree already had.
-`OkaTest/FiniteEtaleCancel.lean`'s `LineTwoOrigins.fold` has the closed-map, finite-fibre
-and local-homeomorphism halves of `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` over a Hausdorff
-base with a non-Hausdorff total space, but it is a map of topological spaces and so is evidence
-about the *topological content of the definition* rather than about analytic spaces. This file's
-witness is an object of the category.
 
 ## What is not settled
 

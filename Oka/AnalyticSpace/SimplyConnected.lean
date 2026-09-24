@@ -18,8 +18,7 @@ a finite coproduct of copies of it.
 ## Why this file exists, and the census is a scan rather than a memory
 
 At the commit this file is cut from, `fundamentalGroup` occurs in the comment-stripped code of
-exactly **two** modules — `Oka/AnalyticSpace/FundamentalGroup.lean`, which declares it, and
-`OkaTest/Axioms/Morphisms.lean`, the guard file — and so do
+exactly **one** module — `Oka/AnalyticSpace/FundamentalGroup.lean`, which declares it — and so do
 `…SeparatedFiniteEtaleOver.contActionEquivalence` and
 `…SeparatedFiniteEtaleOver.isPretransitive_fundamentalGroup`. **Nothing read any of the three.**
 That is the position the `CategoryTheory.GaloisCategory` instance was in before that module was
@@ -32,8 +31,8 @@ file, the stripper is `scripts/import_cost.py`'s `strip_comments`, and what is c
 **not preceded or followed by a letter, a digit or `_`**, with a `.` allowed before it. That last
 clause is the difference from the `GaloisCategory` scan published one module over: a class written
 under `open CategoryTheory` occurs bare, and every occurrence of these three names in code is
-dotted, so a scan that forbids a preceding `.` returns **0** for all three and reports the two
-modules that do name them as naming nothing.
+dotted, so a scan that forbids a preceding `.` returns **0** for all three and reports the module
+that does name them as naming nothing.
 
 ## The whole of the mathematics is that a subsingleton fibre is terminal
 
@@ -54,7 +53,7 @@ search and is not named below, so this file adds no occurrence of it to any cens
 
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.` is **fifty-five** characters before a
 declaration's own name begins, and a `## Main results` entry has to be the whole name — elide it
-and `scripts/guard_coverage.py` resolves the backticked token against nothing, which is the trap
+and the backticked token resolves to nothing, which is the trap
 `Oka/AnalyticSpace/FundamentalGroup.lean` records at length. A name ending
 `_of_subsingleton_fundamentalGroup` is thirty-three characters more, which puts the shortest of the
 four entries below past the hundred-column limit `lake exe lint-style` enforces. **So the
@@ -93,17 +92,8 @@ neither is in the present tense.
 
 `scripts/DumpOkaDecls.lean` writes **4** rows at this module — the four declarations, with **no**
 equation lemma, match lemma or congruence lemma — and the dump total moves **4974 → 4984**, the
-other six being `OkaTest/FundamentalGroup.lean`'s. `scripts/DumpEnvNames.lean` moves
-**338245 → 338257**, which is those ten declarations and the two modules minus nothing.
-
-`scripts/guard_coverage.py` moves guards under `OkaTest/Axioms/` **2003 → 2007**, all four in
-`OkaTest/Axioms/Morphisms.lean`; advertised **1501 → 1504** in **229 → 230** files; in both
-**1359 → 1362**; and guarded and advertised nowhere **644 → 645**, the one being this file's
-`## Main definitions` entry, which is where a guarded declaration advertised outside a
-`## Main results` section lands. **`Δguards = Δ(in both) + Δ(nowhere)` closes at `4 = 3 + 1`**, and
-the *unguarded* row is flat at **142, in 60 files**: this file opens no gap. *Advertised from
-another file* is flat at **86** and *abbreviated citations, not counted* at **30, four of them
-dotted**.
+other six being those of a second module landing in the same commit. `scripts/DumpEnvNames.lean`
+moves **338245 → 338257**, which is those ten declarations and the two modules minus nothing.
 
 `scripts/check_docstring_names.py` goes **17899 → 17962** backticked names
 (**4364 → 4374** distinct) and **311 → 332** elided citations (**156 → 160** distinct), **0
@@ -118,10 +108,7 @@ dotless at both.
   the results say is that the hypothesis is *strong*, since over a base that meets it the category
   has one isomorphism class of connected object.
 * **The converse direction is the one this repository can witness, and it is not in this file.**
-  A cover that is not isomorphic to the base over itself refutes the hypothesis, and
-  `OkaTest/FundamentalGroup.lean` is where that is done, at the punctured line: the witness needs
-  `OkaTest/FiniteEtaleOver.lean`'s `sqOver` and the two instances that file declares at `.left`,
-  none of which is under `Oka/`.
+  A cover that is not isomorphic to the base over itself refutes the hypothesis.
 * **No comparison with the topologist's fundamental group.**
   `Oka/Analysis/Complex/FundamentalGroup.lean` computes `FundamentalGroup` of `ℂ ∖ {0}` and proves
   it infinite; the group here is the

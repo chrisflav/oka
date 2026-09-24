@@ -126,10 +126,10 @@ this file is about them.
   object and pushouts. **Neither a coequaliser nor a pushout is stated for this category or for
   the covers anywhere in this repository**, and that is a measurement at `077f6d5` over the
   comment-stripped code of every tracked module: `Coequalizer` occurs in none, `HasPushouts` in
-  none, `pushout` in none, and the two modules whose code carries `coequalizer` —
-  `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean` and `OkaTest/AffineSections.lean` — are
-  about mapping out of a glued presheafed space and about a cokernel of a map of modules, neither
-  of which is a colimit of either category. `#synth` on `CategoryTheory.Limits.HasFiniteColimits`
+  none, `pushout` in none, and the one library module whose code carries `coequalizer` —
+  `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean` — is about mapping out of a glued
+  presheafed space, which is not a colimit of either category. `#synth` on
+  `CategoryTheory.Limits.HasFiniteColimits`
   at this category fails at the commit that adds this module, which measures the instance graph
   and is not an argument that the class is unprovable.
 * **No `PreGaloisCategory` instance and no claim of one, and every count of how many of the five

@@ -62,13 +62,11 @@ This file is the first module **under `Oka/`** to import both
 `Oka/Analytification/Functor.lean` and `Oka/Analytification/SpecFiniteAnalytification.lean`: at
 the commit this file is added to, neither is in the other's import closure. **`Oka.lean`, the
 aggregator `mk_all` generates, imports both as it imports every module of the library, and is
-excluded from that claim**, as `OkaTest/Axioms.lean` excludes it from the same kind of grep; so
-are the 99 modules under `OkaTest/` that reach both through it. At `73176e1` the modules with
-both in import closure are **102** — those 99, the two aggregators, and this file, which is the
-only one under `Oka/`. **That clause read *"the first module to import
-both"* and was false at `da252a7`, the commit that wrote it, for the reason just given; it is
-corrected here and not dated**, on `README.md`'s rule that a clause false when it was written is
-corrected rather than recorded. **Against the closure of
+excluded from that claim**, as is every module that reaches both through it. At `73176e1` this
+file is the only module under `Oka/` with both in its import closure. **That clause read *"the
+first module to import both"* and was false at `da252a7`, the commit that wrote it, for the
+reason just given; it is corrected here and not dated**, on `README.md`'s rule that a clause false
+when it was written is corrected rather than recorded. **Against the closure of
 `Oka/Analytification/SpecFiniteAnalytification.lean` the `Functor` edge adds exactly one `Oka`
 module — that file itself — and zero Mathlib modules**, taking the closure from 85 `Oka` modules
 to 86 with the Mathlib closure flat at 3320. The reason is that

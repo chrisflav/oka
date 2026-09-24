@@ -49,9 +49,9 @@ not a homeomorphism between them, so nothing transports. `hcocycle` is stated th
 side's triple-overlap morphisms it is about.
 
 **So a caller supplies four hypotheses over one datum, and the two extra ones are the price of
-having both spaces.** `OkaTest/ProjectiveLine.lean` pays it for `ℙ¹` and the price there is zero:
-both triple-overlap hypotheses are vacuous below three members, on both sides and for the same
-reason, so the `Spec`-side pair is the same one-line elimination the analytic pair already was.
+having both spaces.** Below three members the price is zero: both triple-overlap hypotheses are
+vacuous there, on both sides and for the same reason, so the `Spec`-side pair is the same one-line
+elimination the analytic pair already was.
 
 ## `ComplexAnalytic.comparisonPart` is the reason the two squares compose
 

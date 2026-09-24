@@ -77,10 +77,8 @@ inverse image is an isomorphism, for an arbitrary continuous map.
 `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom_of_isClosedMap` and neither is proved**:
 the closed field is the hypothesis, and the fibre field is the hypothesis at
 `Set.Finite.to_subtype`, which changes a spelling and not the content. Closedness is not implied
-by finite fibres —
-`ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom` in `OkaTest/CoveringSpace.lean` is
-the witness, at an open embedding whose fibres have at most one point — so it has to be asked for,
-and asking for it is the whole of what the general form spends on finiteness.
+by finite fibres — an open embedding has fibres of at most one point and need not be closed — so it
+has to be asked for, and asking for it is the whole of what the general form spends on finiteness.
 
 **Where a covering map enters is the corollary and not the statement.**
 `ComplexAnalytic.AnalyticSpace.isFinite_coveringSpaceHom` is the covering-map form, and the one
@@ -192,13 +190,11 @@ from a point, which is the entire question.
   read at `q`'s own base map, which is exactly what frees it of transport — see the module
   docstring. A consumer who arrives holding `p`, a proof that `q`'s base map equals it, and a
   structure on the carrier has to cross that equality, and nothing here does it for them.
-* **The comparison with `ComplexAnalytic.AnalyticSpace.sigma` is no longer absent, and it is not
-  in this file.** The trivial `ι`-sheeted cover `ComplexAnalytic.AnalyticSpace.sigmaFold` is
+* **The comparison with `ComplexAnalytic.AnalyticSpace.sigma` is not stated, and it is one
+  application away.** The trivial `ι`-sheeted cover `ComplexAnalytic.AnalyticSpace.sigmaFold` is
   finite étale, hence a local isomorphism, so
   `ComplexAnalytic.AnalyticSpace.exists_iso_coveringSpace` applies to it and says that `sigma`'s
-  own structure **is** the one this file puts on its source, over `X`. That instance is
-  `ComplexAnalytic.exists_iso_sigmaFoldCoveringSpace` in `OkaTest/CoveringSpace.lean`, beside the
-  same statement for the squaring map and for an open subspace.
+  own structure **is** the one this file puts on its source, over `X`.
 * **Nothing about the number of sheets.**
   `ComplexAnalytic.AnalyticSpace.card_fiber_eq_of_isFiniteEtale` in
   `Oka/AnalyticSpace/CoveringMap.lean` is that statement, over a preconnected base — but it is

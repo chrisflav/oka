@@ -107,8 +107,6 @@ constants.
   `Oka/AnalyticSpace/OpenSubspace.lean`, where the proof spells the name `AnalyticSpace.ext'` and
   not in full; a `git grep` for the fully-qualified name reaches the prose that cites it and not
   the proof that uses it, which is why this bullet names the site rather than a command.
-  `OkaTest/Axioms/AnalyticSpace.lean`'s section on these declarations gives both greps and what
-  each returns.
 
 ## References
 
@@ -543,10 +541,7 @@ in the mirror-image situation has to insert the mirror-image `haveI`, which
 (`Oka/AnalyticSpace/LocalIso.lean`) does. The same seam is recorded by the docstrings of
 `ComplexAnalytic.AnalyticSpace.isLocalIso_of_isIso` and
 `ComplexAnalytic.AnalyticSpace.mono_ofRestrict`, each from one side of it; what is new here is
-that a single proof needs it in both directions at once.
-
-**Named rather than anonymous**, unlike the `CategoryTheory.Functor.Faithful` instance for the
-same functor, so that `OkaTest/Axioms/Morphisms.lean` can name it in a `#print axioms`. -/
+that a single proof needs it in both directions at once. -/
 instance forgetToLocallyRingedSpace_reflectsIsomorphisms :
     forgetToLocallyRingedSpace.{u}.ReflectsIsomorphisms where
   reflects f h := by
@@ -574,11 +569,10 @@ example {X Y : AnalyticSpace} (φ : X ⟶ Y) (a : X.presheaf.obj (op ⊤))
 --   HMul ↑(X.presheaf.obj (op ⊤)) ↑(LocallyRingedSpace.Γ.obj (op X.toLocallyRingedSpace)) ?m
 ```
 
-`OkaTest/AnalytificationDistinguishedOpen.lean` records that the same product *does* elaborate
-through this declaration. The knock-on effect is what actually costs a proof: a `rw` which puts a
-raw `Γ.map … |>.hom` term inside a product elaborated at the other spelling leaves a goal that is
-not type-correct under the `instances` transparency level, and every later `rw` on that goal is
-rejected with "did not find an occurrence of the pattern".
+The same product *does* elaborate through this declaration. The knock-on effect is what actually
+costs a proof: a `rw` which puts a raw `Γ.map … |>.hom` term inside a product elaborated at the
+other spelling leaves a goal that is not type-correct under the `instances` transparency level, and
+every later `rw` on that goal is rejected with "did not find an occurrence of the pattern".
 
 An `abbrev`, so that a caller holding `(Γ.map φ.toLRSHom.op).hom s` recognises it without
 unfolding. `ComplexAnalytic.AnalyticSpace.coordPullback` and
@@ -661,11 +655,10 @@ theorem bijective_base_of_isIso {X Y : AnalyticSpace.{u}} (f : X ⟶ Y) [IsIso f
 /-- **An isomorphism of analytic spaces is surjective on points.**
 
 The surjectivity half of `ComplexAnalytic.AnalyticSpace.bijective_base_of_isIso` above, which is
-where the argument and every caveat now live. It is kept as a separate name because it has
-consumers — `ComplexAnalytic.AnalyticSpace.not_isIso_sigmaι` (`Oka/AnalyticSpace/Sigma.lean`) and
-`ComplexAnalytic.not_isIso_lineRefineToBase` (`OkaTest/RefineDatumUnitFamily.lean`) both spend it
-— and because a non-surjectivity is the shape that refutes an `IsIso`, which is what both of them
-are doing. -/
+where the argument and every caveat now live. It is kept as a separate name because it has a
+consumer — `ComplexAnalytic.AnalyticSpace.not_isIso_sigmaι` (`Oka/AnalyticSpace/Sigma.lean`)
+spends it — and because a non-surjectivity is the shape that refutes an `IsIso`, which is what
+that consumer is doing. -/
 theorem surjective_base_of_isIso {X Y : AnalyticSpace.{u}} (f : X ⟶ Y) [IsIso f] :
     Function.Surjective (f.toLRSHom.base : X → Y) :=
   (bijective_base_of_isIso f).surjective

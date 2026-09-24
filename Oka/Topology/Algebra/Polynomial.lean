@@ -101,11 +101,7 @@ It is weaker than Cauchy's bound and it is deduced from it; nothing here needs i
   subject of this file; it is done in `Oka/AnalyticSpace/MonicProjection.lean`, which is the only
   consumer of anything here and quotes exactly the two set-level statements
   `Polynomial.isClosed_fst_image_of_monic` and `Polynomial.finite_inter_fst_preimage_of_monic`
-  across a carrier homeomorphism. The worked model for that assembly is
-  `ComplexAnalytic.isFinite_sq` in `OkaTest/FiniteMorphism.lean`: it builds `IsFinite` for `z ↦ z²`
-  out of a purely topological closedness statement and a purely topological fibre statement,
-  each transported across a carrier bridge — and the two it transports are `isClosedMap_npow` and
-  `finite_fiber_npow`, the pair of the section above.
+  across a carrier homeomorphism.
 * **No statement about the fibre cardinality.** A fibre is finite, and it has at most `d` points
   because it is the root set of a polynomial of degree `d`; only the finiteness is proved, because
   only the finiteness is what `ComplexAnalytic.AnalyticSpace.IsFinite` asks for. The counting

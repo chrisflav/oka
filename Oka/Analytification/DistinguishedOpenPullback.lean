@@ -109,14 +109,9 @@ what a refined datum still owes**, which is the two conditions
 ## Non-vacuity
 
 Every statement here is an equation of open subsets, so all of them hold of `⊤ = ⊤` and none of
-them says anything about a space it cannot see. Two readings would empty them and
-`OkaTest/DistinguishedOpenPullback.lean` closes both: that the preimage might always be the whole
-space, and that the map might always be one whose value on opens is already known.
-`comap_localisationOpen_nodeStructureHom_ne_top` exhibits a proper preimage — `D(z₁)` on the node
-pulled back to the localisation at `z₀`, where it misses the point `(1, 0, 1)` — and
-`localisationOpen_rename_of_comap` re-derives `ComplexAnalytic.localisationOpen_rename` from the
-theorem below at `ComplexAnalytic.localisationPresHom`, which is a check that the general
-statement specialises to the one that was proved by hand.
+them says anything about a space it cannot see. Two readings would empty them: that the preimage
+might always be the whole space, and that the map might always be one whose value on opens is
+already known.
 
 ## Main results
 

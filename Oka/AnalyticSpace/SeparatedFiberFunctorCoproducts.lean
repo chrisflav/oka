@@ -75,22 +75,14 @@ Hausdorff hypothesis — and a colimit statement about morphisms over `X` does n
 of `X`. The only class hypotheses below are `[Finite ι]` and the universe of the index, both of
 which `ComplexAnalytic.AnalyticSpace.sigma` already asks.
 
-## Two names that are not the ambient ones, and the reason is arithmetic
+## A name that is not the ambient one
 
-`OkaTest/Axioms/Morphisms.lean` guards every declaration of this module with a `#print axioms`
-command, and that command's name has to fit a line: `#print axioms` and a space are fourteen
-characters, `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.` is fifty-five, and a guard
-whose name is wrapped onto an indented line of its own has two more, so a name of more than
-**forty-three** characters after that namespace cannot be guarded in either layout.
-`preservesFiniteCoproducts_fintypeFiberFunctor`, which is the ambient spelling one category out, is
-**forty-five**. So the `FintypeCat`-valued instance below is
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesFiniteCoproducts_fintypeFiber`,
-whose statement is at `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor`
-and is the ambient statement unchanged, and the `Type u`-valued one keeps the ambient spelling
-because it fits. **This is the same arithmetic
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesTerminal_fintypeFiberFunctor`'s
-docstring records for its own name**, and the asymmetry between the two names below is that
-arithmetic and nothing else: a name is shortened here when and only when it does not fit.
+The `FintypeCat`-valued instance below is
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.preservesFiniteCoproducts_fintypeFiber`
+and not `preservesFiniteCoproducts_fintypeFiberFunctor`, which is the ambient spelling one category
+out; its statement is at
+`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fintypeFiberFunctor` and is the ambient
+statement unchanged, and the `Type u`-valued one keeps the ambient spelling.
 
 ## Main results
 

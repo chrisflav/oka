@@ -92,9 +92,9 @@ functor would be a definition nothing can be computed from.
   mutually inverse**, both by `rfl`. The first is the one on a consumer's path: a caller who
   arrives with an isomorphism of presentations and feeds its algebra map to a statement whose
   conclusion is phrased with the first construction above gets the isomorphism it started with
-  back. (That construction is named in the proofs' docstrings rather than here, since
-  `scripts/guard_coverage.py` reads every backticked repository name under this heading as a
-  result this file advertises, and it is a definition advertised above.)
+  back. (That construction is named in the proofs' docstrings rather than here, since every
+  backticked repository name under this heading is read as a result this file advertises, and it
+  is a definition advertised above.)
 
 ## What is not here
 
@@ -215,8 +215,7 @@ polynomials — which is why an isomorphism of presented algebras of this shape 
 commutative algebra at all.
 
 Applying `ComplexAnalytic.analytificationFunctor` to the result is how a change of coordinates
-becomes an isomorphism of analytic spaces; `OkaTest/ProjectiveLine.lean` glues `ℙ¹` out of two
-copies of `𝔸¹` along one of them. -/
+becomes an isomorphism of analytic spaces. -/
 def Presentation.isoOfRename {P Q : Presentation.{u}}
     (σ : ULift.{u} (Fin Q.n) → ULift.{u} (Fin P.n))
     (τ : ULift.{u} (Fin P.n) → ULift.{u} (Fin Q.n))

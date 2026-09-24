@@ -69,9 +69,7 @@ standard étale pair.
   composite down to the base is the projection of the étale cover.
 - `ComplexAnalytic.eval_pderiv_ne_zero_of_mem`: **the derivative does not vanish at a point of the
   hypersurface off the zero locus of `G`** — `StandardEtalePair.cond`, read at a point of the
-  analytification of the hypersurface presentation named above. (That presentation is this file's
-  own definition and is not backticked here, since `scripts/guard_coverage.py` reads every
-  backticked repository name under this heading as a result this file advertises.)
+  analytification of the hypersurface presentation named above.
 - `ComplexAnalytic.base_analytificationMap_etalePresHom_comp_apply`: **the projection to the base
   forgets the last two coordinates**, coordinate by coordinate — the only description of that
   morphism on points, and what a statement about its *image* has to be fed.
@@ -83,17 +81,8 @@ standard étale pair.
   local-isomorphism statement needs is that at a point where `F` vanishes and `G` does not, the
   germ of `F` has `PowerSeries.order (MvPowerSeries.partialEval (Fin.last n) …) = 1` — the
   hypothesis `ComplexAnalytic.bijective_stalkMap_comp_uliftProj` takes. **What is missing is the
-  derivative and not the order**, which is computed here already and by three different routes,
-  none of them a derivative: `order_partialEval_germ`, `order_partialEval_germ_sq` and
-  `order_partialEval_germ_ulift` (`OkaTest/SimpleZeroStalk.lean`) read it *at a coordinate*, by
-  `MvPowerSeries.partialEval_X_self` and then `PowerSeries.order_X` —
-  `PowerSeries.order_X_pow` in `order_partialEval_germ_sq`, which is the control of that file
-  and gets `2`, not `1` — with `order_partialEval_germ_ulift` in exactly the
-  `LocalOkaRing.uliftEquiv` shape the hypothesis above asks for; `order_partialEval_skewDiagonal`
-  (`OkaTest/GermQuotientDegreeOne.lean`) reads it off a **Weierstrass degree**, through
-  `LocalOkaRing.order_partialEval_eq_natDegree` (`Oka/Regular.lean`), which is the only such
-  computation under `Oka/`; and `order_partialEval_parabola`, in that same test file, reads it off
-  `X ^ 2` through `partialEval_coe_fromPolynomial` directly. **`Oka/` still has no
+  derivative and not the order**: `LocalOkaRing.order_partialEval_eq_natDegree`
+  (`Oka/Regular.lean`) reads the order off a **Weierstrass degree**. **`Oka/` still has no
   partial-derivative operator at all**, and that much of what stood here is true — but the
   conclusion drawn from it, that the hypothesis cannot be reached by anything on hand, does not
   follow and is no longer the case. `MvPowerSeries.order_partialEval_eq_one_iff`
@@ -179,27 +168,18 @@ standard étale pair.
   **Since 2026-09-02 the falsity is compiled and this paragraph is no longer the only record of
   it**: `ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp`
   (`Oka/Analytification/StandardEtaleNotLocalIso.lean`), with *proper* restated as
-  `∃ j, g j ≠ 0` and *unless empty* as a `Nonempty` on the source, and with both met together at
-  the node in `OkaTest/StandardEtaleNotLocalIso.lean`. **The argument above stays here in full**,
-  and so does the copy this paragraph names, because the two copies are two copies by the decision
-  recorded three sentences up and a citation is not what either of them is for. What the theorem
-  replaces is one step and not the argument: instead of the interior of `X^an` it applies
-  `MvPolynomial.eq_zero_of_eval_eq_zero_of_isOpen` (`Oka/Algebra/MvPolynomial/Funext.lean`) to the
-  open image directly. **The sentence in this paragraph that is still only prose is *"a proper
-  closed `X^an ⊆ ℂ^n` has empty interior"***, which nothing states and which that theorem does not
-  need.
-* **No witness in this file that the open is ever non-empty, and the witness is elsewhere.** The
-  statements below are hypothesis-free in `F` and `G`, so none of them can be vacuously
-  satisfied — but that says nothing about whether the *objects* are degenerate, and for `F = 1`
-  or `G = 0` both sides of `ComplexAnalytic.etaleAnalytificationIso` really are empty.
-  `OkaTest/StandardEtaleAnalytification.lean` supplies one pair at which they are not: the line
-  `z₁ = 0` in `ℂ²` with `z₀` inverted, where
-  `ComplexAnalytic.localisationOpen_hyperLinePres_ne_bot` and
-  `ComplexAnalytic.localisationOpen_hyperLinePres_ne_top` make `D(G)` a proper non-empty open and
-  `ComplexAnalytic.nonempty_analytification_etalePresentation_hyperLine` carries a point back
-  along the isomorphism. **It is a construction rather than a quotation**, and in particular not a
-  quotation of taxis #1112's `Pex`, which witnesses a non-closed *image* and says nothing about an
-  inhabited `D(G)`.
+  `∃ j, g j ≠ 0` and *unless empty* as a `Nonempty` on the source. **The argument above stays
+  here in full**, and so does the copy this paragraph names, because the two copies are two
+  copies by the decision recorded three sentences up and a citation is not what either of them is
+  for. What the theorem replaces is one step and not the argument: instead of the interior of
+  `X^an` it applies `MvPolynomial.eq_zero_of_eval_eq_zero_of_isOpen`
+  (`Oka/Algebra/MvPolynomial/Funext.lean`) to the open image directly. **The sentence in this
+  paragraph that is still only prose is *"a proper closed `X^an ⊆ ℂ^n` has empty interior"***,
+  which nothing states and which that theorem does not need.
+* **No witness in this file that the open is ever non-empty.** The statements below are
+  hypothesis-free in `F` and `G`, so none of them can be vacuously satisfied — but that says
+  nothing about whether the *objects* are degenerate, and for `F = 1` or `G = 0` both sides of
+  `ComplexAnalytic.etaleAnalytificationIso` really are empty.
 * **No `IsLocalIso` and no `IsFiniteEtale` *below*, and the reason has changed twice.** The
   restriction of the source is no longer an absence.
   `ComplexAnalytic.isLocalIso_ofRestrict_comp_proj_of_pderiv`
@@ -246,14 +226,9 @@ standard étale pair.
 * **No finiteness.** `IsFiniteEtale` of the unrestricted morphism is **false**: a standard étale
   algebra inverts `g`, and `Spec` of `(ℂ[X][x] ⧸ (x² - X))[1/x]` over `ℂ` has the punctured line
   for image, which is not closed. `Oka/Analytification/MonicHypersurface.lean`'s `## What is not
-  here` carries that argument, and since 2026-09-02
-  `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`)
-  compiles the conclusion, at `ComplexAnalytic.condPair` — **this bullet cited only the argument
-  until then**. It proves the image misses the origin rather than computing it, so the *"punctured
-  line for image"* half of the sentence above is still prose. **The finiteness that *is* true —
-  over an open subset of the base on which
-  the inversion is vacuous — is now built, and this paragraph said it was "a construction and is
-  not here" when only the second half was right.** It is
+  here` carries that argument. **The finiteness that *is* true — over an open subset of the base
+  on which the inversion is vacuous — is now built, and this paragraph said it was "a
+  construction and is not here" when only the second half was right.** It is
   `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom_comp`
   (`Oka/Analytification/StandardEtaleFiniteness.lean`), at `k = 0`, and
   `ComplexAnalytic.etaleAnalytificationIso_hom_comp` below is what it spends: the étale

@@ -167,9 +167,8 @@ spelled:
   `IsOpenImmersion.lift` reports `failed to synthesize instance of type class
   LocallyRingedSpace.IsOpenImmersion (X.ofRestrict ⋯)`;
 * against `Z ⟶ X.toLocallyRingedSpace.restrict V.isOpenEmbedding`, or with no expected type at
-  all, the instance **is** found — `OkaTest/Nonvanishing.lean` records that as a test rather than
-  as a recollection — and the `rw [range_ofRestrict]` fails instead, reporting *"did not find an
-  occurrence of the pattern"* with the note that the target is not type-correct under the
+  all, the instance **is** found, and the `rw [range_ofRestrict]` fails instead, reporting *"did not
+  find an occurrence of the pattern"* with the note that the target is not type-correct under the
   `instances` transparency level; the mismatch appears only in the `Full error:` block.
 
 Here `V` is an ordinary argument at the locally-ringed-space spelling, both sides cross at

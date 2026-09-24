@@ -106,10 +106,8 @@ measured with `python3 scripts/import_cost.py Oka/Topology/SeparatedMap.lean`.
 
 ## Why here and not beside the consumer
 
-What consumes this at the commit that adds it is
-`LineTwoOrigins.not_isCoveringMap_fold` in `OkaTest/FiniteEtaleCancel.lean`, and the statement it
-makes possible is about `IsClosedMap.isCoveringMap_of_isLocalHomeomorph` in
-`Oka/Topology/Covering/Basic.lean`. Neither is where this belongs. `README.md`'s mirror-tree
+The statement this makes possible is about `IsClosedMap.isCoveringMap_of_isLocalHomeomorph` in
+`Oka/Topology/Covering/Basic.lean`, and that is not where this belongs. `README.md`'s mirror-tree
 section says to **split by destination, not by subject**, and the destination is decided by the
 imports: `Mathlib/Topology/SeparatedMap.lean`
 publicly imports `Mathlib/Topology/Separation/Hausdorff.lean`, so it already has `t2_separation`
@@ -171,8 +169,7 @@ hypotheses does which half, which its own docstring says.
 * **The biconditional that fails is the one with `[T2Space X]` dropped, and it fails forwards.**
   `Function.Injective.isSeparatedMap` is Mathlib's and makes an injective map separated whatever
   its source, so the identity of a space that is not Hausdorff is a separated map whose source is
-  not Hausdorff. `LineTwoOrigins.not_t2Space` (`OkaTest/FiniteEtaleCancel.lean`) is such a space
-  at the commit that adds this file.
+  not Hausdorff.
 * **This bullet read *Nothing about `IsLocallyInjective`* until 2026-09-12**, and what it said in
   full was: *"**Nothing about `IsLocallyInjective`**, the dual notion
   `Mathlib/Topology/SeparatedMap.lean` introduces alongside `IsSeparatedMap`, and nothing about the

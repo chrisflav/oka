@@ -84,10 +84,6 @@ arbitrariness anyway. A consumer that wants the cover recovers it from either st
   `AlgebraicGeometry.Scheme.Hom.opensRange` are definitionally the same, so no bridge lemma is
   needed and none should be added.
 
-`scripts/guard_coverage.py` reads every whitespace-free backticked token under a `## Main results`
-heading as a declaration this file advertises, so the Mathlib names, the file paths and the
-projection spellings above are here rather than under the heading below.
-
 ## Main results
 
 - `ComplexAnalytic.exists_affineOpenCover_opensRange_presentationRefinedIota_eq`: **two cover data

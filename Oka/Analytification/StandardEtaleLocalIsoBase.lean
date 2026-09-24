@@ -28,37 +28,19 @@ in that argument touches the statement above.
 `ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp`
 (`Oka/Analytification/StandardEtaleNotLocalIso.lean`), which takes *proper* as `∃ j, g j ≠ 0` and
 *non-empty* as a `Nonempty` on the source — so the contrast this paragraph draws is now between
-two compiled statements rather than between a theorem and an argument. **At the node it is drawn
-at the same data**: `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_node`
-(`OkaTest/StandardEtaleLocalIsoBase.lean`) and
-`ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp_node`
-(`OkaTest/StandardEtaleNotLocalIso.lean`) are the two halves of the sentence above at
-`ComplexAnalytic.nodeG`, `ComplexAnalytic.nodeEtaleF` and `ComplexAnalytic.nodeEtaleG`.
+two compiled statements rather than between a theorem and an argument.
 
 ## No implicit function theorem *relative to `X^an`*, and the files that priced one
 
 Five sites said that a statement over a general base *"needs an implicit function theorem relative
 to `X^an`, which `Oka/Analysis/Calculus/Implicit.lean` does not have"*. They stood, at the tree
-this section was written against, in **four** files:
+this section was written against, in **four** files, and four of them in these three:
 
 * `Oka/AnalyticSpace/SimpleZeroPolynomial.lean`;
 * `Oka/Analytification/StandardEtaleAnalytification.lean`, **twice** — the full price in one
-  place and the same price in a shorter wording in another, which is the whole of why five sites
-  sit in four files;
-* `Oka/Analytification/StandardEtaleLocalIso.lean`;
-* `OkaTest/StandardEtaleCond.lean`.
-
-**Two sentences of this file used to say *five files*, and there were four**: this heading, two
-lines above a *five sites* that was right, and
-`ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom`'s docstring below. The file count is
-now the list, because a numeral is falsified by any addition anywhere while a list is falsified by
-a missing entry. **The likeliest source of the wrong numeral is a guess and is marked as one**:
-the branch that wrote this section edited five files under `Oka/`, and two of them never carried
-the price at all.
-
-**`OkaTest/StandardEtaleCond.lean` is one of the five and not a sixth.** That branch repaired the
-four `Oka/` sites and left the `OkaTest/` one standing, and a later one swept `OkaTest/` and
-repaired it; the site that had been missed was inside the five, so the total never moved.
+  place and the same price in a shorter wording in another, which is the whole of why four sites
+  sit in three files;
+* `Oka/Analytification/StandardEtaleLocalIso.lean`.
 
 The five are about the projection to `ℂ^n`, which is a different statement and is the false one;
 the sentence was never tested against this one. **The step from `k = 0` to `k ≥ 1` takes no
@@ -172,37 +154,8 @@ hypersurface `ComplexAnalytic.hypersurfacePresentation g F`.
   `Oka/Analytification/StandardEtaleLocalIso.lean` records why and this file does not touch it.
 * **No general étale morphism.** Every étale morphism is Zariski-locally standard étale and the
   gluing is a separate construction that nothing starts.
-* **No `k ≥ 1` instance is exhibited *here*, and the absence this bullet recorded is retired.**
-  Nothing below produces one — the statement is general in `k` and subsumes `k = 0`, where
-  `ComplexAnalytic.condPair` (`OkaTest/StandardEtaleCond.lean`) is a `StandardEtalePair` over
-  `ComplexAnalytic.PresentedAlgebra 1 0 ComplexAnalytic.condBase` — but
-  `OkaTest/StandardEtaleLocalIsoBase.lean` now does, at `k = 1` and over the node
-  `ComplexAnalytic.nodeG`, which is a base whose zero locus is proper and non-empty and so one at
-  which the bullet above's false statement really is false. **This bullet predicted the route and
-  was right about it**: `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_node_sqSubOne`
-  is `ComplexAnalytic.sqSubOnePair` (`OkaTest/OpenBaseFiniteness.lean`) instantiated, an
-  instantiation and not a construction. **What it did not say is that that pair's cover is an
-  isomorphism** — `ComplexAnalytic.sqSubOneRingEquiv` identifies its standard étale algebra with
-  the base **wherever `2` is a unit of the base**, free over the node's presented algebra, which
-  is a `ℂ`-algebra — so the cheapest witness is a local isomorphism for a reason this theorem does
-  not need, and `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_node` is a second
-  witness at a pair whose algebra is not the base. The base and both witnesses' sources are
-  exhibited non-empty there; **how many sheets either cover has is proved nowhere**. **That clause
-  carried no hypothesis until 2026-09-21.**
-* **Nothing below is uniform in the base, and the test library now is.** Both witnesses above are
-  at one presentation with one relation, so they say the theorem is instantiable and not that it
-  is instantiable uniformly. `OkaTest/StandardEtaleBaseWitness.lean` closes that with
-  `ComplexAnalytic.isLocalIso_analytificationMap_etalePresHom_sqrtCover`: the square-root pair
-  `f = X² − C a`, `g = X` over an arbitrary `ℂ`-algebra, fired at **every** `n`, `k`, `g` and `a`
-  at once, with a `k = 1` instance over the hyperbola `z₀z₁ = 1` as a corollary. It is still an
-  instantiation of the theorem below and adds nothing to it — **and it is quantified over an `a`
-  at which it is vacuous**: at `a = 0` the two new relations force `z_n = 0` and then `0 = 1`, so
-  the source is empty and both fields of `ComplexAnalytic.AnalyticSpace.IsLocalIso` hold for the
-  reason `Oka/Analytification/StandardEtaleLocalIso.lean` gives — they quantify over the points of
-  the source. `Oka/AnalyticSpace/LocalIso.lean`'s own docstring says that of the **stalk** field
-  only, `IsLocalHomeomorph` being where the other one hides its quantifier, which is why the
-  citation here is to the file above and not to the class. The instance whose source is exhibited
-  non-empty is the hyperbola one and not the family.
+* **No `k ≥ 1` instance is exhibited *here*.** Nothing below produces one — the statement is
+  general in `k` and subsumes `k = 0`.
 * **No implicit function theorem *relative to `X^an`*, which is the one the five sites priced.**
   One relative to `ℂ^n` is spent four links down — step 3 is
   `ComplexAnalytic.isLocalIso_ofRestrict_comp_proj_of_pderiv`, whose topological half is

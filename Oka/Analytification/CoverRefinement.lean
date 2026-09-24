@@ -30,9 +30,7 @@ data, and a refinement supplies only the members. What has to be built is the po
 each overlap out, the isomorphism of the two descriptions of it, and the three laws. **This file
 builds all of it**, and then the space the refined datum glues to and the morphism from it down to
 the fixed member — the first `ComplexAnalytic.coverAnalytification` in this repository that is a
-*construction* rather than an instance. The two others, in `OkaTest/ProjectiveLine.lean` and
-`OkaTest/AffineCover.lean`, write their cover data out at particular members and particular
-polynomials; this one is uniform in `g` and `fam`.
+*construction* rather than an instance: it is uniform in `g` and `fam`.
 
 **It is a morphism and not an identification.** `ComplexAnalytic.not_isIso_refineToBase` below
 says so, at the smallest data that shows it: a refinement by no opens at all.
@@ -50,11 +48,10 @@ from the cross-member case rather than merely smaller than it.
 hypothesis-free — the refined data is a cover-datum shape over any index type `K` and any family
 of polynomials, so nothing below can be vacuously *satisfied*. That says nothing about whether the
 **objects** are degenerate, and they can be: `K` may be empty, and for `fam` constantly `0` every
-`D(f_a)` is empty and every law below holds of nothing. `OkaTest/CoverRefinement.lean` is the
-witness that they need not be — an empty base in one variable with `fam = (z₀, z₀ - 1)`, where
-every refined overlap is inhabited and the `(0, 1)` overlap is a **proper** open of the refined
-member, so `ComplexAnalytic.refineGlue` there is an isomorphism of non-empty spaces and the glue
-is along something smaller than the whole member.
+`D(f_a)` is empty and every law below holds of nothing. They need not be: at an empty base in one
+variable with `fam = (z₀, z₀ - 1)` every refined overlap is inhabited and the `(0, 1)` overlap is
+a **proper** open of the refined member, so `ComplexAnalytic.refineGlue` there is an isomorphism
+of non-empty spaces and the glue is along something smaller than the whole member.
 
 `ComplexAnalytic.refineGlue_comp` below is in any case a statement with content — it is the
 `trans_comp` coherence, and it is the reason the glue isomorphism is the *right* one rather than
@@ -150,9 +147,9 @@ member, and at a general `σ` they lie over three.
 ## Main results
 
 - `ComplexAnalytic.refineGlue_symm`: **the refined glue datum is symmetric**, which is the
-  `hsymm` a cover datum asks for. (Named without a citation on purpose:
-  `scripts/guard_coverage.py` reads every backticked repository name under this heading as a
-  result *this* file advertises, and the declaration that asks for `hsymm` is another file's.)
+  `hsymm` a cover datum asks for. (Named without a citation on purpose: every backticked
+  repository name under this heading is read as a result *this* file advertises, and the
+  declaration that asks for `hsymm` is another file's.)
 - `ComplexAnalytic.refineGlue_comp`: **the coherence triangle** — the glue isomorphism commutes
   with the two structure maps down to the fixed member. This is the content of the file.
 - `ComplexAnalytic.refineGlue_analytification_comp`: the same, analytified, which is the form the

@@ -412,7 +412,7 @@ def self_test(ml: Mathlib) -> int:
     check("a mirror path maps to its target",
           target_of("Oka/Algebra/Category/ModuleCat/Sheaf/Free.lean"),
           "Mathlib.Algebra.Category.ModuleCat.Sheaf.Free")
-    check("a non-mirror path maps to nothing", target_of("OkaTest/Foo.lean"), None)
+    check("a non-mirror path maps to nothing", target_of("scripts/Foo.lean"), None)
 
     # The figures printed for a *dropped* `Oka.` import.  The first is the case that caused this
     # part of the script to exist: a module docstring said upstreaming cost its target nothing,

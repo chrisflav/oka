@@ -32,9 +32,8 @@ family of holomorphic functions on an open subset of `ℂ^n`, so the `m` section
 through one chart and one local morphism from beginning to end. The route that *would* need a
 product — take the `m` morphisms `Z ⟶ ℂ` that the `m = 1` statement gives and assemble them — is
 not taken. `ComplexAnalytic.nodeToLine_ne` is what makes that concrete: the node's two coordinate
-functions give two different morphisms `node ⟶ ℂ`, and nothing below combines them into the
-single morphism `node ⟶ ℂ²` that `OkaTest/HolomorphicMapGeneral.lean` obtains from the theorem
-below.
+functions give two different morphisms `node ⟶ ℂ`, and nothing below combines them into a
+single morphism `node ⟶ ℂ²`.
 
 **The heading says *could not be*, and the reason is circularity rather than absence.**
 `Oka/AnalyticSpace/AffineProduct.lean` reads a binary product off this file's bijection —

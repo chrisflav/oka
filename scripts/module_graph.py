@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 """Decide a dependency-relation claim between two modules of this repository, or over a set.
 
-`OkaTest/Axioms.lean`'s sixth object says that a clause asserting a *dependency relation between
-two named files* — *that file is downstream of this one*, *this file does not import that one*,
-*no file in this repository imports both*, *N modules below* — has to be **measured**, and names
-a graph walk as the instrument.  Until this script that walk was written from scratch in the
-session that needed it and thrown away afterwards.  `scripts/import_cost.py` is the same shape of
-computation against **Mathlib**; this one is the repository's own graph, and the two are different
-graphs, which is the confusion that paragraph's *closure figures against Mathlib are a different
-graph* clause exists to stop.
+A clause asserting a *dependency relation between two named files* — *that file is downstream of
+this one*, *this file does not import that one*, *no file in this repository imports both*, *N
+modules below* — has to be **measured**, and a graph walk is the instrument.  Until this script
+that walk was written from scratch in the session that needed it and thrown away afterwards.
+`scripts/import_cost.py` is the same shape of computation against **Mathlib**; this one is the
+repository's own graph, and closure figures against Mathlib are a different graph.
 
 Usage:
 
@@ -41,72 +39,49 @@ computed with it, and two instruments that disagree about the graph are worse th
 `Oka/Analytification/StandardEtaleLocalIso.lean` pair the naive regex understates both closures by
 exactly 14 and returns the two *marginal* costs unchanged.
 
-## The two aggregators are deleted from the tally and not from the graph
+## The aggregator is deleted from the tally and not from the graph
 
-`Oka.lean` is the module `mk_all` generates and `OkaTest.lean` is its test-side twin; at `0b2759b`
-the first carries an `import` line for each of the **253** modules under `Oka/` and the second one
-for each of the **100** under `OkaTest/`, with no module of either directory missing from its own
-root.  Each root is therefore downstream of everything it covers and is a hit for every question of
-this shape.
+`Oka.lean` is the module `mk_all` generates; at `0b2759b` it carried an `import` line for each of
+the **253** modules under `Oka/`, with none missing.  The root is therefore downstream of
+everything it covers and is a hit for every question of this shape.  Nothing in the population
+imports it, so it conducts nothing.
 
-**The roots also conduct, and how much is a count and not a universal.**  Of the 100 modules under
-`OkaTest/`, **76 import `Oka` directly and 97 have it in closure**; the remaining **three** —
-`OkaTest/AnalyticSpaceGlue.lean`, `OkaTest/AnalyticSpaceLocal.lean` and
-`OkaTest/SheafOfModulesStalk.lean` — import named `Oka.*` modules instead and reach the library
-without the root at all.  **Delete both roots from the graph and 12 of the 100 are still downstream
-of some module under `Oka/`, against all 100 with them.**  On the six figures `OkaTest/Axioms.lean`
-states of its own the deletion moves by no single factor: `OkaTest/HolomorphicMapOpen.lean`
-**11 → 11**, `OkaTest/FiniteMorphism.lean` **10 → 10**, `OkaTest/CoherentFree.lean` **3 → 3**,
-`Oka/Analytification/AffineCover.lean` **130 → 35**,
-`Oka/Analytification/UniversalProperty.lean` **153 → 59** and
-`Oka/Algebra/Category/ModuleCat/Sheaf/Quasicoherent.lean` **101 → 4**.  **The three flat rows are
-the point of counting rather than asserting**: no root is above a module under `OkaTest/` except
-`OkaTest.lean` itself, which the tally already subtracts, so for a test subject the roots conduct
-nothing.
-
-The walk therefore runs over the whole graph, roots included, and the **two roots alone** are
-subtracted from what is reported.  `--include-aggregators` puts them back; on those same six
-figures that flag adds 2 to each subject under `Oka/` and 1 to each subject under `OkaTest/`
-and changes nothing else.  **`self_test` plants both shapes** — a test module reaching the library
-through the root, and one importing a named module directly — so that the distinction this
-paragraph measures is one the fixture has rather than one it assumes.
+The walk therefore runs over the whole graph, the root included, and the root alone is subtracted
+from what is reported.  `--include-aggregators` puts it back, which adds 1 to each `--downstream`
+figure and changes nothing else.  **`self_test` plants the root** so that the subtraction is one
+the fixture has rather than one it assumes.
 
 ## Population
 
-Every tracked `.lean` file under `Oka/` and `OkaTest/`, together with `Oka.lean` and
-`OkaTest.lean`.  `scripts/DumpOkaDecls.lean` and `scripts/DumpEnvNames.lean` import `Oka` and
-`OkaTest` and are **not** in it; counting them adds 4 edges and no node any prose claim is about.
-`git ls-files` is the set, not the directory listing, for the reason `.orchestra/validation.sh`
-records at its own `scripts/` walk.
+Every tracked `.lean` file under `Oka/`, together with `Oka.lean`.  `scripts/DumpOkaDecls.lean`
+and `scripts/DumpEnvNames.lean` import `Oka` and are **not** in it; counting them adds 2 edges and
+no node any prose claim is about.  `git ls-files` is the set, not the directory listing, so that
+an ignored or untracked file on disk is not counted.
 
 ## What this cannot decide
 
 **A claim about declarations rather than modules.**  *"Proved without using `X`, or anything
-downstream of `X`"* is about the environment, and `OkaTest/Axioms.lean` names the transitive
-`Expr.getUsedConstants` walk as the instrument for it.  `--grep` is the weaker text test: it says
+downstream of `X`"* is about the environment, and the instrument for it is a transitive
+`Expr.getUsedConstants`
+walk.  `--grep` is the weaker text test: it says
 which modules mention a token **in code** — comments stripped with the same stripper — and a
 module that mentions nothing is evidence, while a module that mentions something is only a
-pointer to read it.  A `#print axioms` guard line mentions a name and states nothing, which is the
-false positive this docstring records so that a run of `--grep` is not read as a verdict.
+pointer to read it, so a run of `--grep` is not to be read as a verdict.
 
 **`--grep` is a substring test and `--word` is not the same figure**, which is worth a live
-example rather than a warning.  `OkaTest/Axioms.lean` records that `IsProper` occurs as a whole
-word in the code of **no** module of this repository, and at `0b2759b` the substring occurs in
-**six**: `Oka/AnalyticSpace/Finite.lean`, `Oka/Topology/Algebra/Polynomial.lean`,
-`Oka/Topology/Maps/Proper/Basic.lean`, `OkaTest/Axioms/Morphisms.lean`,
-`OkaTest/CoveringBaseChange.lean` and `OkaTest/FiniteMorphism.lean`, every one of them
-`IsProperMap`, which is a different class.  A verdict taken from the wrong one of the two reads
+example rather than a warning.  At `0b2759b` `IsProper` occurred as a whole word in the code of
+**no** module under `Oka/`, and the substring occurred in **three**:
+`Oka/AnalyticSpace/Finite.lean`, `Oka/Topology/Algebra/Polynomial.lean` and
+`Oka/Topology/Maps/Proper/Basic.lean`, every one of them `IsProperMap`, which is a different
+class.  A verdict taken from the wrong one of the two reads
 *the class this file declines to declare is consumed downstream* off the class it declines in
 favour of.  Whichever a figure is, say which.
 
 **And `--grep` is never a figure about the repository, because it only ever qualifies a set**: it
 is an option on `--downstream`, `--upstream` or `--importers` and `module_graph.py --grep IsProper`
-on its own exits 1 with the usage text.  *"`--grep IsProper` returns 3"* is three different claims
-until the set is named — `--downstream Oka/AnalyticSpace/Finite.lean` gives the three `OkaTest`
-modules above, `--upstream Oka.lean` gives the three under `Oka/`, and over the repository it is
-six.  **The wrong reading of it cannot be caught by the sentence's own check**, since *all three
-are `IsProperMap`* is true of either triple.  **Name the set beside the count**, which is the same
-instruction one level up from *say which of the two tests it is*.
+on its own exits 1 with the usage text.  *"`--grep IsProper` returns 3"* is a different claim for
+every set it can qualify, and cannot be checked until the set is named.  **Name the set beside the
+count**, which is the same instruction one level up from *say which of the two tests it is*.
 """
 
 from __future__ import annotations
@@ -123,7 +98,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from import_cost import IMPORT, strip_comments  # noqa: E402
 
-ROOTS = ("Oka", "OkaTest")
+ROOTS = ("Oka",)
 AGGREGATORS = frozenset(ROOTS)
 #: How many modules to name under a set answer.  A downstream set here runs to about 130 and a
 #: reader deciding a prose claim wants the count and a sample, not the list; `--all` prints it.
@@ -260,7 +235,8 @@ def self_test() -> int:
 
     The cases are the ones that have cost this repository a push: an `import` line inside a
     comment, a `public import`, a pair whose names look ordered and is not, and the aggregator
-    that conducts.  A walk that only ever ran on the real tree would pass all four silently.
+    that is a hit for everything.  A walk that only ever ran on the real tree would pass all four
+    silently.
     """
     failures = 0
 
@@ -273,7 +249,6 @@ def self_test() -> int:
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         (root / "Oka").mkdir()
-        (root / "OkaTest").mkdir()
         write = lambda p, s: (root / p).write_text(s, encoding="utf-8")  # noqa: E731
         write("Oka/Leaf.lean", "/-! A leaf. `Token` is named here and only here. -/\n")
         # An `import` line inside a comment, which the naive regex follows.
@@ -285,18 +260,8 @@ def self_test() -> int:
         write("Oka/Top.lean", "module\npublic import Oka.Mid\n/-! Top. -/\ndef Token := 1\n")
         write("Oka/Unrelated.lean", "/-! Nothing imports this. -/\n")
         write("Oka.lean", "import Oka.Leaf\nimport Oka.Mid\nimport Oka.Top\nimport Oka.Unrelated\n")
-        write("OkaTest/Probe.lean", "import Oka\n/-! A test file. -/\n")
-        # A test module importing a named `Oka.*` module and not the root, which is the shape three
-        # of the 100 modules under `OkaTest/` have at `0b2759b`.  Without it the fixture would make
-        # the docstring's `76 / 97 / 3` split a case the self-test cannot see.
-        write("OkaTest/Direct.lean", "import Oka.Leaf\n/-! A test file that skips the root. -/\n")
-        write("OkaTest.lean", "import OkaTest.Probe\nimport OkaTest.Direct\n")
-        files = [
-            "Oka.lean", "Oka/Leaf.lean", "Oka/Mid.lean", "Oka/Top.lean", "Oka/Unrelated.lean",
-            "OkaTest.lean", "OkaTest/Direct.lean", "OkaTest/Probe.lean",
-        ]
+        files = ["Oka.lean", "Oka/Leaf.lean", "Oka/Mid.lean", "Oka/Top.lean", "Oka/Unrelated.lean"]
         g = Graph(root, files)
-        rootless = Graph(root, [f for f in files if f not in ("Oka.lean", "OkaTest.lean")])
 
         check("a commented-out import is not an edge", g.imports["Oka.Mid"], ["Oka.Leaf"])
         check("a `public import` is an edge", g.imports["Oka.Top"], ["Oka.Mid"])
@@ -312,33 +277,18 @@ def self_test() -> int:
             "incomparable" in pair(g, "Oka.Top", "Oka.Unrelated"),
             True,
         )
-        # The aggregator conducts: `OkaTest.Probe` imports `Oka`, which imports `Oka.Leaf`.
+        # The root is downstream of everything and is subtracted from the tally, not the graph.
         check(
-            "the roots conduct",
+            "the root is subtracted from the tally",
             strip_aggregators(g.downstream("Oka.Leaf"), keep=False),
-            {"Oka.Mid", "Oka.Top", "OkaTest.Direct", "OkaTest.Probe"},
+            {"Oka.Mid", "Oka.Top"},
         )
         check(
-            "and are subtracted from the tally, not from the graph",
+            "…and only from the tally, not from the graph",
             len(strip_aggregators(g.downstream("Oka.Leaf"), keep=True))
             - len(strip_aggregators(g.downstream("Oka.Leaf"), keep=False)),
-            2,
+            1,
         )
-        # Deleting the roots is what the docstring's `12 of the 100` measures, and it does not
-        # empty the relation: a test module that goes through the root drops out and one that
-        # imports a named module does not.
-        check(
-            "delete the roots and a test module that went through one drops out",
-            "OkaTest.Probe" in rootless.downstream("Oka.Leaf"),
-            False,
-        )
-        check(
-            "…and one importing a named module directly does not",
-            "OkaTest.Direct" in rootless.downstream("Oka.Leaf"),
-            True,
-        )
-        check("a test root is one extra for a test subject",
-              len(g.downstream("OkaTest.Probe")), 1)
         # `--grep` reads code and not comments: `Token` is in `Oka/Top.lean`'s code and in
         # `Oka/Leaf.lean`'s docstring only.
         check("--grep sees code", g.mentions("Oka.Top", "Token"), True)

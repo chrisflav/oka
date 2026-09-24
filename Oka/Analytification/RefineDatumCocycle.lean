@@ -126,8 +126,7 @@ it, and it separates them:
   `Oka/Analytification/RefineDatumRange.lean` for the same reason: that file declares
   `ComplexAnalytic.coverSpaceHomOfEq` and holds `ComplexAnalytic.coverSpaceHomOfEq_refl` beside
   it, and the three are the groupoid facts about a transport, whose statements say nothing about a
-  triple. This file is their only consumer. **They were written here first and moved**, which is
-  why their guards are in this file's section of `OkaTest/Axioms/Analytification.lean`.
+  triple. This file is their only consumer. **They were written here first and moved.**
 * `ComplexAnalytic.coverTransitionHom_of_fac_eq_ab`,
   `ComplexAnalytic.coverTransitionHom_of_fac_eq_bc` and
   `ComplexAnalytic.coverTransitionHom_of_fac_eq_ac` **stay here**, and that is not an

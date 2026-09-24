@@ -65,10 +65,8 @@ AnalyticSpace`.
 ## What is not here
 
 * **No separation axiom on `ComplexAnalytic.AnalyticSpace`**, and no change to
-  `Oka/AnalyticSpace/Basic.lean`. `OkaTest/FiniteEtaleCancel.lean`'s `TwoIndiscrete` is a
-  two-point indiscrete space used as a counterexample one rung down; it is not an analytic space,
-  so it is not a witness that the class below is empty of non-Hausdorff objects — but nothing here
-  claims the class is empty of them either, and the general statement is simply not made.
+  `Oka/AnalyticSpace/Basic.lean`. Nothing here claims the class is empty of non-Hausdorff
+  objects, and the general statement is simply not made.
 * **No general locally-ringed-space instance, and that is a decision rather than an omission.**
   `[T2Space Y] → T2Space (Y.zeroLocusSubspace f)` and the same for
   `AlgebraicGeometry.LocallyRingedSpace.restrict` are genuinely general, hold with the same
@@ -82,13 +80,6 @@ AnalyticSpace`.
 * **No `degree` corollary.** `ComplexAnalytic.AnalyticSpace.degree_eq_card_fiber` also asks
   `[PreconnectedSpace Y]` of the base, which no instance below supplies at any construction, so
   the separation hypothesis is not the only thing between it and a caller.
-* **`ComplexAnalytic.t2Space_restrict_punctured` is not retired.**
-  `OkaTest/FiniteMorphism.lean`'s bespoke instance is subsumed by
-  `ComplexAnalytic.t2Space_complexAffineSpace` and `ComplexAnalytic.t2Space_restrict` below —
-  measured, and asserted there by an `example` — but it is cited by name at six sites, two of
-  which say a theorem's separation hypothesis is *supplied by* it, so deleting it is an editorial
-  change with no mathematical content and six citations to re-verify. What it does get is a
-  repaired docstring: its claim that no competing instance exists is false from here on.
 
 ## Main results
 
@@ -156,8 +147,7 @@ instance t2Space_restrict (X : AnalyticSpace.{u}) [T2Space X] (U : X.Opens) :
 
 Not consumed by anything in `Oka/`; it is here because `ComplexAnalytic.AnalyticSpace.zeroLocus`
 reaches `ℂ^n` through the locally-ringed-space spelling and never through this one, so a caller
-holding the analytic space would otherwise find no instance. Together with
-`ComplexAnalytic.t2Space_restrict` it subsumes `ComplexAnalytic.t2Space_restrict_punctured`. -/
+holding the analytic space would otherwise find no instance. -/
 instance t2Space_complexAffineSpace (n : ℕ) :
     T2Space (AnalyticSpace.complexAffineSpace.{u} n : Type u) :=
   inferInstanceAs (T2Space (ULift.{u} (Fin n) → ℂ))

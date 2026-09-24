@@ -27,26 +27,14 @@ an application.
 
 ## Why this is the second application of the third rung and the first outside a test file
 
-`ComplexAnalytic.isCoveringMap_base_sq` (`OkaTest/FiniteMorphism.lean`) is the only earlier one.
-**This sentence read *is the only other one* until 2026-09-21**, when
-`Oka/Analytification/HausdorffBase.lean` stated the `k ≥ 1` counterpart over `X^an` and became the
-third application of the rung; **the heading above is unchanged**, because it is a claim about
-where *this* file stands in that order and that is what it still says.
-**`OkaTest/FiniteMorphism.lean` said so three times, in the present tense, and the branch writing
-this paragraph narrowed all three rather than citing one of them as authority for a count it
-falsifies** — its module docstring, the section docstring of the section that declaration sits in,
-and that declaration's own docstring. Each keeps
-the clause that survives, which is that `ComplexAnalytic.isCoveringMap_base_sq` is still the only
-application at a morphism that repository proves is not an isomorphism
-(`ComplexAnalytic.not_isIso_sq`); nothing shows that of the morphism below. **The grep that reaches
-those three is on this rung's name and not on `T2Space`**, which no widening of a separation-axiom
-sweep could have found: when a hypothesis is discharged, the sentences that go stale are about the
-theorem the hypothesis was gating. It is the squaring map of the punctured line, written by hand,
-with its separation hypothesis supplied by a bespoke instance about that one space
-(`ComplexAnalytic.t2Space_restrict_punctured`). The theorems below are about a morphism the
-analytification machinery produces from a Mathlib `StandardEtalePair`, and their
-separation hypothesis is found by instance search at a family rather than at a point — which is
-the difference `Oka/AnalyticSpace/Hausdorff.lean` is for.
+The first is the squaring map of the punctured line, written by hand, with its separation
+hypothesis supplied by a bespoke instance about that one space;
+`Oka/Analytification/HausdorffBase.lean` later stated the `k ≥ 1` counterpart over `X^an` and
+became the third application of the rung, which leaves where *this* file stands in that order
+unchanged. The theorems below are about a morphism
+the analytification machinery produces from a Mathlib `StandardEtalePair`, and their separation
+hypothesis is found by instance search at a family rather than at a point — which is the
+difference `Oka/AnalyticSpace/Hausdorff.lean` is for.
 
 **Nothing about the covering is computed.** `IsCoveringMap` is a statement about the underlying
 continuous map, so these say nothing about structure sheaves, nothing about how many sheets there
@@ -84,15 +72,9 @@ are, and nothing about whether the base is nonempty; the last of those is a live
   `ComplexAnalytic.AnalyticSpace.IsFiniteEtale.isLocalIso`, not finite étale — as soon as some
   `g j` is nonzero and the source has a point, by
   `ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp`
-  (`Oka/Analytification/StandardEtaleNotLocalIso.lean`), and that is instantiated at the node as
-  `ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp_node`
-  (`OkaTest/StandardEtaleNotLocalIso.lean`) — **at the same pair at which the `k ≥ 1` instance of
-  the class exists**, `OkaTest/StandardEtaleFiniteEtaleBase.lean`'s. So the two morphisms are not
-  merely different in general: they are separated at one pair by two compiled theorems.
-* **Nothing about the unrestricted morphism.** It is not finite étale —
-  `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`) — so
-  there is no covering-map statement to make about it, and the restriction to `V` is not an
-  artefact of this file.
+  (`Oka/Analytification/StandardEtaleNotLocalIso.lean`).
+* **Nothing about the unrestricted morphism.** It is not finite étale, so there is no covering-map
+  statement to make about it, and the restriction to `V` is not an artefact of this file.
 * **No comparison functor and no Riemann existence theorem**, and no covering-map statement about
   the analytification of a finite étale morphism of schemes: everything here is one standard étale
   presentation over `ℂ^n`.

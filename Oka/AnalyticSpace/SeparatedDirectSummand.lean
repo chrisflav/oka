@@ -96,9 +96,9 @@ docstring gives.
   not the push that repairs it — which is this one, the first to edit this file since.
 
   **Measured rather than read**: at `0eed5cd`, the base of this push, the string
-  `SeparatedFiniteEtaleOver` occurs in the comment-stripped code of exactly two modules,
-  `Oka/AnalyticSpace/SeparatedFiniteEtale.lean` and `OkaTest/Axioms/Morphisms.lean`,
-  and the only limits instance either declares for the category is that terminal object; and
+  `SeparatedFiniteEtaleOver` occurs in the comment-stripped code of exactly one module under
+  `Oka/`, `Oka/AnalyticSpace/SeparatedFiniteEtale.lean`, and the only limits instance it declares
+  for the category is that terminal object; and
   `PreGaloisCategory` and `SingleObj` occur in the comment-stripped code of no module of this
   repository at all. **`HasFiniteCoproducts` does occur, in two** —
   `Oka/AnalyticSpace/FiniteEtaleOver.lean` and `Oka/AnalyticSpace/Sigma.lean` — but of the covers

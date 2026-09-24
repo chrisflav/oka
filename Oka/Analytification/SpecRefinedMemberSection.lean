@@ -81,17 +81,6 @@ docstring: a caller holding a cover datum and an index should not have to spell 
 of the general form, and `Oka/Analytification/SpecMemberSections.lean` already argues against
 stating both. **Generality in the immersion is content; a second name at one immersion is not.**
 
-**Every backticked token in the `## Main results` block below is a declaration of this file that is
-guarded here, and that is deliberate rather than terse**: `scripts/guard_coverage.py` reads every
-whitespace-free backticked token under that heading as a declaration this file advertises, so a
-file path or a piece of notation resolves to nothing and moves a census row for no reason, and
-another file's real name that is unguarded opens a coverage gap that was not there. **Stated as a
-rule rather than as a count**, because this sentence read *"two backticked names"* where there were
-five before this branch and are seven after: a numeral under this heading goes stale on the next
-append, and did. The files these theorems bridge are named in the
-paragraphs above, which is where the extractor does not look — and this paragraph is above the
-heading for the same reason.
-
 ## The overlap of two refined members at one immersion, and the sentence it narrows
 
 Two files on this line say, in two spellings, that what a cover **datum** additionally needs over
@@ -340,13 +329,13 @@ their left-hand sides have the same *shape* and differ only in which of `p` and 
 along; a descriptive suffix
 would have to name an argument position rather than a subject. **The prime is not a new convention
 here**: `Oka/` already carries primed declaration names — `ComplexAnalytic.coverGlueData'` and
-`ComplexAnalytic.stalkMap_restrictHom_eq'` among them — and so does `OkaTest/`. **No figure is
+`ComplexAnalytic.stalkMap_restrictHom_eq'` among them. **No figure is
 quoted for that because the reading decides it**: declaration sites whose name *contains* a prime,
 sites whose name *ends* in one, and rows of the environment dump are three different counts over
 one tree, and a sentence quoting one of them beside another rots the moment a reader checks the
 other. **The alternative — restating both as one theorem taking
-the member as an argument — was rejected**: it renames a declaration that is guarded, is advertised
-in the `## Main results` above, and is cited at eight sites in two files, and it buys nothing a
+the member as an argument — was rejected**: it renames a declaration that is advertised in the
+`## Main results` above, and is cited at eight sites in two files, and it buys nothing a
 caller can use.
 
 **It is the theorem above at `q` and `p` composed with `inf_comm`, and that is the whole of it.**

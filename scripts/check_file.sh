@@ -43,7 +43,7 @@
 # One further caveat, measured: the linter options carry TOML's `weak.` prefix, which means an
 # option Lean does not know about is **ignored rather than rejected**. The style linters are
 # registered by `Mathlib.Tactic.Linter`, so a file whose imports do not reach it gets no style
-# linting from this script and no warning that it did not. Every file under `Oka/` and `OkaTest/`
+# linting from this script and no warning that it did not. Every file under `Oka/`
 # imports far more than that, so this matters only for scratch files.
 # ---------------------------------------------------------------------------------------------
 
@@ -87,11 +87,11 @@ read_lean_options() {
 # Warnings are made fatal the way `lake build --wfail` makes them fatal: by looking at the output.
 #
 # **`-DwarningAsError=true` is NOT what `--wfail` does, and using it here is wrong.** Measured:
-# with that option every file under `OkaTest/Axioms/` fails, because `linter.hashCommand`'s
-# warning about `#print` becomes an *error*, `#guard_msgs` then captures it, and the docstring no
-# longer matches the generated message. Twelve files that the build passes. `--wfail` leaves
-# warnings as warnings inside Lean and fails at the lake level on the build log, so `#guard_msgs`
-# sees what it expects to see.
+# with that option a file wrapping `#print axioms` in `#guard_msgs` fails, because
+# `linter.hashCommand`'s warning about `#print` becomes an *error*, `#guard_msgs` then captures it,
+# and the docstring no longer matches the generated message — a file that the build passes.
+# `--wfail` leaves warnings as warnings inside Lean and fails at the lake level on the build log,
+# so `#guard_msgs` sees what it expects to see.
 run_check() {
   local -a opts=()
   local line out rc
@@ -135,8 +135,8 @@ self_test() {
   } > "$dir/long.lean"
   printf 'import Mathlib.Tactic.Linter\n\n/-- An accidental auto-bound implicit. -/\ntheorem checkFileAuto (x : ThisTypeDoesNotExist) : True := trivial\n' \
     > "$dir/auto.lean"
-  # A regression fixture. This is the shape of every file under `OkaTest/Axioms/`, and all twelve
-  # of them failed while this script made warnings fatal with `-DwarningAsError=true` instead of
+  # A regression fixture. Files of this shape (`#guard_msgs` around `#print axioms`) all
+  # failed while this script made warnings fatal with `-DwarningAsError=true` instead of
   # by inspecting the output: `linter.hashCommand` warns about `#print`, the option promoted that
   # warning to an error, and `#guard_msgs` then reported a message mismatch.
   printf 'import Mathlib.Tactic.Linter\n\n/--\ninfo: '"'"'Nat.add'"'"' does not depend on any axioms\n-/\n#guard_msgs (whitespace := lax) in\n#print axioms Nat.add\n' \

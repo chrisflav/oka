@@ -44,7 +44,7 @@ it, so the sentence had a counterexample two screens above itself at the commit 
 read through its nesting-aware `strip_comments`: **thirteen** modules under `Oka/` have both
 `Oka.Analytification.Comparison` and `Oka.Analytification.LocalisationIndependence` in their import
 closure — the aggregator `Oka.lean`, which imports every module of the library, is
-excluded throughout, as `OkaTest/Axioms.lean` excludes it from the same kind of grep — and
+excluded throughout — and
 **twelve of the thirteen reach this file**, at edge distances one to five —
 `Oka/Analytification/SpecAffineCover.lean` and `Oka/Analytification/SpecRefinedMember.lean` at
 one, `Oka/Analytification/CoverComparison.lean`, `Oka/Analytification/SpecFunctoriality.lean`,
@@ -272,13 +272,9 @@ The equality and not the containment, for the reason
 `ComplexAnalytic.range_base_localisationProj` gives on the analytic side: the side condition of an
 open-immersion lift is a containment *in* this range, so an equality is what lets a statement about
 `D(f)` discharge it. It is what a `Spec`-side glue data's `hrange` obligation will be checked
-against — **still a prediction, and the reason nothing has tested it is not the one to reach for
-first.** The tree has three `hrange` obligations: `ComplexAnalytic.hrange_lineCover` and
-`ComplexAnalytic.specHrange_lineCover` are vacuous at two members, but
-`ComplexAnalytic.hrange_nodeCover` is at three and its proof is real. **All three are discharged
-without this theorem**, and the non-vacuous one goes through
-`AlgebraicGeometry.LocallyRingedSpace.range_ofRestrict` as
-`ComplexAnalytic.range_specTransitionHom_subset` does. So what is untested is not the containment
+against — **still a prediction.** A containment goes through
+`AlgebraicGeometry.LocallyRingedSpace.range_ofRestrict` without this theorem, as
+`ComplexAnalytic.range_specTransitionHom_subset` does, so what is untested is not the containment
 but **the equality** — nothing has yet needed the range of a distinguished open's inclusion to be
 *exactly* `D(f)` rather than contained in it, which is what a three-member `Spec`-side cover would
 be the first thing to ask for.

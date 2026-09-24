@@ -71,45 +71,8 @@ exhibit, and what makes it a witness rather than a degeneracy, is that the cross
 reads the original datum's own `glue` — through `ComplexAnalytic.refineDatumCrossAlgEquiv`,
 exactly once, as `ComplexAnalytic.refineDatumGlueNe` does at any input — and that the refined
 overlaps are the original overlaps, so nothing here is empty unless the original cover's overlaps
-are. `OkaTest/CoverRefinement.lean` exists because this project accepted a degenerate witness
-once, at `fam` constantly `0` where every overlap is empty; this is the opposite extreme and it is
-named rather than left for a reader to notice.
-
-**And the hypotheses below are met by something**, which nothing in `Oka/` can say because every
-concrete cover datum in this repository is under `OkaTest/`:
-`OkaTest/RefineDatumWitness.lean` instantiates the construction at `OkaTest/AffineCover.lean`'s
-three copies of the node, whose three laws are theorems, at `σ = id` on a three-element index
-type — giving an `ComplexAnalytic.AnalyticSpace` with **no hypothesis left open at all** and an
-index map `ComplexAnalytic.not_isConstant_id` proves is not constant. It also checks there that
-every refined overlap is non-empty and proper. This clause used to end *"which is what separates
-this family from the `0` one in both directions"*, and it is **narrowed rather than withdrawn**:
-both halves do fail at `fam ≡ 0`, so both do separate this family from that one. What is not two
-is the directions.
-
-**At `fam ≡ 0` the two checks are the same statement, and it is the refined member rather than the
-overlap that makes them so.** `ComplexAnalytic.localisationPresentation` adjoins `t·f - 1`, which
-at `f = 0` is a constant vanishing nowhere — `ComplexAnalytic.eval_rename_localisationIncl_ne_zero`
-is that fact — so at that family every refined member is **empty**, which is how
-`Oka/Analytification/CoverGlueTop.lean` and `OkaTest/RefineDatumWitness.lean` both word the
-degeneracy `OkaTest/CoverRefinement.lean` accepted once. An empty space has one open and it is `⊥`
-and `⊤` at once. So neither `≠ ⊥` nor `≠ ⊤` is inert against the `0` family: each is refuted
-there, and by the same emptiness. The paragraph above says the overlaps are empty there, which is
-this one step later.
-
-**Where the two do come apart is the other degeneracy, and only one of them reaches it.**
-`OkaTest.RefineDatumWitness.coverOpen_nodeRefineOne_ne_top` says an overlap is not the whole
-refined member, which is the third check `Oka/Analytification/CoverGlueTop.lean` names: a cover
-can be non-degenerate in its refining family and still glue to one member, and that file's theorem
-is why. `OkaTest.RefineDatumWitness.coverOpen_nodeRefineOne_ne_bot` does not see that case — a
-non-empty member glued along the whole of itself has overlap `⊤`, which is `≠ ⊥` — and is not
-implied by it either, since a non-empty member glued along nothing has overlap `⊥`, which is
-`≠ ⊤`. **Both of those turn on the member being non-empty**, which is the same hypothesis the
-paragraph above is about. `OkaTest/RefineDatumWitness.lean`'s own module docstring states the pair
-as *nothing glued along nothing and nothing along everything*, which is what they check.
-
-**And it checks there that the glued space is not one of its members**
-(`OkaTest.RefineDatumWitness.exists_ι_nodeRefineOne_ne`), which is the statement neither overlap
-check reaches: the overlaps say what the members are glued along, not what they glue to.
+are. At `fam` constantly `0` every overlap is empty; this is the opposite extreme and it is named
+rather than left for a reader to notice.
 
 ## What is not here
 
@@ -122,8 +85,7 @@ check reaches: the overlaps say what the members are glued along, not what they 
   `ComplexAnalytic.refineDatumRangeEq_of_injective`
   (`Oka/Analytification/RefineDatumUnitFamily.lean`) closes it in one line at every refining
   family. That file also generalises `ComplexAnalytic.refineDatumOneRangeCross` below off
-  `fam ≡ 1`, and `OkaTest/RefineDatumUnitFamily.lean` exhibits the refinement of `ℙ¹`'s two-chart
-  cover by the coordinate, where every refined member is a proper non-empty open of its chart.
+  `fam ≡ 1`.
   **What stays open is what `ComplexAnalytic.exists_refineDatumCross_of_isUnit` asks of the
   family** — `fam a` a unit in the localisation at `f_{σa σb}`, which is the geometric statement
   that the refined member contains the whole overlap — since that is a hypothesis there and no
@@ -132,14 +94,7 @@ check reaches: the overlaps say what the members are glued along, not what they 
   satisfies either condition is untouched here in both directions, and the associate question
   `Oka/Analytification/CrossMemberGlue.lean` records is not narrowed.
 * **Nothing about whether the refined overlap is the geometric one**, which is the same file's
-  other absence and is about the construction rather than about any input to it. **At one
-  concrete datum that identification is now made**, in `OkaTest/RefineDatumWitness.lean`: at the
-  node cover, `σ = id` and the caller's `q` taken to be the datum's own `poly`, the refined
-  overlap is the preimage of the original overlap along the projection of the refined member.
-  That is a fact about that data — the extra factor there is `z₀`, the original overlap's own
-  polynomial, so `D(z₀ · z₀) = D(z₀)` and it cuts nothing away — and it is **not** evidence about
-  the factor `ComplexAnalytic.exists_refineDatumCross` produces, which is what the absence is
-  about.
+  other absence and is about the construction rather than about any input to it.
 * **No scheme, no `admissible`, and no comparison functor**, as in the files this one sits beside.
 
 ## Main definitions

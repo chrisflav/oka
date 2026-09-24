@@ -369,9 +369,8 @@ def nodeToLine (j : ULift.{u} (Fin 2)) :
 /-- **The two coordinate morphisms out of the node are different.**
 
 The point exhibited is `(1, 0)`, which lies on the node. This is a statement about the
-morphisms rather than a check on any one construction, which is why it is here and not in
-`OkaTest/HolomorphicMap.lean`; `ComplexAnalytic.nodeCoord_ne` turns it into the corresponding
-statement about *sections* using the rigidity of
+morphisms rather than a check on any one construction; `ComplexAnalytic.nodeCoord_ne` turns it
+into the corresponding statement about *sections* using the rigidity of
 `ComplexAnalytic.AnalyticSpace.hom_ext_complexLine`. -/
 theorem nodeToLine_ne : nodeToLine.{u} (ULift.up 0) ≠ nodeToLine.{u} (ULift.up 1) := by
   classical

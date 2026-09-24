@@ -36,15 +36,11 @@ subset of `ℂ^n` and for an open subspace of any Hausdorff analytic space, and
 `Oka/Analytification/Hausdorff.lean` for an analytification; between them a caller who built the
 source out of polynomials supplies nothing.
 `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom_comp` is what that
-buys — the theorem below at the analytification of a standard étale morphism — and it is the
-second application of this rung anywhere, `ComplexAnalytic.isCoveringMap_base_sq`
-(`OkaTest/FiniteMorphism.lean`) being the first and
+buys — the theorem below at the analytification of a standard étale morphism — and
 `ComplexAnalytic.isCoveringMap_base_restrictHom_analytificationMap_etalePresHom`
-(`Oka/Analytification/HausdorffBase.lean`) the third since 2026-09-21, at the structure map to
-`X^an` over a presented base rather than at the composite to `ℂ^n`. **No wording was retired
-here**: both ordinals were right when written and are right now, and the sentence ended at the
-second only because there was no third. **What stays true is the hypothesis**: `X` is
-arbitrary below and no instance fires at a variable.
+(`Oka/Analytification/HausdorffBase.lean`) is a further application since 2026-09-21, at the
+structure map to `X^an` over a presented base rather than at the composite to `ℂ^n`. **What stays
+true is the hypothesis**: `X` is arbitrary below and no instance fires at a variable.
 
 **Connectedness of the target is not needed for the rung**, and `Oka/AnalyticSpace/LocalIso.lean`
 used to phrase it as being about a connected base, which the argument never uses: a point outside
@@ -75,19 +71,15 @@ base being nonempty is never used.
 
 ## What is not here
 
-* **The degree of a finite étale morphism that is neither the squaring map nor a trivial cover.**
+* **The degree of a finite étale morphism that is not a trivial cover.**
   The bullet that used to stand here said no particular morphism had any particular degree
-  computed, and then that exactly one did. Both are retired. The value is known for two things
-  now, and they are known for unrelated reasons:
-  `ComplexAnalytic.card_fiber_base_sq` in `OkaTest/FiniteMorphism.lean` puts every fibre of the
-  squaring map of the punctured line at **2** points — a statement about roots in `ℂ` and not
-  about covering maps, its content being `IsAlgClosed.card_setOf_pow_eq` — and
-  `ComplexAnalytic.AnalyticSpace.card_fiber_sigmaFold` in
+  computed, and then that exactly one did. Both are retired. The value is known for trivial
+  covers: `ComplexAnalytic.AnalyticSpace.card_fiber_sigmaFold` in
   `Oka/AnalyticSpace/SigmaFiniteEtale.lean` puts every fibre of the trivial `ι`-sheeted cover
   `∐_{i : ι} X ⟶ X` at `Nat.card ι` points, for **every** `ι` and every `X`, with no analysis in
-  it at all. So the constant is realised at every value and not only at 2; what is still true is
-  that no morphism outside those two descriptions has a computed degree, and in particular
-  **nothing here computes the degree of a cover that is not trivial and not the squaring map.**
+  it at all. So the constant is realised at every value; what is still true is that no morphism
+  outside that description has a computed degree, and in particular **nothing here computes the
+  degree of a cover that is not trivial.**
 * **A `degree` function on morphisms — this is no longer absent, and it is not in this file.**
   The bullet that used to stand here said a `Nat`-valued definition would carry a
   well-definedness obligation and that nothing consumed one. Both halves are answered in

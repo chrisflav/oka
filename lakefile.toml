@@ -1,18 +1,9 @@
 name = "oka"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["Oka", "OkaTest"]
+defaultTargets = ["Oka"]
 
-# `lake lint` runs the environment linters over the `Oka` library: fourteen are in the default
-# set here, nine of them Batteries' (`docBlame`, `simpNF`, …) and five Mathlib's
-# (`defsWithUnderscore`, …); `#list_linters` prints the lot, marking the default set. Defining
-# it here rather than spelling out `lake exe batteries/runLinter Oka` means
-# `.orchestra/validation.sh` and `.github/workflows/lean_action_ci.yml` cannot drift apart about
-# what "lint" means, and it is what `leanprover/lean-action`'s `lint` input invokes.
-#
-# The argument is deliberate. `lake exe batteries/runLinter` with no argument auto-detects the
-# default targets and lints `OkaTest.*` as well; pinning `Oka` keeps `lake lint` to exactly the
-# library, which is what has been enforced since PR #21.
+# `lake lint` runs the environment linters over the `Oka` library.
 lintDriver = "batteries/runLinter"
 lintDriverArgs = ["Oka"]
 
@@ -30,16 +21,3 @@ rev = "v4.32.0"
 
 [[lean_lib]]
 name = "Oka"
-
-# Regression tests. Kept out of the `Oka` library so that they are not imported by downstream
-# users, but built by `lake build` so that CI runs them.
-#
-# `OkaTest` itself is in the globs as well as `OkaTest.+`, so that the root module `OkaTest.lean`
-# is built rather than being a file nothing checks. The root exists for `lake exe lint-style`,
-# which takes module names and so had no way to reach the test library while it was a glob with
-# no root; `.orchestra/validation.sh` keeps it in step with `lake exe mk_all --lib OkaTest`.
-# Every `OkaTest.+` module is still its own build target, so a file missing from the root is
-# still built — `mk_all --check` is what reports it.
-[[lean_lib]]
-name = "OkaTest"
-globs = ["OkaTest", "OkaTest.+"]

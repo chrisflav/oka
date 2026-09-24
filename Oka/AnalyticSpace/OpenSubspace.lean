@@ -83,10 +83,7 @@ transport of algebra structures along an isomorphism is needed anywhere.
   the chart the `local_model` field supplies.
 - `ComplexAnalytic.AnalyticSpace.range_base_ofRestrict`: **the image of the inclusion of an open
   subspace is that open subset**, which is the form a factorisation asks its range hypothesis in;
-  that declaration's own docstring names the two constructions which ask for it. **The two names
-  are deliberately not repeated here**: `scripts/guard_coverage.py` reads every backticked
-  repository name under this heading as a result this file advertises, and one of them is a
-  definition of this file already advertised under `## Main definitions`.
+  that declaration's own docstring names the two constructions which ask for it.
 - `ComplexAnalytic.AnalyticSpace.isIso_stalkMap_ofRestrict`: **the inclusion of an open subspace
   is an isomorphism on stalks**, at the spelling a caller of `ofRestrict` holds. Mathlib has the
   statement; what this adds is a discrimination-tree key, exactly as
@@ -136,15 +133,12 @@ transport of algebra structures along an isomorphism is needed anywhere.
 files had to import the other, and an earlier draft of this paragraph said it did.** Three files
 already reach both: `Oka/AnalyticSpace/CoveringSpace.lean`, `Oka/AnalyticSpace/Degree.lean` and
 `Oka/AnalyticSpace/SigmaFiniteEtale.lean`. Any of them would have cost **nothing**. **None of the
-three is where the instance is used**, and that draft said the first of them was: the only
-consumer of `ComplexAnalytic.AnalyticSpace.isLocalIso_ofRestrict` anywhere is
-`OkaTest/CoveringSpace.lean`, which imports `Oka` wholesale and so finds it wherever it sits.
+three is where the instance is used**, and that draft said the first of them was.
 
 **This paragraph also said the import "can be undone by moving one instance", and that is no
 longer true.** `ComplexAnalytic.AnalyticSpace.isLocalIso_restrictHom` below is a second
 declaration in this file whose statement mentions `ComplexAnalytic.AnalyticSpace.IsLocalIso`, and
-unlike the instance above it has a consumer **under `Oka/`** —
-`Oka/Analytification/StandardEtaleFiniteEtale.lean` — rather than only in the test library. So
+it has a consumer **under `Oka/`**, `Oka/Analytification/StandardEtaleFiniteEtale.lean`. So
 undoing the edge now means moving two declarations and giving that consumer an import it does not
 have. The edge is still cheap, for the reason measured below; what it is no longer is free.
 
@@ -357,9 +351,7 @@ is what that lemma exists for, Mathlib's own statement being at a different
 discrimination-tree key.
 
 It is **not** finite étale in general, and nothing here says otherwise: the inclusion of the
-punctured line into the line is an open subspace whose inclusion is not a closed map, which
-`OkaTest/CoveringSpace.lean` exhibits as
-`ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom`. -/
+punctured line into the line is an open subspace whose inclusion is not a closed map. -/
 instance isLocalIso_ofRestrict (X : AnalyticSpace.{u}) (U : X.Opens) :
     AnalyticSpace.IsLocalIso (X.ofRestrict U) where
   isLocalHomeomorph := U.isOpenEmbedding.isLocalHomeomorph
@@ -712,12 +704,11 @@ than the `RespectsIso` route the finite étale version in
 find on its own: `ComplexAnalytic.AnalyticSpace.isFinite_of_isIso` is a theorem and not an
 instance, so the isomorphisms have to be fed in by hand.
 
-**This is the version two `## What is not here` bullets were about**, and they were about
-finiteness rather than about finite étaleness:
+**This is the version a `## What is not here` bullet was about**, and it was about finiteness
+rather than about finite étaleness:
 `Oka/Analytification/StandardEtaleFiniteness.lean`'s *"nothing in this repository relates the two
-at `V = ⊤`"* and `OkaTest/StandardEtaleNotFinite.lean`'s `V`-irredundance bullet both name
-`ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom_comp`. The finite étale
-statement alone would not have retired either. -/
+at `V = ⊤`"* names `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom_comp`.
+The finite étale statement alone would not have retired it. -/
 theorem isFinite_of_restrictHom_top {A B : AnalyticSpace.{u}} (f : A ⟶ B)
     (hfin : IsFinite (restrictHom f (⊤ : B.Opens))) : IsFinite f := by
   set U : A.Opens := (Opens.map f.toLRSHom.base).obj (⊤ : B.Opens) with hUdef
@@ -752,9 +743,8 @@ theorem isClosedEmbedding_ofRestrict_of_isClosed (X : AnalyticSpace.{u}) (U : X.
 
 The closedness is the content and the fibres are not: the base map is injective, so a fibre is a
 subsingleton and `Set.Finite.to_subtype` finishes it from the preimage of a singleton. The closed
-half is what fails for a general open subspace, and this repository has the witness —
-`ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom` in `OkaTest/CoveringSpace.lean` is
-the inclusion of the punctured line into the line, whose image is open and not closed.
+half is what fails for a general open subspace — the inclusion of the punctured line into the
+line has image open and not closed.
 
 **Both fields are stated at the `ComplexAnalytic.AnalyticSpace.IsFinite` spelling and neither goes
 through `ComplexAnalytic.AnalyticSpace.isFinite_comp_of_isClosedEmbedding`**, which asks for a

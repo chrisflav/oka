@@ -57,9 +57,8 @@ topology of a subspace of a product is induced by the two projections (`nhds_ind
 `Filter.Tendsto.prodMk_nhds`).
 
 **`Continuous g` is spent exactly once**, on `f ∘ fst` tending to `g y`, and it cannot be dropped:
-`TwoIndiscrete.not_isProperMap_pullback_snd_of_not_continuous` (`OkaTest/CoveringBaseChange.lean`)
-is a compiled witness with `f` the identity of `Bool`, which is proper, and `g` the identity out of
-the two-element indiscrete space, which is not continuous, where the projection is a continuous
+with `f` the identity of `Bool`, which is proper, and `g` the identity out of the two-element
+indiscrete space, which is not continuous, the projection is a continuous
 bijection with finite fibres and is not a closed map.
 
 ## Main results
@@ -100,9 +99,7 @@ bijection with finite fibres and is not a closed map.
   was retired**, so what the heading denied had been false on `master` from `280bb67` onwards and
   before anything swept it — **and no census over the qualified name could have caught it**,
   because that consumer reaches this statement by projection notation on its receiver and never
-  writes `IsProperMap.pullback_snd`. `OkaTest/Axioms/Morphisms.lean`'s
-  `### Base change of a local homeomorphism, and of a proper map` publishes that run and the
-  measurement that it does not move when the consumer arrives.
+  writes `IsProperMap.pullback_snd`.
 -/
 
 open Filter Topology

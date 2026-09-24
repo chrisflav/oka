@@ -51,12 +51,6 @@ a `specSchemeIota`. **The general form below is what makes both refinable by one
 is still true and now says explicitly that a legal argument is not an appearance — but the
 immersion is an argument rather than a fixed morphism, so a caller may supply one.
 
-**The immersion the specialised forms are the general ones at is named in this section and not
-under either heading below, and that is deliberate rather than terse**: `scripts/guard_coverage.py`
-reads every whitespace-free backticked token under a `## Main results` heading as a declaration
-that file advertises, and a token that is a *path* resolves to nothing and moves a census row for
-no reason. This paragraph is above the headings for the same reason.
-
 ## Main definitions
 
 - `ComplexAnalytic.presentationRefinedPres`: **`D(p)`'s presentation**, for a polynomial `p` in

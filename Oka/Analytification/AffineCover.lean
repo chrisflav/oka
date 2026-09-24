@@ -181,8 +181,8 @@ a much larger tax than one unused value per index.
   `ComplexAnalytic.coverTransition` be pushed down to the member it sits over: it is what a
   refinement of a cover needs, it is why the declaration moved here from
   `Oka/Analytification/CoverComparison.lean`, and nothing in this file consumes it. (Named
-  without citing the projection: `scripts/guard_coverage.py` reads every backticked repository
-  name under this heading as a result *this* file advertises, and that one is another file's.)
+  without citing the projection: every backticked repository name under this heading is read as
+  a result *this* file advertises, and that one is another file's.)
 - `ComplexAnalytic.range_coverTransitionHom_subset` and
   `ComplexAnalytic.range_comp_coverTransitionHom_subset`: **the transition into the ambient member
   cannot leave `D(f_ji)`**, whatever the input is. This is the half of the range condition that is
@@ -239,15 +239,10 @@ a much larger tax than one unused value per index.
 ## What is not here
 
 * **No input exhibited in this file, and no scheme.** Nothing below exhibits an input for
-  `ComplexAnalytic.coverAnalytification`; the two instances are elsewhere and both now **quote**
-  this construction rather than rebuilding it. `OkaTest/AffineCover.lean`'s three-member node
-  cover is the one that is evidence — `ComplexAnalytic.base_nodeIota_nodeOrigin_ne` says its
-  three copies of the origin are three distinct points of the analytic space — since
-  `ComplexAnalytic.GlueShape.hRange_of_no_three` and
+  `ComplexAnalytic.coverAnalytification`. `ComplexAnalytic.GlueShape.hRange_of_no_three` and
   `ComplexAnalytic.GlueShape.hCocycle_of_no_three` make both triple-overlap hypotheses vacuous
-  below three members, so `OkaTest/ProjectiveLine.lean`'s two-member `ℙ¹` exercises neither. What
-  `ℙ¹` adds is a **non-identity transition**, which the node cover does not have. Nor is any of
-  this related to a *scheme*: the input is presentations and isomorphisms, and no statement here
+  below three members, so a two-member input exercises neither. Nor is any of this related to a
+  *scheme*: the input is presentations and isomorphisms, and no statement here
   says they present one. **This bullet's heading said "no non-vacuity in this file" until the
   statements about `ComplexAnalytic.coverGlueMorphisms` arrived** — chiefly
   `ComplexAnalytic.coverIota_comp_coverGlueMorphisms`, which rules out a
@@ -255,15 +250,9 @@ a much larger tax than one unused value per index.
   `ComplexAnalytic.coverGlueMorphisms_coverIota` — and so reads to a grep as this bullet's
   contradiction. The two senses are different and both hold: nothing here exhibits an *input*, and
   statements here rule out a degenerate *output*.
-* **Any statement that a gluing is not affine.** The two instances of this construction check
-  different things and neither subsumes the other. `OkaTest/AffineCover.lean` glues three copies
-  of the node along the punctured axis and shows that their three copies of the origin are three
-  *distinct* points of the gluing, which is what rules out a construction quietly returning its
-  first member. `OkaTest/ProjectiveLine.lean` glues two copies of the affine line along `D(z)` by
-  `z ↦ 1/z` and shows that **neither member's inclusion is surjective**, so the glued space is
-  equal to no one member; that is the stronger statement and it is proved only there. Neither
-  exhibits a space that is not the analytification of *some* presentation, which is stronger
-  again and needs an invariant nothing here computes.
+* **Any statement that a gluing is not affine.** Nothing here shows that the glued space is equal
+  to no one member, nor exhibits a space that is not the analytification of *some* presentation,
+  which is stronger again and needs an invariant nothing here computes.
 * **`Localization.Away`.** Nothing here needs
   `ComplexAnalytic.PresentedAlgebra (localisationPresentation g f)` to *be* a localisation; it
   needs the structure map and its analytification, both of which

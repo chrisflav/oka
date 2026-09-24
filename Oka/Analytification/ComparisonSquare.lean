@@ -87,10 +87,8 @@ each cost a measured number of attempts:
   transformation *between*; what is proved is the square at one morphism of covered data.
   `Oka/Analytification/CoverFunctoriality.lean` makes the same disclaimer about its two laws and
   for the same reason.
-* **No non-identity instance.** `OkaTest/ProjectiveLine.lean` and `OkaTest/AffineCover.lean` are
-  the two covers this repository has and neither has a map to the other, so nothing below is
-  exercised at a `σ` other than the identity. That is a real gap and it is the same one both
-  functoriality files record.
+* **No non-identity instance.** Nothing below is exercised at a `σ` other than the identity. That
+  is a real gap and it is the same one both functoriality files record.
 * **No statement that either vertical map is an isomorphism.** Those are theorems about
   `ComplexAnalytic.analytificationToSpec` and belong wherever that is studied; this file relates
   two morphisms that already exist.

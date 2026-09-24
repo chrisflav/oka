@@ -50,13 +50,8 @@ the structure morphism.
 
 **That declaration was in this file, and said *below*, until 2026-09-20**, when taxis #2094 moved
 it to `Oka/AnalyticSpace/Sigma.lean`, beside the construction it is about and with the two lemmas
-pinning it against the inclusions. **The argument for moving it is this file's own guard section**:
-`OkaTest/Axioms/Morphisms.lean` said of the six names it guarded for this module that *one of the
-six does not mention the covers at all*, and says that the split between guard files is *by what
-the statement is about and not by which push wrote it* — which is an argument that the declaration
-was in the wrong module and not merely in the wrong guard file. Both clauses are dated there.
-Nothing about it changed but its home: the statement, its name and its proof are the ones
-that landed.
+pinning it against the inclusions. Nothing about it changed but its home: the statement, its name
+and its proof are the ones that landed.
 
 ## Main definitions
 
@@ -116,11 +111,11 @@ is existential at both ends.
 
 ## What the import costs and what the census scripts return
 
-**Every figure in this section down to the pullback paragraph is a figure of the push that added
-this file, pinned to it, and none of them is a claim about the tree as it stands**; what the push
-of 2026-09-20 moved is the paragraph after them. **Two sentences below were written in the present
-tense and are dated in place** rather than rewritten, because a record of what a push measured is
-worth more than a figure that tracks the head.
+**Every figure in this section is a figure of the push that added this file, pinned to it, and none
+of them is a claim about the tree as it stands**; what the push of 2026-09-20 moved is the paragraph
+after them. **Two sentences below were written in the present tense and are dated in place** rather
+than rewritten, because a record of what a push measured is worth more than a figure that tracks the
+head.
 
 **The import cost is measured in the environment and not by a scan.** At the commit this file is
 cut from, `import Oka` brings **5534** modules; at the commit that adds it, **5536**. The
@@ -141,23 +136,6 @@ no congruence lemma in any of the three — and the dump total moves **4957 → 
 declarations and **5680 → 5682** modules, which is this push's eleven declarations and
 its two modules.
 
-**`scripts/guard_coverage.py`** moves guards **1986 → 1997** under `OkaTest/Axioms/`, which is
-**6** added to `OkaTest/Axioms/Morphisms.lean` (**721 → 727** in that file) and **5** to
-`OkaTest/Axioms/Sheaves.lean` (**111 → 116**); advertised **1487 → 1493** declarations in
-**226 → 228** files, in both **1345 → 1351**, and guarded and advertised nowhere
-**641 → 646** — the five being this file's `## Main definitions` entries, that row being where a
-guarded declaration advertised outside a `## Main results` section lands. **Its *unguarded* row
-is flat at 142, in 60 files** — every
-declaration this push advertises is guarded — *abbreviated citations, not counted* is flat at
-**30, four of them dotted**, and the *backticked tokens skipped* line is flat at **700**
-in its *resolve to nothing* column.
-
-**One row moves that the list above does not name.** *Advertised from another file* goes
-**85 → 86**, and the one is
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_isConnected_decomposition`: this
-file's `## Main results` entry names it, because the entry says what the theorem is read from, and
-the script attributes every name in that section to the file it is declared in.
-
 **`scripts/check_docstring_names.py`** goes **17761 → 17845** backticked names
 (**4327 → 4348** distinct) and **273 → 306** elided citations
 (**150 → 155** distinct), **0 unresolved at both ends**, **6** resolving under more than
@@ -165,17 +143,11 @@ one namespace at both, and **232 → 237** dotless.
 
 **The census the module this one is cut beside published is what this push moves.**
 `Oka/AnalyticSpace/ConnectedCover.lean`'s `## What is not here` records that `connectedComponent`
-occurred **0** times in the comment-stripped code of `Oka/` and `OkaTest/` at the commit that adds
-that file; at the commit that adds this one the token occurs **14** times in **4** files,
-**2** of them inside `connectedComponentIn`, and `≃ₜ` goes **12 → 17** occurrences in
-**10 → 12** files. That sentence is pinned to its own commit and stays exact there;
-the record that the tree has moved past it is in the bullet this push narrows.
-
-**The published check on the statements of a pullback square was unmoved in both halves**: over
-`OkaTest/Axioms/Morphisms.lean`'s `#print axioms` names, *isPullback* returned **9** unfiltered
-and **8** dropping the ones over `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`, and
-*hasPullback* returned **8** and **6**, at both ends alike; no name of the six that push added
-there carries either token.
+occurred **0** times in the comment-stripped code of the tree at the commit that adds that file; at
+the commit that adds this one the token occurs **14** times in **4** files, **2** of them inside
+`connectedComponentIn`, and `≃ₜ` goes **12 → 17** occurrences in **10 → 12** files. That sentence is
+pinned to its own commit and stays exact there; the record that the tree has moved past it is in the
+bullet this push narrows.
 
 ## What the push of 2026-09-20 moved
 
@@ -201,41 +173,20 @@ that left and the one that arrived. **No equation lemma, no match lemma and no c
 at any of them.** `scripts/DumpEnvNames.lean` moves **338238 → 338245**, being
 **332556 → 332562** declarations and **5682 → 5683** modules.
 
-**`scripts/guard_coverage.py`** moves guards **1997 → 2003** under `OkaTest/Axioms/`:
-`OkaTest/Axioms/AnalyticSpace.lean` **254 → 257**, `OkaTest/Axioms/Sheaves.lean` **116 → 119**,
-and `OkaTest/Axioms/Morphisms.lean` **flat at 727**, where one guard was removed and one added.
-Advertised goes **1493 → 1501** in **228 → 229** files and *in both lists* **1351 → 1359**.
-**The eight are not the eight a reader would guess**: the three of the new mirror file, the three
-added to `Oka/AnalyticSpace/Sigma.lean`'s `## Main results`, this file's new theorem — and
-`ComplexAnalytic.AnalyticSpace.sigma` itself, which that file's `## Main results` names for the
-first time in the sentence saying what the new entry adds, and which was a `## Main definitions`
-entry there and so counted in no advertised row before. *Guarded and advertised nowhere* goes
-**646 → 644**, the two being that name and
-`ComplexAnalytic.AnalyticSpace.sigmaHomeoSigma`, which moved the same way out of this file's
-`## Main definitions`. **The *unguarded* row is flat at 142, in 60 files**, *abbreviated
-citations, not counted* is flat at **30, four of them dotted**, and *advertised from another
-file* is **flat at 86** — this file's citation of
-`…SeparatedFiniteEtaleOver.exists_isConnected_decomposition` is still the same one entry and the
-new `## Main results` bullets name no declaration owned by another module. **The *resolve to
-nothing* column is the one row of this push that is not flat and not accounted for by a
-declaration**: **700 → 702**, the two being the `simpNF` output quoted in the two declaration
-docstrings added to `Oka/AnalyticSpace/Sigma.lean`, which contains dotted tokens that are terms
-and not names.
-
 **`scripts/check_docstring_names.py`** goes **17845 → 17899** backticked names
 (**4348 → 4364** distinct) and **306 → 311** elided citations (**155 → 156** distinct), with
 **0 unresolved at both ends** and **6** resolving under more than one namespace at both;
 **237 → 239** dotless occurrences are not checked.
 
-**The two censuses this line publishes, re-taken.** In the comment-stripped code of `Oka/` and
-`OkaTest/`, `connectedComponent` goes **14 → 29** occurrences in **4 → 5** files and `≃ₜ`
-goes **17 → 20** in **12 → 14**; the **2** occurrences inside `connectedComponentIn` are unmoved in
-number and have changed file, being in the mirror module's proof rather than in this one's.
-**`ConnectedComponents`, the quotient type, goes 0 → 5 occurrences in 2 files** — this module
-and `Oka/Topology/Homeomorph/Lemmas.lean` — and **the sentence that dates it is the one in
-`## What the statement says and what it does not` above**, the paragraph that ended *appears
-nowhere* in the present tense until 2026-09-20. It is named by its section and not reached by
-counting paragraphs, so the pointer survives the next push into this docstring.
+**The two censuses this line publishes, re-taken.** In the comment-stripped code of the tree,
+`connectedComponent` goes **14 → 29** occurrences in **4 → 5** files and `≃ₜ` goes **17 → 20** in
+**12 → 14**; the **2** occurrences inside `connectedComponentIn` are unmoved in number and have
+changed file, being in the mirror module's proof rather than in this one's. **`ConnectedComponents`,
+the quotient type, goes 0 → 5 occurrences in 2 files** — this module and
+`Oka/Topology/Homeomorph/Lemmas.lean` — and **the sentence that dates it is the one in `## What the
+statement says and what it does not` above**, the paragraph that ended *appears nowhere* in the
+present tense until 2026-09-20. It is named by its section and not reached by counting paragraphs,
+so the pointer survives the next push into this docstring.
 
 ## What is not here
 

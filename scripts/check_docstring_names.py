@@ -96,7 +96,7 @@ it does not, and what was being compared was two different trees.
 ## What counts as a candidate
 
 A backtick-delimited run of non-backtick, non-whitespace characters, occurring inside a `--`,
-`/- -/`, `/-- -/` or `/-! -/` region of a `.lean` file under `Oka/`, `OkaTest/` or `scripts/`,
+`/- -/`, `/-- -/` or `/-! -/` region of a `.lean` file under `Oka/` or `scripts/`,
 containing at least one `.`, and shaped like a Lean name: every dot-separated component non-empty
 and starting with a letter or `_`, every character alphanumeric or one of `_ ' ! ?`.  That shape
 test alone discards `Mathlib/RingTheory/Filtration.lean`, `[M.IsCoherent]`, `Scheme.{0}`,
@@ -116,7 +116,7 @@ three share one paragraph of `scripts/DumpEnvNames.lean` — the one under its "
 the two kinds are told apart" heading, which states this field-notation rule and then exhibits a
 citation it rejects.
 
-`scripts/` is walked for its `.lean` files only, like the other two.  **The `.py` files there —
+`scripts/` is walked for its `.lean` files only, like `Oka/`.  **The `.py` files there —
 this one included — are still read by nothing**, and they carry the same prose in the same
 backticked form: the field-notation rule below is stated with `head.tail` twice in this very
 docstring.  Whether a Python docstring should be checked at all is a separate question and this
@@ -126,7 +126,8 @@ helpers are no longer the exception.
 **Widening the walk turned up a class of name the escape hatch did not have a clause for**: prose
 *about* the rules, where the name is written as an example and resolving would defeat the point of
 writing it.  Both members are in `scripts/DumpEnvNames.lean` — the schematic `head.tail`, and
-`OkaTest.FiniteMorphism.someDecl`, which is exhibited there precisely as a citation the tightened
+`Mathlib.RingTheory.Filtration.someDecl`, which is exhibited there precisely as a citation the
+tightened
 field-notation rule now rejects.  They are in `scripts/docstring-names-ignore.txt` under a header
 clause of their own; see that file for why no rewording fixes the second one.
 
@@ -135,8 +136,8 @@ clause of their own; see that file for why no rewording fixes the second one.
 Deliberately more permissive than Lean's own name resolution, in the direction that avoids false
 positives.  A candidate resolves if any of the following holds.
 
-* **Suffix rule.**  Some constant in the environment of `Oka` + `OkaTest` ends with it, as a run
-  of whole components.  This is "resolves with every namespace in the environment open", so
+* **Suffix rule.**  Some constant in the environment of `Oka` ends with it, as a run of whole
+  components.  This is "resolves with every namespace in the environment open", so
   `Multicoequalizer.desc` passes in a file that opens `CategoryTheory.Limits` and equally in one
   that does not.  Tracking each file's own `open`s and `namespace`s, which is what Lean would
   do, buys precision this check does not need and costs a false positive every time the tracking
@@ -160,10 +161,11 @@ positives.  A candidate resolves if any of the following holds.
   Field notation is on a *term*; a module is not one and has no fields.  Because
   `scripts/DumpEnvNames.lean` wrote modules and constants into one undifferentiated list, this
   rule could not tell them apart, and every module that is an *empty namespace* — which is every
-  module under `OkaTest/`, since they all declare into `ComplexAnalytic` — became a head under
-  which **any tail whatsoever** was accepted, unexamined.  Planted on `master` = `4f96682` and
-  reverted: `` `OkaTest.FiniteMorphism.zzz_planted_bogus` `` was accepted silently while
-  `` `ComplexAnalytic.zzz_planted_bogus` `` was reported.  It cost eight real citations in this
+  module of the test library this repository then carried, since they all declared into
+  `ComplexAnalytic` — became a head under which **any tail whatsoever** was accepted,
+  unexamined.  Planted on `master` = `4f96682` and reverted: a bogus tail under such a module was
+  accepted silently while `` `ComplexAnalytic.zzz_planted_bogus` `` was reported.  It cost eight
+  real citations in this
   tree — three declaration references naming nothing and five bare file names with no directory,
   one of which (`PullbackStalk.lean`) is ambiguous between two files that state the same result.
   The dump now tags each line `module` or `decl`; taxis #1326 has the measurement, and
@@ -316,7 +318,7 @@ written after.
 
 * **What is in scope.**  A backticked run beginning `…` whose remainder is `is_name_shaped` — so
   at least one dot, every component identifier-shaped.  **165 occurrences, 107 distinct, in 14
-  files** at `daeb942`, `OkaTest/Axioms/Morphisms.lean` holding 109 of them.
+  files** at `daeb942`, one since-deleted test file holding 109 of them.
 
 * **What resolving means.**  Some declaration or module in the environment ends with the remainder
   as a run of whole components **and has at least one component before it** — a proper suffix,
@@ -386,7 +388,7 @@ import tempfile
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IGNORE_FILE = os.path.join("scripts", "docstring-names-ignore.txt")
 DUMP_SCRIPT = os.path.join("scripts", "DumpEnvNames.lean")
-ROOTS = ("Oka", "OkaTest")
+ROOTS = ("Oka",)
 
 # Directories walked for prose that are **not** library roots: no `<name>.lean` root module sits
 # beside them, and their presence is not what makes a directory a checkout of this repository.
@@ -721,7 +723,7 @@ def build_dump(repo: str | None = None) -> str:
     if proc.returncode != 0 or not os.path.getsize(path):
         sys.stderr.write(proc.stdout + proc.stderr)
         sys.stderr.write(
-            "\nFailed to dump the environment of `Oka` + `OkaTest`. `lake build` must have run\n"
+            "\nFailed to dump the environment of `Oka`. `lake build` must have run\n"
             "first: this reads the oleans, it does not produce them.\n"
         )
         os.unlink(path)
@@ -854,8 +856,8 @@ def diff_trees(base: str, tree: str, sites: bool = False) -> int:
     """Print the added and removed *distinct* candidate names between two checkouts.
 
     Both trees are scanned by this file's rules; see the module docstring for why, and for what
-    that hides.  This is a reporter and not a gate — `scripts/guard_coverage.py` is the model —
-    so it exits 0 whatever the diff is.  A removal is not by itself a defect: a name leaves the
+    that hides.  This is a reporter and not a gate, so it exits 0 whatever the diff is.  A removal
+    is not by itself a defect: a name leaves the
     set when the last docstring citing it is reworded, which is what most prose commits do.
 
     With `sites`, the per-occurrence report follows; see the module docstring for the branch that
@@ -947,10 +949,8 @@ def self_test() -> int:
     """
     def plant(root: str, body: str) -> str:
         os.makedirs(os.path.join(root, "Oka"), exist_ok=True)
-        os.makedirs(os.path.join(root, "OkaTest"), exist_ok=True)
-        for f in ("Oka.lean", "OkaTest.lean"):
-            with open(os.path.join(root, f), "w", encoding="utf-8") as h:
-                h.write("import Oka.Fixture\n")
+        with open(os.path.join(root, "Oka.lean"), "w", encoding="utf-8") as h:
+            h.write("import Oka.Fixture\n")
         with open(os.path.join(root, "Oka", "Fixture.lean"), "w", encoding="utf-8") as h:
             h.write(body)
         return root
@@ -1147,8 +1147,9 @@ def self_test() -> int:
             return path
 
         # **The defect.**  `Planted` is a module with nothing declared into it — which is what
-        # every module under `OkaTest/` is, since they all `namespace ComplexAnalytic` — so it
-        # resolves and is not a namespace, and before the tag existed the field-notation rule
+        # every module of the former test library was, since they all declared into
+        # `ComplexAnalytic` — so it resolves and is not a namespace, and before the tag existed the
+        # field-notation rule
         # accepted `Planted.someField` and never looked at the tail.  A module has no fields.
         mod = run_on(tagged_env("env-module.txt", "module\tPlanted", "decl\tUnrelated.decl"))
         check("negative: field notation on a *module* head is reported",
@@ -1210,7 +1211,7 @@ def self_test() -> int:
               walked.stdout.strip().replace("\n", " | ") or f"rc={walked.returncode}")
         check("negative: a `.py` file under `scripts/` is not read",
               "Unwalked.zzzPy" not in walked.stdout)
-        check("negative: a `.lean` file outside the three walked directories is not read",
+        check("negative: a `.lean` file outside the walked directories is not read",
               "Unwalked.zzzDir" not in walked.stdout)
         # Absence from stdout is also what a run that never read `Oka/Fixture.lean` would print,
         # so the headline is asserted too: exactly two candidates were read — the planted one and
@@ -1383,10 +1384,10 @@ def main() -> int:
         """Is `name` generalised field notation on a term, rather than a declaration reference?
 
         The head has to resolve to a **declaration**.  `resolved` rather than `resolved_decl`
-        here is the defect taxis #1326 records: a module resolves too, and every `OkaTest/`
-        module in this repository is an empty namespace — its declarations are named into
-        `ComplexAnalytic` — so `` `OkaTest.SomeFile.anythingAtAll` `` was read as field notation
-        on the module and its tail was never looked at.
+        here is the defect taxis #1326 records: a module resolves too, and a module that is an
+        empty namespace — as every module of the former test library was, its declarations being
+        named into `ComplexAnalytic` — was read as a field-notation head, so any tail after it was
+        never looked at.
         """
         parts = name.split(".")
         for k in range(len(parts) - 1, 0, -1):
@@ -1409,7 +1410,7 @@ def main() -> int:
             if head not in resolved:
                 continue
             # The **longest** resolving head, and then why it was declined: a shorter one always
-            # resolves too — `OkaTest` is a namespace because `OkaTest.OpenSubspace` is a module —
+            # resolves too — `Oka` is a namespace because `Oka.Weierstrass` is a module —
             # and naming it instead sends the reader to the wrong prefix of their own citation.
             if head in namespaces:
                 return head, namespace_cause.get(head, "another declaration under it")

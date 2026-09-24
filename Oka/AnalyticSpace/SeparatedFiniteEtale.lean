@@ -31,11 +31,10 @@ covers commutes with the two structure maps and is asked for nothing else.
 **No declaration that existed before this module is edited**, and that is the measurement rather
 than a way of putting it: `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` gains no field,
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver` is not redefined, no landed statement acquires a
-hypothesis and no landed proof is touched. **The push that adds this module touches four files and
-the instrument is `git diff --numstat` against its base**: this one, which is new;
-`Oka/Topology/SeparatedMap.lean`, which gains two general-topology statements; the root
-`Oka.lean`, which gains one import line; and `OkaTest/Axioms/Morphisms.lean`, which gains a guard
-section and the module-docstring clause that section owes. **Five lines are removed anywhere in
+hypothesis and no landed proof is touched. **The push that adds this module touches three library
+files and the instrument is `git diff --numstat` against its base**: this one, which is new;
+`Oka/Topology/SeparatedMap.lean`, which gains two general-topology statements; and the root
+`Oka.lean`, which gains one import line. **Five lines are removed anywhere in
 it, all five in `Oka/Topology/SeparatedMap.lean`'s header and all five prose** — its title, the
 sentence retired there with a dated record, and a bullet restated to cover three statements
 instead of one. **That is the whole of the measurement

@@ -304,9 +304,8 @@ instance only over a Hausdorff base, and no statement below uses it or needs it.
   `CategoryTheory.MorphismProperty`, assembled over every cospan with a leg in it; nothing below
   is stated at that spelling and no assembly is attempted here. **What separates the two is not a
   separation axiom**, and at this base it cannot be: `280bb67` took `[T2Space E]` out of
-  `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`, that file's own bullet records the retirement of
-  exactly this reading, and `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean` compiles the base
-  change at a cospan whose finite étale leg has a non-Hausdorff source. **What is missing is the
+  `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean`, and that file's own bullet records the retirement
+  of exactly this reading. **What is missing is the
   assembly**, and the bullets in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and
   `Oka/AnalyticSpace/FiniteEtaleOver.lean` say at `ddcc4c6` what they say without this file, those
   two files being byte-identical at `280bb67` and at `ddcc4c6`.
@@ -337,9 +336,8 @@ instance only over a Hausdorff base, and no statement below uses it or needs it.
 * **The functor is not shown faithful, full or conservative**, and nothing below bears on the
   fibre functor `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fintypeFiberFunctor` or on the
   factorisation of it through a base change.
-* **Nothing in this repository consumes this file at the commit that adds it**, which is the shape
-  `OkaTest/Axioms.lean` asks a module to declare rather than leave to a reader: no module imports
-  it but `Oka.lean` and its guards in `OkaTest/Axioms/Morphisms.lean`. What consumes it next is a
+* **Nothing in this repository consumes this file at the commit that adds it**: no module imports
+  it but `Oka.lean`. What consumes it next is a
   fibre functor stated as a base change to a point, and the functoriality of the fibre of a cover
   in the base — neither of which exists here.
 ## The `Mathlib/CategoryTheory/Galois/Basic.lean` scoping, and the record for it

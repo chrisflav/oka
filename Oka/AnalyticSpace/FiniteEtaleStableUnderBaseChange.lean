@@ -25,8 +25,7 @@ class IsStableUnderBaseChange : Prop where
 reachable: `ComplexAnalytic.AnalyticSpace.doubledLineFold` is a finite étale morphism whose source
 is not Hausdorff, so the cospans this class quantifies over include ones no statement of this
 repository could reach until `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` dropped `[T2Space E]`
-on 2026-09-14. `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean` applies the instance below at that
-cospan rather than citing it.
+on 2026-09-14.
 
 ## Why this is one declaration in a file of its own
 
@@ -147,7 +146,7 @@ hypothesis on any of the four spaces and none on `f`.
 `#synth CategoryTheory.MorphismProperty.IsStableUnderBaseChange
 ComplexAnalytic.AnalyticSpace.isFiniteEtale.{0}` **fails** at the commit this file is cut from,
 both in a file importing `Oka.AnalyticSpace.FiniteEtaleOver` and in one importing the whole of
-`Oka`; `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean` runs it as `inferInstance` at the head.
+`Oka`.
 Mathlib consumes this class by instance search — `CategoryTheory.MorphismProperty.pullbacks_le`
 and the instance giving
 `CategoryTheory.MorphismProperty.IsStableUnderBaseChangeAlong` at every morphism both take it as

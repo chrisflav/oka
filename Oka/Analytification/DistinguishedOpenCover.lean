@@ -79,11 +79,11 @@ graph, each counting the module itself.
   `scripts/module_graph.py --downstream` counts **157** modules downstream of it against **101**
   downstream of `Oka/AnalyticSpace/LocalAtSource.lean`, and what the append charges is the
   difference: **56** modules, every one of them under `Oka/`, would acquire the import. **The
-  other 101 have it already** — the 100 under `OkaTest/`, each of which has the root `Oka` in its
-  import closure and takes the import from that root's own `import Oka.AnalyticSpace.LocalAtSource`
-  line, and this module, which imports it directly. **This file is downstream of no module under
-  `Oka/`**: the 100 the same command reports downstream of *it* are all under `OkaTest/` and all
-  reach it through the root, and its own two imports are paid by nobody else.
+  other 101 have it already** — every one but this module, which imports it directly, has the root
+  `Oka` in its import closure and takes the import from that root's own
+  `import Oka.AnalyticSpace.LocalAtSource` line. **This file is downstream of no module under
+  `Oka/`**: the 100 the same command reports downstream of *it* all reach it through the root, and
+  its own two imports are paid by nobody else.
 
 **Which fence these numbers are on, since the instrument has two.** Every one of them is
 `scripts/module_graph.py` as printed — the two aggregator roots conduct and are subtracted from
@@ -92,7 +92,7 @@ from the graph, returns different ones. **On this fence the 56 is the figure the
 on and it does not move with this push**: at the parent commit the same two commands return
 **155** and **99**, the difference is **56** again, and it is the same 56 modules. What the push
 moves is the two raw counts, by its own two modules — this one, which imports `DistinguishedOpen`
-directly, and `OkaTest.DistinguishedOpenCover`, which reaches it through `import Oka`. **The
+directly, and a second that reaches it through `import Oka`. **The
 closures in the table are records of the commit this file is added at**, moving whenever either
 file gains an import, and the raw downstream counts move whenever anything imports either file;
 the acquisition count is the one that survives both, which is why the bullet argues from it. A

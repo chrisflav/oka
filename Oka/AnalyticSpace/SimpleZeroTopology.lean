@@ -82,9 +82,7 @@ uniform in the point, and nothing needs to be.
   file's hypothesis admits: `z₀z₁ = 1` has `∂/∂z₁ = z₀`, which is nonzero at every point of it,
   so the results below apply; and its projection to the `z₀`-line misses the origin, so the image
   is not closed and the map is not `IsFinite`. **That last sentence is reasoning about a set and
-  is compiled nowhere** — no declaration in this repository states it, and the only compiled
-  non-closed image on this line is `ComplexAnalytic.not_isClosedMap_base_proj`, which is about a
-  different morphism.
+  is compiled nowhere** — no declaration in this repository states it.
 * **Nothing about a hypersurface inside an open subset of the *ambient* space.** `i` maps into the
   whole of `ℂ^(n+1)`, so the cutting section is entire, and that is unchanged by the restricted
   statements above: those restrict the **source**, and the section they cut it out by is still an
@@ -99,10 +97,9 @@ uniform in the point, and nothing needs to be.
 * **No statement about the image.** A local homeomorphism need not be surjective and need not be
   injective, and nothing below says which points of `ℂ^n` are hit or how often.
 * **Nothing here is a statement about the projection alone, and the hypersurface is what makes
-  the difference.** `ComplexAnalytic.proj` itself is **not** a local isomorphism —
-  `ComplexAnalytic.not_isLocalIso_proj` (`OkaTest/FiniteMorphism.lean`) — so no result below is
-  an instance of one about `p`, and the simple-zero hypothesis is what rules out the collapsing
-  that statement exhibits.
+  the difference.** `ComplexAnalytic.proj` itself is **not** a local isomorphism, so no result
+  below is an instance of one about `p`, and the simple-zero hypothesis is what rules out the
+  collapsing the projection exhibits.
 * **Nothing is moved.** `ComplexAnalytic.not_mem_range_uliftCastSuccEmb` and
   `ComplexAnalytic.mem_range_uliftCastSuccEmb` are facts about `ComplexAnalytic.uliftCastSuccEmb`
   alone and their home is `Oka/AnalyticSpace/ProjectionStalk.lean`, where that embedding is

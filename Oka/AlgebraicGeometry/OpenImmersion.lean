@@ -97,24 +97,23 @@ declarations here.
 `Mathlib/AlgebraicGeometry/Noetherian.lean:140`, `:148` and `:172` — so the only occurrence in a
 *statement* is the definition itself.
 
-**Here the `grep` decides the claim rather than narrowing it**, which is the verdict the three
-questions `OkaTest/Axioms.lean`'s seventh census object puts to a scan offered in support of one
-exist to reach, and all three are answered. A lemma about `(ΓIsoTop f).hom` or `(ΓIsoTop f).inv`
-has to write the token `ΓIsoTop` in its own statement, whatever namespace is open, and it cannot
-be stated about `ΓIso` instead: `ΓIsoTop` is a `def` in its own right and **not** `ΓIso f ⊤`, whose
-type is `Γ(X, f ⁻¹ᵁ ⊤) ≅ Γ(Y, f.opensRange ⊓ ⊤)` and not `Γ(X, ⊤) ≅ Γ(Y, f.opensRange)` — so a
-rewrite by a `ΓIso` lemma does not fire on a goal carrying the token. A `variable` binder
-introducing `f` and its instance leaves the projection still to be written, so nothing is
-inherited from a binder the scan does not read. And the one thing a scan of source cannot see — an
-equation lemma generated on demand for the `def` — unfolds the whole definition rather than
-projecting a field, which is the rewrite the paragraph above is about avoiding. **The environment
-agrees and is deliberately the weaker of the two routes**: of the names `scripts/DumpEnvNames.lean`
-dumps at the commit this paragraph is written at, exactly **three** contain `ΓIsoTop` — Mathlib's
-`def` and the two this file declares, `AlgebraicGeometry.IsOpenImmersion.specΓIsoTop` and
+**Here the `grep` decides the claim rather than narrowing it.** A lemma about `(ΓIsoTop f).hom`
+or `(ΓIsoTop f).inv` has to write the token `ΓIsoTop` in its own statement, whatever namespace is
+open, and it cannot be stated about `ΓIso` instead: `ΓIsoTop` is a `def` in its own right and
+**not** `ΓIso f ⊤`, whose type is `Γ(X, f ⁻¹ᵁ ⊤) ≅ Γ(Y, f.opensRange ⊓ ⊤)` and not
+`Γ(X, ⊤) ≅ Γ(Y, f.opensRange)` — so a rewrite by a `ΓIso` lemma does not fire on a goal carrying the
+token. A `variable` binder introducing `f` and its instance leaves the projection still to be
+written, so nothing is inherited from a binder the scan does not read. And the one thing a scan of
+source cannot see — an equation lemma generated on demand for the `def` — unfolds the whole
+definition rather than projecting a field, which is the rewrite the paragraph above is about
+avoiding. **The environment agrees and is deliberately the weaker of the two routes**: of the names
+`scripts/DumpEnvNames.lean` dumps at the commit this paragraph is written at, exactly **three**
+contain `ΓIsoTop` — Mathlib's `def` and the two this file declares,
+`AlgebraicGeometry.IsOpenImmersion.specΓIsoTop` and
 `AlgebraicGeometry.IsOpenImmersion.image_basicOpen_ΓIsoTop` — and none of the **9023** generated
-`.eq_1` names among them is one. `OkaTest/Axioms.lean` says why that route cannot be the primary
-one: the dump is the environment of `Oka` + `OkaTest`, which imports some of Mathlib and not all
-of it, so an absence in it is an absence from this build's imports and not from Mathlib.
+`.eq_1` names among them is one. That route cannot be the primary one: the dump is the environment
+of `Oka`, which imports some of Mathlib and not all of it, so an absence in it is an absence from
+this build's imports and not from Mathlib.
 
 **The control is a positive one, because a scan returning nothing is weaker than one that returns
 something next door.** At the same rev, `grep -rn "ΓIsoTop_\|ΓIso_hom\|ΓIso_inv" Mathlib/`
@@ -132,8 +131,7 @@ it; `git show d4c49af:Oka/AlgebraicGeometry/OpenImmersion.lean` carries the reti
 rather than struck: that scan is keyed on **names**, and a lemma stating what `(ΓIsoTop f).hom` is
 need not be called `ΓIsoTop_hom`, so as published it narrowed where the token scan above decides.
 Widening its directory to all of `Mathlib/` returns the same six lines, so the restriction cost
-nothing and is not what was wrong with it. `OkaTest/Axioms.lean`'s seventh census object is the
-rule and taxis #2127 is the sweep.
+nothing and is not what was wrong with it. Taxis #2127 is the sweep.
 
 **Supplying the missing lemma here — a `ΓIsoTop_hom` of this file's own — is a candidate and is
 deliberately not taken**: it would be a fourth declaration whose only consumer is one `have`, and

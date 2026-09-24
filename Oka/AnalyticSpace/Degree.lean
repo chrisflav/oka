@@ -73,12 +73,9 @@ finite étale morphisms; none of them is this gap. The nearest sentence there is
 opposite sides*, which is about surjectivity and the empty index type and is a different sentence
 about a different gap. The pointer is dropped rather than repaired.
 
-**One clause of that paragraph was true and stays true.** `ComplexAnalytic.not_isIso_sq` is still
-not reproved here: `ComplexAnalytic.degree_sq` (`OkaTest/FiniteMorphism.lean`) puts that
-morphism's degree at `2`, so `ComplexAnalytic.AnalyticSpace.isIso_of_degree_eq_one`'s hypothesis
-fails at it and no route to that refutation is added. What is retired is the clause that **the
-degree of a morphism is at present a topological invariant of it** — degree one now decides an
-isomorphism of analytic spaces and not only of the underlying spaces.
+What is retired is the clause that **the degree of a morphism is at present a topological invariant
+of it** — degree one now decides an isomorphism of analytic spaces and not only of the underlying
+spaces.
 
 ## Multiplicativity in a composite, and what the count actually costs
 
@@ -224,7 +221,7 @@ and the degree is `0`, while `Nat.card ι` need not be.
 `ι = ULift (Fin n)` the degree is `n`, for every `n`, and the morphism is finite étale by
 `ComplexAnalytic.AnalyticSpace.isFiniteEtale_sigmaFold`. What it does not give is a *connected*
 source, so the trivial covers say nothing about the degree of a cover that is not a disjoint union
-of copies of its base; `ComplexAnalytic.degree_sq` is the witness for that. -/
+of copies of its base, such as the squaring map of the punctured line. -/
 theorem degree_sigmaFold (ι : Type u) (X : AnalyticSpace.{u}) [Nonempty X] :
     degree (sigmaFold ι X) = Nat.card ι :=
   degree_eq_of_forall_card_fiber_eq _ (card_fiber_sigmaFold X)
@@ -329,8 +326,8 @@ homeomorphism should not have to build an isomorphism and forget it, and because
 no stalk: it does not use the local-homeomorphism field either, so it is a statement about a
 closed continuous bijection and nothing more.
 
-It still does not reprove `ComplexAnalytic.not_isIso_sq`, whose degree is not one, and it is still
-not the converse of anything stated here.
+It still says nothing about the squaring map of the punctured line, whose degree is not one, and
+it is still not the converse of anything stated here.
 
 **One morphism of degree one was known to be an isomorphism before any of this, and it is still
 not got this way.** The trivial cover at one sheet is, by
@@ -364,11 +361,8 @@ and no connectedness. The hypothesis-free form is
 `ComplexAnalytic.AnalyticSpace.isIso_of_isFiniteEtale_of_injective`, which takes injectivity
 instead of a degree and asks nothing of `X` beyond being non-empty.
 
-**This does not reprove `ComplexAnalytic.not_isIso_sq`.** `ComplexAnalytic.degree_sq`
-(`OkaTest/FiniteMorphism.lean`) puts that morphism's degree at `2`, so the hypothesis fails and
-this statement says nothing about it. Refuting an `IsIso` is a different shape and its general
-form is `ComplexAnalytic.AnalyticSpace.surjective_base_of_isIso`
-(`Oka/AnalyticSpace/Basic.lean`). -/
+**This refutes no `IsIso`.** Refuting an `IsIso` is a different shape and its general form is
+`ComplexAnalytic.AnalyticSpace.surjective_base_of_isIso` (`Oka/AnalyticSpace/Basic.lean`). -/
 theorem isIso_of_degree_eq_one (f : X ⟶ Y) [IsFiniteEtale f] [T2Space X] [PreconnectedSpace Y]
     [Nonempty Y] (h : degree f = 1) : IsIso f :=
   isIso_of_isLocalIso_of_bijective f ((bijective_base_iff_degree_eq_one f).mpr h)

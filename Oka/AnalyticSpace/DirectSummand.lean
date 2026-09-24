@@ -100,9 +100,7 @@ for character what it was.
   `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_comp`, which is where a morphism of covers gets
   its own finite étale property from, and `Oka/AnalyticSpace/Finite.lean` argues in its module
   docstring that a separation axiom on the middle space is what the closed half of the finite rung
-  actually needs. `OkaTest/FiniteEtaleCancel.lean` compiles that paragraph as
-  `TwoIndiscrete.not_isClosedMap_pt_of_isClosedMap_comp` and, at a second factor that *is* a local
-  homeomorphism, `LineTwoOrigins.not_isClosedMap_inc_of_isClosedMap_comp`.
+  actually needs.
 * **The isomorphism onto the clopen part, as a named declaration.** It is built inside the proof
   below and is not exposed. Exposing it would put the source of
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isFiniteEtale_left` — a theorem and not an
@@ -328,10 +326,10 @@ name and its docstring says why the name is load-bearing.
 
 **This proof was the block now above until 2026-09-12**, when it was moved out under a name; the
 statement of this theorem is character for character what it was, which is the measurement that
-says the modules that apply it are untouched by the move. **In the comment-stripped code of this
-repository the name occurs in four modules**: this one, which declares it,
+says the modules that apply it are untouched by the move. **In the comment-stripped code of `Oka/`
+the name occurs in three modules**: this one, which declares it, and
 `Oka/AnalyticSpace/MonoDirectSummand.lean` and `Oka/AnalyticSpace/SeparatedFiniteEtale.lean`, which
-apply it, and `OkaTest/Axioms/Morphisms.lean`, whose `#print axioms` guard for it is unchanged. -/
+apply it. -/
 theorem FiniteEtaleOver.inducesIsoOnDirectSummand_of_injective {X : AnalyticSpace.{u}}
     {A B : FiniteEtaleOver.{u} X} (i : A ⟶ B) [T2Space (B.left : Type u)]
     (hinj : Function.Injective (i.left.toLRSHom.base : A.left → B.left)) :

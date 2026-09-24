@@ -32,10 +32,10 @@ exactly what is still missing.
 builds is a term of one of Mathlib's.** Both halves are one walk of the environment at `487ea43`,
 over the declarations whose declaring module begins `Oka`, taking the head of the codomain under
 `Lean.Meta.forallTelescopeReducing`: of the **sixteen** inductive types declared, not one is a glue
-datum, and of the **twenty-one** declarations whose codomain is one, **thirteen** are under `Oka/` —
-ten into `AlgebraicGeometry.LocallyRingedSpace.GlueData`, this file's own
+datum, and of the declarations whose codomain is one, **thirteen** are under `Oka/` — ten into
+`AlgebraicGeometry.LocallyRingedSpace.GlueData`, this file's own
 `ComplexAnalytic.AnalyticSpace.Pullback.gluing` among them, and three into
-`CategoryTheory.GlueData'` — with the other eight under `OkaTest/`.
+`CategoryTheory.GlueData'`.
 `ComplexAnalytic.GlueDataCLinear` is a `def` into `Prop` **on** a locally-ringed-space datum and
 not a datum of its own.
 

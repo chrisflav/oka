@@ -54,9 +54,8 @@ of this file; `a711e47`, the same day, added `Oka/Analytification/SpecRefinedMem
 second. **What the sentence got wrong is the count of importers and not the argument**, which
 is about where the six declarations below *live*: they are here, and a file that wants the scheme
 still has to take the edge. The instrument is one reverse edge of the import graph, read with
-`scripts/import_cost.py`'s `IMPORT` pattern over its nesting-aware `strip_comments`;
-`OkaTest/Axioms.lean` states the rule this repairs, and this clause is one of the cheap cases it
-names — no closure walk and no grep.
+`scripts/import_cost.py`'s `IMPORT` pattern over its nesting-aware `strip_comments` — no closure
+walk and no grep.
 
 The four claims that were about the *line of files* rather than about
 one file are falsified either way, and have been repaired in this same change.

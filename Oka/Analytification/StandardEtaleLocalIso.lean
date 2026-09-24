@@ -32,10 +32,7 @@ edge further up. **So the claim is about closures and is measured over them**, b
 
 **That clause read *"it is the first module to import both subtrees"*, and it was false at
 `a01e3c4`, the commit that wrote it.** `Oka.lean`, the aggregator `mk_all` generates, imports
-every module of the library and so had both on the day — `OkaTest/Axioms.lean` excludes it from
-the same kind of grep, and the 99 modules under `OkaTest/` that reach the library through it go
-with it: the whole population with both in closure is **108** at `73176e1`, of which 101 are
-those, the root above them and `Oka.lean`. **It is corrected here and not dated**, on
+every module of the library and so had both on the day. **It is corrected here and not dated**, on
 `README.md`'s rule that a clause false when it was written is corrected rather than recorded.
 **The argument it was making survives the repair and only its scope was wrong**, which is the
 same repair `Oka/Analytification/SpecDistinguishedOpen.lean` records of a clause of this shape.
@@ -78,12 +75,6 @@ every relation zero, which contradicts `∃ j, g j ≠ 0` at once. The two route
 facts in a different order and the paragraph is kept as written because it is the one a reader
 meets here; **and it is kept as a paragraph rather than replaced by a citation**, for the reason
 the section below gives about the two copies of it.
-
-**Both hypotheses are met together at the node**, so the theorem is not vacuous:
-`ComplexAnalytic.not_isLocalIso_analytificationMap_etalePresHom_comp_node`
-(`OkaTest/StandardEtaleNotLocalIso.lean`), where the same standard étale data **is** a local
-isomorphism onto the base's own analytification and is not one onto `ℂ²`. That is this paragraph's
-distinction exhibited rather than argued.
 
 ***Proper* is a hypothesis at `k ≥ 1` and not a consequence of it, which is why the clause above
 carries it rather than leaving it to be read out of the argument.** Nothing constrains `g`:
@@ -228,7 +219,7 @@ anywhere. A reader comparing the two signatures will otherwise go looking for on
   neither file is in the other's closure and the relation between them is incomparability, which
   is what the sentence was reaching for. Measured at `5a525bc` over this repository's import
   graph with `scripts/import_cost.py`'s `IMPORT` pattern read through its nesting-aware
-  `strip_comments`; `OkaTest/Axioms.lean` states the rule this repairs.
+  `strip_comments`.
 * **Nothing at `k ≥ 1`**, for the reason at the top of this docstring: not a gap but a different
   statement.
 * **Nothing saying `ComplexAnalytic.analytificationInclHom g` is an isomorphism when `g` is the
@@ -248,33 +239,10 @@ anywhere. A reader comparing the two signatures will otherwise go looking for on
   reason that stands: the last theorem below is a complete statement with `ℂ^n` as its target, and
   the thing that would want the other spelling is the assembly of the Riemann existence theorem,
   not this file.
-* **No `StandardEtalePair` is constructed *here*, and this bullet's own count of what is
-  constructed elsewhere was wrong in both of its halves.** It said *"no `StandardEtalePair` is
-  constructed anywhere"* and that `ComplexAnalytic.eval_pderiv_ne_zero_of_mem` *"has been on
-  `master` without a witness since it landed"*; **both were already false the day this file
-  landed.** `ComplexAnalytic.condPair` (`OkaTest/StandardEtaleCond.lean`) arrived a day earlier
-  and `ComplexAnalytic.eval_pderiv_condF_condHyperPoint_ne_zero` is that theorem applied at it, so
-  the `cond` route through the two theorems below is checked there and not by nothing. There are
-  more, **named rather than counted, because the sentence this replaces was a count and a second
-  count would rot the same way — and did**: `ComplexAnalytic.sqSubOnePair` and
-  `ComplexAnalytic.xPair` (`OkaTest/OpenBaseFiniteness.lean`),
-  `ComplexAnalytic.sqSubOneTwoPair` (`OkaTest/StandardEtaleLocalIsoBase.lean`), and
-  `ComplexAnalytic.sqrtCoverPair` (`OkaTest/StandardEtaleBaseWitness.lean`), the last a family
-  over an arbitrary `ℂ`-algebra. **They are not all pairs the base theorem has been fired at**:
-  `OkaTest/StandardEtaleBaseWitness.lean` names the three that it has, and `ComplexAnalytic.xPair`
-  and `ComplexAnalytic.condPair` are not among them — `ComplexAnalytic.subsingleton_xPairRing`
-  makes the first's standard étale algebra the zero ring. **What survives is the placement and it
-  is what the bullet is for**: the two theorems below inherit that hypothesis rather than
-  discharging it, and this file adds no new unwitnessed one.
-  `OkaTest/StandardEtaleAnalytification.lean` exercises the *derivative* form instead, on the
-  line `z₁ = 0` in `ℂ²` with `z₀` inverted, where the derivative is `1` and no pair is needed.
-
-  **The bullet was invisible to any sweep of `Oka/`, and that is the transferable part.** It is an
-  absence scoped to *anywhere* whose refutation lives under `OkaTest/`; nothing under `Oka/`
-  imports `OkaTest/`, so the claim is true of this file's import closure and false of the
-  repository, and a grep of the library cannot see the difference.
+* **No `StandardEtalePair` is constructed *here*.** The two theorems below take one as a
+  hypothesis rather than constructing it.
 * **Nothing about the image.** A local isomorphism need not be surjective and this one is not:
-  the witness in the test library misses the origin. No statement below says anything about the
+  at `F = X² - x` and `G = X` it misses the origin. No statement below says anything about the
   image, about fibres, or about degree.
 * **Nothing about a general étale morphism.** Every étale morphism of schemes is Zariski-locally
   standard étale; gluing the statement below over such a cover is a separate construction and

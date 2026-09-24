@@ -170,13 +170,12 @@ these two module names as arguments. Against the naive regex the same two closur
 `Oka/Algebra/Category/ModuleCat/Sheaf/`: the modules the naive closure does reach that carry such
 an import are `Oka/Algebra/Category/ModuleCat/Sheaf/Coherent/Criterion.lean` and
 `Oka/Algebra/Category/ModuleCat/Sheaf/Coherent/Free.lean`.
-Swept at `ca96745` over every tracked `.lean` file under `Oka/` and `OkaTest/` together with the
-two root modules, the tree holds eight comment-embedded `import` matches across seven files, and
-every one of them names a module that does not exist, so it is the `public import` and not the
-comment that costs here. **That clause opened *"At this commit the tree holds eight
-comment-embedded `import` matches across seven files"* until 2026-09-07**, and the figure was
-exact at `ca96745`, the commit that wrote it; what retired the wording is the pin and not the
-count. lana-agents/oka#494 wrapped a line of prose onto `import` in
+Swept at `ca96745` over every tracked `.lean` file, the tree holds eight comment-embedded `import`
+matches across seven files, and every one of them names a module that does not exist, so it is the
+`public import` and not the comment that costs here. **That clause opened *"At this commit the tree
+holds eight comment-embedded `import` matches across seven files"* until 2026-09-07**, and the
+figure was exact at `ca96745`, the commit that wrote it; what retired the wording is the pin and not
+the count. lana-agents/oka#494 wrapped a line of prose onto `import` in
 `Oka/Analytification/SpecDistinguishedOpen.lean` and took the tree to **nine** matches across
 **eight** files at `db7b658`; the push carrying this record is taxis #1847 and returns it to eight
 across seven. **Neither that file nor this one is in the other's import closure** — measured with

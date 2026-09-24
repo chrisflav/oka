@@ -185,8 +185,7 @@ theorem okaStalk_ringHom_ext {y : ι → ℂ} {A : Type*} [CommRing A] [IsLocalR
 /-- **A normalised coordinate germ is nonzero.**
 
 Without this `ComplexAnalytic.maximalIdeal_stalk_eq_span_stalkCoord` is not known to be a
-statement about a nonzero ideal: `stalkCoord_mem_maximalIdeal`, in `OkaTest/HomToComplex.lean`,
-rules out the generators being everything, and this rules out their being nothing. -/
+statement about a nonzero ideal: this rules out the generators being nothing. -/
 theorem stalkCoord_ne_zero (y : ι → ℂ) (i : ι) : stalkCoord y i ≠ 0 := fun h ↦
   LocalOkaRing.coord_ne_zero i (by rw [← okaStalkEquiv_stalkCoord y i, h, map_zero])
 
@@ -382,13 +381,8 @@ theorem coordPullback_nodeIncl (j : ULift.{u} (Fin 2)) :
 the image of `p` is the `j`-th coordinate of `p`.
 
 This is `rfl` — `ComplexAnalytic.nodeIncl` is built from `zeroLocusSubspaceι` and `ofRestrict`,
-whose base maps are the two subtype inclusions — and it is stated because nothing else says it,
-and because it is what makes the pullback computation `ComplexAnalytic.coordPullback_nodeIncl`
-falsifiable: `OkaTest/HomToComplex.lean` proves this same equation a second time through
-`ComplexAnalytic.AnalyticSpace.eval_c_app` and `ComplexAnalytic.eval_nodeCoord`. A wrong
-coordinate index anywhere in that chain would not make the two *disagree* — they are the same
-proposition, so they cannot — it would make the second **fail to elaborate**, which is what the
-check consists of. -/
+whose base maps are the two subtype inclusions — and it is stated because nothing else says it.
+-/
 theorem base_nodeIncl (p : AnalyticSpace.node.{u}) (j : ULift.{u} (Fin 2)) :
     ((nodeIncl.{u}).toLRSHom.base p : ULift.{u} (Fin 2) → ℂ) j = p.1.1 j :=
   rfl

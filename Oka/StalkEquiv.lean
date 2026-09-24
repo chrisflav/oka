@@ -102,9 +102,7 @@ lemma okaStalkEquiv_germ {y : ι → ℂ} {U : Opens (ι → ℂ)} (hy : y ∈ U
 -- object's carrier in its discrimination-tree keys as a projection, whereas a goal over a
 -- *concrete* object has the carrier reduced away before its lookup keys are taken, so the
 -- lemma is never retrieved. `rw` is unaffected, and pinning the object restores `simp` —
--- `simp [okaStalkEquiv_germ (ι := ι)]` does fire. `OkaTest/SimpDiscrTree.lean` measures the
--- keys, reproduces it in three lines with `CommRingCat` and `+`, and holds the tripwires that
--- will fail once it is fixed upstream. See issue #583.
+-- `simp [okaStalkEquiv_germ (ι := ι)]` does fire. See issue #583.
 /-- The stalk isomorphism is `ℂ`-linear: it sends the germ of a constant function to the
 corresponding constant power series. -/
 lemma okaStalkEquiv_germ_algebraMap {y : ι → ℂ} {U : Opens (ι → ℂ)} (hy : y ∈ U) (c : ℂ) :

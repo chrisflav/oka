@@ -103,10 +103,8 @@ file is cut from and **5540** at the commit that adds it.
 ## What is not here
 
 * **No unrestricted finiteness**, and there never will be: it is **false**, at `k = 0` already.
-  `Oka/Analytification/MonicHypersurface.lean` carries the witness and
-  `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`)
-  compiles it. The restriction below is in the statement because the conclusion needs it and not
-  because the proof is weak.
+  `Oka/Analytification/MonicHypersurface.lean` carries the witness. The restriction below is in the
+  statement because the conclusion needs it and not because the proof is weak.
 * **Nothing about the composite to `ℂ^n` at `k ≥ 1`.** That is a different statement and
   `Oka/Analytification/StandardEtaleLocalIso.lean` proves its local-isomorphism half false for a
   base with a proper non-empty zero locus; this file does not touch it. The open subset below is

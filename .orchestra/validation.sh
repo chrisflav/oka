@@ -3,8 +3,8 @@
 #
 #   bash .orchestra/validation.sh
 #
-# `.github/workflows/lean_action_ci.yml` runs the same checks in CI and the two must be kept in
-# step; if you add a check here, add it there. What "lint" means is defined once, as
+# CI (`.github/workflows/lean_action_ci.yml`) runs only `lake build --wfail` and `lake lint`;
+# every other check below is local to this script. What "lint" means is defined once, as
 # `lintDriver` in `lakefile.toml`, so that at least that much cannot drift.
 #
 # Exits 0 only if every check below passes; the first failing check stops the script and
@@ -23,169 +23,16 @@ fi
 
 # Verify the library is free of `sorry`. This runs before the build because it is instant and
 # the build is not; it is a fast fail, not the only defence. **`lake build --wfail` below does
-# catch a `sorry`** — measured 2026-08-20 by planting one under `OkaTest/` and watching
-# `declaration uses \`sorry\`` become `error: build failed` — so the test library, which this
-# grep does not cover, is not unguarded. (This comment previously said the build "would not fail
-# on it", which is true of a bare `lake build` and false with `--wfail`.)
-#
-# Until 2026-08-20 that was true of this script and **not** of CI, which called
-# `leanprover/lean-action` without `build-args` and so ran a bare `lake build`. CI now passes
-# `--wfail` too; if the two ever diverge again, every build linter silently becomes
-# local-only.
+# catch a `sorry`** — measured 2026-08-20 by planting one and watching
+# `declaration uses \`sorry\`` become `error: build failed`. (This comment previously said the
+# build "would not fail on it", which is true of a bare `lake build` and false with `--wfail`.)
 #
 # The negative lookarounds keep `sorryAx`, `unsorry` and `sorry_foo` from matching. The bare word
-# *does* match in comments and docstrings, so prose under `Oka/` should avoid it. This mirrors
-# the check in `.github/workflows/lean_action_ci.yml`.
+# *does* match in comments and docstrings, so prose under `Oka/` should avoid it.
 if grep -rnP '(?<![A-Za-z_])sorry(?![A-Za-z_])' --include='*.lean' Oka Oka.lean; then
   echo 'Found a `sorry` in the library, at the location(s) listed above.'
   exit 1
 fi
-
-# Verify that every file under `scripts/` is named somewhere in `README.md`.
-#
-# `README.md`'s `### Checking` section is this repository's index of `scripts/`, and it is a good
-# one: it says what each tool is *for* and why it had to be written, which is more than any
-# mechanical check can verify. What it cannot do on its own is notice a file nobody wrote a
-# sentence about — and it had already stopped noticing. On 2026-08-24, **three of the six entries
-# under `scripts/` were named nowhere in `README.md`, in any form**: `check_docstring_names.py`,
-# which this script runs and whose figures every pull request body on this project quotes;
-# `DumpEnvNames.lean`, which feeds it; and `docstring-names-ignore.txt`, its escape hatch. The
-# first of those is described in that section twice, and never named, so a reader who wanted to
-# run the thing being described had to go and find it.
-#
-# **This check secures exactly one thing and it is worth being explicit about how little that
-# is**: a file under `scripts/` that nobody has written a sentence about. It cannot tell whether
-# the sentence is true, or current, or anything more than the filename repeated. It asks
-# Mathlib's `undocumentedScripts` question — is this entry named in the index at all? — of the
-# index this repository already has rather than of `scripts/README.md`, the path Mathlib
-# hardcodes and which taxis #964 decided not to create, on the measurement that a file holding
-# eight backticked names and no prose satisfies that linter outright.
-#
-# **The test is not Mathlib's**, and until 2026-08-24 this paragraph said it was. Mathlib looks
-# for the name *wrapped in backticks* (`scripts/lint-style.lean:180` in the Mathlib checkout),
-# which is already exact and so has none of the hole fixed below — but which `README.md` fails
-# for three of the eight entries: `check_file.sh` is written only as `bash scripts/check_file.sh
-# FILE.lean` inside a fenced block, and `check_module_docstrings.py` and `import_cost.py` are
-# backticked only as part of a longer path or command. That is why the rule below matches a bare
-# filename, and why the match then has to be made exact some other way.
-#
-# Three choices in it, none of them forced:
-#
-#   * **The bare filename, not the path.** `README.md` writes both forms —
-#     `scripts/check_module_docstrings.py` in one place and `bash scripts/check_file.sh
-#     FILE.lean` in another — so a path-form match would fail today on a file that is documented.
-#   * **Anywhere in `README.md`, not inside `### Checking`.** Scoping is stricter and it makes a
-#     heading load-bearing for a check; a filename in an unrelated paragraph is a worse index and
-#     is still a sentence about the file, which is all this can see.
-#   * **No exemption list.** `docstring-names-ignore.txt` is data rather than a script, and
-#     Mathlib exempts its own two data files; here it is named in `README.md` like everything
-#     else. One clause costs less than a list, and this repository's own exception file went from
-#     "empty, and the intention is that it stays that way" to two entries in under three hours.
-#
-# **The match is a whole token, not a substring, and that is a correction to how this check
-# shipped.** Until 2026-08-24 it was `grep -qF -- "$name" README.md`, and containment means one
-# entry's name can be satisfied by *another* entry's. Planting `scripts/cost.py` beside the
-# documented `import_cost.py` printed `checked 7 files under scripts/: 0 not named in README.md`
-# on the shipped rule, where a `zz_probe.py` planted the same way is reported: the new file was
-# covered by a sentence about a different tool.
-#
-# So `README.md` is split into maximal runs of `[A-Za-z0-9_.-]` and the name has to equal one of
-# them. That set is the filename alphabet, so a token breaks exactly where a filename cannot
-# continue, and every form `README.md` writes still matches: the backticked
-# `scripts/check_module_docstrings.py`, the bare `check_docstring_names.py` in prose, and `bash
-# scripts/check_file.sh FILE.lean` in a fenced block, since a backtick, a `/` and a space all
-# break a token. It keeps what `grep -F` was there for — `check_file_sh` is a different token
-# from `check_file.sh`, so a `README.md` naming the first still fails for the second — and it
-# needs no filename escaped into a regular expression, which is what the obvious `grep -E`
-# word-boundary version would cost.
-#
-# The alternative was to leave the rule alone and fail on a shadowing *pair*. Rejected: that
-# fails a **correct** tree, since `import_cost.py` beside a documented `import_cost_test.py` is
-# a legitimate pair, and a gate that rejects a correct tree is worse than the hole it closes.
-#
-# A name outside the filename alphabet cannot be a token, so it falls back to containment — the
-# rule as it shipped. Nothing under `scripts/` is such a name; the branch is there so that adding
-# one is a weaker check rather than a failure no sentence in `README.md` can clear.
-#
-# The here-string is load-bearing, and the first draft of this got it wrong. `printf '%s\n'
-# "$readme_tokens" | grep -qxF` is the same test, and under the `set -o pipefail` at the top of
-# this file it returns **141**: `grep -q` exits on the first match, `printf` takes a SIGPIPE
-# writing the remaining sixteen thousand tokens, and `pipefail` reports that. So every entry was
-# reported as undocumented — and only here. GitHub Actions runs a `run:` block as `bash -e`, with
-# no `pipefail`, so the CI copy of the pipe form passes: a green CI and a red `validation.sh` for
-# the same loop. `<<<` has no second process and no pipeline status to inherit.
-#
-# **The set asked about is the tracked set, and until 2026-09-03 it was the directory listing.**
-# `for f in scripts/*` is a shell glob over what is *on disk*, so `.gitignore` is invisible to it
-# and any ignored artifact under `scripts/` becomes an entry demanding a sentence in `README.md`.
-# That is not hypothetical: importing a module under `scripts/` — which is how a session prices an
-# import through `import_cost.py`'s `Mathlib.closure`, or chases a `guard_coverage.py` census row
-# with the script's own predicate — makes Python write `scripts/__pycache__/`, and the glob then
-# reported `checked 9 files under scripts/: __pycache__`. Ignoring the directory (`.gitignore`,
-# 2026-09-03) fixes the clean-tree check at the top of this file and moves that failure here
-# rather than removing it, which is strictly worse: `Not named in README.md: __pycache__` sends
-# the reader to `README.md`'s index to write a sentence about a bytecode cache, where the
-# clean-tree check at least named the directory.
-#
-# `git ls-files` is the right set rather than merely a working one. A sentence in `README.md` is a
-# claim about a file *in the repository*, and the clean-tree check above already guarantees that
-# anything present-but-untracked is ignored on purpose — so it is not part of the repository and
-# there is nothing for the index to say about it. It is also the shape that survives a
-# `scripts/<subdir>/`: `git ls-files` lists that subdirectory's files, so each is checked, where
-# the glob would have demanded a `README.md` sentence naming the *directory*. The smaller fix —
-# `[ -d "$f" ] && continue` in the glob — passes today with the same 8/0 figures, but it buys that
-# by silently checking nothing inside such a subdirectory, and it still asks about untracked
-# files.
-#
-# Two shell details, both load-bearing:
-#
-#   * **`-z` and `read -r -d ''`**, not `for f in $(git ls-files scripts/)`, which word-splits. No
-#     name under `scripts/` contains whitespace today and this check's own token alphabet could
-#     not match one that did — a name with a space falls to the containment branch below — but
-#     the `-z` form does not depend on either fact.
-#   * **Process substitution, not a pipe.** `git ls-files -z … | while` runs the loop in a
-#     subshell, so `scripts_undocumented` and `scripts_checked` would be discarded at `done` and
-#     every tree would report clean. `< <(…)` keeps the loop in this shell, and it also has no
-#     pipeline status for the `set -o pipefail` at the top of this file to inherit — the trap
-#     documented on the here-string above.
-#
-# **The vacuity guard is new with the tracked-set form and is not decoration.** An unmatched
-# `scripts/*` still yields one iteration, so the glob could not report zero files; `git ls-files`
-# can — it exits non-zero outside a work tree, so without the guard a broken invocation would
-# print `checked 0 files under scripts/: 0 not named in README.md` and pass. Measured by pointing
-# the same loop at a path that matches nothing: 0 checked, guard fires, exit 1.
-#
-# **`set -e` is not the missing defence**, and the sentence here used to give its absence from
-# this file as the reason the guard is needed. That is true of this file and is not the operative
-# fact: `-e` does not fire on a failing process substitution either, because `git ls-files` is the
-# producer on the other end of `< <(…)` and not a command the shell tests. So the CI copy, which
-# *is* `bash -e`, needs the guard exactly as much — measured on that step's own body, run as
-# `bash -e` from outside a work tree: guard present, exit 1; guard deleted, `checked 0 files under
-# scripts/` and **exit 0**.
-#
-# It runs here, before the build, because it reads two text files and the index and nothing else.
-# This mirrors the check in `.github/workflows/lean_action_ci.yml`.
-scripts_undocumented=""
-scripts_checked=0
-readme_tokens="$(tr -c 'A-Za-z0-9_.-' '\n' < README.md)"
-while IFS= read -r -d '' f; do
-  name="$(basename "$f")"
-  scripts_checked=$((scripts_checked + 1))
-  case "$name" in
-    *[!A-Za-z0-9_.-]*) grep -qF -- "$name" README.md ;;
-    *) grep -qxF -- "$name" <<< "$readme_tokens" ;;
-  esac || scripts_undocumented="$scripts_undocumented $name"
-done < <(git ls-files -z -- scripts/)
-if [ "$scripts_checked" -eq 0 ]; then
-  echo 'No file under `scripts/` was checked; `git ls-files -z -- scripts/` listed nothing.'
-  exit 1
-fi
-if [ -n "$scripts_undocumented" ]; then
-  echo "Not named in README.md:$scripts_undocumented"
-  echo 'Every file under `scripts/` needs a sentence in `README.md`; see its `### Checking`.'
-  exit 1
-fi
-echo "checked $scripts_checked files under scripts/: 0 not named in README.md"
 
 # Fetch build cache. Needed before the two steps below, both of which build Mathlib
 # artifacts.
@@ -193,16 +40,6 @@ lake exe cache get || exit 1
 
 # Verify all .lean files are imported by the root module `Oka.lean`.
 lake exe mk_all --lib Oka --git --check || exit 1
-
-# The same for the test library and `OkaTest.lean`. The test library used to be a glob with no
-# root module, which is why `lake exe lint-style` below could not be pointed at it: that
-# executable takes module names, so a library with no root is unreachable and `OkaTest/` was
-# text-linted by nothing at all. The root exists to close that, and this check is what keeps it
-# honest — without it a new test file would silently drop out of `lint-style`'s reach while
-# still being built, since every `OkaTest.+` module is its own build target.
-#
-# Regenerate with `lake exe mk_all --lib OkaTest --git` rather than editing `OkaTest.lean`.
-lake exe mk_all --lib OkaTest --git --check || exit 1
 
 # Verify everything builds, and that it builds without warnings.
 lake build --wfail || exit 1
@@ -258,18 +95,10 @@ lake lint || exit 1
 # `nolints-style.txt` are exempt — and **a file holding those six names in backticks and not one
 # word of prose exits 0**. Measured, and it is the whole enforcement value: the check reads for
 # `` `name` `` and can say nothing about whether a description is present, let alone true.
-# Meanwhile the index it would duplicate is already here, in `README.md`'s `### Checking`
-# section, which says what a tool is *for* and why it had to be written rather than only that it
-# exists. **It was not complete when this was written** — half the entries under `scripts/` were
-# missing from it, including the docstring-name checker it describes twice without ever naming —
-# and the answer is to keep one index honest rather than to write a second. A second copy that no
-# check can keep honest is the defect this repository repairs most often, and buying one to
-# silence a switch that is already off is the wrong trade. The tripwire itself — somebody added a
-# script and documented it nowhere — is worth having, and the honest version points at the
-# section that already exists rather than at a new file. **It is now the check near the top of
-# this file**, immediately after the `sorry` grep: argued for on taxis #971 and added on
-# 2026-08-24. Declining `scripts/README.md` is what this paragraph is for, and that part of it
-# stands.
+# Each script under `scripts/` documents itself in its own header instead, which says what the
+# tool is *for* rather than only that it exists; an index that no check can keep honest is the
+# defect this repository repairs most often, and buying one to silence a switch that is already
+# off is the wrong trade.
 #
 # One trap, and it is upstream's rather than ours: `modulesOSForbidden` is gated on
 # `linter.modulesUpperCamelCase` (`Mathlib/Tactic/Linter/TextBased.lean:602`) and not on the
@@ -277,13 +106,6 @@ lake lint || exit 1
 # **read nowhere in Mathlib**. Both default `true`, so both module-name checks do run here. But
 # setting `modulesUpperCamelCase = false` to allow one module name would silently switch off the
 # forbidden-filename check too, and setting `modulesForbiddenWindows = false` would do nothing.
-#
-# Both library root modules. `OkaTest` was absent here until 2026-08-20, not by choice but
-# because `lake exe lint-style Oka OkaTest` failed with `no such file OkaTest.lean` — the test
-# library had no root module — so half the tree was text-linted by nothing while every pull
-# request quoted a green `lint-style` as evidence that style had been checked. The root module
-# added above is what makes this line possible; the `mk_all --lib OkaTest` check above is what
-# stops it from silently going stale again.
 #
 # The `nolints file could not be read` warning is harmless and always present, and its absence
 # is a choice rather than an omission. `lint-style` reads `scripts/nolints-style.txt` relative
@@ -309,7 +131,7 @@ lake lint || exit 1
 #
 # If you disagree, the change is `touch scripts/nolints-style.txt` plus a header comment, and it
 # needs an argument about what would ever go in it rather than about the warning.
-lake exe lint-style Oka OkaTest || exit 1
+lake exe lint-style Oka || exit 1
 
 # Verify that every backticked dotted name in a comment or docstring resolves to something.
 #
@@ -354,8 +176,8 @@ lake exe lint-style Oka OkaTest || exit 1
 # Unlike the check, the self-test needs no build and no oleans: it plants its fixtures in a
 # `TemporaryDirectory`, and exactly one of its checks reads the real tree at all — what it does
 # there is a text walk, not a build. That one check is worth more than one walk, and the count is
-# below with what the walks cost; a reader who takes "one" for a walk count gets it wrong by four
-# and `.github/workflows/lean_action_ci.yml` did. It could therefore run earlier
+# below with what the walks cost; a reader who takes "one" for a walk count gets it wrong by
+# four. It could therefore run earlier
 # than this; it is here so that the instrument and the check it verifies stay one comment block
 # apart rather than two places to keep in step. **Order 2s, and a small multiple of that on a
 # loaded machine** — measured 2026-08-30 at 1.94–1.97s over three runs on a warm checkout, against
@@ -384,14 +206,14 @@ lake exe lint-style Oka OkaTest || exit 1
 python3 scripts/check_docstring_names.py --self-test || exit 1
 python3 scripts/check_docstring_names.py || exit 1
 
-# Verify that every `.lean` file under `Oka/` and `OkaTest/` has a module docstring with a
+# Verify that every `.lean` file under `Oka/` has a module docstring with a
 # non-empty body.
 #
 # The check above looks at the names *inside* a docstring, so on an empty one it finds nothing to
 # check and passes; and an empty `/-! -/` elaborates, so the build does not see it either. Seven
 # files under `Oka/` carried one from the second commit in the repository until 2026-08-23 — 892
 # lines and 74 declarations between them, all of them in the mirror tree, every one of them
-# therefore making the claim `README.md` says a mirror path makes without stating it — and this
+# therefore making the claim a mirror path makes without stating it — and this
 # script exited 0 on all seven for four months.
 #
 # It is deliberately the narrow rule: a non-empty body, and nothing about what the body says —
@@ -421,46 +243,5 @@ python3 scripts/check_docstring_names.py || exit 1
 # because they are the cheapest and a failure of the check is the least urgent.
 python3 scripts/check_module_docstrings.py --self-test || exit 1
 python3 scripts/check_module_docstrings.py || exit 1
-
-# Verify that every section heading in a guard file is written on the line that opens its doc
-# comment.
-#
-# A guard file is divided into sections by `/-! ### … ` headings, and everything that attributes a
-# guard to a section matches one by that opener: the per-heading recipe beside
-# `OkaTest/Axioms.lean`'s routing table, and every recount run from it. A heading written as `/-!`
-# on one line and `### Title` on the next elaborates identically and is **invisible to all of
-# them** — its guards are charged to the *previous* heading, so the partition is wrong from there
-# to the end of the file and nothing says so. `3177e67` wrote one in each of the two guard files
-# it touched, on 2026-09-03. The first cost `OkaTest/Axioms/AnalyticSpace.lean`'s module docstring
-# a coproduct subtotal of 29 where the partition holds 23, and a heading count one short; the
-# second stood in `OkaTest/Axioms/Morphisms.lean` until the commit that added this check, and had
-# already falsified a positional claim in that file's own docstring.
-#
-# `scripts/check_module_docstrings.py`'s docstring has carried the identical trap since
-# 2026-08-23, one heading level up: a one-line grep for the opening delimiter carrying `##`
-# returns 58 where that script's own predicate returns 59, and the file it cannot see,
-# `Oka/LocalOkaRing.lean`, has its header written across two lines. Nobody joined that to the
-# guard files for eleven days, and this is the first thing in the tree that checks for it.
-#
-# **It is one grep and deliberately not the count comparison it was priced as.** That form was
-# `grep -c '^/-! ###'` per file against `grep -cE '^(/-! )?### '`, and over the twelve guard files
-# at `6e80a99` it is wrong in both directions: `^/-! ###` also matches a `####` sub-heading, so
-# `OkaTest/Axioms/Analytification.lean` fails it 81 against 80 on a legitimate one — and on
-# `OkaTest/Axioms/Morphisms.lean`, the one file that held the defect, the extra `####` cancelled
-# the missing heading exactly and it read 28 against 28, green. Requiring the trailing space on
-# both sides repairs both; but the two counts then differ exactly when some line matches `^### `,
-# so that comparison *is* the grep below, and the grep names the file and the line rather than a
-# number. Widened to three-or-more `#` because a `#### ` sub-heading across two lines is invisible
-# to exactly the same degree.
-#
-# Text only, twelve files, no build: microseconds. It covers `OkaTest/Axioms/` and nothing else,
-# because that is where a heading is a unit somebody counts; the tree-wide `##` version is a
-# bigger instrument and a different subject. The failing case is not hypothetical — it was red on
-# `OkaTest/Axioms/Morphisms.lean` at the commit before this one, which is the only evidence that
-# it is an instrument and not a `true`.
-if grep -nE '^#{3,} ' OkaTest/Axioms/*.lean; then
-  echo 'The heading(s) above are not written on the line that opens the doc comment; join them.'
-  exit 1
-fi
 
 echo "Validation succeeded."

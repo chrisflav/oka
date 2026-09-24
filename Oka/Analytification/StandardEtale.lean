@@ -86,15 +86,14 @@ them.
   lift of the `Polynomial.derivative`** — the bridge between the two derivative notions, and the
   statement a consumer of `StandardEtalePair.cond` has to come through. (The theorem its
   hypothesis feeds is another file's declaration and is named in the proof's docstring rather
-  than here, since `scripts/guard_coverage.py` reads every backticked repository name under this
-  heading as a result this file advertises.)
+  than here.)
 - `ComplexAnalytic.exists_mk_pderiv_mul_add_eq_mk_pow`: **`StandardEtalePair.cond` read on the
   polynomial lifts**, which is the equation moved from `A[X]` down to the polynomial ring the
   presentation cuts with.
 - `ComplexAnalytic.eval_pderiv_ne_zero`: **and evaluated** — at a point where the relations and
   `F` vanish and `G` does not, the partial derivative of `F` in the last variable does not vanish
   either. (What that hypothesis then feeds is another file's declaration and is named in the
-  proof's docstring rather than here, for the reason the bullet above gives.)
+  proof's docstring rather than here.)
 
 ## What is not here
 
@@ -397,8 +396,7 @@ the commit that wrote it**: `Algebra.compHom` is in `Mathlib/Algebra/Algebra/Def
 rev, so a reader taking the retired wording at face value would conclude that composing two
 algebra structures is something this repository would have to build. The reading that is true is
 the one above, about what instance search finds, and this is the one site of the fourteen taxis
-#2133 enumerates where those two readings come apart. `OkaTest/Axioms.lean`'s seventh census
-object is the rule. -/
+#2133 enumerates where those two readings come apart. -/
 instance standardEtalePairRingAlgebra : Algebra ℂ P.Ring :=
   inferInstanceAs (Algebra ℂ (Polynomial (Polynomial (PresentedAlgebra.{u} n k g)) ⧸
     Ideal.span {Polynomial.C P.f, Polynomial.X * Polynomial.C P.g - 1}))
@@ -609,9 +607,9 @@ relabelled between the two.
 **There is no analysis in it and no geometry either.** The equation above holds modulo
 `presentationIdeal (polyPresentation g)`, `hx` says evaluation at `x` kills that ideal, so the
 equation holds at `x` as complex numbers; `hFx` deletes the second summand and the right-hand side
-is a power of a non-zero number. **`hGx` is not removable and the test file says so with a
-theorem**: at a point of the same hypersurface where `G` does vanish the derivative may vanish
-too, which is exactly the locus a standard étale algebra inverts away.
+is a power of a non-zero number. **`hGx` is not removable**: at a point of the same hypersurface
+where `G` does vanish the derivative may vanish too, which is exactly the locus a standard étale
+algebra inverts away.
 
 Mathlib proves the same divisibility one level up, as
 `StandardEtalePair.HasMap.isUnit_derivative_f`, for a point of any `R`-algebra. It is not quoted

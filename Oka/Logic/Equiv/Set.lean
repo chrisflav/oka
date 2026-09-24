@@ -80,13 +80,12 @@ reason offered under them was not.**
 `Oka/SetTheory/Cardinal/Finite.lean` used to say that getting this statement out of
 `Equiv.sigmaFiberEquiv` — by restricting along the inclusion of `(g ∘ f) ⁻¹' {z}` and then
 reconciling a subtype of a subtype at each point — **is *longer than writing the equivalence
-out*. It is not: at `a8c2f63` the two spellings were the same length**, ten non-blank lines
-each, counting the shared two-line signature into both. **That figure is a record of a
-measurement at a named commit rather than a count of `Set.preimageCompEquivSigma`'s proof as it
-stands today**: an edit to that proof moves the count and leaves this sentence true, which is the
-exemption `OkaTest/Axioms.lean` grants a figure pinned to a commit. Striking the numeral and
-keeping the comparison would have gone the wrong way — the comparison is the part that rots, and
-the figure is what a reader can check it against.
+out*. It is not: at `a8c2f63` the two spellings were the same length**, ten non-blank lines each,
+counting the shared two-line signature into both. **That figure is a record of a measurement at
+a named commit rather than a count of `Set.preimageCompEquivSigma`'s proof as it stands today**:
+an edit to that proof moves the count and leaves this sentence true, as it does any figure pinned
+to a commit. Striking the numeral and keeping the comparison would have gone the wrong way — the
+comparison is the part that rots, and the figure is what a reader can check it against.
 
 What the derivation does not do is avoid building an equivalence by hand: the
 subtype-of-a-subtype step is itself a four-field `Equiv` passed to `Equiv.sigmaCongrRight`. So

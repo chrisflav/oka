@@ -138,25 +138,12 @@ initiality, and `connectedSpace_iff_clopen` — is in that module's closure alre
 rather than written in the present tense, exactly as `Oka/AnalyticSpace/GaloisCategory.lean` and
 `Oka/AnalyticSpace/FundamentalGroup.lean` do for their own.
 
-**What the two census scripts return, at the commit this file is cut from and at the commit that
-adds it.** `scripts/guard_coverage.py` moves
-**1978 → 1986** guards under `OkaTest/Axioms/` — the eight below — and **1481 → 1487** advertised
-in a `## Main results`, in **225 → 226** files, which is the six heads of the list above; the two
-`## Main definitions` heads land in *guarded and advertised nowhere*, **639 → 641**. **Its
-*unguarded* row is flat at 142, in 60 files**, which is the tripwire this repository reads that
-script for, and *abbreviated citations, not counted* is flat at **30, four of them dotted**, and
-*advertised from another file* flat at **85**: no head of the list above is another module's
-declaration and no citation in that section is a suffix of one. **One row of that script does move
-and is not in the list above**: its *backticked tokens skipped* line goes **699 → 700** in the
-*resolve to nothing* column, and the one is the backticked path
-`Oka/AnalyticSpace/SeparatedFiberFunctor.lean` in the `## Main results` list above — a file path and
-not a name, which is what that column is mostly made of at the other end too.
-`scripts/check_docstring_names.py`
-goes **17680 → 17761** backticked names (4314 → 4327 distinct) and **229 → 273** elided citations
-(138 → 150), **0 unresolved at both ends**, **6** resolving under more than one namespace at both,
-and **232** dotless at both, against a `scripts/DumpEnvNames.lean` dump that moves
-**338216 → 338225** — **332537 → 332545** declarations and **5679 → 5680** modules, which is this
-module's eight declarations and this module.
+**What the census script returns, at the commit this file is cut from and at the commit that adds
+it.** `scripts/check_docstring_names.py` goes **17680 → 17761** backticked names (4314 → 4327
+distinct) and **229 → 273** elided citations (138 → 150), **0 unresolved at both ends**, **6**
+resolving under more than one namespace at both, and **232** dotless at both, against a
+`scripts/DumpEnvNames.lean` dump that moves **338216 → 338225** — **332537 → 332545** declarations
+and **5679 → 5680** modules, which is this module's eight declarations and this module.
 
 **Eight declarations, and eight is the whole of the module.** `scripts/DumpOkaDecls.lean` writes
 **8** rows at `Oka.AnalyticSpace.ConnectedCover` at the commit that adds this file — no equation
@@ -188,10 +175,9 @@ lemma, no match lemma, no congruence lemma — and the dump total moves **4949 �
   nothing here bears on it: this file relates two notions of *connected*, not two groups.
 * **Nothing at `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver`.** The ambient covers carry no
   `CategoryTheory.PreGaloisCategory` instance in this repository —
-  `Oka/AnalyticSpace/GaloisCategory.lean` gives the reason and `OkaTest/GaloisCategory.lean`
-  records the failing
-  `#synth` — so the categorical condition has no fibre-functor theory there and neither proof
-  below transports. **Both statements are at the separated covers and only there.**
+  `Oka/AnalyticSpace/GaloisCategory.lean` gives the reason — so the categorical condition has no
+  fibre-functor theory there and neither proof below transports. **Both statements are at the
+  separated covers and only there.**
 * **This bullet opened *Nothing that makes the pieces of the decomposition the topological
   connected components of the total space* until 2026-09-20**, when
   `…SeparatedFiniteEtaleOver.exists_connectedComponent_decomposition`
@@ -238,11 +224,11 @@ lemma, no match lemma, no congruence lemma — and the dump total moves **4949 �
      neither is enough.
 
   **The census that says this is an absence and not an oversight**: at the commit that adds this
-  file the token `connectedComponent` occurs **0 times** in the comment-stripped code of `Oka/` and
-  `OkaTest/` — so the notion the reading above concludes about is in **no** statement and **no**
-  proof of this repository — and `≃ₜ` occurs **12** times in **10** files, **none of them about the
-  total space of an object of this category**: they are fibres, charts of `ℂ^n`, a cylinder, a
-  sheet, and the locally ringed space statement of step 3.
+  file the token `connectedComponent` occurs **0 times** in the comment-stripped code of the tree —
+  so the notion the reading above concludes about is in **no** statement and **no** proof of this
+  repository — and `≃ₜ` occurs **12** times in **10** files, **none of them about the total space of
+  an object of this category**: they are fibres, charts of `ℂ^n`, a cylinder, a sheet, and the
+  locally ringed space statement of step 3.
 
   **What the push that closed this absence found, recorded here because this bullet priced it
   wrongly.** *This is the expensive step of the three* was said of step 1 and is the judgement
@@ -297,9 +283,7 @@ produce one.
 of the base, together with `ComplexAnalytic.AnalyticSpace.bijective_base_of_isIso` beside it.** The
 proof here is self-contained rather than a transport along the two forgetful functors, which is one
 `haveI` plus that lemma; both are a `congrArg` at `CategoryTheory.IsIso.inv_hom_id` and neither is
-shorter. `OkaTest/Axioms/Morphisms.lean`'s
-`### An isomorphism of analytic spaces is bijective on points` is where the two are related on the
-guard side. -/
+shorter. -/
 theorem SeparatedFiniteEtaleOver.surjective_base_left_of_isIso
     {A B : SeparatedFiniteEtaleOver.{u} X} (i : A ⟶ B) [IsIso i] :
     Function.Surjective (i.left.toLRSHom.base : A.left → B.left) := fun b ↦

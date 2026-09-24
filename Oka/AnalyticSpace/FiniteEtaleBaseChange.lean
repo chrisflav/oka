@@ -14,9 +14,7 @@ Let `q : E ⟶ B` be finite étale and let `f : B' ⟶ B` be **any** morphism of
 spaces. Then the fibre product `E ×_B B'` exists, its projection to `B'` is finite étale again,
 and the square is a pullback in `ComplexAnalytic.AnalyticSpace`. **No separation axiom is asked
 of any of the three spaces**, and `ComplexAnalytic.AnalyticSpace.doubledLineFold` is a finite
-étale morphism whose source is not one — `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean`
-applies four of this file's statements at that leg, one in each of four of its five `example`s,
-which is what checks that they apply at all.
+étale morphism whose source is not one.
 
 **The opening sentence read *Let `q : E ⟶ B` be finite étale with `E` Hausdorff* and the file
 carried `[T2Space E]` in its `variable` block, until 2026-09-14**, when the route through
@@ -175,13 +173,11 @@ what moved is the route and not the accounting rule.
   **This bullet gave as its reason that the class quantifies over *all* cospans with a leg in the
   class, including those whose finite étale leg has a non-Hausdorff source, and that nothing
   below reaches one, until 2026-09-14.** The second half stopped being true in the same push that
-  removed `[T2Space E]`: the statements below reach every cospan the class quantifies over, and
-  `OkaTest/FiniteEtaleBaseChangeNonHausdorff.lean` compiles them at one whose finite étale leg has
-  a non-Hausdorff source. What is absent **from this file** is the
-  `CategoryTheory.MorphismProperty` spelling and not the reach. **That last sentence read *What is
-  still absent is the `CategoryTheory.MorphismProperty` spelling and not the reach*, with no file
-  named, until 2026-09-15**, when that spelling landed one module further on and *still absent*
-  stopped being available as a reading of it.
+  removed `[T2Space E]`: the statements below reach every cospan the class quantifies over. What is
+  absent **from this file** is the `CategoryTheory.MorphismProperty` spelling and not the reach.
+  **That last sentence read *What is still absent is the `CategoryTheory.MorphismProperty` spelling
+  and not the reach*, with no file named, until 2026-09-15**, when that spelling landed one module
+  further on and *still absent* stopped being available as a reading of it.
 * **Nothing about the degree.** `ComplexAnalytic.AnalyticSpace.degree_eq_card_fiber` would say the
   base change has the same number of sheets; the fibres do correspond, by
   `Function.Pullback.fst`, and no statement below says so.

@@ -62,8 +62,7 @@ about the definitions makes them equal, and the proof is the identity theorem: b
 
 **`LocalOkaRing.incl` is deliberately not named in the list above**, though it is what two of the
 results are stated in terms of and it is named in every paragraph before it:
-`scripts/guard_coverage.py` reads a backticked name under a `## Main results` heading as a result
-the file advertises, and `incl` is a result of `Oka/Weierstrass.lean`.
+`incl` is a result of `Oka/Weierstrass.lean`.
 
 **No map in the other direction.** A germ in `κ` variables restricts to one in `ι` variables
 only after choosing values for the variables outside the image of `e`, which is a substitution

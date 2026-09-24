@@ -14,23 +14,12 @@ open `V ⊆ ℂ^n`, cut out by a family of monic polynomials of fixed degree, is
 file is the first consumer of `ComplexAnalytic.isFinite_comp_projRestrict_of_range_eq` **whose
 source is an analytification**, at `ℂ[x₁, …, x_n, X] ⧸ (F)` for `F` monic in the last variable.
 
-The consumers that came before it split two ways and neither way reaches an analytification.
+The consumers that came before it do not reach an analytification.
 `ComplexAnalytic.isFinite_comp_projRestrict_of_isCutOutBy` and
 `ComplexAnalytic.isFinite_comp_projRestrict_of_monic` are **restatements**: each takes the source
 `i` as a hypothesis and exhibits no space at all, so neither has a source to be an analytification
-of. The sources that *are* exhibited are both in the test tree and both hand-written
-`ComplexAnalytic.AnalyticSpace.okaMap`s — the parabola of `OkaTest/OpenBaseProjection.lean`, and
-the transcendental curve of `OkaTest/HolomorphicFamily.lean`, which reaches the theorem through
-the second restatement. **So this is also the first consumer in the library that supplies a source
-rather than passing one through**, and that is the same fact said the other way round.
-
-**An earlier draft of this paragraph said that nothing anywhere consumed the theorem and that this
-file was its first consumer, and that was false when it was written**: the theorem was already
-named in seven files and applied in three. It is recorded here rather than quietly deleted because
-the way it went wrong is reusable — the hits sort `Oka/` before `OkaTest/`, so a
-`git grep -n … | head` at the default ten lines stops one line short of the test file, and both
-the draft and the first review of it made that cut. **Count with `git grep -c` before claiming
-that nothing anywhere does something.**
+of. **So this is also the first consumer in the library that supplies a source rather than
+passing one through**, and that is the same fact said the other way round.
 
 The reason to want it is `Oka/Analytification/MonicHypersurface.lean`'s `## What is not here`,
 which said, until this file landed and the same push corrected it, what a standard étale algebra
@@ -119,9 +108,8 @@ available here.
 ## What is not here
 
 * **No standard étale algebra, and no `IsFiniteEtale`.** The unrestricted statement is **false** —
-  taxis #1112 carries the counterexample, the punctured parabola over the line, and since
-  2026-09-02 `ComplexAnalytic.not_isFiniteEtale_condEtaleProj`
-  (`OkaTest/StandardEtaleNotFinite.lean`) compiles it — and nothing here states either.
+  taxis #1112 carries the counterexample, the punctured parabola over the line — and nothing here
+  states it.
   Identifying the source of this theorem with the analytification of a *localised*
   algebra is the step `ComplexAnalytic.etaleAnalytificationIso` would be spent on, and it is not
   taken **here**; it is taken in `Oka/Analytification/StandardEtaleFiniteness.lean`, at `k = 0`,
@@ -256,11 +244,8 @@ that came before. Its four hypotheses:
   `ComplexAnalytic.range_base_analytificationIncl` and
   `ComplexAnalytic.eval_lastVarPolyEquiv_symm`.
 
-**The range step is built with `Set.ext` and `Iff.trans` rather than with `rw`.** That shape is
-not this file's invention: it is `ComplexAnalytic.range_base_parabolaPunctured`'s in
-`OkaTest/OpenBaseProjection.lean` and `ComplexAnalytic.range_base_curvePunctured`'s in
-`OkaTest/HolomorphicFamily.lean`. What is stated nowhere else, and is the reason to keep the
-paragraph, is *why* `rw` is unavailable. `ComplexAnalytic.cylinder V` is declared at
+**The range step is built with `Set.ext` and `Iff.trans` rather than with `rw`**, and the reason
+to keep the paragraph is *why* `rw` is unavailable. `ComplexAnalytic.cylinder V` is declared at
 `TopologicalSpace.Opens (ULift (Fin (n + 1)) → ℂ)` while
 `ComplexAnalytic.AnalyticSpace.restrict` asks for the space's own `Opens`, so a goal mentioning
 `(complexAffineSpace (n + 1)).restrict (cylinder V)` is not type-correct at `instances`
@@ -296,41 +281,7 @@ theorem isFinite_analytification_comp_projRestrict (hF : F.Monic)
 `ComplexAnalytic.hypersurfaceCommonZeroImage_parabola` below: at `F = X² - x_i` and `G = X` the
 bad set is a coordinate hyperplane, so the open subset of the base is **proper and nonempty**,
 which is the only case in which a *finite over `V`* statement is interesting at all. The two
-extremes below bound `V` at `∅` and at `ℂ^n` and say nothing about anything between them.
-
-**A fourth is elsewhere and is worth knowing about**, because its pair is a `StandardEtalePair`
-and this file declares none: `ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOnePair`
-(`OkaTest/OpenBaseFiniteness.lean`) makes the bad set everything at
-`ComplexAnalytic.sqSubOnePair`. It separates two things the extremes cannot.
-`ComplexAnalytic.hypersurfaceCommonZeroImage_X` reaches *everything* at a pair where `G` vanishes
-on the whole hypersurface, so nothing survives the inversion and a reader may take a bad set of
-`ℂ^n` for a symptom of that; at `ComplexAnalytic.sqSubOnePair` the bad set is still everything and
-plenty survives. **Both algebras are theorems in that file and not readings of a picture**:
-`ComplexAnalytic.sqSubOneRingEquiv` makes the standard étale algebra of that pair the base itself
-**wherever `2` is a unit of the base**, `ComplexAnalytic.moduleFinite_sqSubOnePair` records it
-finite over the base under that same hypothesis — `ComplexAnalytic.isUnit_two_of_sqSubOneRingEquiv`
-proves the first cannot drop it and `ComplexAnalytic.isUnit_two_mvPolynomial` discharges it over
-the polynomial base this file works at — and
-`ComplexAnalytic.subsingleton_xPairRing` makes the algebra of `ComplexAnalytic.xPair` — the pair
-behind `ComplexAnalytic.hypersurfaceCommonZeroImage_X` — the zero ring. **So "the bad set is all
-of `ℂ^n`" is not by itself a statement that the pair is degenerate**, and
-`Oka/Analytification/StandardEtaleFiniteness.lean`'s main theorem docstring is where that
-distinction is spent. What is **not** proved anywhere is the step from either algebra to what
-survives in the *analytification*, which is the reading the sentence above is written in. **The
-first two of those three citations carried no hypothesis until 2026-09-21**, in a sentence whose
-own lead is that they are theorems and not readings; the claims are unchanged and only their
-warrant was missing.
-
-**A fifth is elsewhere too and it is the fourth's mirror**, added 2026-09-20 and named here
-because leaving this enumeration at four would make it short of the tree:
-`ComplexAnalytic.hypersurfaceCommonZeroImage_sqSubOneTwoPair`
-(`OkaTest/StandardEtaleFiniteEtaleBase.lean`) makes the bad set **empty** at
-`ComplexAnalytic.sqSubOneTwoPair`, which is `ComplexAnalytic.sqSubOnePair`'s `f = X² − 1` with
-`g = 2` in place of `g = X − 1`. **So the two pairs have the same hypersurface and land at the two
-extremes**, which is the sharpest form of the paragraph above: the bad set is a statement about
-what is inverted and not about `F`. It is also the only one of the five at which the finite étale
-class is instantiated with the restriction removed — that is the point of the file it is in, and
-it turns on `2` being a unit and on nothing else. -/
+extremes below bound `V` at `∅` and at `ℂ^n` and say nothing about anything between them. -/
 
 /-- **With nothing inverted the bad set is empty**, so the open subset of the base may be all of
 `ℂ^n`.
@@ -416,13 +367,7 @@ hyperplane `{w | w i = 0}`.**
 inclusions are needed and only one of them has a precedent**: the `⊇` half is
 `ComplexAnalytic.hypersurfaceCommonZeroImage_X`'s proof with the base point moved, and the `⊆`
 half is the first non-trivial containment proved about this set — the two witnesses above conclude
-`= ∅` and `= Set.univ`, neither of which needs one.
-
-**This is the same geometry `OkaTest/OpenBaseProjection.lean` carries as
-`ComplexAnalytic.parabolaPunctured`**, in different vocabulary: that file works through
-`ComplexAnalytic.cylinder` and `ComplexAnalytic.punctured` and never mentions the bad set, which
-is why the two were never seen to be the same example. **Nothing here relates them**, and doing so
-is not attempted; see this file's `## What is not here`. -/
+`= ∅` and `= Set.univ`, neither of which needs one. -/
 theorem hypersurfaceCommonZeroImage_parabola (i : ULift.{u} (Fin n)) :
     hypersurfaceCommonZeroImage.{u}
       (Polynomial.X ^ 2 - Polynomial.C (MvPolynomial.X i))

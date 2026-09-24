@@ -33,22 +33,21 @@ identities that say the classifying action is carried by the fibre.
 
 At the commit this file is cut from, the class occurs in the comment-stripped code of exactly
 **three** modules: `Oka/AnalyticSpace/GaloisCategory.lean`, which declares the instance,
-`Oka/AnalyticSpace/EmptyBase.lean`, whose only occurrence is under a `¬`, and
-`OkaTest/GaloisCategory.lean`, the control. **In none of the three is the class a hypothesis of a
-declaration**, which is the claim the opening paragraph quotes, checked rather than carried over.
+`Oka/AnalyticSpace/EmptyBase.lean`, whose only occurrence is under a `¬`, and a control file since
+deleted. **In none of the three is the class a hypothesis of a declaration**, which is the claim the
+opening paragraph quotes, checked rather than carried over.
 
 **Which spelling a scan counts is part of its figure, so this one says which.** The population is
-every tracked `.lean` file under `Oka/` and `OkaTest/` together with the two root modules, the
-stripper is `scripts/import_cost.py`'s `strip_comments`, and what is counted is *GaloisCategory*
-**as a token** — not preceded by a letter, a digit, `_` or `.`, and not followed by one — which is
-how the class is written in code under `open CategoryTheory`, and how it is written in all six
-occurrences the three modules between them have. So *PreGaloisCategory* is not an occurrence,
-`…SeparatedFiniteEtaleOver.preGaloisCategory` is not one, and a module path in an `import` line is
-not one either. **The fully-qualified `CategoryTheory.GaloisCategory` is written nowhere in the
-code of this repository** under that population and stripper — it occurs in **0** modules — and the
-bare substring occurs in **6** modules and **28** places, the three extra modules being the two
-root ones and `OkaTest/Axioms/Morphisms.lean`. **The figure three belongs to the token reading and
-to neither of the other two**, which is why naming the token here is not a formality.
+every tracked `.lean` file, the stripper is `scripts/import_cost.py`'s `strip_comments`, and what
+is counted is *GaloisCategory* **as a token** — not preceded by a letter, a digit, `_` or `.`, and
+not followed by one — which is how the class is written in code under `open CategoryTheory`, and how
+it is written in all six occurrences the three modules between them have. So *PreGaloisCategory* is
+not an occurrence, `…SeparatedFiniteEtaleOver.preGaloisCategory` is not one, and a module path in an
+`import` line is not one either. **The fully-qualified `CategoryTheory.GaloisCategory` is written
+nowhere in the code of this repository** under that population and stripper — it occurs in **0**
+modules — and the bare substring occurs in **6** modules and **28** places, the three extra modules
+being the two root ones and a file since deleted. **The figure three belongs to the token reading
+and to neither of the other two**, which is why naming the token here is not a formality.
 
 ## What the import costs, measured in the environment and not by a scan
 
@@ -102,8 +101,7 @@ are not the base's. `#check` reports the inferred result type as `Type (u + 1)`.
 **Both are quoted in the shape Lean prints them**: two lines, the class indented under a first
 line that names no type at all, and the standard *Type class instance resolution failures can be
 inspected with the `set_option trace.Meta.synthInstance true` command* hint below them, which is
-the one part elided above. That is the shape `OkaTest/GaloisCategory.lean`'s own synthesis-failure
-`#guard_msgs` record, and a quotation that folds the two lines into one — dropping *instance of
+the one part elided above. A quotation that folds the two lines into one — dropping *instance of
 type class* — is a message no run of either probe produces.
 
 ## Main definitions
@@ -133,38 +131,6 @@ type class* — is a message no run of either probe produces.
   the sense of `CategoryTheory.PreGaloisCategory.IsConnected`.
 - `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.exists_isGalois_hom`: **every connected
   such cover is dominated by a Galois one.**
-
-## The two lists above are written in full, and what reads them
-
-**Every head in the two lists above is the whole name**, with the house `…` elision kept for the
-prose below them — which is the shape `Oka/AnalyticSpace/EmptyBase.lean` uses — **because
-`scripts/guard_coverage.py` resolves a backticked token of a `## Main results` section against the
-declaration dump and an elided one resolves to nothing.** **The list as written gives that tool ten
-backticked tokens and seven of them resolve**, the other three being `rfl` twice and
-`CategoryTheory.PreGaloisCategory.IsConnected`, none of which this repository declares. **Elide
-the seven heads — which is what the first draft of this file did — and the same ten tokens
-resolve to nothing at all**: every result here is then outside the population that tool checks,
-and *no gap for this module* means *nothing read* rather than *nothing wrong*, two reports that
-look identical from the outside.
-
-Its four figures that this file moves, at the commit this file is cut from and at the one that
-adds it, each end a run of `python3 scripts/guard_coverage.py --dump …` against a declaration dump
-built there:
-
-| `scripts/guard_coverage.py` | cut from | adds this file |
-|---|---|---|
-| advertised in a `## Main results` | **1474**, in 224 files | **1481**, in 225 files |
-| of those, unguarded | **142** | **142** |
-| in both lists | **1332** | **1339** |
-| guarded and advertised nowhere | **637** | **639** |
-
-**Seven of the nine declarations here are in that list and two are not**, which is the whole of the
-seven in the first and third rows and of the two in the last:
-`ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fundamentalGroup` and
-`…SeparatedFiniteEtaleOver.contActionEquivalence` are under `## Main definitions`, a heading that
-tool does not read at all, so they count as guarded and advertised nowhere however they are
-spelled. **All nine are guarded**, in `OkaTest/Axioms/Morphisms.lean`, and *unguarded* is unmoved
-in both its figures — this file opens no gap, and now that is a reading and not a silence.
 
 ## What is not here
 
@@ -223,11 +189,9 @@ in both its figures — this file opens no gap, and now that is a reading and no
   covers anywhere in this repository, and `#synth` for the first of them there fails:
   `Oka/AnalyticSpace/GaloisCategory.lean` gives the reason its own instance does not reach them —
   those covers are not separated, and the `monoInducesIsoOnDirectSummand` field is stated at the
-  separated category — and `OkaTest/GaloisCategory.lean` records the failure as a `#guard_msgs`
-  probe. So none of this transports to them. **That either class is *false* there is neither
-  proved here nor claimed.** A failing synthesis probe cannot tell *the class does not hold* from
-  *this context does not reach it*, which is the distinction `OkaTest/GaloisCategory.lean`'s own
-  correction to its canary paragraph draws; settling the question in the other direction, at the
+  separated category — so none of this transports to them. **That either class is *false* there is
+  neither proved here nor claimed.** A failing synthesis probe cannot tell *the class does not hold*
+  from *this context does not reach it*; settling the question in the other direction, at the
   separated covers over a base with no points, took a refutation and a module of its own,
   `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.not_galoisCategory_of_isEmpty` in
   `Oka/AnalyticSpace/EmptyBase.lean`, and nothing of that kind is done here.

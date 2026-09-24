@@ -93,17 +93,12 @@ touches a base map goes through it.
   is a condition at a point of a space that has none. **No proof here special-cases it and none
   needs to** — `TopologicalSpace.IsOpenCover.exists_mem` is what would fail at an empty `ι`, and
   it does not, because it is applied to a point of `Y` and there is no such point to apply it to.
-  `OkaTest/LocalAtTarget.lean` compiles the `ι = Empty` instance rather than leaving this as prose.
 * **Nothing is built.** No space, no morphism and no cover is constructed here; the cover is a
   hypothesis in every statement. `Oka/AnalyticSpace/Glue.lean` is the file that builds a space out
   of a cover and shares nothing with this one but the word.
 * **No witness, and no statement that the criteria reach a cover no member of which is `⊤`.**
-  `OkaTest/LocalAtTarget.lean` is where that is exhibited, together with the derivations of
-  `ComplexAnalytic.AnalyticSpace.isFinite_of_restrictHom_top` and
-  `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_restrictHom_top` from the theorems here, which
-  is how this development says the criteria generalise those two rather than asserting it.
 * **Neither `…_of_restrictHom_top` theorem is replaced or deprecated.** Each keeps its own proof
-  and its own consumers; the derivations are in the test file and change nothing in the library.
+  and its own consumers.
 -/
 
 open CategoryTheory TopologicalSpace Opposite AlgebraicGeometry Topology

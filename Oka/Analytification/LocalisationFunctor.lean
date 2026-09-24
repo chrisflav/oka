@@ -37,8 +37,7 @@ one; and *further on* asserts an order that does not hold — `Oka/Analytificati
 functor is not downstream of that file at any distance. What the argument needed all along is the
 weaker and checkable statement now written above, and the two false halves were both reached by
 reading the import block rather than the graph. Measured at `5a525bc` with
-`scripts/import_cost.py`'s `IMPORT` pattern over its nesting-aware `strip_comments`;
-`OkaTest/Axioms.lean` states the rule this repairs.
+`scripts/import_cost.py`'s `IMPORT` pattern over its nesting-aware `strip_comments`.
 
 ## Which way the arrows go
 
@@ -116,8 +115,7 @@ the category.
 
 Stated because the bare `ComplexAnalytic.PresHom` does not elaborate against `≫`, `Iso` or `IsIso`:
 `Category Presentation` has `Hom P Q := PresHom P.g Q.g`, and the two objects are not recovered
-from the term. `OkaTest/LocalisationFunctor.lean`'s `nodeStructureHom` is this ascription taken at
-the node, and records that the missing one is what costs time. -/
+from the term. -/
 abbrev localisationHom :
     (⟨n + 1, k + 1, localisationPresentation.{u} g f⟩ : Presentation.{u}) ⟶ ⟨n, k, g⟩ :=
   localisationPresHom.{u} g f

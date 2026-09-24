@@ -36,12 +36,10 @@ steps:
 
 * **a criterion** — `ComplexAnalytic.AnalyticSpace.isFinite_comp_of_isClosedEmbedding` reduces
   `IsFinite (i ≫ p)` to those two statements *about the image of `i`*, which is what lets the
-  projection be used even though it is not itself finite
-  (`ComplexAnalytic.not_isFinite_proj`);
+  projection be used even though it is not itself finite;
 * **a carrier bridge** — `ComplexAnalytic.uliftSnocHomeo`, the homeomorphism
   `ℂ^(n+1) ≃ₜ ℂ^n × ℂ` splitting off the last coordinate, across which the two set-level
-  statements are read; it is the analogue of `ComplexAnalytic.puncturedHomeo` in
-  `OkaTest/FiniteMorphism.lean`, which plays the same role for `ComplexAnalytic.isFinite_sq`;
+  statements are read;
 * **the image of `i`** — `ComplexAnalytic.range_base_eq_of_isCutOutBy` turns
   `ComplexAnalytic.IsCutOutBy`'s `range_base` field, which is phrased with germs and maximal
   ideals, into the vanishing of a function, by `germ_mem_maximalIdeal_iff`.
@@ -57,11 +55,10 @@ a source cut out by **more** equations than the family gives, which is the analy
 base algebra's hypersurface (`Oka/Analytification/HypersurfaceFinite.lean`); a caller holding an
 equation should still quote **the equation form**, which is one line of the inclusion and keeps
 its own name and its consumers. **The equation form** is the one a hand-built morphism satisfies —
-`OkaTest/FiniteMorphism.lean` explains why cut-out data for a *hand-built* morphism of analytic
-spaces still has to be built by hand, which is a claim about those morphisms and not about the
-category: `ComplexAnalytic.isCutOutBy_analytificationInclHom` produces the datum for the
-inclusion of an analytification into `ℂ^n`, and nothing built by hand is one — and it is what
-`OkaTest/MonicProjection.lean` applies.
+cut-out data for a *hand-built* morphism of analytic spaces still has to be built by hand, which
+is a claim about those morphisms and not about the category:
+`ComplexAnalytic.isCutOutBy_analytificationInclHom` produces the datum for the inclusion of an
+analytification into `ℂ^n`, and nothing built by hand is one.
 **The `ComplexAnalytic.IsCutOutBy` form** is the one the Weierstrass line will consume, and is two
 lines of the equation form.
 
@@ -181,8 +178,7 @@ theorem uliftSnocHomeo_fst (z : ULift.{u} (Fin (n + 1)) → ℂ) :
 `ComplexAnalytic.uliftSnocHomeo`.**
 
 The composite form rather than the pointwise one, because it is what lets a statement about
-`Prod.fst` transfer along a homeomorphism; compare `ComplexAnalytic.base_sq_eq_conj` in
-`OkaTest/FiniteMorphism.lean`. -/
+`Prod.fst` transfer along a homeomorphism. -/
 theorem base_proj_eq (n : ℕ) :
     ⇑(AnalyticSpace.proj.{u} n).toLRSHom.base = Prod.fst ∘ uliftSnocHomeo.{u} n :=
   funext fun z ↦ (uliftSnocHomeo_fst z).symm

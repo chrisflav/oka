@@ -60,7 +60,6 @@ At the point of use the site still has to be spelled so that it matches. For an
 lives over `Opens.grothendieckTopology ↑Y.toPresheafedSpace`, the space to pass is
 `TopCat.of ↑Y.toPresheafedSpace` and **not** `Y.toTopCat`; with `Y.toTopCat` the statement
 elaborates and then fails to find `PreservesZeroMorphisms`.
-`OkaTest/SheafOfModulesStalk.lean` records it.
 
 ## Main definitions
 
@@ -210,9 +209,9 @@ backticks.** CategoryTheory.Functor.RightExact, CategoryTheory.Functor.Preserves
 and CategoryTheory.Limits.PreservesCokernel are what a reader would try next, and **the three
 are not in Mathlib at this rev** — the classes that exist are the two spelled above. They are
 bare because `scripts/check_docstring_names.py` resolves every backticked dotted name against
-the environment of `Oka` + `OkaTest` and would report all three, correctly: that they resolve to
-nothing is the content of the sentence, and an entry in `scripts/docstring-names-ignore.txt`
-would buy silence at the price of the same spelling being exempt tree-wide.
+the environment of `Oka` and would report all three, correctly: that they resolve to nothing is the
+content of the sentence, and an entry in `scripts/docstring-names-ignore.txt` would buy silence at
+the price of the same spelling being exempt tree-wide.
 
 **Until 2026-09-22 this passage was invisible to `scripts/mathlib_absence.py`, and it is now three
 of that scan's rows**, all three inside it: the version-bearing claim at the head, the sentence

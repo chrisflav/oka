@@ -46,12 +46,11 @@ where this belongs and not a claim that it could be upstreamed tomorrow: the coh
 go first.
 
 **Two readings, and the cheap instrument decides only the narrower one.** As a claim about the
-**name** the `grep` decides outright, which is the verdict the three questions
-`OkaTest/Axioms.lean`'s seventh census object puts to a scan offered in support of an absence
-exist to reach: a consumer that wants `SheafOfModules.IsCoherent` has to write that token in its
-own statement, whatever namespace is open; a `variable` binder introducing a sheaf of modules
-leaves the predicate still to be written; and a `class` is declared and not generated, so there
-is no elaborator-produced spelling for a scan of source to miss.
+**name** the `grep` decides outright, which is the verdict the three questions put to a scan offered
+in support of an absence exist to reach: a consumer that wants `SheafOfModules.IsCoherent` has to
+write that token in its own statement, whatever namespace is open; a `variable` binder introducing
+a sheaf of modules leaves the predicate still to be written; and a `class` is declared and not
+generated, so there is no elaborator-produced spelling for a scan of source to miss.
 
 **The claim this paragraph needs is the wider one — that Mathlib has no coherence predicate for
 sheaves of modules under *any* name — and no scan keyed on a name can decide that.** What decides it

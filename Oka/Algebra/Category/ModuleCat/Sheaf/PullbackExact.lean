@@ -63,9 +63,8 @@ positive control: Mathlib has `CategoryTheory.Limits.PreservesFiniteLimits` for 
 **That passage is named here by what it is about and not by where it sits**, because a pointer
 into another file's structure is falsified by any rearrangement of that file; at `6a792ba` it is
 the first bullet of that file's `## What is not here`.
-**That passage carried no version when this sentence was written, on 2026-09-21**, which the rule
-in `OkaTest/Axioms.lean` asks of the sentence that measures as much as of the sentence that
-points; repairing it is a change to a file this push only reads, and is filed as taxis #2152.
+**That passage carried no version when this sentence was written, on 2026-09-21**; repairing it
+is a change to a file this push only reads, and is filed as taxis #2152.
 
 **The absence is Mathlib's and not this repository's, and when this sentence was written, on
 2026-09-21, that passage did not say so.**

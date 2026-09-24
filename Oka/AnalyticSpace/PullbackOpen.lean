@@ -317,10 +317,8 @@ c6bfc1f:Oka/AnalyticSpace/PullbackOpen.lean` carries it at `:242`. **It was a ne
 about Mathlib in a section heading**, which is the one place this tree's rule for such a clause
 cannot be met: a heading has no room for a version or an instrument, and taxis #2118 records that
 a rule stated as a heading is not a rule. **Nothing quoted it**: `git grep` for the retired
-heading over the tree at `c6bfc1f` returns that line and no other, and the nearest thing to a
-quotation — `OkaTest/Axioms/Morphisms.lean`'s *That square read as an identification, and the one
-cospan orientation it makes legal* — names the instance rather than the heading and is unmoved by
-this push. The claim the heading made is the one measured two paragraphs up, which is where it
+heading over the tree at `c6bfc1f` returns that line and no other. The claim the heading made is
+the one measured two paragraphs up, which is where it
 belongs. -/
 instance hasPullback_pullbackFst_ofRestrict' {T : AnalyticSpace.{u}} (k : T ⟶ X) :
     HasPullback (pullback.fst f (Y.ofRestrict V)) k :=

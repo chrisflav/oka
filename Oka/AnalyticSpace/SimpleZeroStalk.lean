@@ -140,9 +140,7 @@ centred at `i.base x` and not at the origin; `okaStalkEquiv` absorbs the transla
 
 **Nothing the results above are stated *in terms of* is named in that list** — not
 `LocalOkaRing.incl`, not `okaStalkEquiv`, not `complexAffineSpace`, though all three are named in
-the paragraphs before it. `scripts/guard_coverage.py` reads every backticked repository name
-under a `## Main results` heading as a result the file advertises, and none of those is a result
-of this file.
+the paragraphs before it: none of those is a result of this file.
 
 **No finiteness, and so no `IsFiniteEtale`. And no `IsLocalIso` — but that is now an absence
 from this *file* and not from the tree.** Nothing below says anything about the underlying map of

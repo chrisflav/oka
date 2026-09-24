@@ -117,10 +117,6 @@ goal.
 - `ComplexAnalytic.coverOverlap_refineDatumPoly_const`: **and so is the refined overlap itself**,
   as a presented object — which is the statement that the one-member file is a special case of
   this one at the level the glue is built at, and not only at the level of the polynomials.
-  (Spelled without naming the presentation type: `scripts/guard_coverage.py` reads a backticked
-  declaration inside a `## Main results` block as advertised *by this file*, and that one is
-  unguarded in the file that declares it, so naming it here would put this file in the gap list
-  for a declaration it does not own.)
 
 ## What is not here
 
@@ -182,23 +178,10 @@ goal.
   `Oka/Analytification/RefineDatumRefinesCross.lean` does both, so what the two files leave open
   between them is no longer this. The gap the containment leaves is `D(fam b)`, and the rule on
   the caller's factor read geometrically is exactly what closes it.
-* **No witness at a concrete cover datum *here*.** This bullet said there was none anywhere:
-  *"its refining family is constantly `1`, so it is not a witness at a concrete datum with a
-  `poly` field of its own either"*. There is one — `OkaTest/RefineDatumWitness.lean` instantiates
-  `Oka/Analytification/RefineDatumWitness.lean`'s construction at `OkaTest/AffineCover.lean`'s
-  three copies of the node, whose `poly` field is `z₀` and whose three laws are theorems, at
-  `σ = id` on a three-element index type — so that space has **no hypothesis left open** and its
-  index map is provably not constant. **The refining family there is still constantly `1`**, so
-  what is exhibited is that cover reindexed and not one cut down. **And there is now one at a
-  family that is not `1`**: `OkaTest/RefineDatumUnitFamily.lean`'s
-  `ComplexAnalytic.lineRefinement` is `ComplexAnalytic.refineDatumUnitFamAnalytification` at
-  `OkaTest/ProjectiveLine.lean`'s two-chart cover of `ℙ¹` — also a concrete datum with a `poly`
-  field of its own — at `σ = id` and at a refining family that cuts every member down to a
-  proper non-empty open. What stands in for a witness *in this file* is unchanged:
+* **No witness at a concrete cover datum *here*.** What stands in for a witness *in this file*:
   `ComplexAnalytic.refineDatumPoly_const` and
-  `ComplexAnalytic.coverOverlap_refineDatumPoly_const` reduce the general form to a configuration
-  `OkaTest/CoverRefinement.lean` and `OkaTest/CrossMemberGlue.lean` exhibit, which says nothing
-  about `σ` being non-constant.
+  `ComplexAnalytic.coverOverlap_refineDatumPoly_const` reduce the general form to the
+  constant-`σ` configuration, which says nothing about `σ` being non-constant.
 * **No scheme and no `admissible`**, as in the three files this one sits beside.
 -/
 

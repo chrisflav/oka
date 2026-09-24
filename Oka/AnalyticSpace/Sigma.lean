@@ -475,8 +475,8 @@ member (`AlgebraicGeometry.LocallyRingedSpace.exists_sigma_ι_base_eq`) and ther
 so the carrier is empty. **Emptiness is a property of a space built some other way, and nothing in
 the library is defined as the empty analytic space**: that is as true of the sibling below and of
 `ComplexAnalytic.isEmpty_refineAnalytification` — the same statement for a refinement at an empty
-index type — as it is of this one. `OkaTest/` instantiates this one, and
-`Oka/AnalyticSpace/LocalModel.lean` uses the phrase only to say that the node is *not* it.
+index type — as it is of this one. `Oka/AnalyticSpace/LocalModel.lean` uses the phrase only to
+say that the node is *not* it.
 
 The sentence this replaces said that this was *the only declaration in the library that names the
 empty analytic space*. That was exact at `0b19eb1`, which wrote it, and **`9ce75e2` falsified it

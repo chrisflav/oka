@@ -59,16 +59,13 @@ the rung.
   of the number of sheets over a connected base was not proved anywhere; it is, as
   `ComplexAnalytic.AnalyticSpace.card_fiber_eq_of_isFiniteEtale` in
   `Oka/AnalyticSpace/CoveringMap.lean`. It then said the common value was computed for no morphism;
-  it is, and no longer only for one — `ComplexAnalytic.card_fiber_base_sq` puts the fibres of
-  `z ↦ z²` on the punctured line at **2**, by a statement about roots in `ℂ` rather than about
-  covers, and `ComplexAnalytic.AnalyticSpace.card_fiber_sigmaFold` puts the fibres of the trivial
+  it is — `ComplexAnalytic.AnalyticSpace.card_fiber_sigmaFold` puts the fibres of the trivial
   `ι`-sheeted cover at `Nat.card ι`, so every value is realised. **The fourth step retires it
   altogether**: `ComplexAnalytic.AnalyticSpace.degree` in `Oka/AnalyticSpace/Degree.lean` is the
   `Nat`-valued invariant, the well-definedness obligation this bullet made the condition of
   having one is `ComplexAnalytic.AnalyticSpace.degree_eq_card_fiber`, and the consumer it asked
-  for is `ComplexAnalytic.AnalyticSpace.isHomeomorph_base_of_degree_eq_one`. The two computations
-  above are now read as degrees, `ComplexAnalytic.degree_sq` and
-  `ComplexAnalytic.AnalyticSpace.degree_sigmaFold`.
+  for is `ComplexAnalytic.AnalyticSpace.isHomeomorph_base_of_degree_eq_one`. The computation
+  above is now read as a degree, `ComplexAnalytic.AnalyticSpace.degree_sigmaFold`.
 * **The analytification of a finite étale morphism** — the other blocker of #551, stateable only
   now that this exists.
 * **Cancellation for `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` — this is no longer absent, and
@@ -86,9 +83,8 @@ the rung.
   **What this bullet used to say was that closedness does not follow**, with the real line with
   two origins over the real line as the witness and the classical graph-and-fibre-product proof as
   the only route. **The witness is right and both conclusions drawn from it were wrong.** It is a
-  counterexample, and `TwoIndiscrete.not_isClosedMap_pt_of_isClosedMap_comp`
-  (`OkaTest/FiniteEtaleCancel.lean`) now compiles one of the same shape — but what it exhibits is
-  a **non-Hausdorff middle space**, and not anything about the second factor: its two origins are
+  counterexample — but what it exhibits is a **non-Hausdorff middle space**, and not anything
+  about the second factor: its two origins are
   two points of `Y` that no open set separates. At `[T2Space Y]` the cancellation holds for an
   arbitrary second factor, by `isProperMap_of_comp_of_t2` and the properness of a finite morphism,
   and no separatedness notion and no fibre product is needed at any point.
@@ -197,11 +193,7 @@ most of the target too.
 
 **Neither implication between the fields is settled here.** No counterexample to either direction
 is exhibited and neither is proved, so the two-field definition is a design choice and not a
-theorem. What *is* checked is that the topological field is not idle:
-`ComplexAnalytic.not_isLocalIso_axisIncl` (`OkaTest/FiniteMorphism.lean`) rules out the closed
-immersion of an axis into `ℂ²` **using that field alone** — its own docstring records that nothing
-about stalks enters. That
-morphism fails both fields, so it witnesses no implication in either direction. -/
+theorem. -/
 class IsLocalIso {X Y : AnalyticSpace.{u}} (f : X ⟶ Y) : Prop where
   /-- The underlying map is a local homeomorphism. -/
   isLocalHomeomorph : IsLocalHomeomorph f.toLRSHom.base
@@ -512,21 +504,9 @@ is not finite** — the contrapositive of
 non-example is stated in.
 
 It is the only *general criterion* the library has for refuting
-`ComplexAnalytic.AnalyticSpace.IsFinite`'s **first** field, and it is **not** the only route this
-repository has to that refutation — an earlier draft of this paragraph said it was.
+`ComplexAnalytic.AnalyticSpace.IsFinite`'s **first** field;
 `ComplexAnalytic.AnalyticSpace.not_isFinite_of_infinite_fiber` (`Oka/AnalyticSpace/Finite.lean`)
-refutes the second field, and `ComplexAnalytic.not_isFinite_puncturedInclCoveringSpaceHom`
-(`OkaTest/CoveringSpace.lean`) refutes the first already, with no fibre anywhere in it — by
-exhibiting a non-closed image by hand, which is the route this theorem replaces rather than the
-one it is alone against.
-
-**That morphism is an instance of this theorem**, which is a better pedigree than being the only
-route would have been: it is a local isomorphism by
-`ComplexAnalytic.isLocalIso_puncturedInclCoveringSpaceHom`, out of a non-empty source, over the
-preconnected `ℂ¹`, and its base map is the inclusion on the nose by
-`ComplexAnalytic.AnalyticSpace.base_coveringSpaceHom`, so the origin is missed. **The rewrite is
-not carried out**: `OkaTest/CoveringSpace.lean`'s own proof is untouched and this paragraph is a
-reading of it, not a second proof. -/
+refutes the second field. -/
 theorem not_isFinite_of_isLocalIso_of_not_surjective {X Y : AnalyticSpace.{u}} (f : X ⟶ Y)
     [IsLocalIso f] [Nonempty X] [PreconnectedSpace Y]
     (hf : ¬ Function.Surjective (f.toLRSHom.base : X → Y)) : ¬ IsFinite f :=

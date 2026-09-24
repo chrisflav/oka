@@ -67,15 +67,11 @@ injectivity — because the fibre of `f` over `y` sits inside the fibre of `f �
 with two origins over the real line, with `f` the inclusion of one of the two branches: then
 `f ≫ g` is the identity, hence closed with finite fibres, and `g` is closed with fibres of at most
 two points, while the complement of the image of `f` is the other origin alone, which is not open
-— so `f` is not closed. **That is a statement about topological spaces, and one of that shape is
-now compiled**: `TwoIndiscrete.not_isClosedMap_pt_of_isClosedMap_comp`
-(`OkaTest/FiniteEtaleCancel.lean`) exhibits a `g` that is continuous, closed and has finite
-fibres, an `f` that is continuous, a
-closed `f ≫ g` and a non-closed `f`. It is a two-point indiscrete space and not the line with two
-origins, so it is the weaker witness — its `g` is not a local homeomorphism and its middle space
-is not T1. **The line with two origins itself is compiled beside it**, as
-`LineTwoOrigins.not_isClosedMap_inc_of_isClosedMap_comp`, with a `g` that *is* a local
-homeomorphism, so the paragraph above is now a theorem at the space it argues with.
+— so `f` is not closed. **That is a statement about topological spaces, and a smaller one of
+that shape exists**: a two-point indiscrete space mapping to a point gives a `g` that is
+continuous, closed and has finite fibres, and the inclusion of one of its points an `f` that is
+continuous, with `f ≫ g` closed and `f` not. It is the weaker witness — its `g` is not a local
+homeomorphism and its middle space is not T1.
 
 That paragraph does not collide with `ComplexAnalytic.AnalyticSpace.isFinite_of_isFinite_comp`,
 which is this file's older cancellation lemma and asks the second factor to be injective: the `g`
@@ -306,8 +302,7 @@ this development cuts out — every local model, in particular — is finite ove
 
 Like `ComplexAnalytic.AnalyticSpace.mono_of_isCutOutBy`, this takes the cut-out data as a
 hypothesis about `f.toLRSHom` rather than producing it, because most analytic-level morphisms
-carrying such data are built by the caller; see `OkaTest/FiniteMorphism.lean` for a closed
-embedding exhibited directly instead. **One class of them is not**: an analytification carries
+carrying such data are built by the caller. **One class of them is not**: an analytification carries
 its own datum, `ComplexAnalytic.isCutOutBy_analytificationInclHom`, and a caller holding one of
 those has this theorem for free. -/
 theorem isFinite_of_isCutOutBy {X Y : AnalyticSpace.{u}} (f : X ⟶ Y) {k : ℕ}
@@ -399,8 +394,7 @@ that embedding is finite.**
 
 This is the shape every finite morphism onto a *non-closed* image in this development has, and
 `ComplexAnalytic.AnalyticSpace.isFinite_comp` does not cover it: there `p` itself has to be
-finite, and the projection `ℂ^(n+1) ⟶ ℂ^n` is not — `ComplexAnalytic.not_isFinite_proj` in
-`OkaTest/FiniteMorphism.lean` is that non-example. What is asked here instead is that `p` be
+finite, and the projection `ℂ^(n+1) ⟶ ℂ^n` is not. What is asked here instead is that `p` be
 closed and finite-fibred **only along `Set.range i.base`**, which for a hypersurface is a
 statement about the roots of one family of polynomials and is exactly what
 `Polynomial.isClosed_fst_image_of_monic` and `Polynomial.finite_inter_fst_preimage_of_monic`
@@ -576,14 +570,10 @@ space*.** `Oka/AnalyticSpace/Basic.lean` imposes no separation axiom on an analy
 reason `AlgebraicGeometry.Scheme` does not, so with `Y` a variable there is nothing to synthesise.
 A caller whose middle space is one this development *constructs* is in a different position:
 `Oka/AnalyticSpace/Hausdorff.lean` makes every zero locus inside an open subset of `ℂ^n`, and
-every open subspace of a Hausdorff analytic space, carry the instance. **This paragraph used to
-say that the only `T2Space` instance for an analytic space in this repository was
-`ComplexAnalytic.t2Space_restrict_punctured`, about a single restriction of a single space**; that
-was exact until that file was written and both halves of it are now false. And the hypothesis
-cannot be dropped: `TwoIndiscrete.not_isClosedMap_pt_of_isClosedMap_comp`
-(`OkaTest/FiniteEtaleCancel.lean`) is a compiled witness with a two-point indiscrete middle space,
-whose second factor is closed with finite fibres — so no strengthening of `g` short of one that
-forces `Y` to be Hausdorff can replace it.
+every open subspace of a Hausdorff analytic space, carry the instance. And the hypothesis cannot
+be dropped: the module docstring's witness has a two-point indiscrete middle space, whose
+second factor is closed with finite fibres — so no strengthening of `g` short of one that forces `Y`
+to be Hausdorff can replace it.
 
 **It is on the *middle* space and not on the source or the target**, which is where the module
 docstring's counterexamples put the failure and is the position `isProperMap_of_comp_of_t2` asks

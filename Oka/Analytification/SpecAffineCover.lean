@@ -17,12 +17,12 @@ It exists because `X` did not. `ComplexAnalytic.comm_coverGlueData` and
 `AlgebraicGeometry.LocallyRingedSpace.GlueData.glueMorphisms` already produce a morphism out of
 `X^an` into **any** locally ringed space, so the comparison morphism `X^an ⟶ X` was never blocked
 on the gluing — it was blocked on there being a target at all. **On `dab084a`, the commit before
-this file, the census below counted thirteen declarations, and every one of them was on the
+this file, the census below counted nine declarations, and every one of them was on the
 analytic side or generic in the space:**
 
-    grep -rnE "^(noncomputable )?(def|abbrev) [^ ]*([Gg]lue[Dd]ata|gluedCover)" Oka OkaTest
+    grep -rnE "^(noncomputable )?(def|abbrev) [^ ]*([Gg]lue[Dd]ata|gluedCover)" Oka
 
-**This file's two are the fourteenth and fifteenth and are neither**, which is why the sentence is
+**This file's two are the tenth and eleventh and are neither**, which is why the sentence is
 pinned to a revision and written in the past: a present-tense census in the file that changes it
 is false from the moment it merges, and `Oka/Analytification/AffineCover.lean`'s policy paragraph
 has been repaired twice for the same reason. The filter is on *names* rather than result types, so
@@ -218,8 +218,7 @@ member only. Nothing here is about two data at once; taxis #1329 has the measure
   the scheme out of this one leaves all ten true verbatim and makes the property an import-graph
   fact rather than a prose one. `Oka/Analytification/SpecScheme.lean` records the counter-argument.
 * **No input exhibited, and so no non-vacuity of the *input*.** As in
-  `Oka/Analytification/AffineCover.lean`, nothing here builds a family; the two instances that do
-  — the node cover and `ℙ¹` — are exhibited under `OkaTest/` and are not re-run here. What *is*
+  `Oka/Analytification/AffineCover.lean`, nothing here builds a family. What *is*
   ruled out is a degenerate *output*: `ComplexAnalytic.specIncl_comp_specIota` is false of a
   construction that ignores the transitions.
 * **Any comparison between `ComplexAnalytic.specOpen` and `ComplexAnalytic.coverOpen`.** One is a

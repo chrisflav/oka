@@ -77,8 +77,8 @@ import closure at all.
 open**, which is why the paragraph above is written at its commit and not in the present tense:
 `Oka/AnalyticSpace/GaloisCategory.lean` declares `CategoryTheory.PreGaloisCategory` at
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver`, so the name occurs in the
-comment-stripped code of **two** modules of this repository from that commit — that one and
-`OkaTest/GaloisCategory.lean` — with `scripts/import_cost.py`'s `strip_comments` the instrument;
+comment-stripped code of **two** modules of this repository from that commit — that one and a
+file since deleted — with `scripts/import_cost.py`'s `strip_comments` the instrument;
 the comparison functor is taxis #1113 and is open. **Whether the structure that now exists
 consumes any of the four is not decided here**, and the paragraph below is what says which
 instrument would decide it. **Neither a grep nor a guard can decide who consumes these four**, and
@@ -91,11 +91,10 @@ module but this one sees them, the library still reaches `lake build` exit 0 ove
 `7a99bfc` and **4154** at `2cf6efa`, which is a proof that nothing outside this file consumes one;
 removed outright they leave exactly **two** synthesis failures, both at
 `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_restrictHom_top`'s two `comp_mem` applications.
-Each run alters nothing but those four declarations, and the instrument is recorded as the sixth
-object of `OkaTest/Axioms.lean`. **This paragraph said `attribute [local instance]` until
-2026-09-12**, which is a different command and not this instrument: on a declaration that is
-already a global `instance` it adds a local attribute and removes nothing, so the build stays green
-whatever consumes it. The retired wording is kept here as a dated record.
+Each run alters nothing but those four declarations. **This paragraph said `attribute [local
+instance]` until 2026-09-12**, which is a different command and not this instrument: on a
+declaration that is already a global `instance` it adds a local attribute and removes nothing, so
+the build stays green whatever consumes it. The retired wording is kept here as a dated record.
 
 **That numeral read 2026-09-08 from the commit that wrote this record, which is the day the
 retired wording was *written* and not the day it was retired.** `0c370e5` put
@@ -109,13 +108,10 @@ numeral this repair replaces never did. **The instrument is `git log -G` or the 
 changes, and a retirement quotes the wording it retires into the record that replaces it, so the
 count does not move; run here it returns `0c370e5` alone, which is the commit whose date the wrong
 numeral was, and so reads as though the record were dated correctly.
-`OkaTest/Axioms.lean`'s paragraph on the same experiment took the same numeral from the same push
-and is corrected in the same way and for the same reason.
 
 Each is a quotation of a declaration that was already on `master`; nothing is proved here. (Those
-three are named in the instances' own vicinity rather than in this docstring, because
-`scripts/guard_coverage.py` reads every backticked repository name under a `## Main results`
-heading as a result this file advertises, and they are another file's.)
+three are named in the instances' own vicinity rather than in this docstring, because they are
+another file's.)
 
 **An earlier form of that list named a fibre functor, and that is now measurably wrong.**
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fiberFunctor` below reads the structure map of an
@@ -182,8 +178,7 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
 - `ComplexAnalytic.AnalyticSpace.isFiniteEtale_iff`: membership is the class, by `Iff.rfl`.
 - `ComplexAnalytic.AnalyticSpace.isIso_hom_of_iso_id`: **an object isomorphic to the base over
   itself has an invertible structure map.** This is what turns a `¬ IsIso` statement about one
-  cover into the statement that the category has an object the identity is not, and it is how the
-  non-vacuity in `OkaTest/FiniteEtaleOver.lean` is stated.
+  cover into the statement that the category has an object the identity is not.
 - `ComplexAnalytic.AnalyticSpace.isFiniteEtale_of_restrictHom_top`: **a morphism whose restriction
   over `⊤` is finite étale is finite étale** — the step that lets a `V` hypothesis be refuted
   rather than only left unproved, and the only place in this file where the property is read
@@ -343,7 +338,6 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2_trivial_of_isEmpty_base` is the
   witness that the `[Nonempty X]` of
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.not_preconnectedSpace_trivial` is doing work.
-  `OkaTest/FiniteEtaleOver.lean` exhibits one that is not isomorphic to the base over itself.
 - `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isColimitCofanSigma` and
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.hasFiniteCoproducts`: **the disjoint union of
   finitely many covers is their coproduct, so the category has finite coproducts** — with no
@@ -401,8 +395,7 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   proved or claimed here**: without it a monomorphism's image is not known to be among the clopen
   subsets in the first place — and the cancellation that makes a morphism of covers finite étale
   asks `[T2Space]` of the target's total space while the axiom asks nothing at all. taxis #1772 is
-  the filing that measures both, and `OkaTest/FiniteEtaleCancel.lean` compiles the counterexample
-  that makes the separation axiom a theorem rather than an artefact of a proof.
+  the filing that measures both.
 
   **It is proved elsewhere as of 2026-09-07, and under two hypotheses rather than none.**
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.injective_base_left_of_mono`
@@ -436,10 +429,8 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
     `ComplexAnalytic.AnalyticSpace.isFinite_of_isFinite_comp`, which concludes `IsFinite f` from
     `IsFinite (f ≫ i)`. What it asks in place of `IsFinite i` is
     `Function.Injective i.toLRSHom.base`, and the `i` here is the structure map of a cover, which
-    is exactly what is not injective: `OkaTest/FiniteEtaleOver.lean`'s separating object is
-    `ComplexAnalytic.sq`, whose `ComplexAnalytic.not_isIso_sq` is proved *from*
-    non-injectivity. So the lemma exists and its hypothesis is the one a cover cannot supply,
-    which is a route where "nothing exists" offered none.
+    is exactly what is not injective. So the lemma exists and its hypothesis is the one a cover
+    cannot supply, which is a route where "nothing exists" offered none.
   * `ComplexAnalytic.AnalyticSpace.IsLocalIso` **cancels outright** —
     `ComplexAnalytic.AnalyticSpace.isLocalIso_of_comp`, in `Oka/AnalyticSpace/LocalIso.lean` beside
     the `ComplexAnalytic.AnalyticSpace.isLocalIso_comp` it is the companion of — and it was free
@@ -467,9 +458,6 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
     `ComplexAnalytic.AnalyticSpace.isFinite_of_comp_of_t2Space` in
     `Oka/AnalyticSpace/Finite.lean`. So no separatedness notion and no fibre product was ever
     needed, and the hypothesis that was missing is a separation axiom rather than a construction.
-    The counterexample is now compiled as
-    `TwoIndiscrete.not_isClosedMap_pt_of_isClosedMap_comp` in `OkaTest/FiniteEtaleCancel.lean`,
-    where it is the witness that the separation axiom cannot be dropped.
 * **The fibre functor is here and the Galois category is not.**
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fiberFunctor` and
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.fintypeFiberFunctor` below are the fibre at a
@@ -590,11 +578,9 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   object**, so it does not enter the subcategory; and the subcategory is not empty —
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2_id` puts the base over itself in
   it, `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2_trivial_of_isEmpty` puts the
-  trivial cover at an empty index type in it,
-  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2_trivial_of_isEmpty_base` puts
-  the trivial cover over an empty base in it at any finite index type at all, and
-  `OkaTest/FiniteEtaleOver.lean`'s `sqOver` is in it as well, not isomorphic to the base over
-  itself.
+  trivial cover at an empty index type in it, and
+  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isPreconnectedT2_trivial_of_isEmpty_base` puts the
+  trivial cover over an empty base in it at any finite index type at all.
 
   **What closed the gap was one general lemma, and the statements the previous version of this
   paragraph named — `AlgebraicGeometry.LocallyRingedSpace.stalkMap_comp` and
@@ -714,12 +700,11 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   **What hid the fifth citation is the register and not the reading**: it wraps after *of the
   class*, so `git grep` for the heading reached four of the five in this file, which is the
   blindness `README.md`'s census section is about, and the wrapped-and-joined scan reaches all
-  five. **Both registers now return 12 over `Oka/` and `OkaTest/` and agree file by file**, this
-  push having re-wrapped the two citations of this file that straddled a line break — that fifth
-  one and the one in
-  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fiberFunctor` — and
-  rewritten outright the one outside it that did, so
-  that a later seat renaming this heading again is not told four where there are five.
+  five. **Both registers now return 12 over the tree and agree file by file**, this push having
+  re-wrapped the two citations of this file that straddled a line break — that fifth one and the one
+  in `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fiberFunctor` —
+  and rewritten outright the one outside it that did, so that a later seat renaming this heading
+  again is not told four where there are five.
 
   **This sentence read *The four sentences in this file that cite this bullet by its heading are
   unaffected* until 2026-09-15**, when the heading moved a second time and the count was written
@@ -732,35 +717,32 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   stood in `Oka/AnalyticSpace/FiniteEtaleBaseChange.lean` and was rewritten in the same push, and
   it is not among them because that file is not this one.** That was the whole of the outside
   on 2026-09-08. **It is not now, and this clause named only that file until 2026-09-15**: the
-  wrapped-and-joined scan over `Oka/` and `OkaTest/` returns **four** citations
-  outside this file at the commit this push is cut from — that one, together with
-  `Oka/AnalyticSpace/LocalAtTarget.lean`, `Oka/AnalyticSpace/LocalIso.lean` and
-  `Oka/AnalyticSpace/PullbackOpen.lean` — and all four are rewritten in this push. **A line-wise
-  `git grep` returns three of those four**, the one in `Oka/AnalyticSpace/LocalAtTarget.lean`
-  wrapping after *general*: the same blindness as inside this file, in a second population, so
-  the two registers stand at 4 / 6 in this file and 7 / 10 over the tree at that commit.
-  **The clause was
-  exact when written**: `git blame` puts the two in `Oka/AnalyticSpace/LocalIso.lean` and
-  `Oka/AnalyticSpace/PullbackOpen.lean` at `2cf6efa`, the push that wrote this paragraph, and its
-  diff shows both as additions citing the *new* heading rather than rewrites of the old one, and
-  the one in `Oka/AnalyticSpace/LocalAtTarget.lean` at `b79ab9b`, six days later.
-  **This paragraph named
+  wrapped-and-joined scan over the tree returns **four** citations outside this file at the commit
+  this push is cut from — that one, together with `Oka/AnalyticSpace/LocalAtTarget.lean`,
+  `Oka/AnalyticSpace/LocalIso.lean` and `Oka/AnalyticSpace/PullbackOpen.lean` — and all four are
+  rewritten in this push. **A line-wise `git grep` returns three of those four**, the one in
+  `Oka/AnalyticSpace/LocalAtTarget.lean` wrapping after *general*: the same blindness as inside this
+  file, in a second population, so the two registers stand at 4 / 6 in this file and 7 / 10 over the
+  tree at that commit. **The clause was exact when written**: `git blame` puts the two in
+  `Oka/AnalyticSpace/LocalIso.lean` and `Oka/AnalyticSpace/PullbackOpen.lean` at `2cf6efa`, the push
+  that wrote this paragraph, and its diff shows both as additions citing the *new* heading rather
+  than rewrites of the old one, and the one in `Oka/AnalyticSpace/LocalAtTarget.lean` at `b79ab9b`,
+  six days later. **This paragraph named
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fintypeFiberFunctor`
   where it now names
-  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fiberFunctor`,
-  until 2026-09-07, and was false when written, so this is a correction and not one of this
-  repository's dated records**: the citation sits in the docstring that ends at the `Type u`-valued
+  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fiberFunctor`, until
+  2026-09-07, and was false when written, so this is a correction and not one of this repository's
+  dated records**: the citation sits in the docstring that ends at the `Type u`-valued
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fiberFunctor`, and
   the docstring of
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preservesLimitsOfShape_pempty_fintypeFiberFunctor`
-  cites this bullet by no heading — it cites the `Type u`-valued instance instead, for the
-  spelling of its conclusion. Both are declarations, so `scripts/check_docstring_names.py`
-  resolves either name and only a read of the two docstrings separates them; **the count is
-  unaffected whatever it stands at**, since the citation is the same sentence under either name.
-  That clause named the count as *four* while four is what the paragraph above it said; it is not
-  re-dated here, because what it asserts — that a renaming inside one citation moves no count —
-  was true at four and is true at five.
-  The heading is unchanged for the same reason.
+  cites this bullet by no heading — it cites the `Type u`-valued instance instead, for the spelling
+  of its conclusion. Both are declarations, so `scripts/check_docstring_names.py` resolves either
+  name and only a read of the two docstrings separates them; **the count is unaffected whatever it
+  stands at**, since the citation is the same sentence under either name. That clause named the
+  count as *four* while four is what the paragraph above it said; it is not re-dated here, because
+  what it asserts — that a renaming inside one citation moves no count — was true at four and is
+  true at five. The heading is unchanged for the same reason.
 
   **This bullet read *No pullbacks, so no base change* and said that no `HasPullback` instance for
   analytic spaces is available and that none is exhibited or claimed.** That was exact until
@@ -781,9 +763,9 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree` does, and
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree_eq_of_iso` is what makes that well defined
   on isomorphism classes. It said next that the invariant is coarse and that **nothing below can
-  tell apart** the two degree-`2` covers of the punctured line — `OkaTest/FiniteEtaleOver.lean`'s
-  `z ↦ z²` and the trivial two-sheeted cover — and that the classical separation, connectedness of
-  the total space, was half present in this repository.
+  tell apart** the two degree-`2` covers of the punctured line — `z ↦ z²` and the trivial
+  two-sheeted cover — and that the classical separation, connectedness of the total space, was half
+  present in this repository.
 
   **Both halves are present now and the separation is below.**
   `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isEmpty_iso_trivial_of_preconnectedSpace` is the
@@ -804,32 +786,6 @@ would make sense at every `CategoryTheory.MorphismProperty.Over` and not only at
   monodromy *action* on it, which needs a fundamental group nothing here connects to a cover and
   the base change the **No base change of the class over a cospan of morphisms of covers** bullet
   above says this category has not.
-
-  **What the witness in `OkaTest/FiniteEtaleOver.lean` settles is that the functor's values are
-  not a complete invariant.** `OkaTest.FiniteEtaleOver.nonempty_fiber_equiv_trivial_sqOver` puts
-  the fibres of `z ↦ z²` and of the trivial two-sheeted cover of the punctured line in bijection
-  at every point of the base — the same pair that
-  `OkaTest.FiniteEtaleOver.not_iso_trivial_sqOver` proves non-isomorphic. So two objects this
-  category distinguishes have fibres it does not, at a base this repository exhibits, and that
-  much is compiled rather than argued. **It needs neither `[T2Space]` nor `[PreconnectedSpace]`**,
-  the finiteness of a fibre being unconditional.
-
-  **What it does not settle is the connected-covers sentence above, and the reason is the second
-  member of its pair.** The trivial two-sheeted cover's total space is disconnected —
-  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.not_preconnectedSpace_trivial`, which is what
-  `OkaTest.FiniteEtaleOver.not_iso_trivial_sqOver` reads and not what it proves — so the pair is a
-  connected cover and a disconnected one, and a claim quantified over pairs of *connected* covers
-  is untouched by it. **At a pair of connected covers this repository does exhibit, the values do
-  separate**: `OkaTest.FiniteEtaleOver.sqOver` and the base over itself at the punctured line are
-  both preconnected (`OkaTest.FiniteEtaleOver.preconnectedSpace_left_sqOver` and
-  `ComplexAnalytic.preconnectedSpace_restrict_punctured`) and non-isomorphic
-  (`OkaTest.FiniteEtaleOver.not_iso_id_sqOver`), and their fibres have two points and one —
-  `OkaTest.FiniteEtaleOver.card_fiber_sqOver` and
-  `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.uniqueFiberId`. **That separation is the degree
-  again** and is no evidence that the fibre sees more, which is the paragraph above read at an
-  instance. So the connected-covers sentence above stays an argument, and what would
-  compile it is a pair of *non-isomorphic* connected covers of the same degree — which is what
-  the missing monodromy action would be needed to tell apart.
 * **No scheme side and no comparison functor.** Taxis #1113 wants a functor from finite étale
   covers of a presented affine `ℂ`-scheme to these; the source of that functor is
   `(@AlgebraicGeometry.IsFinite ⊓ @AlgebraicGeometry.IsEtale).Over ⊤ X` and is available in
@@ -1094,11 +1050,10 @@ theorem FiniteEtaleOver.degree_eq_of_iso {X : AnalyticSpace.{u}}
 /-- **Two covers of different degrees are not isomorphic.**
 
 The contrapositive of `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree_eq_of_iso`, stated as
-`IsEmpty` of the type of isomorphisms because that is the shape
-`OkaTest/FiniteEtaleOver.lean`'s separations are written in. **This is the first invariant on this
-category that separates objects by a computation** rather than by refuting an `IsIso` of one
-particular morphism, and the two are genuinely different: a `¬ IsIso f` says nothing about the
-existence of some *other* isomorphism, and this says there is none. -/
+`IsEmpty` of the type of isomorphisms. **This is the first invariant on this category that separates
+objects by a computation** rather than by refuting an `IsIso` of one particular morphism, and the
+two are genuinely different: a `¬ IsIso f` says nothing about the existence of some *other*
+isomorphism, and this says there is none. -/
 theorem FiniteEtaleOver.isEmpty_iso_of_degree_ne {X : AnalyticSpace.{u}}
     {A B : FiniteEtaleOver.{u} X}
     (h : FiniteEtaleOver.degree.{u} A ≠ FiniteEtaleOver.degree.{u} B) : IsEmpty (A ≅ B) :=
@@ -1126,13 +1081,10 @@ theorem FiniteEtaleOver.degree_trivial (ι : Type u) [Finite ι] (X : AnalyticSp
 
 /-- **The trivial `ι`-sheeted cover is not the base over itself unless `ι` has one point.**
 
-The separation `OkaTest/FiniteEtaleOver.lean` records as missing: it says that separating the
-trivial cover from the identity *"needs a statement that `X ⨿ X ⟶ X` is not an isomorphism, which
-this repository does not have"*. It does not need one. The degree is `Nat.card ι` on one side and
-`1` on the other, and
+Separating the trivial cover from the identity does not need a statement that `X ⨿ X ⟶ X` is not
+an isomorphism. The degree is `Nat.card ι` on one side and `1` on the other, and
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isEmpty_iso_of_degree_ne` closes it — no `¬ IsIso`
-of any morphism is proved on the way, which is exactly why the route the absence was priced at is
-not the route taken.
+of any morphism is proved on the way.
 
 `Nat.card ι ≠ 1` is the honest hypothesis and is weaker than `1 < Nat.card ι`: it also covers the
 empty `ι`, where the cover is the empty space and the degree is `0`. **And it is sharp** —
@@ -1151,7 +1103,6 @@ cardinality.**
 So the category over a non-empty base has an object of every degree in the range of `Nat.card` and
 they are pairwise non-isomorphic — at `ι = ULift (Fin n)` that is one class for every `n`, which
 is what turns *"at least two isomorphism classes"* into *"infinitely many"*.
-`OkaTest/FiniteEtaleOver.lean` instantiates it.
 
 Stated as an implication from an isomorphism rather than as an `IsEmpty`, because the two index
 types are the data a caller has and the cardinality is what it wants back; the `IsEmpty` form is
@@ -1191,17 +1142,15 @@ theorem FiniteEtaleOver.preconnectedSpace_of_iso {X : AnalyticSpace.{u}}
 /-- **A cover with a preconnected total space is not isomorphic to one without.**
 
 The contrapositive of `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.preconnectedSpace_of_iso`, in
-the `IsEmpty` shape `OkaTest/FiniteEtaleOver.lean`'s separations are written in. **This is the
-second invariant on this category**, and the first that is not a number:
-`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isEmpty_iso_of_degree_ne` separates by a
-computation and is blind to any two objects of equal degree, which the punctured line supplies at
+the same `IsEmpty` shape. **This is the second invariant on this category**, and the first that is
+not a number: `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isEmpty_iso_of_degree_ne` separates by
+a computation and is blind to any two objects of equal degree, which the punctured line supplies at
 degree `2`.
 
 **The hypothesis is instance-implicit on `A` and explicit on `B`**, which is not a symmetry the
 statement has to break and is where the two sides are actually used: the connected side is the one
-a caller has an instance for — `ComplexAnalytic.preconnectedSpace_restrict_punctured` is one — and
-the disconnected side is the one a caller has a *theorem* for, since `¬ PreconnectedSpace` is not
-a class. -/
+a caller has an instance for, and the disconnected side is the one a caller has a *theorem* for,
+since `¬ PreconnectedSpace` is not a class. -/
 theorem FiniteEtaleOver.isEmpty_iso_of_preconnectedSpace {X : AnalyticSpace.{u}}
     {A B : FiniteEtaleOver.{u} X} [PreconnectedSpace A.left] (h : ¬ PreconnectedSpace B.left) :
     IsEmpty (A ≅ B) :=
@@ -1228,12 +1177,11 @@ theorem FiniteEtaleOver.not_preconnectedSpace_trivial (ι : Type u) [Finite ι]
 /-- **A cover with a preconnected total space is not a trivial cover with two distinct sheets.**
 
 The two statements above composed, and **the separation
-`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree` cannot make**: at the punctured line
-`OkaTest/FiniteEtaleOver.lean`'s `z ↦ z²` and
-`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.trivial` at a two-element index type both have
-degree `2` — `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree_trivial` and that file's
-`degree_sqOver` — so `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isEmpty_iso_of_degree_ne` says
-nothing about the pair. `OkaTest/FiniteEtaleOver.lean` instantiates this at exactly that pair.
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree` cannot make**: at the punctured line `z ↦ z²`
+and `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.trivial` at a two-element index type both have
+degree `2` — the second by `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.degree_trivial` — so
+`ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.isEmpty_iso_of_degree_ne` says nothing about the
+pair.
 
 **Nothing here is finite étale and nothing here is analytic.** Every step is topology — a clopen
 image, a continuous surjection, and `isClopen_iff` — which is why the statement holds of any two
@@ -1270,8 +1218,7 @@ instances that make the conjugation a transfer.
 form *"restricted over `V` the morphism is finite étale"* says nothing on its own about whether
 `V` can be `⊤`; with this, a morphism that is not finite étale gives
 `¬ IsFiniteEtale (restrictHom f ⊤)` by contraposition, so such a theorem at `V = ⊤` would be
-false. `OkaTest/StandardEtaleNotFinite.lean`'s `## What is not checked here` recorded the absence of
-exactly this step — **at `IsFinite`, not here**; see the paragraph below.
+false.
 
 **Nothing is said about `ComplexAnalytic.AnalyticSpace.IsLocalIso`.** The same conjugation would
 run and no prose site asks for it, so it is declined rather than overlooked.
@@ -1898,8 +1845,7 @@ Hausdorff.
 
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.id`'s total space is the base on the nose, so this
 is two `inferInstanceAs` and no proof. It is here so that the subcategory is known to be non-empty
-from inside this file; `OkaTest/FiniteEtaleOver.lean` exhibits an object of it that is **not**
-isomorphic to this one. -/
+from inside this file. -/
 theorem FiniteEtaleOver.isPreconnectedT2_id (X : AnalyticSpace.{u})
     [PreconnectedSpace (X : Type u)] [T2Space (X : Type u)] :
     FiniteEtaleOver.isPreconnectedT2.{u} X (FiniteEtaleOver.id.{u} X) :=

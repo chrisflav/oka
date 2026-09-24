@@ -82,9 +82,9 @@ only importer. It has been false since `c5db26c` the following day, which gave
 `Oka/AnalyticSpace/CutOutProduct.lean` as a second one on 2026-09-07. **Three modules import this
 one** at that date and two of them are not the root module. The retired wording is kept and is not
 struck, because what it records is how long a claim of this shape survives unnoticed: seventeen
-days and two falsifying pushes, neither of which opened this file. `OkaTest/Axioms.lean` states
-the rule this repairs, and this clause is one of the cheap cases: a claim about a file's
-*importers* is one reverse edge of the import graph and no grep at all.
+days and two falsifying pushes, neither of which opened this file. This clause is one of the cheap
+cases: a claim about a file's *importers* is one reverse edge of the import graph and no grep at
+all.
 
 ## Main results
 

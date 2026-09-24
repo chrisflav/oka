@@ -514,10 +514,9 @@ expect an *instance* failure rather than a proof failure.
 **The `have`s are not collapsible into a `simp` for free.**
 `ComplexAnalytic.localisationPresentedAlgebraEquiv` and `ComplexAnalytic.localisationRingHom` are
 `def`s, and naming either as a rewrite rule generates its equation lemma into this module — the
-hazard `Oka/Analytification/RefineDatumCocycle.lean` records at its own `rw`s and
-`OkaTest/LocalisationIndependence.lean`, this file's facing test, records for a definition of
-*another* module. It is recorded in many files here and counting them is not worth the sentence.
-The step is stated as a `funext` of the existing lemma for that reason. -/
+hazard `Oka/Analytification/RefineDatumCocycle.lean` records at its own `rw`s. It is recorded in
+many files here and counting them is not worth the sentence. The step is stated as a `funext` of
+the existing lemma for that reason. -/
 theorem bijective_localisationRingHom_one :
     Function.Bijective (localisationRingHom.{u} g 1) := by
   have h1 : Ideal.Quotient.mk (presentationIdeal.{u} g) (1 : MvPolynomial (ULift.{u} (Fin n)) ℂ)
@@ -561,10 +560,9 @@ noncomputable def presentedAlgebraEquivLocalisationOne :
 `ComplexAnalytic.Presentation.isoOfAlgEquiv` at
 `ComplexAnalytic.presentedAlgebraEquivLocalisationOne`. Nothing here says the two objects are
 equal — they have different variable counts — and nothing here is about a general `f`: for a
-general `f` the statement is **false**, and both halves of that are in this repository —
-`OkaTest.LocalisationFunctor.not_isIso_nodeStructureHom` is the compiled witness, at `f = z₀` on
-the node, and `ComplexAnalytic.localisationOpen_ne_top` is the reason, that `D(f)` is proper
-whenever `f` has a zero on the space. The bare `1` is doing the work. -/
+general `f` the statement is **false**, and `ComplexAnalytic.localisationOpen_ne_top` is the
+reason, that `D(f)` is proper whenever `f` has a zero on the space. The bare `1` is doing the
+work. -/
 noncomputable def localisationIsoOne :
     (⟨n + 1, k + 1, localisationPresentation.{u} g 1⟩ : Presentation.{u}) ≅ ⟨n, k, g⟩ :=
   Presentation.isoOfAlgEquiv.{u} (presentedAlgebraEquivLocalisationOne.{u} g)
@@ -601,16 +599,14 @@ statement, one category down from
 an isomorphism. **One of the two implications holds and the other is what is missing**: this
 statement gives the analytic one, by pushing it through
 `ComplexAnalytic.analytificationFunctor` and reading the result with
-`ComplexAnalytic.analytificationFunctor_map_localisationPresHom` — functoriality and nothing more,
-which is the step `OkaTest.LocalisationFunctor.not_isIso_nodeStructureHom` already runs. The
-analytic form does **not** give this one: no statement in this repository says that functor is
-full, faithful or reflects isomorphisms.
+`ComplexAnalytic.analytificationFunctor_map_localisationPresHom` — functoriality and nothing
+more. The analytic form does **not** give this one: no statement in this repository says that
+functor is full, faithful or reflects isomorphisms.
 
 **What it is *for* is that a construction taking an isomorphism in
 `ComplexAnalytic.Presentation` can now be fed at `f = 1`** — and whether any particular such
 construction's remaining hypotheses hold is a question about that construction and is not answered
-here. `OkaTest/RefineDatumWitness.lean`'s `## What this is not` says which one is open and what is
-left of it. -/
+here. -/
 instance isIso_localisationHom_one : IsIso (localisationHom.{u} g 1) := by
   rw [← localisationIsoOne_hom.{u} g]
   infer_instance

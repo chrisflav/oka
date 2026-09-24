@@ -14,9 +14,7 @@ morphism out of each member. This file says that being **finite** and being a **
 isomorphism** both pass from the members to it, and applies that to the family of `n` copies of a
 single space mapping to it by the identity.
 
-**That morphism is the first finite étale witness in this repository whose number of sheets is not
-2.** `ComplexAnalytic.card_fiber_base_sq` puts every fibre of the squaring map of the punctured
-line at two points, and until now it was the only morphism here for which the value was known;
+**That morphism realises every number of sheets**:
 `ComplexAnalytic.AnalyticSpace.card_fiber_sigmaFold` gives every value at once. It is also the
 first `ComplexAnalytic.AnalyticSpace.IsFiniteEtale` witness with a **disconnected source**, which
 is the local model of *evenly covered* and the shape the analytic side of the Riemann existence
@@ -214,8 +212,7 @@ through it `ComplexAnalytic.AnalyticSpace.isFiniteEtale_sigmaι`;
 `ComplexAnalytic.AnalyticSpace.isLocalIso_sigmaι` uses none of it — both of its fields are the
 inclusion being an *open* immersion, as its own docstring below records. It is worth naming on
 its own: *clopen*, and not
-*open*, is what an inclusion of a member is, and a bullet in `OkaTest/AnalyticSigma.lean` priced
-it as merely open and drew a false conclusion from that.
+*open*, is what an inclusion of a member is.
 
 `AlgebraicGeometry.LocallyRingedSpace.disjoint_range_sigmaι _ hij` at `hij : i ≠ j` is already
 `Disjoint (Set.range (Sigma.ι f i).base) (Set.range (Sigma.ι f j).base)` in that order; adding a
@@ -339,10 +336,7 @@ preconnected — `ComplexAnalytic.AnalyticSpace.not_surjective_sigmaι_base`
 (`Oka/AnalyticSpace/Sigma.lean`) is the same pair of hypotheses for the same reason, and the
 empty disjoint union of `ComplexAnalytic.AnalyticSpace.isEmpty_sigma` is preconnected vacuously.
 
-**The other `¬ PreconnectedSpace` statements here are narrower than this one.**
-`not_preconnectedSpace_puncturedNodeSpace` (`OkaTest/OpenSubspace.lean`) — not nameable from here,
-the test library not being in this file's import closure — is about one particular space, the node
-with a point removed, and
+**The other `¬ PreconnectedSpace` statement here is narrower than this one.**
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver.not_preconnectedSpace_trivial`
 (`Oka/AnalyticSpace/FiniteEtaleOver.lean`) is this theorem read at the constant family. **This is
 about every disjoint union at once**, and it is what `Oka/AnalyticSpace/FiniteEtaleOver.lean`
@@ -428,7 +422,7 @@ the constant family at the identity of `X`.
 This is the fold map of the coproduct, and it is a cover in the honest sense as soon as `ι` is
 finite: `ComplexAnalytic.AnalyticSpace.isFiniteEtale_sigmaFold`. The index type is a `Type u` and
 not a `ℕ` because `ComplexAnalytic.AnalyticSpace.sigma` is indexed by one; the `n`-sheeted cover
-is this at `ULift (Fin n)`, which is how `OkaTest/AnalyticSigma.lean` instantiates it. -/
+is this at `ULift (Fin n)`. -/
 def sigmaFold (X : AnalyticSpace.{u}) : sigma (fun _ : ι ↦ X) ⟶ X :=
   sigmaDesc _ fun _ ↦ 𝟙 X
 
@@ -454,11 +448,9 @@ For infinite `ι` both sides are `0` — the fibre is infinite and `Nat.card` of
 because the content survives. The morphism is not finite étale in that case, so nothing downstream
 reads it there.
 
-This is the first morphism in this repository whose number of sheets is computed and is not 2 —
-compare `ComplexAnalytic.card_fiber_base_sq`, which puts the fibres of `z ↦ z²` on the punctured
-line at two points. Unlike `ComplexAnalytic.AnalyticSpace.card_fiber_eq_of_isFiniteEtale`, which
-says the number is *constant* over a preconnected base, this computes it at each point separately
-and needs no hypothesis on `X` at all. -/
+Unlike `ComplexAnalytic.AnalyticSpace.card_fiber_eq_of_isFiniteEtale`, which says the number is
+*constant* over a preconnected base, this computes it at each point separately and needs no
+hypothesis on `X` at all. -/
 theorem card_fiber_sigmaFold (X : AnalyticSpace.{u}) (x : X) :
     Nat.card ((sigmaFold ι X).toLRSHom.base ⁻¹' {x}) = Nat.card ι := by
   have hu : ∀ _ : ι, Unique (((𝟙 X : X ⟶ X).toLRSHom.base ⁻¹' {x} : Set X)) := by

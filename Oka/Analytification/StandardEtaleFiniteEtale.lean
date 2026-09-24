@@ -21,11 +21,8 @@ presentation this repository has had both for two files without ever putting the
 
 The two are stated about different morphisms, and that is not an oversight in either file:
 unrestricted finiteness is **false**, and
-`Oka/Analytification/MonicHypersurface.lean` carries the counterexample in terms — compiled since
-2026-09-02 as `ComplexAnalytic.not_isFinite_condEtaleProj`
-(`OkaTest/StandardEtaleNotFinite.lean`), which is what makes *"stated about different morphisms"*
-a measurement rather than a reading. So the class can only be
-claimed for the restricted morphism, and what was missing was the second field *at the
+`Oka/Analytification/MonicHypersurface.lean` carries the counterexample in terms. So the class
+can only be claimed for the restricted morphism, and what was missing was the second field *at the
 restriction* — which is `ComplexAnalytic.AnalyticSpace.isLocalIso_restrictHom`
 (`Oka/AnalyticSpace/OpenSubspace.lean`), a general fact about open subspaces with nothing étale in
 it. Both files record the absence of that transport, in terms, and this file is what retires it.
@@ -79,9 +76,8 @@ header lines, even one using `scripts/import_cost.py`'s comment-stripped extract
 about twenty low on a closure this size while reproducing the delta and the named set exactly.
 Quote the delta from either instrument; quote an absolute only from the environment.
 
-**So cost decides nothing** — both are leaves, imported by `Oka.lean` alone and by no module under
-`OkaTest/`, so neither shape adds a build to the library and the seven modules are already built
-for `Oka.lean` in either case.
+**So cost decides nothing** — both are leaves, imported by `Oka.lean` alone, so neither shape adds
+a build to the library and the seven modules are already built for `Oka.lean` in either case.
 
 **What decided it is a sentence in the other file that this theorem would falsify.**
 `Oka/Analytification/StandardEtaleFiniteness.lean`'s `## What is not here` says *"No
@@ -94,9 +90,8 @@ theorem reads a `StandardEtalePair`, so appending it there would have turned tha
 ## What is not here
 
 * **No `IsFiniteEtale` of the unrestricted morphism**, and there never will be: it is **false**,
-  `Oka/Analytification/MonicHypersurface.lean` carries the witness and
-  `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`)
-  compiles it, and nothing in this file narrows that. The restriction is in the statement because
+  `Oka/Analytification/MonicHypersurface.lean` carries the witness, and nothing in this
+  file narrows that. The restriction is in the statement because
   the first field needs it.
 * **Nothing at `k ≥ 1`.** Both halves are at an empty base presentation, for the reasons their own
   files give, and a presented base is a different theorem rather than a missing hypothesis. **The
@@ -113,36 +108,15 @@ theorem reads a `StandardEtalePair`, so appending it there would have turned tha
   finiteness half at `k ≥ 1` is untouched, so this bullet stands for the class as a whole* until
   2026-09-20**, when that half and that class were written. What it says about *this* file is
   unchanged: nothing below is at `k ≥ 1`.
-* **Nothing about how large `V` is *here*, and the class is now instantiated elsewhere at a `V`
-  that is proper and nonempty.** This bullet said no pair `(F, G)` was exhibited anywhere for
-  which `V` is proper *and* nonempty; one is —
+* **Nothing about how large `V` is *here*.** This bullet said no pair `(F, G)` was exhibited
+  anywhere for which `V` is proper *and* nonempty; one is —
   `ComplexAnalytic.hypersurfaceCommonZeroImage_parabola`
   (`Oka/Analytification/OpenBaseFiniteness.lean`), instantiated for the finiteness half as
   `ComplexAnalytic.isFinite_restrictHom_analytificationMap_etalePresHom_comp_parabola`.
 
-  **It then said the parabola is *not* instantiated for this class, *"because the second field
-  needs a `StandardEtalePair` and nothing exhibits the parabola as one"*, and that reason was
-  false when it was written.** `ComplexAnalytic.condPair` (`OkaTest/StandardEtaleCond.lean`) *is*
-  the parabola, at `n = 1` and `i = 0`, in the multivariate vocabulary rather than the polynomial
-  one; `ComplexAnalytic.condPair` predates this bullet by 1d 22h and the parabola by 1d 23h, and
-  nobody read them against each other. **This bullet is 1h 14m older than the parabola**, so the
-  two intervals are not the same one: the pair is `5ae9ed5`, this bullet was first written at
-  `868ed5f`, and the parabola and the clause just quoted arrived together at `028808f`.
-  `ComplexAnalytic.isFiniteEtale_restrictHom_condEtaleProj`
-  (`OkaTest/CondFiniteEtale.lean`) is the theorem below at that pair, and the `V` it holds over is
-  the punctured line — proper and nonempty, by
-  `ComplexAnalytic.condGoodOpen_nonempty` and `ComplexAnalytic.condGoodOpen_ne_univ`. **The same
-  morphism unrestricted is not finite étale**, which is
-  `ComplexAnalytic.not_isFiniteEtale_condEtaleProj` (`OkaTest/StandardEtaleNotFinite.lean`), and
-  neither is its restriction over `⊤`, which is
-  `ComplexAnalytic.not_isFiniteEtale_restrictHom_condEtaleProj_top` in the same file as the
-  positive half — so the two sides of the comparison are the restriction below at two opens, and
-  the hypothesis on `V` is doing visible work at one compiled instance.
-
-  **What stays true is the last clause and it is the one that matters here**: the size of `V`
-  remains a hypothesis on the pair rather than a theorem, nothing below bounds it, and the
-  instance is in the test library rather than in this one — a reader of the theorem below alone
-  still cannot conclude that the morphism is finite étale over anything in particular.
+  The size of `V` remains a hypothesis on the pair rather than a theorem and nothing below bounds
+  it — a reader of the theorem below alone still cannot conclude that the morphism is finite étale
+  over anything in particular.
 * **No comparison functor and no Riemann existence theorem.** A *different and broader* absence —
   the analytification of a finite étale morphism of **schemes** — is what
   `Oka/AnalyticSpace/LocalIso.lean`, `Oka/AnalyticSpace/CoveringMap.lean` and

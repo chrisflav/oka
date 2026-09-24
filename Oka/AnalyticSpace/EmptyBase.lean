@@ -81,9 +81,7 @@ empty is an isomorphism — has no Galois content and is stated beside
   zero-object category.** What is compiled is that one named object is initial and terminal and
   that every object is isomorphic to it; the hom sets are not described and nothing below is an
   equivalence of categories.
-* **No object.** Every statement here is under `[IsEmpty (X : Type u)]` at a variable base;
-  `OkaTest/GaloisCategory.lean` is where the refutation is read at a named analytic space, which is
-  what keeps the hypothesis from being one nothing satisfies.
+* **No object.** Every statement here is under `[IsEmpty (X : Type u)]` at a variable base.
 -/
 
 open CategoryTheory CategoryTheory.Limits

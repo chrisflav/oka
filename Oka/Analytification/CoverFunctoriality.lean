@@ -94,16 +94,6 @@ it costs one attribute.
   `ComplexAnalytic.comm_coverMapPart_comp` below discharge it too — at the identity data, and at a
   composite whose two factors already carry it — so what is new elsewhere is the data and where
   the proof comes from, not the fact of a discharge.
-
-  **This bullet also said `OkaTest/ProjectiveLine.lean` and `OkaTest/AffineCover.lean` hold *"the
-  only two instantiations of `ComplexAnalytic.coverAnalytification` in this repository"*, and that
-  was already wrong when it was written**: `ComplexAnalytic.refineAnalytification`
-  (`Oka/Analytification/CoverRefinement.lean`) and `ComplexAnalytic.refineDatumAnalytification`
-  (`Oka/Analytification/RefineDatumGlueData.lean`) are instantiations too, in `Oka/` rather than in
-  `OkaTest/`. The claim the sentence was reaching for is about the *test* covers and it survives:
-  `ComplexAnalytic.projectiveLineSpace` and `ComplexAnalytic.nodeTripleSpace` are the two
-  instantiations under `OkaTest/`, and neither has a map to the other. Named rather than counted,
-  because a cardinal about the contents of a directory is a dated claim nothing checks.
 * **Nothing algebraic about the compatibility.** The hypothesis is an equation of morphisms of
   locally ringed spaces; deriving it from a compatibility of the `ψ i` with the two glue data would
   need the overlaps of `X` to map into the overlaps of `Y`, which is a refinement condition on the

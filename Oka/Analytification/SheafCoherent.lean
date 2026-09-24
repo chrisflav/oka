@@ -61,16 +61,11 @@ is reach `Module.FinitePresentation A (Γ M)`, which is the module-level step.
 
 **This section used to say the coherent statement had no witness in this repository**, because no
 sheaf on a `Spec` was proved coherent and every coherent sheaf this development exhibited lived on
-an analytic space. `AlgebraicGeometry.isCoherentStructureSheaf_spec` retired that:
-`OkaTest.AffineSections.isCoherent_cokernel_specXHom` proves `𝒪_{Spec A} ⧸ (x)` coherent, and
-`OkaTest/CoherentPresentation.lean` applies
-`ComplexAnalytic.isCoherent_analytificationSheaf_of_isCoherent` to it. So the hypothesis is
-inhabited and the theorem is a check rather than only a statement.
+an analytic space. `AlgebraicGeometry.isCoherentStructureSheaf_spec` retired that, so the
+hypothesis is inhabited.
 
 **Do not read the coherent statement as superseding the presented one.** It is a corollary of it,
-its hypothesis is strictly stronger, and the presented form is what the three witnesses in
-`OkaTest/CoherentPresentation.lean` and the two in `OkaTest/CoherentFree.lean` satisfy — none of
-those is a coherent sheaf on a `Spec`.
+and its hypothesis is strictly stronger.
 
 ## The proof, which is three transports and no new mathematics
 
@@ -85,8 +80,7 @@ moves the cokernel across the functor. Nothing is computed.
 - `ComplexAnalytic.isCoherent_analytificationSheaf_cokernel`: **the analytification of the
   cokernel of a morphism of finite free sheaves is coherent.**
 - `ComplexAnalytic.isCoherent_analytificationSheaf_of_isCoherent`: **the analytification of a
-  coherent sheaf is coherent**, which is the previous statement plus the affine dictionary. It is
-  instantiated in `OkaTest/CoherentPresentation.lean`.
+  coherent sheaf is coherent**, which is the previous statement plus the affine dictionary.
 - `ComplexAnalytic.isCoherent_analytificationSheaf_cokernel_sectionsHom`: the same for the
   quotient of `𝒪_{Spec A}` by a finitely generated ideal sheaf, which is the shape a subscheme
   of `Spec (ℂ[x] ⧸ I)` arrives in.
@@ -191,9 +185,8 @@ free sheaves so the presented theorem applies. See the module docstring for why 
 local-to-global step is algebraic.
 
 **This hypothesis used to be uninhabited in this repository**, and the paragraph here said so.
-`AlgebraicGeometry.isCoherentStructureSheaf_spec` inhabits it, and
-`OkaTest/CoherentPresentation.lean` applies this theorem at `𝒪_{Spec A} ⧸ (x)` — so it is a check
-and not only a statement. `ComplexAnalytic.isCoherent_analytificationSheaf_cokernel` remains the
+`AlgebraicGeometry.isCoherentStructureSheaf_spec` inhabits it.
+`ComplexAnalytic.isCoherent_analytificationSheaf_cokernel` remains the
 form to apply when only a presentation is in hand, which is the weaker hypothesis and the one
 every other witness in this development satisfies.
 

@@ -92,7 +92,7 @@ conservativity and — with one `rfl` in place of a transport — the terminal o
 **This one cannot be, and the reason is that the ambient category has no such limit.**
 `ComplexAnalytic.AnalyticSpace.FiniteEtaleOver` has no fibre products in this repository at the
 commit that adds this file — `git grep -l 'AnalyticSpace\.FiniteEtaleOver\.fibreProd'` over `Oka/`
-and `OkaTest/` is **empty**, and the anchor is not decoration: without it the pattern matches every
+is **empty**, and the anchor is not decoration: without it the pattern matches every
 `ComplexAnalytic.AnalyticSpace.SeparatedFiniteEtaleOver.fibreProd…` name, of which the tree has
 many, because the shorter namespace is a substring of the longer one. **The other family of
 `fibreProd` names, and it is not a counterexample**: `ComplexAnalytic.AnalyticSpace.fibreProdCutOut`

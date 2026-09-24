@@ -188,9 +188,9 @@ that form and **nothing above is evidence about it**.
   back-references by description — *the same law* and *the witness above* — and each of those
   resolves: *the same law* by adjacency, being the bullet immediately above it, and *the witness
   above* by predicate, being the only membership statement in the list. **This note is here and
-  not under `## Main results`** because `scripts/guard_coverage.py` reads every backticked
-  repository name under that heading as a result the file advertises, so a paragraph left there
-  is counted as though it were more bullets; `Oka/AnalyticSpace/SimpleZeroStalk.lean` keeps its
+  not under `## Main results`** because every backticked repository name under that heading is
+  read as a result the file advertises, so a paragraph left there is counted as though it were
+  more bullets; `Oka/AnalyticSpace/SimpleZeroStalk.lean` keeps its
   equivalent note in the same place for the same reason.
 
 * **No general finite morphism *in this file*, and that is now all this bullet says.** It used to

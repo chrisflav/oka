@@ -72,8 +72,7 @@ The same split is what this repository wants for a second reason: this file need
 `Oka/CategoryTheory/GlueData.lean`, which `Oka/Geometry/RingedSpace/PresheafedSpace/Gluing.lean`
 neither imports nor reaches — that file's `Oka`-internal import closure has four modules and this
 is not one of them — so putting the material there would put it into the import closure of the
-**167** repository modules downstream of that file (measured at `d2ae161`, over the 316 tracked
-`.lean` modules under `Oka/` and `OkaTest/` together with `Oka.lean` and `OkaTest.lean`, with
+**167** repository modules downstream of that file (measured at `d2ae161`, with
 `public import` counted).
 
 ## Main definitions
