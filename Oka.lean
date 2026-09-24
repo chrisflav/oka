@@ -321,6 +321,11 @@ import Oka.Analytification.RET.EtaleLocalIso
 import Oka.Analytification.RET.Faithful
 import Oka.Analytification.RET.FiniteAnalytification
 import Oka.Analytification.RET.FiniteEtaleFunctor
+import Oka.Analytification.RET.Full
+import Oka.Analytification.RET.Graph
+import Oka.Analytification.RET.Pullback
+import Oka.Analytification.RET.PullbackLRS
+import Oka.Analytification.RET.Separated
 import Oka.Analytification.RET.SpecBridge
 import Oka.Analytification.RefineDatumCocycle
 import Oka.Analytification.RefineDatumCover
