@@ -243,9 +243,11 @@ import Oka.Analytification.GAGA.ProjectiveSpaceHom
 import Oka.Analytification.GAGA.ProjectiveSpaceTwistGAGA
 import Oka.Analytification.GAGA.ProjectiveSpaceVanishing
 import Oka.Analytification.GAGA.Proper.Basic
+import Oka.Analytification.GAGA.Proper.CechProjectiveBox
 import Oka.Analytification.GAGA.Proper.Chow
 import Oka.Analytification.GAGA.Proper.Induction
 import Oka.Analytification.GAGA.Proper.PushforwardComparison
+import Oka.Analytification.GAGA.Proper.TheoremBProduct
 import Oka.Analytification.GAGA.RationalBox
 import Oka.Analytification.GAGA.Runge
 import Oka.Analytification.GAGA.RungeFrame
