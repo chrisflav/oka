@@ -106,27 +106,59 @@ lemma closure_prod_boxExhaustion_subset (a b : ι → ℂ) (n : ℕ) :
   rw [closure_prod]
   exact pi_mono fun i _ ↦ closure_boxExhaustion_set_subset a b n i
 
-lemma prod_boxExhaustion_subset_openBox (a b : ι → ℂ) (n : ℕ) :
-    prod (boxExhaustion a b n) ⊆ openBox a b := by
-  intro x hx i _
-  obtain ⟨⟨h1, h2⟩, h3, h4⟩ := mem_boxExhaustion_set_iff.1 (mem_prod_iff.1 hx i)
+/-- The shrunk rectangles lie in the rectangle. -/
+lemma mem_rect_of_mem_boxExhaustion_set {a b : ι → ℂ} {n : ℕ} {i : ι} {z : ℂ}
+    (hz : z ∈ (boxExhaustion a b n i).set) :
+    z ∈ Ioo (a i).re (b i).re ×ℂ Ioo (a i).im (b i).im := by
+  obtain ⟨⟨h1, h2⟩, h3, h4⟩ := mem_boxExhaustion_set_iff.1 hz
   have : (0 : ℝ) < 1 / ((n : ℝ) + 1) := by positivity
   exact ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
+
+/-- A point of the rectangle eventually lies in the shrunk rectangles. -/
+lemma eventually_mem_boxExhaustion_set {a b : ι → ℂ} {i : ι} {z : ℂ}
+    (hz : z ∈ Ioo (a i).re (b i).re ×ℂ Ioo (a i).im (b i).im) :
+    ∀ᶠ n : ℕ in atTop, z ∈ (boxExhaustion a b n i).set := by
+  have hev : ∀ c : ℝ, 0 < c → ∀ᶠ n : ℕ in atTop, 1 / ((n : ℝ) + 1) < c := fun c hc ↦
+    tendsto_one_div_add_atTop_nhds_zero_nat.eventually (gt_mem_nhds hc)
+  obtain ⟨⟨h1, h2⟩, h3, h4⟩ := hz
+  filter_upwards [hev _ (sub_pos.2 h1), hev _ (sub_pos.2 h2), hev _ (sub_pos.2 h3),
+    hev _ (sub_pos.2 h4)] with n e1 e2 e3 e4
+  exact mem_boxExhaustion_set_iff.2 ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
+
+lemma prod_boxExhaustion_subset_openBox (a b : ι → ℂ) (n : ℕ) :
+    prod (boxExhaustion a b n) ⊆ openBox a b :=
+  fun _ hx i _ ↦ mem_rect_of_mem_boxExhaustion_set (mem_prod_iff.1 hx i)
 
 lemma iUnion_prod_boxExhaustion [Finite ι] (a b : ι → ℂ) :
     ⋃ n, prod (boxExhaustion a b n) = openBox a b := by
   refine subset_antisymm (iUnion_subset (prod_boxExhaustion_subset_openBox a b)) fun x hx ↦ ?_
-  have hev : ∀ c : ℝ, 0 < c → ∀ᶠ n : ℕ in atTop, 1 / ((n : ℝ) + 1) < c := fun c hc ↦
-    tendsto_one_div_add_atTop_nhds_zero_nat.eventually (gt_mem_nhds hc)
-  have h : ∀ᶠ n : ℕ in atTop, ∀ i, x i ∈ (boxExhaustion a b n i).set := by
-    rw [Filter.eventually_all]
-    intro i
-    obtain ⟨⟨h1, h2⟩, h3, h4⟩ := hx i (mem_univ i)
-    filter_upwards [hev _ (sub_pos.2 h1), hev _ (sub_pos.2 h2), hev _ (sub_pos.2 h3),
-      hev _ (sub_pos.2 h4)] with n e1 e2 e3 e4
-    exact mem_boxExhaustion_set_iff.2 ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
-  obtain ⟨n, hn⟩ := h.exists
+  obtain ⟨n, hn⟩ := (Filter.eventually_all.2 fun i ↦
+    eventually_mem_boxExhaustion_set (hx i (mem_univ i))).exists
   exact mem_iUnion.2 ⟨n, mem_prod_iff.2 hn⟩
+
+/-- Runge approximation in one coordinate of the box exhaustion: functions holomorphic on the
+`(n + 1)`-st shrunk rectangle (with holomorphic parameters) are uniform limits on the closure of
+the `n`-th one of functions holomorphic on `ℂ` (with the same parameters). -/
+theorem exists_approx_boxExhaustion_coord {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
+    [FiniteDimensional ℂ E] (a b : ι → ℂ) (n : ℕ) (j : ι) {Q : Set E}
+    (hQ : IsOpen Q) {f : ℂ × E → ℂ}
+    (hf : DifferentiableOn ℂ f ((boxExhaustion a b (n + 1) j).set ×ˢ Q)) {L : Set E}
+    (hL : IsCompact L) (hLQ : L ⊆ Q) {ε : ℝ} (hε : 0 < ε) :
+    ∃ g : ℂ × E → ℂ, DifferentiableOn ℂ g (univ ×ˢ Q) ∧
+      ∀ z ∈ closure (boxExhaustion a b n j).set, ∀ w ∈ L, ‖f (z, w) - g (z, w)‖ ≤ ε := by
+  rcases (closure (boxExhaustion a b n j).set).eq_empty_or_nonempty with hK0 | ⟨z₀, hz₀⟩
+  · exact ⟨0, differentiableOn_const 0, fun z hz ↦ by simp [hK0] at hz⟩
+  obtain ⟨m, hm1, hm2⟩ := exists_between (one_div_succ_lt_one_div n)
+  obtain ⟨⟨h1, h2⟩, h3, h4⟩ := mem_closure_boxExhaustion_set hz₀
+  have hre : (a j).re + m < (b j).re - m := by linarith
+  have him : (a j).im + m < (b j).im - m := by linarith
+  refine exists_approx_entire_of_rect (a := ⟨(a j).re + m, (a j).im + m⟩)
+    (b := ⟨(b j).re - m, (b j).im - m⟩) hre him ?_ hQ hf (isCompact_closure_set _) ?_ hL hLQ hε
+  · rintro z ⟨⟨e1, e2⟩, e3, e4⟩
+    exact mem_boxExhaustion_set_iff.2 ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
+  · intro z hz
+    obtain ⟨⟨e1, e2⟩, e3, e4⟩ := mem_closure_boxExhaustion_set hz
+    exact ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
 
 /-- Functions holomorphic on the `(n + 1)`-st shrunk box are uniform limits on the `n`-th shrunk
 box of entire functions. -/
@@ -142,22 +174,8 @@ theorem exists_approx_boxExhaustion [Finite ι] (a b : ι → ℂ) (n : ℕ) {g 
   have hrunge : ∀ j (Q : Set ({k // k ≠ j} → ℂ)), IsOpen Q → ∀ f : ℂ × ({k // k ≠ j} → ℂ) → ℂ,
       DifferentiableOn ℂ f (Ω j ×ˢ Q) → ∀ L, IsCompact L → L ⊆ Q → ∀ ε' > 0,
       ∃ g : ℂ × ({k // k ≠ j} → ℂ) → ℂ, DifferentiableOn ℂ g (T j ×ˢ Q) ∧
-        ∀ z ∈ K j, ∀ w ∈ L, ‖f (z, w) - g (z, w)‖ ≤ ε' := by
-    intro j Q hQ f hf L hL hLQ ε' hε'
-    rcases (K j).eq_empty_or_nonempty with hK0 | ⟨z₀, hz₀⟩
-    · exact ⟨0, differentiableOn_const 0, fun z hz ↦ by simp [hK0] at hz⟩
-    obtain ⟨m, hm1, hm2⟩ := exists_between (one_div_succ_lt_one_div n)
-    obtain ⟨⟨h1, h2⟩, h3, h4⟩ := mem_closure_boxExhaustion_set hz₀
-    have hre : (a j).re + m < (b j).re - m := by linarith
-    have him : (a j).im + m < (b j).im - m := by linarith
-    refine exists_approx_entire_of_rect (a := ⟨(a j).re + m, (a j).im + m⟩)
-      (b := ⟨(b j).re - m, (b j).im - m⟩) (V := Ω j) (K := K j) hre him
-      ?_ hQ hf (isCompact_closure_set _) ?_ hL hLQ hε'
-    · rintro z ⟨⟨e1, e2⟩, e3, e4⟩
-      exact mem_boxExhaustion_set_iff.2 ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
-    · intro z hz
-      obtain ⟨⟨e1, e2⟩, e3, e4⟩ := mem_closure_boxExhaustion_set hz
-      exact ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
+        ∀ z ∈ K j, ∀ w ∈ L, ‖f (z, w) - g (z, w)‖ ≤ ε' :=
+    fun j _ hQ _ hf _ hL hLQ _ hε' ↦ exists_approx_boxExhaustion_coord a b n j hQ hf hL hLQ hε'
   obtain ⟨G, hG, hGe⟩ := exists_approx_pi Ω T K (fun j ↦ (boxExhaustion a b (n + 1) j).isOpen_set)
     (fun _ ↦ isOpen_univ) (fun _ ↦ subset_univ _)
     (fun j ↦ (boxExhaustion a b n j).isCompact_closure_set)

@@ -32,28 +32,6 @@ variable {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S) (hf : Function
   (M : ModuleCat.{u} R)
 
 include hf in
-/-- For a surjective ring map `f : R → S`, the map `M → S ⊗_R M`, `m ↦ 1 ⊗ m` is surjective. -/
-lemma surjective_extendRestrictScalarsAdj_unit_app_of_surjective :
-    Function.Surjective ((extendRestrictScalarsAdj f).unit.app M) := by
-  let g : S → R := Function.surjInv hf
-  have hg : ∀ s, f (g s) = s := Function.surjInv_eq hf
-  intro t
-  change TensorProduct R ((restrictScalars f).obj (of S S)) M at t
-  induction t using TensorProduct.induction_on with
-  | zero => exact ⟨0, map_zero _⟩
-  | tmul s m =>
-    refine ⟨g s • m, ?_⟩
-    change (show (restrictScalars f).obj (of S S) from (1 : S)) ⊗ₜ[R] (g s • m) = _
-    rw [← TensorProduct.smul_tmul]
-    congr 1
-    change f (g s) * 1 = s
-    rw [hg, mul_one]
-  | add t₁ t₂ h₁ h₂ =>
-    obtain ⟨a, ha⟩ := h₁
-    obtain ⟨b, hb⟩ := h₂
-    exact ⟨a + b, by rw [map_add, ha, hb]; exact rfl⟩
-
-include hf in
 /-- For a surjective ring map `f : R → S`, the kernel of `M → S ⊗_R M`, `m ↦ 1 ⊗ m` is contained
 in `(ker f) • M`. -/
 lemma mem_smul_top_of_extendRestrictScalarsAdj_unit_app_eq_zero (m : M)
