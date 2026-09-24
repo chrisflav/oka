@@ -320,6 +320,9 @@ import Oka.Analytification.PresentationStalk
 import Oka.Analytification.RET.ClosedPoints
 import Oka.Analytification.RET.Connected
 import Oka.Analytification.RET.ConnectedZeroLocus
+import Oka.Analytification.RET.ES.Local
+import Oka.Analytification.RET.ES.LocalGlue
+import Oka.Analytification.RET.ES.LocalModel
 import Oka.Analytification.RET.ES.NilThickening
 import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.EtaleLocalIso
