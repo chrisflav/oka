@@ -266,7 +266,15 @@ import Oka.Analytification.GAGA.Proper.GAGA2
 import Oka.Analytification.GAGA.Proper.HomSheaf
 import Oka.Analytification.GAGA.Proper.Induction
 import Oka.Analytification.GAGA.Proper.PushforwardComparison
+import Oka.Analytification.GAGA.Proper.RelativeBaseChangeAn
+import Oka.Analytification.GAGA.Proper.RelativeBaseChangeStalk
+import Oka.Analytification.GAGA.Proper.RelativeBaseChangeTwist
+import Oka.Analytification.GAGA.Proper.RelativeProjectiveAn
+import Oka.Analytification.GAGA.Proper.RelativeProjectiveAnFunctions
+import Oka.Analytification.GAGA.Proper.RelativeProjectiveVanishing
 import Oka.Analytification.GAGA.Proper.RelativeSerre
+import Oka.Analytification.GAGA.Proper.RelativeSerreAn
+import Oka.Analytification.GAGA.Proper.RelativeTwistCechAn
 import Oka.Analytification.GAGA.Proper.TheoremBProduct
 import Oka.Analytification.GAGA.RationalBox
 import Oka.Analytification.GAGA.Runge
