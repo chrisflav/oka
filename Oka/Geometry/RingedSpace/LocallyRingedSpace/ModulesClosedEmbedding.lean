@@ -35,6 +35,28 @@ noncomputable section
 
 namespace ModuleCat
 
+/-- For a surjective ring map `f : R → S`, the map `M → S ⊗_R M`, `m ↦ 1 ⊗ m` is surjective. -/
+lemma surjective_extendRestrictScalarsAdj_unit_app_of_surjective
+    {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S) (hf : Function.Surjective f)
+    (M : ModuleCat.{u} R) : Function.Surjective ((extendRestrictScalarsAdj f).unit.app M) := by
+  let g : S → R := Function.surjInv hf
+  have hg : ∀ s, f (g s) = s := Function.surjInv_eq hf
+  intro t
+  change TensorProduct R ((restrictScalars f).obj (of S S)) M at t
+  induction t using TensorProduct.induction_on with
+  | zero => exact ⟨0, map_zero _⟩
+  | tmul s m =>
+    refine ⟨g s • m, ?_⟩
+    change (show (restrictScalars f).obj (of S S) from (1 : S)) ⊗ₜ[R] (g s • m) = _
+    rw [← TensorProduct.smul_tmul]
+    congr 1
+    change f (g s) * 1 = s
+    rw [hg, mul_one]
+  | add t₁ t₂ h₁ h₂ =>
+    obtain ⟨a, ha⟩ := h₁
+    obtain ⟨b, hb⟩ := h₂
+    exact ⟨a + b, by rw [map_add, ha, hb]; exact rfl⟩
+
 /-- For a surjective ring map `f : R → S` and an `R`-module `M` killed by `ker f`, the map
 `M → S ⊗_R M`, `m ↦ 1 ⊗ m` is bijective. -/
 lemma bijective_extendRestrictScalarsAdj_unit_app_of_surjective
@@ -60,22 +82,8 @@ lemma bijective_extendRestrictScalarsAdj_unit_app_of_surjective
   have hΦ : ∀ m : M, Φ ((extendRestrictScalarsAdj f).unit.app M m) = m := fun m ↦ by
     change g 1 • m = m
     rw [key (g 1) 1 (by rw [hg, map_one]), one_smul]
-  refine ⟨fun a b h ↦ ?_, fun t ↦ ?_⟩
-  · rw [← hΦ a, ← hΦ b, h]
-  · change TensorProduct R ((restrictScalars f).obj (of S S)) M at t
-    induction t using TensorProduct.induction_on with
-    | zero => exact ⟨0, map_zero _⟩
-    | tmul s m =>
-      refine ⟨g s • m, ?_⟩
-      change (show (restrictScalars f).obj (of S S) from (1 : S)) ⊗ₜ[R] (g s • m) = _
-      rw [← TensorProduct.smul_tmul]
-      congr 1
-      change f (g s) * 1 = s
-      rw [hg, mul_one]
-    | add t₁ t₂ h₁ h₂ =>
-      obtain ⟨a, ha⟩ := h₁
-      obtain ⟨b, hb⟩ := h₂
-      exact ⟨a + b, by rw [map_add, ha, hb]; exact rfl⟩
+  refine ⟨fun a b h ↦ ?_, surjective_extendRestrictScalarsAdj_unit_app_of_surjective f hf M⟩
+  rw [← hΦ a, ← hΦ b, h]
 
 /-- If an ideal `I ⊆ R` kills `M`, then `f(I) S` kills `S ⊗_R M`. -/
 lemma smul_extendScalars_eq_zero_of_mem_map

@@ -5,8 +5,9 @@ Authors: Christian Merten
 -/
 import Oka.Analytification.GAGA.OpenImmersion
 import Oka.Analytification.GAGA.ProjectiveGAGA3
-import Oka.Analytification.GAGA.Proper.ChowIrreducible
+import Oka.Analytification.GAGA.Proper.Chow
 import Oka.Analytification.GAGA.Proper.GAGA3Induction
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.PushforwardBaseChangeStalk
 
 /-!
 # GAGA-3 for proper schemes over `ℂ`
@@ -64,27 +65,6 @@ lemma Hom.exists_preimage_le_of_isOpenImmersion_comp [IsOpenImmersion (g ≫ f)]
 end AlgebraicGeometry.LocallyRingedSpace
 
 namespace ComplexAnalytic
-
-/-- **Analytification preserves stalkwise bijectivity**: if `φ` is bijective on the stalk at
-`π z`, then `φ^an` is bijective on the stalk at `z`. -/
-lemma bijective_stalkFunctor_map_analytificationModules {T : SchemeLFTℂ.{u}}
-    {F G : SheafOfModules.{u} T.obj.left.toLocallyRingedSpace.ringSheaf} (φ : F ⟶ G)
-    (z : analytification.obj T)
-    (h : Function.Bijective
-      ((T.obj.left.toLocallyRingedSpace.stalkFunctor ((analytificationπLRS T).base z)).map φ)) :
-    Function.Bijective (((analytification.obj T).toLocallyRingedSpace.stalkFunctor z).map
-      ((analytificationModules T).map φ)) := by
-  let f := analytificationπLRS T
-  haveI : IsIso ((T.obj.left.toLocallyRingedSpace.stalkFunctor (f.base z)).map φ) :=
-    (ConcreteCategory.isIso_iff_bijective _).2 h
-  haveI : IsIso ((T.obj.left.toLocallyRingedSpace.stalkFunctor (f.base z) ⋙
-      ModuleCat.extendScalars (f.stalkMap z).hom).map φ) := by
-    rw [Functor.comp_map]
-    exact Functor.map_isIso _ _
-  haveI : IsIso ((f.pullbackModules ⋙
-      (analytification.obj T).toLocallyRingedSpace.stalkFunctor z).map φ) :=
-    (NatIso.isIso_map_iff (f.pullbackModulesStalkIso z) φ).2 inferInstance
-  exact (ConcreteCategory.isIso_iff_bijective _).1 this
 
 section Local
 
@@ -203,7 +183,8 @@ theorem genericAlgebraization_of_isProperℂ (H : RelativeAnalyticSerre.{u})
   have hμ : Function.Bijective (((analytification.obj T').toLocallyRingedSpace.stalkFunctor
       (ιA.base q)).map (eG.inv ≫ (analytificationModules T').map μ)) := by
     rw [Functor.map_comp, ConcreteCategory.coe_comp]
-    refine Function.Bijective.comp (bijective_stalkFunctor_map_analytificationModules μ _ ?_)
+    refine Function.Bijective.comp
+      ((analytificationπLRS T').bijective_stalkFunctor_map_pullbackModules _ μ ?_)
       ((((analytification.obj T').toLocallyRingedSpace.stalkFunctor _).mapIso
         eG.symm).toLinearEquiv.bijective)
     refine LocallyRingedSpace.bijective_stalkFunctor_map_of_bijective_app μ

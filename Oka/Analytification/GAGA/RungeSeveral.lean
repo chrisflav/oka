@@ -135,49 +135,57 @@ omit [Finite ι] in
 lemma monotone_exhaustion (P : Finset ι) : Monotone fun n ↦ prod (exhaustion P n) :=
   monotone_nat_of_le_succ (exhaustion_subset P)
 
-lemma iUnion_exhaustion (P : Finset ι) :
-    ⋃ n, prod (exhaustion P n) = puncturedSet (P : Set ι) := by
-  cases nonempty_fintype ι
-  ext x
-  simp only [mem_iUnion, puncturedSet, Finset.mem_coe, mem_setOf_eq]
-  constructor
-  · rintro ⟨n, hn⟩ i hi h0
-    have := (mem_set_iff'.1 (mem_prod_iff.1 hn i)).2.2
-    simp only [exhaustion, hi, if_true, h0, zero_re, zero_im, abs_zero, max_self] at this
-    have : (0 : ℝ) < (1 / 4) ^ (n + 1) := by positivity
+omit [Finite ι] in
+/-- The members of the exhaustion avoid `0` in the coordinates in `P`. -/
+lemma ne_zero_of_mem_exhaustion_set {P : Finset ι} {n : ℕ} {i : ι} (hi : i ∈ P) {z : ℂ}
+    (hz : z ∈ (exhaustion P n i).set) : z ≠ 0 := by
+  rintro rfl
+  have := (mem_set_iff'.1 hz).2.2
+  simp only [exhaustion, hi, if_true, zero_re, zero_im, abs_zero, max_self] at this
+  have : (0 : ℝ) < (1 / 4) ^ (n + 1) := by positivity
+  linarith
+
+omit [Finite ι] in
+/-- A point, nonzero if `i ∈ P`, eventually lies in the `i`-th factor of the exhaustion. -/
+lemma eventually_mem_exhaustion_set {P : Finset ι} {i : ι} {z : ℂ} (hz : i ∈ P → z ≠ 0) :
+    ∀ᶠ n : ℕ in atTop, z ∈ (exhaustion P n i).set := by
+  have hev1 : ∀ᶠ n : ℕ in atTop, ‖z‖ < n + 1 := by
+    obtain ⟨N, hN⟩ := exists_nat_gt ‖z‖
+    filter_upwards [eventually_ge_atTop N] with n hn
+    have : (N : ℝ) ≤ n := by exact_mod_cast hn
     linarith
-  · intro hx
-    have hev1 : ∀ᶠ n : ℕ in atTop, ‖x‖ < n + 1 := by
-      obtain ⟨N, hN⟩ := exists_nat_gt ‖x‖
-      filter_upwards [eventually_ge_atTop N] with n hn
-      have : (N : ℝ) ≤ n := by exact_mod_cast hn
-      linarith
-    have hev2 : ∀ᶠ n : ℕ in atTop, ∀ i ∈ P, (1 / 4 : ℝ) ^ (n + 1) < max |(x i).re| |(x i).im| := by
-      rw [Filter.eventually_all_finset]
-      intro i hi
-      have hpos : 0 < max |(x i).re| |(x i).im| := by
+  have hev2 : ∀ᶠ n : ℕ in atTop, i ∈ P → (1 / 4 : ℝ) ^ (n + 1) < max |z.re| |z.im| := by
+    by_cases hi : i ∈ P
+    · have hpos : 0 < max |z.re| |z.im| := by
         by_contra h
         push Not at h
-        have h1 : |(x i).re| = 0 := le_antisymm ((le_max_left _ _).trans h) (abs_nonneg _)
-        have h2 : |(x i).im| = 0 := le_antisymm ((le_max_right _ _).trans h) (abs_nonneg _)
-        exact hx i hi (Complex.ext (abs_eq_zero.1 h1) (abs_eq_zero.1 h2))
+        have h1 : |z.re| = 0 := le_antisymm ((le_max_left _ _).trans h) (abs_nonneg _)
+        have h2 : |z.im| = 0 := le_antisymm ((le_max_right _ _).trans h) (abs_nonneg _)
+        exact hz hi (Complex.ext (abs_eq_zero.1 h1) (abs_eq_zero.1 h2))
       obtain ⟨N, hN⟩ := exists_pow_lt_of_lt_one hpos (show (1 / 4 : ℝ) < 1 by norm_num)
-      filter_upwards [eventually_ge_atTop N] with n hn
+      filter_upwards [eventually_ge_atTop N] with n hn _
       exact lt_of_le_of_lt (pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)) hN
-    obtain ⟨n, hn1, hn2⟩ := (hev1.and hev2).exists
-    refine ⟨n, mem_prod_iff.2 fun i ↦ ?_⟩
-    have hxi : ‖x i‖ < n + 1 := lt_of_le_of_lt (norm_le_pi_norm x i) hn1
-    have h1 := abs_lt.1 (lt_of_le_of_lt (Complex.abs_re_le_norm (x i)) hxi)
-    have h2 := abs_lt.1 (lt_of_le_of_lt (Complex.abs_im_le_norm (x i)) hxi)
-    refine mem_set_iff'.2 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
-    all_goals simp only [exhaustion]
-    · linarith [h1.1]
-    · linarith [h1.2]
-    · linarith [h2.1]
-    · linarith [h2.2]
-    split_ifs with hi
-    · exact hn2 i hi
-    · exact lt_of_lt_of_le (by norm_num) (le_max_of_le_left (abs_nonneg _))
+    · exact .of_forall fun _ h ↦ absurd h hi
+  filter_upwards [hev1, hev2] with n hn1 hn2
+  have h1 := abs_lt.1 (lt_of_le_of_lt (Complex.abs_re_le_norm z) hn1)
+  have h2 := abs_lt.1 (lt_of_le_of_lt (Complex.abs_im_le_norm z) hn1)
+  refine mem_set_iff'.2 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
+  all_goals simp only [exhaustion]
+  · linarith [h1.1]
+  · linarith [h1.2]
+  · linarith [h2.1]
+  · linarith [h2.2]
+  split_ifs with hi
+  · exact hn2 hi
+  · exact lt_of_lt_of_le (by norm_num) (le_max_of_le_left (abs_nonneg _))
+
+lemma iUnion_exhaustion (P : Finset ι) :
+    ⋃ n, prod (exhaustion P n) = puncturedSet (P : Set ι) := by
+  ext x
+  simp only [mem_iUnion, puncturedSet, Finset.mem_coe, mem_setOf_eq]
+  refine ⟨fun ⟨n, hn⟩ i hi ↦ ne_zero_of_mem_exhaustion_set hi (mem_prod_iff.1 hn i), fun hx ↦ ?_⟩
+  obtain ⟨n, hn⟩ := (Filter.eventually_all.2 fun i ↦ eventually_mem_exhaustion_set (hx i)).exists
+  exact ⟨n, mem_prod_iff.2 hn⟩
 
 omit [Finite ι] in
 lemma closure_exhaustion_set_subset (P : Finset ι) (n : ℕ) (j : ι) :
@@ -206,6 +214,74 @@ lemma closure_exhaustion_subset (P : Finset ι) (n : ℕ) :
   rw [closure_prod]
   exact pi_mono fun j _ ↦ closure_exhaustion_set_subset P n j
 
+omit [Finite ι] in
+/-- Runge approximation in one coordinate of the exhaustion of `(ℂ^×)^P × ℂ^{ι \ P}`: functions
+holomorphic on the `j`-th factor of the `(n + 1)`-st member (with holomorphic parameters) are
+uniform limits on the closure of the `j`-th factor of the `n`-th member of functions holomorphic
+on `ℂ^×` (if `j ∈ P`), resp. on `ℂ` (with the same parameters). -/
+theorem exists_approx_exhaustion_coord {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
+    [FiniteDimensional ℂ E] (P : Finset ι) (n : ℕ) (j : ι) {Q : Set E}
+    (hQ : IsOpen Q) {f : ℂ × E → ℂ}
+    (hf : DifferentiableOn ℂ f ((exhaustion P (n + 1) j).set ×ˢ Q)) {L : Set E}
+    (hL : IsCompact L) (hLQ : L ⊆ Q) {ε : ℝ} (hε : 0 < ε) :
+    ∃ g : ℂ × E → ℂ, DifferentiableOn ℂ g ((if j ∈ P then {0}ᶜ else univ) ×ˢ Q) ∧
+      ∀ z ∈ closure (exhaustion P n j).set, ∀ w ∈ L, ‖f (z, w) - g (z, w)‖ ≤ ε := by
+  have hr : ∀ m : ℕ, (0 : ℝ) < (1 / 4) ^ (m + 1) := fun m ↦ by positivity
+  have hr' : ((1 : ℝ) / 4) ^ (n + 1) = 4 * (1 / 4) ^ (n + 1 + 1) := by ring
+  obtain ⟨R, hRdef⟩ : ∃ R : ℝ, R = n + 3 / 2 := ⟨_, rfl⟩
+  have hn0 : (0 : ℝ) ≤ n := n.cast_nonneg
+  by_cases hj : j ∈ P
+  · rw [if_pos hj]
+    set ρ : ℝ := 2 * (1 / 4) ^ (n + 1 + 1)
+    have hρ : 0 < ρ := by positivity
+    have hρ1 : ρ < 1 := by
+      have : ((1 : ℝ) / 4) ^ (n + 1 + 1) ≤ 1 / 4 := pow_le_of_le_one (by norm_num)
+        (by norm_num) (by omega) |>.trans (by norm_num)
+      linarith
+    have hR : 1 < R := by linarith
+    refine exists_approx_punctured_of_frame (X₀ := -R) (X₁ := R) (Y₀ := -R) (Y₁ := R)
+      hρ (by linarith) (by linarith) (by linarith) (by linarith) ?_ hQ hf
+      ((exhaustion P n j).isCompact_closure_set) ?_ ?_ hL hLQ hε
+    · rintro z ⟨⟨⟨h1, h2⟩, ⟨h3, h4⟩⟩, h5⟩
+      refine mem_set_iff'.2 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
+      all_goals simp only [exhaustion, hj, if_true]
+      · push_cast; linarith
+      · push_cast; linarith
+      · push_cast; linarith
+      · push_cast; linarith
+      by_contra hle
+      push Not at hle
+      refine h5 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;>
+        linarith [abs_le.1 ((le_max_left _ _).trans hle), abs_le.1 ((le_max_right _ _).trans hle)]
+    · intro z hz
+      obtain ⟨⟨h1, h2⟩, ⟨h3, h4⟩, h5⟩ := mem_closure_set hz
+      simp only [exhaustion, hj, if_true] at h1 h2 h3 h4 h5
+      refine ⟨⟨⟨by linarith, by linarith⟩, ⟨by linarith, by linarith⟩⟩, fun h ↦ ?_⟩
+      have : max |z.re| |z.im| ≤ ρ := max_le (abs_le.2 ⟨h.1.1, h.1.2⟩) (abs_le.2 ⟨h.2.1, h.2.2⟩)
+      rw [hr'] at h5
+      linarith [hr (n + 1)]
+    · intro z hz
+      obtain ⟨-, -, h5⟩ := mem_closure_set hz
+      simp only [exhaustion, hj, if_true] at h5
+      rw [hr'] at h5
+      refine le_trans ?_ (max_le (Complex.abs_re_le_norm z) (Complex.abs_im_le_norm z))
+      linarith [hr (n + 1)]
+  · rw [if_neg hj]
+    refine exists_approx_entire_of_rect (a := ⟨-R, -R⟩) (b := ⟨R, R⟩) (by simp; linarith)
+      (by simp; linarith) ?_ hQ hf ((exhaustion P n j).isCompact_closure_set) ?_ hL hLQ hε
+    · rintro z ⟨⟨h1, h2⟩, ⟨h3, h4⟩⟩
+      refine mem_set_iff'.2 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
+      all_goals simp only [exhaustion, hj, if_false]
+      · push_cast; linarith
+      · push_cast; linarith
+      · push_cast; linarith
+      · push_cast; linarith
+      · linarith [(abs_nonneg z.re).trans (le_max_left |z.re| |z.im|)]
+    · intro z hz
+      obtain ⟨⟨h1, h2⟩, ⟨h3, h4⟩, -⟩ := mem_closure_set hz
+      simp only [exhaustion] at h1 h2 h3 h4
+      exact ⟨⟨by simp; linarith, by simp; linarith⟩, ⟨by simp; linarith, by simp; linarith⟩⟩
+
 /-- Functions holomorphic on the `(n + 1)`-st member of the exhaustion are uniform limits on the
 `n`-th member of functions holomorphic on `(ℂ^×)^P × ℂ^{ι \ P}`. -/
 theorem exists_approx_exhaustion (P : Finset ι) (n : ℕ) {g : (ι → ℂ) → ℂ}
@@ -216,78 +292,18 @@ theorem exists_approx_exhaustion (P : Finset ι) (n : ℕ) {g : (ι → ℂ) →
   set Ω : ι → Set ℂ := fun j ↦ (exhaustion P (n + 1) j).set
   set T : ι → Set ℂ := fun j ↦ if j ∈ P then {0}ᶜ else univ
   set K : ι → Set ℂ := fun j ↦ closure (exhaustion P n j).set
-  have hr : ∀ m : ℕ, (0 : ℝ) < (1 / 4) ^ (m + 1) := fun m ↦ by positivity
-  have hr' : ((1 : ℝ) / 4) ^ (n + 1) = 4 * (1 / 4) ^ (n + 1 + 1) := by ring
   have hKΩ : ∀ j, K j ⊆ Ω j := fun j ↦ closure_exhaustion_set_subset P n j
   have hrunge : ∀ j (Q : Set ({k // k ≠ j} → ℂ)), IsOpen Q → ∀ f : ℂ × ({k // k ≠ j} → ℂ) → ℂ,
       DifferentiableOn ℂ f (Ω j ×ˢ Q) → ∀ L, IsCompact L → L ⊆ Q → ∀ ε' > 0,
       ∃ g : ℂ × ({k // k ≠ j} → ℂ) → ℂ, DifferentiableOn ℂ g (T j ×ˢ Q) ∧
-        ∀ z ∈ K j, ∀ w ∈ L, ‖f (z, w) - g (z, w)‖ ≤ ε' := by
-    intro j Q hQ f hf L hL hLQ ε' hε'
-    obtain ⟨R, hRdef⟩ : ∃ R : ℝ, R = n + 3 / 2 := ⟨_, rfl⟩
-    have hn0 : (0 : ℝ) ≤ n := n.cast_nonneg
-    by_cases hj : j ∈ P
-    · have hTj : T j = {0}ᶜ := by simp [T, hj]
-      rw [hTj]
-      set ρ : ℝ := 2 * (1 / 4) ^ (n + 1 + 1)
-      have hρ : 0 < ρ := by positivity
-      have hρ1 : ρ < 1 := by
-        have : ((1 : ℝ) / 4) ^ (n + 1 + 1) ≤ 1 / 4 := pow_le_of_le_one (by norm_num)
-          (by norm_num) (by omega) |>.trans (by norm_num)
-        linarith
-      have hR : 1 < R := by linarith
-      refine exists_approx_punctured_of_frame (X₀ := -R) (X₁ := R) (Y₀ := -R) (Y₁ := R)
-        hρ (by linarith) (by linarith) (by linarith) (by linarith) ?_ hQ hf
-        ((exhaustion P n j).isCompact_closure_set) ?_ ?_ hL hLQ hε'
-      · rintro z ⟨⟨⟨h1, h2⟩, ⟨h3, h4⟩⟩, h5⟩
-        refine mem_set_iff'.2 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
-        all_goals simp only [exhaustion, hj, if_true]
-        · push_cast; linarith
-        · push_cast; linarith
-        · push_cast; linarith
-        · push_cast; linarith
-        by_contra hle
-        push Not at hle
-        refine h5 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;>
-          linarith [abs_le.1 ((le_max_left _ _).trans hle), abs_le.1 ((le_max_right _ _).trans hle)]
-      · intro z hz
-        obtain ⟨⟨h1, h2⟩, ⟨h3, h4⟩, h5⟩ := mem_closure_set hz
-        simp only [exhaustion, hj, if_true] at h1 h2 h3 h4 h5
-        refine ⟨⟨⟨by linarith, by linarith⟩, ⟨by linarith, by linarith⟩⟩, fun h ↦ ?_⟩
-        have : max |z.re| |z.im| ≤ ρ := max_le (abs_le.2 ⟨h.1.1, h.1.2⟩) (abs_le.2 ⟨h.2.1, h.2.2⟩)
-        rw [hr'] at h5
-        linarith [hr (n + 1)]
-      · intro z hz
-        obtain ⟨-, -, h5⟩ := mem_closure_set hz
-        simp only [exhaustion, hj, if_true] at h5
-        rw [hr'] at h5
-        refine le_trans ?_ (max_le (Complex.abs_re_le_norm z) (Complex.abs_im_le_norm z))
-        linarith [hr (n + 1)]
-    · have hTj : T j = univ := by simp [T, hj]
-      rw [hTj]
-      refine exists_approx_entire_of_rect (a := ⟨-R, -R⟩) (b := ⟨R, R⟩) (by simp; linarith)
-        (by simp; linarith) ?_ hQ hf ((exhaustion P n j).isCompact_closure_set) ?_ hL hLQ hε'
-      · rintro z ⟨⟨h1, h2⟩, ⟨h3, h4⟩⟩
-        refine mem_set_iff'.2 ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
-        all_goals simp only [exhaustion, hj, if_false]
-        · push_cast; linarith
-        · push_cast; linarith
-        · push_cast; linarith
-        · push_cast; linarith
-        · linarith [(abs_nonneg z.re).trans (le_max_left |z.re| |z.im|)]
-      · intro z hz
-        obtain ⟨⟨h1, h2⟩, ⟨h3, h4⟩, -⟩ := mem_closure_set hz
-        simp only [exhaustion] at h1 h2 h3 h4
-        exact ⟨⟨by simp; linarith, by simp; linarith⟩, ⟨by simp; linarith, by simp; linarith⟩⟩
+        ∀ z ∈ K j, ∀ w ∈ L, ‖f (z, w) - g (z, w)‖ ≤ ε' :=
+    fun j _ hQ _ hf _ hL hLQ _ hε' ↦ exists_approx_exhaustion_coord P n j hQ hf hL hLQ hε'
   obtain ⟨G, hG, hGe⟩ := exists_approx_pi Ω T K (fun j ↦ (exhaustion P (n + 1) j).isOpen_set)
     (fun j ↦ by simp only [T]; split_ifs; exacts [isOpen_compl_singleton, isOpen_univ])
     (fun j z hz ↦ by
       simp only [T]
       split_ifs with hj
-      · rintro rfl
-        have := (mem_set_iff'.1 hz).2.2
-        simp only [exhaustion, hj, if_true, zero_re, zero_im, abs_zero, max_self] at this
-        linarith [hr (n + 1)]
+      · exact ne_zero_of_mem_exhaustion_set hj hz
       · exact mem_univ _)
     (fun j ↦ (exhaustion P n j).isCompact_closure_set) hKΩ hrunge hg hε
   refine ⟨G, hG.mono fun x hx j _ ↦ ?_, fun x hx ↦ hGe x fun j _ ↦

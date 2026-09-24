@@ -12,9 +12,11 @@ import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
 
 For morphisms `sY : Y ⟶ S`, `sP : P ⟶ S`, an open `U ⊆ Y` and `g : U ⟶ P` over `S`, the graph
 `U ⟶ Y ×_S P` is an immersion (`AlgebraicGeometry.graphMap`). If `U ⟶ Y` is quasi-compact and
-`P` is separated over `S`, the first projection from the scheme-theoretic image `Γ̄` of the graph
-restricts to an isomorphism over `U` when `Y` is reduced
-(`AlgebraicGeometry.isIso_graphClosureFst_restrict`).
+`P` is separated over `S`, the preimage of `U` is scheme-theoretically dense in the
+scheme-theoretic image `Γ̄` of the graph, and the first projection `Γ̄ ⟶ Y` restricts to an
+isomorphism over `U` (`AlgebraicGeometry.isIso_graphClosureFst_restrict`). Morphisms to a
+separated scheme agreeing on a scheme-theoretically dense open agree
+(`AlgebraicGeometry.ext_of_isSchemeTheoreticallyDominant_of_isSeparated`).
 
 We also record two criteria used in the proof of Chow's lemma:
 
@@ -32,21 +34,6 @@ open CategoryTheory Limits
 universe u
 
 namespace AlgebraicGeometry
-
-/-- A dominant morphism into a reduced scheme is injective on global sections. -/
-lemma appTop_injective_of_isDominant {X Y : Scheme.{u}} [IsReduced Y] (f : X ⟶ Y)
-    [IsDominant f] : Function.Injective f.appTop := by
-  rw [injective_iff_map_eq_zero]
-  intro s hs
-  apply eq_zero_of_basicOpen_eq_bot
-  have h : f ⁻¹ᵁ Y.basicOpen s = ⊥ := by
-    rw [Scheme.preimage_basicOpen_top, hs, Scheme.basicOpen_zero]
-  by_contra hne
-  obtain ⟨y, hy⟩ := (TopologicalSpace.Opens.ne_bot_iff_nonempty _).1 hne
-  obtain ⟨x, hx⟩ := f.denseRange.exists_mem_open (Y.basicOpen s).isOpen ⟨y, hy⟩
-  have : x ∈ f ⁻¹ᵁ Y.basicOpen s := hx
-  rw [h] at this
-  exact this
 
 variable {X Y P S : Scheme.{u}} {sY : Y ⟶ S} {sP : P ⟶ S}
 
@@ -107,24 +94,74 @@ theorem isClosedImmersion_of_isClosed_range_of_cover {X P : Scheme.{u}} (q : X �
       infer_instance
     · exact h a
 
-/-- The scheme-theoretic image of a quasi-compact morphism from a reduced scheme is reduced. -/
-lemma isReduced_image {X Z : Scheme.{u}} (f : X ⟶ Z) [QuasiCompact f] [IsReduced X] :
-    IsReduced f.image := by
-  let W : Z.affineOpens → f.image.Opens := fun V ↦ f.imageι ⁻¹ᵁ V.1
-  have hW : TopologicalSpace.IsOpenCover W := by
-    rw [TopologicalSpace.IsOpenCover, eq_top_iff]
+/-- The morphism to the scheme-theoretic image of a quasi-compact morphism is
+scheme-theoretically dominant. -/
+instance isSchemeTheoreticallyDominant_toImage {X Z : Scheme.{u}} (f : X ⟶ Z)
+    [QuasiCompact f] : IsSchemeTheoreticallyDominant f.toImage := by
+  rw [isSchemeTheoreticallyDominant_iff]
+  let W : Z.affineOpens → f.image.affineOpens := fun V ↦ ⟨f.imageι ⁻¹ᵁ V.1, V.2.preimage _⟩
+  refine Scheme.IdealSheafData.ext_of_iSup_eq_top W ?_ fun V ↦ ?_
+  · rw [eq_top_iff]
     intro x _
     obtain ⟨_, ⟨V, hV, rfl⟩, hxV, -⟩ :=
       Z.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ (f.imageι x)) isOpen_univ
     exact TopologicalSpace.Opens.mem_iSup.2 ⟨⟨V, hV⟩, hxV⟩
-  have (V : Z.affineOpens) : IsReduced (W V).toScheme := by
-    have : IsAffine (W V).toScheme := V.2.preimage f.imageι
-    have : _root_.IsReduced Γ((W V).toScheme, ⊤) :=
-      isReduced_of_injective ((W V).topIso.hom ≫ f.toImage.app (W V)).hom
-        ((f.toImage_app_injective V).comp
-          (ConcreteCategory.bijective_of_isIso (W V).topIso.hom).1)
-    exact isReduced_of_isAffine_isReduced _
-  exact @IsReduced.of_openCover _ (f.image.openCoverOfIsOpenCover W hW) this
+  · rw [Scheme.Hom.ker_apply, Scheme.IdealSheafData.ideal_bot, Pi.bot_apply]
+    exact (RingHom.injective_iff_ker_eq_bot _).1 (f.toImage_app_injective V)
+
+/-- The restriction of a quasi-compact scheme-theoretically dominant morphism to an open of the
+target is scheme-theoretically dominant. -/
+instance isSchemeTheoreticallyDominant_morphismRestrict {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsSchemeTheoreticallyDominant f] [QuasiCompact f] (V : Y.Opens) :
+    IsSchemeTheoreticallyDominant (f ∣_ V) :=
+  .of_isPullback (isPullback_morphismRestrict f V).flip
+
+/-- If `g ≫ V.ι` is quasi-compact and scheme-theoretically dominant, so is `g`. -/
+lemma IsSchemeTheoreticallyDominant.of_comp_ι {X Y : Scheme.{u}} {V : Y.Opens}
+    (g : X ⟶ V) [IsSchemeTheoreticallyDominant (g ≫ V.ι)] [QuasiCompact (g ≫ V.ι)] :
+    IsSchemeTheoreticallyDominant g := by
+  refine .of_isPullback (f := g ≫ V.ι) (g := V.ι) (pX := 𝟙 X) (IsPullback.flip ?_)
+  refine IsOpenImmersion.isPullback g (𝟙 X) V.ι (g ≫ V.ι) (Category.id_comp _) ?_
+  ext x
+  exact iff_of_true ⟨g x, rfl⟩ ⟨x, rfl⟩
+
+/-- If the source of a scheme-theoretically dominant morphism `i` factors through an open `V`,
+then `V ⟶ X` is scheme-theoretically dominant. -/
+lemma IsSchemeTheoreticallyDominant.ι_of_fac {W X : Scheme.{u}} {V : X.Opens} (g : W ⟶ V)
+    (i : W ⟶ X) [IsSchemeTheoreticallyDominant i] (h : g ≫ V.ι = i) :
+    IsSchemeTheoreticallyDominant V.ι := by
+  rw [isSchemeTheoreticallyDominant_iff, eq_bot_iff, ← i.ker_eq_bot, ← h]
+  exact Scheme.Hom.le_ker_comp _ _
+
+/-- Let `f g : X ⟶ Y` agree over some separated `s : Y ⟶ Z`. Then `f = g` if `ι ≫ f = ι ≫ g`
+for some scheme-theoretically dominant `ι`. -/
+lemma ext_of_isSchemeTheoreticallyDominant_of_isSeparated {W X Y Z : Scheme.{u}} {f g : X ⟶ Y}
+    (s : Y ⟶ Z) [IsSeparated s] (h : f ≫ s = g ≫ s)
+    (ι : W ⟶ X) [IsSchemeTheoreticallyDominant ι] (hU : ι ≫ f = ι ≫ g) : f = g := by
+  let X' : Over Z := Over.mk (f ≫ s)
+  let Y' : Over Z := Over.mk s
+  let U' : Over Z := Over.mk (ι ≫ f ≫ s)
+  let f' : X' ⟶ Y' := Over.homMk f
+  let g' : X' ⟶ Y' := Over.homMk g
+  let ι' : U' ⟶ X' := Over.homMk ι
+  have : IsSeparated Y'.hom := ‹_›
+  have hι : ι' ≫ f' = ι' ≫ g' := by ext1; exact hU
+  have hfac : (equalizer.lift ι' hι).left ≫ (equalizer.ι f' g').left = ι := by
+    rw [← Over.comp_left, equalizer.lift_ι]
+    rfl
+  have : IsIso (equalizer.ι f' g').left := by
+    have : IsSchemeTheoreticallyDominant
+        ((equalizer.lift ι' hι).left ≫ (equalizer.ι f' g').left) := by
+      rw [hfac]; exact (inferInstance : IsSchemeTheoreticallyDominant ι)
+    rw [IsClosedImmersion.isIso_iff_ker_eq_bot, eq_bot_iff,
+      ← ((equalizer.lift ι' hι).left ≫ (equalizer.ι f' g').left).ker_eq_bot]
+    exact Scheme.Hom.le_ker_comp _ _
+  exact (cancel_epi (equalizer.ι f' g').left).1 congr($(equalizer.condition f' g').left)
+
+/-- The scheme-theoretic image of a quasi-compact morphism from a reduced scheme is reduced. -/
+lemma isReduced_image {X Z : Scheme.{u}} (f : X ⟶ Z) [QuasiCompact f] [IsReduced X] :
+    IsReduced f.image :=
+  IsSchemeTheoreticallyDominant.isReduced f.toImage
 
 section graph
 
@@ -168,37 +205,56 @@ lemma isReduced_graphClosure [IsReduced Y] : IsReduced (graphMap sY sP U g hg).i
   have := quasiCompact_graphMap sY sP U g hg
   isReduced_image _
 
-/-- **The closure of the graph is isomorphic to `U` over `U`.** -/
-lemma isIso_graphClosureFst_restrict [IsReduced Y] :
-    IsIso (graphClosureFst sY sP U g hg ∣_ U) := by
+/-- The open immersion `U ⟶ π⁻¹ U` into the preimage of `U` in the closure of the graph. -/
+noncomputable def graphClosureι :
+    U.toScheme ⟶ (graphClosureFst sY sP U g hg ⁻¹ᵁ U).toScheme :=
+  IsOpenImmersion.lift (graphClosureFst sY sP U g hg ⁻¹ᵁ U).ι (graphMap sY sP U g hg).toImage
+    (by
+      rintro _ ⟨x, rfl⟩
+      rw [Scheme.Opens.range_ι]
+      change graphClosureFst sY sP U g hg ((graphMap sY sP U g hg).toImage x) ∈ U
+      rw [← Scheme.Hom.comp_apply]
+      simp)
+
+omit [QuasiCompact U.ι] [IsSeparated sP] in
+@[reassoc]
+lemma graphClosureι_ι : graphClosureι sY sP U g hg ≫ (graphClosureFst sY sP U g hg ⁻¹ᵁ U).ι =
+    (graphMap sY sP U g hg).toImage :=
+  IsOpenImmersion.lift_fac _ _ _
+
+instance : IsSchemeTheoreticallyDominant (graphClosureι sY sP U g hg) := by
   have := quasiCompact_graphMap sY sP U g hg
-  have := isReduced_graphClosure sY sP U g hg
+  have : IsSchemeTheoreticallyDominant
+      (graphClosureι sY sP U g hg ≫ (graphClosureFst sY sP U g hg ⁻¹ᵁ U).ι) := by
+    rw [graphClosureι_ι]; infer_instance
+  have : QuasiCompact (graphClosureι sY sP U g hg ≫ (graphClosureFst sY sP U g hg ⁻¹ᵁ U).ι) := by
+    rw [graphClosureι_ι]; infer_instance
+  exact .of_comp_ι _
+
+/-- The preimage of `U` is scheme-theoretically dense in the closure of the graph. -/
+instance : IsSchemeTheoreticallyDominant (graphClosureFst sY sP U g hg ⁻¹ᵁ U).ι := by
+  have := quasiCompact_graphMap sY sP U g hg
+  exact .ι_of_fac _ _ (graphClosureι_ι sY sP U g hg)
+
+/-- **The closure of the graph is isomorphic to `U` over `U`.** -/
+lemma isIso_graphClosureFst_restrict : IsIso (graphClosureFst sY sP U g hg ∣_ U) := by
   set Γ := graphMap sY sP U g hg
   set π := graphClosureFst sY sP U g hg
-  let V := π ⁻¹ᵁ U
+  set ι' := graphClosureι sY sP U g hg
   have hπ : Γ.toImage ≫ π = U.ι := by simp [π, Γ]
   have hq : Γ.toImage ≫ graphClosureSnd sY sP U g hg = g := by simp [Γ]
-  have hrange : Set.range Γ.toImage ⊆ (V : Set _) := by
-    rintro _ ⟨x, rfl⟩
-    change π (Γ.toImage x) ∈ U
-    rw [← Scheme.Hom.comp_apply, hπ]
-    exact x.2
-  let ι' : U.toScheme ⟶ V := IsOpenImmersion.lift V.ι Γ.toImage (by simpa using hrange)
-  have hι' : ι' ≫ V.ι = Γ.toImage := IsOpenImmersion.lift_fac _ _ _
-  have : IsDominant ι' := by
-    have : IsDominant (ι' ≫ V.ι) := by rw [hι']; infer_instance
-    exact IsDominant.of_comp_of_isOpenImmersion ι' V.ι
+  have hι' : ι' ≫ (π ⁻¹ᵁ U).ι = Γ.toImage := graphClosureι_ι ..
   have h₂ : ι' ≫ π ∣_ U = 𝟙 _ := by
     rw [← cancel_mono U.ι, Category.assoc, morphismRestrict_ι, reassoc_of% hι', hπ,
       Category.id_comp]
   refine ⟨ι', ?_, h₂⟩
-  rw [← cancel_mono (V.ι ≫ Γ.imageι), Category.assoc, reassoc_of% hι', Γ.toImage_imageι,
-    Category.id_comp]
+  rw [← cancel_mono ((π ⁻¹ᵁ U).ι ≫ Γ.imageι), Category.assoc, reassoc_of% hι',
+    Γ.toImage_imageι, Category.id_comp]
   apply pullback.hom_ext
   · simp only [Category.assoc, graphMap_fst, Γ]
     exact morphismRestrict_ι π U
   · simp only [Category.assoc, graphMap_snd, Γ]
-    refine ext_of_isDominant_of_isSeparated sP ?_ ι' ?_
+    refine ext_of_isSchemeTheoreticallyDominant_of_isSeparated sP ?_ ι' ?_
     · simp only [Category.assoc, hg]
       rw [← Category.assoc, morphismRestrict_ι, Category.assoc, Category.assoc,
         pullback.condition]

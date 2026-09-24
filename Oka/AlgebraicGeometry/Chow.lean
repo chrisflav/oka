@@ -9,10 +9,12 @@ import Oka.AlgebraicGeometry.ProjectiveSpace.FromGlobalSections
 /-!
 # Chow's lemma
 
-Let `Y` be an integral scheme, proper over `Spec R`. Then there is a closed immersion
-`c : Y' ⟶ Y ×_R ℙ(N; R)` from an integral scheme `Y'` such that the second projection
-`Y' ⟶ ℙ(N; R)` is a closed immersion and the first projection `π : Y' ⟶ Y` is an isomorphism
-over a nonempty open `U ⊆ Y` (`AlgebraicGeometry.exists_chow`).
+Let `Y` be an irreducible scheme, proper over `Spec R`. Then there is a closed immersion
+`c : Y' ⟶ Y ×_R ℙ(N; R)` from an irreducible scheme `Y'` such that the second projection
+`Y' ⟶ ℙ(N; R)` is a closed immersion, the first projection `π : Y' ⟶ Y` is an isomorphism over a
+nonempty open `U ⊆ Y`, and `π⁻¹ U` is scheme-theoretically dense in `Y'`
+(`AlgebraicGeometry.exists_chow_of_irreducibleSpace`). If `Y` is integral, so is `Y'`
+(`AlgebraicGeometry.exists_chow`).
 
 ## Construction
 
@@ -20,7 +22,7 @@ Cover `Y` by finitely many affine opens `V i` and choose `R`-algebra generators 
 `Γ(V i)`, and a dense open `U ⊆ ⋂ V i` (`AlgebraicGeometry.Chow.Data`). The coordinates of
 `ℙ(N; R)` are indexed by the multi-indices `κ : ∀ i, Option (G i)`, and `g : U ⟶ ℙ(N; R)` is given
 by `X_κ ↦ ∏ᵢ a i (κ i)` (with `a i none = 1`). Then `Y'` is the scheme-theoretic image of the
-graph of `g` in `Y ×_R ℙ(N; R)`.
+graph of `g` in `Y ×_R ℙ(N; R)`, in which `π⁻¹ U` is scheme-theoretically dense.
 
 - `π` is an isomorphism over `U` since `ℙ(N; R)` is separated (`Chow.Data.isIso_π_restrict`).
 - If `κ i = none`, the chart coordinates `X_{κ[i ↦ g]} / X_κ` restrict to `a i g` on `U`, so
@@ -206,6 +208,10 @@ lemma j_q : d.j ≫ d.q = d.g := by simp
 
 instance [IsReduced Y] : IsReduced d.Y' := isReduced_graphClosure ..
 
+/-- `U` is scheme-theoretically dense in `Y'`. -/
+instance : IsSchemeTheoreticallyDominant (d.π ⁻¹ᵁ d.U).ι :=
+  inferInstanceAs (IsSchemeTheoreticallyDominant (graphClosureFst _ _ d.U d.g d.g_toSpec ⁻¹ᵁ d.U).ι)
+
 /-- The standard open `D₊(X_κ)` of `ℙ(N; R)`. -/
 noncomputable abbrev W (κ : d.K) : ℙ(d.N; R).Opens := Proj.basicOpen (𝒜 d) (X (d.e κ))
 
@@ -343,12 +349,9 @@ end chart
 
 section closed
 
-variable [IsReduced Y] [IsSeparated sY] (i : d.I) (κ : d.K) (hκ : κ i = none)
+variable [IsSeparated sY] (i : d.I) (κ : d.K) (hκ : κ i = none)
 
-instance (V : d.Y'.Opens) : IsDominant (d.j ∣_ V) :=
-  IsZariskiLocalAtTarget.restrict (inferInstance : IsDominant d.j) V
-
-omit [IsReduced Y] [IsSeparated sY] in
+omit [IsSeparated sY] in
 include hκ in
 /-- If `κ i = none`, then on `U` the map `ρ ∘ q` agrees with `ε`. -/
 lemma restrict_j_q_ρ :
@@ -364,8 +367,7 @@ lemma restrict_j_q_ρ :
 omit [IsSeparated sY] in
 include hκ in
 /-- If `κ i = none`, then `ρ ∘ q` factors through the closed immersion `ε`. -/
-lemma ker_ε_le : (d.ε i).ker ≤ (d.q ∣_ d.W κ ≫ d.ρ i κ).ker := by
-  have : IsSchemeTheoreticallyDominant (d.j ∣_ (d.q ⁻¹ᵁ d.W κ)) := .of_isDominant _
+lemma ker_ε_le : (d.ε i).ker ≤ (d.q ∣_ d.W κ ≫ d.ρ i κ).ker :=
   calc (d.ε i).ker ≤ ((d.j ⁻¹ᵁ d.q ⁻¹ᵁ d.W κ).ι ≫ Y.homOfLE (d.U_le i) ≫ d.ε i).ker := by
         rw [← Category.assoc]; exact Scheme.Hom.le_ker_comp _ _
     _ = (d.q ∣_ d.W κ ≫ d.ρ i κ).ker := by
@@ -390,7 +392,7 @@ lemma j_restrict_h : d.j ∣_ (d.q ⁻¹ᵁ d.W κ) ≫ d.h i κ hκ =
 
 /-- On `q⁻¹ D₊(X_κ)`, `π` factors through `h : q⁻¹ D₊(X_κ) ⟶ V i`. -/
 lemma h_ι : d.h i κ hκ ≫ (d.V i).ι = (d.q ⁻¹ᵁ d.W κ).ι ≫ d.π := by
-  refine ext_of_isDominant_of_isSeparated sY ?_ (d.j ∣_ (d.q ⁻¹ᵁ d.W κ)) ?_
+  refine ext_of_isSchemeTheoreticallyDominant_of_isSeparated sY ?_ (d.j ∣_ (d.q ⁻¹ᵁ d.W κ)) ?_
   · rw [Category.assoc, ← ε_SpecMap_C, h_ε_assoc, Category.assoc, ρ_SpecMap_C,
       morphismRestrict_ι_assoc]
     simp [pullback.condition]
@@ -405,7 +407,8 @@ theorem isClosedImmersion_q_restrict : IsClosedImmersion (d.q ∣_ d.W κ) := by
   · rw [Category.assoc, ← ε_SpecMap_C, ← pullback.condition_assoc, ρ_SpecMap_C]
   · rw [pullback.lift_snd_assoc, h_ι]
 
-omit [IsSeparated sY] in
+end closed
+
 /-- On `π⁻¹ V i ∩ q⁻¹ D₊(X_λ)` with `λ i = g`, the coordinate `X_{λ[i ↦ none]}` does not vanish:
 its ratio with `X_λ` is inverse to the generator `a i g`. -/
 lemma mem_W_update (y : d.Y') (i : d.I) (l : d.K) (g : d.G i) (hl : l i = some g)
@@ -448,11 +451,12 @@ lemma mem_W_update (y : d.Y') (i : d.I) (l : d.K) (g : d.G i) (hl : l i = some g
     exact IsLocalization.mk'_self' (Localization.Away (d.φ (X (d.e l))))
   have hs : IsUnit (m.appTop ((Scheme.ΓSpecIso _).inv r)) := by
     refine IsUnit.of_mul_eq_one (n.appTop ((Scheme.ΓSpecIso _).inv (X g))) ?_
-    apply appTop_injective_of_isDominant (d.j ∣_ V)
+    apply (d.j ∣_ V).app_injective ⊤
     have h₁ : (d.j ∣_ V).appTop (m.appTop ((Scheme.ΓSpecIso _).inv r)) =
         (d.j ∣_ V ≫ m).appTop ((Scheme.ΓSpecIso _).inv r) := rfl
     have h₂ : (d.j ∣_ V).appTop (n.appTop ((Scheme.ΓSpecIso _).inv (X g))) =
         (d.j ∣_ V ≫ n).appTop ((Scheme.ΓSpecIso _).inv (X g)) := rfl
+    change (d.j ∣_ V).appTop _ = (d.j ∣_ V).appTop _
     rw [map_mul, map_one, h₁, h₂, hm, hn, appTop_comp_SpecMap_ΓSpecIso_inv,
       appTop_comp_SpecMap_ΓSpecIso_inv, ← map_mul, ← map_mul]
     simp only [CommRingCat.hom_ofHom, RingHom.comp_apply, hring, map_one]
@@ -475,10 +479,8 @@ lemma mem_W_update (y : d.Y') (i : d.I) (l : d.K) (g : d.G i) (hl : l i = some g
       d.W l' := h₃
   rwa [hmι] at h₄
 
-end closed
-
 /-- Every point of `Y'` maps under `q` to a chart `D₊(X_κ)` with `κ i = none` for some `i`. -/
-lemma exists_chart [IsReduced Y] (y : d.Y') : ∃ i κ, κ i = none ∧ d.q y ∈ d.W κ := by
+lemma exists_chart (y : d.Y') : ∃ i κ, κ i = none ∧ d.q y ∈ d.W κ := by
   obtain ⟨i, hi⟩ : ∃ i, d.π y ∈ d.V i :=
     TopologicalSpace.Opens.mem_iSup.mp (d.iSup_V.ge (Set.mem_univ (d.π y)))
   obtain ⟨k, hk⟩ : ∃ k, d.q y ∈ ProjectiveSpace.U d.N R k :=
@@ -490,7 +492,7 @@ lemma exists_chart [IsReduced Y] (y : d.Y') : ∃ i κ, κ i = none ∧ d.q y �
   | some g => exact ⟨i, _, Function.update_self .., d.mem_W_update y i _ g h hi hl⟩
 
 /-- **The projection `Y' ⟶ ℙ(N; R)` is a closed immersion.** -/
-theorem isClosedImmersion_q [IsReduced Y] [IsProper sY] : IsClosedImmersion d.q := by
+theorem isClosedImmersion_q [IsProper sY] : IsClosedImmersion d.q := by
   refine isClosedImmersion_of_isClosed_range_of_cover d.q d.q.isClosedMap.isClosed_range
     (fun p : {p : d.I × d.K // p.2 p.1 = none} ↦ d.W p.1.2) (fun y ↦ ?_) ?_
   · obtain ⟨i, κ, h, hy⟩ := d.exists_chart y
@@ -499,17 +501,21 @@ theorem isClosedImmersion_q [IsReduced Y] [IsProper sY] : IsClosedImmersion d.q 
     exact d.isClosedImmersion_q_restrict i κ h
 
 /-- **`π : Y' ⟶ Y` is an isomorphism over `U`.** -/
-theorem isIso_π_restrict [IsReduced Y] : IsIso (d.π ∣_ d.U) :=
+theorem isIso_π_restrict : IsIso (d.π ∣_ d.U) :=
   isIso_graphClosureFst_restrict ..
 
-/-- `Y'` is integral if `Y` is. -/
-lemma isIntegral_Y' [IsIntegral Y] : IsIntegral d.Y' := by
+/-- `Y'` is irreducible if `Y` is. -/
+lemma irreducibleSpace_Y' [IrreducibleSpace Y] : IrreducibleSpace d.Y' := by
   have hne : (d.U : Set Y).Nonempty := d.dense_U.nonempty
   have : IrreducibleSpace d.U.toScheme :=
     Subtype.irreducibleSpace ⟨hne, (IrreducibleSpace.isIrreducible_univ Y).2.open_subset
       d.U.isOpen (Set.subset_univ _)⟩
-  have := irreducibleSpace_image d.Γ
-  exact isIntegral_of_irreducibleSpace_of_isReduced _
+  exact irreducibleSpace_image d.Γ
+
+/-- `Y'` is integral if `Y` is. -/
+lemma isIntegral_Y' [IsIntegral Y] : IsIntegral d.Y' :=
+  have := d.irreducibleSpace_Y'
+  isIntegral_of_irreducibleSpace_of_isReduced _
 
 end Data
 
@@ -528,10 +534,10 @@ lemma exists_finset_surjective {A : Type u} [CommRing A] {f : R →+* A} (hf : f
   exact ⟨p, (aeval_eq_eval₂Hom _ p).symm⟩
 
 open TopologicalSpace in
-/-- **Chow data exist** for an integral, quasi-compact, quasi-separated scheme locally of finite
-type over `R`. -/
-theorem Data.nonempty [IsIntegral Y] [CompactSpace Y] [QuasiSeparatedSpace Y]
-    [LocallyOfFiniteType sY] : Nonempty (Data sY) := by
+/-- **Chow data exist** for an irreducible, quasi-compact, quasi-separated scheme locally of
+finite type over `R`. -/
+theorem Data.nonempty [IrreducibleSpace Y] [CompactSpace Y]
+    [QuasiSeparatedSpace Y] [LocallyOfFiniteType sY] : Nonempty (Data sY) := by
   classical
   have hx (x : Y) : ∃ V : Y.Opens, IsAffineOpen V ∧ x ∈ V := by
     obtain ⟨_, ⟨V, hV, rfl⟩, hxV, -⟩ :=
@@ -590,5 +596,22 @@ theorem exists_chow {Y : Scheme.{u}} (sY : Y ⟶ Spec (.of R)) [IsIntegral Y] [I
   obtain ⟨d⟩ := Chow.Data.nonempty (sY := sY)
   exact ⟨d.N, d.Y', d.c, d.U, inferInstance, d.isClosedImmersion_q, d.dense_U.nonempty,
     d.isIso_π_restrict, d.isIntegral_Y'⟩
+
+/-- **Chow's lemma** (EGA II 5.6.1, irreducible case). Let `Y` be an irreducible scheme, proper
+over `Spec R`. There are `N`, a closed immersion `c : Y' ⟶ Y ×_R ℙ(N; R)` from an irreducible
+scheme `Y'` whose second projection `Y' ⟶ ℙ(N; R)` is a closed immersion, and a nonempty open
+`U ⊆ Y` over which the first projection `π : Y' ⟶ Y` restricts to an isomorphism `π⁻¹ U ≅ U`;
+moreover `π⁻¹ U` is scheme-theoretically dense in `Y'`. -/
+theorem exists_chow_of_irreducibleSpace {Y : Scheme.{u}}
+    (sY : Y ⟶ Spec (.of R)) [IrreducibleSpace Y] [IsProper sY] :
+    ∃ (N : ℕ) (Y' : Scheme.{u}) (c : Y' ⟶ pullback sY (ProjectiveSpace.toSpec N R))
+      (U : Y.Opens), IsClosedImmersion c ∧ IsClosedImmersion (c ≫ pullback.snd _ _) ∧
+      (U : Set Y).Nonempty ∧ IsIso ((c ≫ pullback.fst _ _) ∣_ U) ∧ IrreducibleSpace Y' ∧
+      IsSchemeTheoreticallyDominant ((c ≫ pullback.fst _ _) ⁻¹ᵁ U).ι := by
+  have : CompactSpace Y := QuasiCompact.compactSpace_of_compactSpace sY
+  have : QuasiSeparatedSpace Y := quasiSeparatedSpace_of_quasiSeparated sY
+  obtain ⟨d⟩ := Chow.Data.nonempty (sY := sY)
+  exact ⟨d.N, d.Y', d.c, d.U, inferInstance, d.isClosedImmersion_q, d.dense_U.nonempty,
+    d.isIso_π_restrict, d.irreducibleSpace_Y', inferInstance⟩
 
 end AlgebraicGeometry
