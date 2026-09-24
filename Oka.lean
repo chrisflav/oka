@@ -45,6 +45,7 @@ import Oka.AlgebraicGeometry.Modules.LocallyExact
 import Oka.AlgebraicGeometry.Modules.QuasicoherentCover
 import Oka.AlgebraicGeometry.Modules.QuasicoherentSections
 import Oka.AlgebraicGeometry.Modules.Sheaf
+import Oka.AlgebraicGeometry.Modules.Support
 import Oka.AlgebraicGeometry.Modules.Tilde
 import Oka.AlgebraicGeometry.Modules.TildeExact
 import Oka.AlgebraicGeometry.Morphisms.ClosedImmersion
@@ -238,6 +239,8 @@ import Oka.Analytification.GAGA.ProjectiveSpaceGlobalSections
 import Oka.Analytification.GAGA.ProjectiveSpaceHom
 import Oka.Analytification.GAGA.ProjectiveSpaceTwistGAGA
 import Oka.Analytification.GAGA.ProjectiveSpaceVanishing
+import Oka.Analytification.GAGA.Proper.Basic
+import Oka.Analytification.GAGA.Proper.Induction
 import Oka.Analytification.GAGA.Proper.PushforwardComparison
 import Oka.Analytification.GAGA.RationalBox
 import Oka.Analytification.GAGA.Runge
@@ -351,6 +354,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.LocallyFree
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Modules
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbeddingKilled
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesClosedEmbeddingUnit
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesComp
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalk
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.ModulesStalkNakayama
