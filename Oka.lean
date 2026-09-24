@@ -93,6 +93,8 @@ import Oka.Analysis.Normed.Operator.Compact.Pi
 import Oka.Analysis.Normed.Operator.Compact.Schwartz
 import Oka.Analytic.DifferentiableTsum
 import Oka.Analytic.DividedDifference
+import Oka.Analytic.Hartogs
+import Oka.Analytic.HartogsRegular
 import Oka.Analytic.Laurent.Basic
 import Oka.Analytic.Laurent.Several
 import Oka.Analytic.OkaRingDifferentiable
@@ -134,6 +136,7 @@ import Oka.AnalyticSpace.FundamentalGroup
 import Oka.AnalyticSpace.GaloisCategory
 import Oka.AnalyticSpace.GermGlobalDimension
 import Oka.AnalyticSpace.Glue
+import Oka.AnalyticSpace.HartogsModule
 import Oka.AnalyticSpace.Hausdorff
 import Oka.AnalyticSpace.HolomorphicFamily
 import Oka.AnalyticSpace.HolomorphicMap
