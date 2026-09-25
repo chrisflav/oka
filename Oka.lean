@@ -413,6 +413,15 @@ import Oka.Analytification.RET.ES.EvaluationCramer
 import Oka.Analytification.RET.ES.FiniteCoherent
 import Oka.Analytification.RET.ES.FinitePushforward
 import Oka.Analytification.RET.ES.FiniteSplitting
+import Oka.Analytification.RET.ES.GrauertRemmert
+import Oka.Analytification.RET.ES.GrauertRemmert.GraphPoint
+import Oka.Analytification.RET.ES.GrauertRemmert.HolomorphicPolynomial
+import Oka.Analytification.RET.ES.GrauertRemmert.LocalChart
+import Oka.Analytification.RET.ES.GrauertRemmert.LocalForm
+import Oka.Analytification.RET.ES.GrauertRemmert.ReducedWeierstrass
+import Oka.Analytification.RET.ES.GrauertRemmert.RegularPair
+import Oka.Analytification.RET.ES.GrauertRemmert.SimpleRoot
+import Oka.Analytification.RET.ES.GrauertRemmert.WeierstrassForm
 import Oka.Analytification.RET.ES.Kummer
 import Oka.Analytification.RET.ES.KummerEvalSections
 import Oka.Analytification.RET.ES.KummerExtensionAlgebra
