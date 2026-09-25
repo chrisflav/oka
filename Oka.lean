@@ -242,11 +242,16 @@ import Oka.Analytification.Functor
 import Oka.Analytification.GAGA.AffineSpace
 import Oka.Analytification.GAGA.AnalytificationStalkSections
 import Oka.Analytification.GAGA.CartanApprox
+import Oka.Analytification.GAGA.CartanBoxInduction
 import Oka.Analytification.GAGA.CartanBundle
+import Oka.Analytification.GAGA.CartanGluing
 import Oka.Analytification.GAGA.CartanMatrixLemma
 import Oka.Analytification.GAGA.CartanNearOne
+import Oka.Analytification.GAGA.CartanSectionSplit
 import Oka.Analytification.GAGA.CartanSerre
 import Oka.Analytification.GAGA.CartanSplit
+import Oka.Analytification.GAGA.CartanTheoremA
+import Oka.Analytification.GAGA.CartanTheoremB
 import Oka.Analytification.GAGA.CauchyRectangle
 import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
