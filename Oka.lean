@@ -100,7 +100,10 @@ import Oka.Analytic.DividedDifference
 import Oka.Analytic.Hartogs
 import Oka.Analytic.HartogsRegular
 import Oka.Analytic.Laurent.Basic
+import Oka.Analytic.Laurent.L1
+import Oka.Analytic.Laurent.L1Holomorphic
 import Oka.Analytic.Laurent.Several
+import Oka.Analytic.Laurent.Toeplitz
 import Oka.Analytic.OkaRingDifferentiable
 import Oka.Analytic.ParametricCircleIntegral
 import Oka.Analytic.Puiseux
@@ -267,6 +270,7 @@ import Oka.Analytification.GAGA.ParametricIntervalIntegral
 import Oka.Analytification.GAGA.ProjectiveGAGA
 import Oka.Analytification.GAGA.ProjectiveGAGA3
 import Oka.Analytification.GAGA.ProjectiveGAGAHom
+import Oka.Analytification.GAGA.ProjectiveLineBundle
 import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAlgebraization
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
