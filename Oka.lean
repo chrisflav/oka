@@ -333,9 +333,15 @@ import Oka.Analytification.RET.ES.EtaleCriterion
 import Oka.Analytification.RET.ES.FinitePushforward
 import Oka.Analytification.RET.ES.FiniteSplitting
 import Oka.Analytification.RET.ES.Kummer
+import Oka.Analytification.RET.ES.KummerEvalSections
+import Oka.Analytification.RET.ES.KummerExtensionAlgebra
+import Oka.Analytification.RET.ES.KummerExtensionCoherent
+import Oka.Analytification.RET.ES.KummerExtensionFree
+import Oka.Analytification.RET.ES.KummerExtensionSheaf
 import Oka.Analytification.RET.ES.KummerModel
 import Oka.Analytification.RET.ES.KummerPi
 import Oka.Analytification.RET.ES.KummerSections
+import Oka.Analytification.RET.ES.KummerSectionsGlue
 import Oka.Analytification.RET.ES.Local
 import Oka.Analytification.RET.ES.LocalGlue
 import Oka.Analytification.RET.ES.LocalModel
