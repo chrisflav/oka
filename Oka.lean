@@ -373,6 +373,7 @@ import Oka.Analytification.PresentationStalk
 import Oka.Analytification.RET.ClosedPoints
 import Oka.Analytification.RET.Connected
 import Oka.Analytification.RET.ConnectedZeroLocus
+import Oka.Analytification.RET.Curves
 import Oka.Analytification.RET.ES.AffineSpaceHartogs
 import Oka.Analytification.RET.ES.Algebraize
 import Oka.Analytification.RET.ES.AnalyticStalkFlat
@@ -417,6 +418,7 @@ import Oka.Analytification.RET.ES.CurveSections
 import Oka.Analytification.RET.ES.CurveSetup
 import Oka.Analytification.RET.ES.CurveStalk
 import Oka.Analytification.RET.ES.CurveTensor
+import Oka.Analytification.RET.ES.DimZero
 import Oka.Analytification.RET.ES.EtaleCriterion
 import Oka.Analytification.RET.ES.Evaluation
 import Oka.Analytification.RET.ES.EvaluationCramer
@@ -454,6 +456,8 @@ import Oka.Analytification.RET.ES.Normalization
 import Oka.Analytification.RET.ES.NormalizationInCover
 import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.ES.ReflexiveHull
+import Oka.Analytification.RET.ES.SeparatedLocal
+import Oka.Analytification.RET.ES.SeparatedProduct
 import Oka.Analytification.RET.ES.Smooth
 import Oka.Analytification.RET.ES.SmoothCompare
 import Oka.Analytification.RET.ES.SmoothExtension
@@ -474,6 +478,7 @@ import Oka.Analytification.RET.Pullback
 import Oka.Analytification.RET.PullbackLRS
 import Oka.Analytification.RET.RootCover
 import Oka.Analytification.RET.Separated
+import Oka.Analytification.RET.SeparatedFunctor
 import Oka.Analytification.RET.SpecBridge
 import Oka.Analytification.RefineDatumCocycle
 import Oka.Analytification.RefineDatumCover
