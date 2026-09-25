@@ -227,7 +227,12 @@ import Oka.Analytification.Flatness
 import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor
 import Oka.Analytification.GAGA.AffineSpace
+import Oka.Analytification.GAGA.CartanApprox
+import Oka.Analytification.GAGA.CartanBundle
+import Oka.Analytification.GAGA.CartanMatrixLemma
+import Oka.Analytification.GAGA.CartanNearOne
 import Oka.Analytification.GAGA.CartanSerre
+import Oka.Analytification.GAGA.CartanSplit
 import Oka.Analytification.GAGA.CauchyRectangle
 import Oka.Analytification.GAGA.CechProjectiveAn
 import Oka.Analytification.GAGA.ClosedImmersion
