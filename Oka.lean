@@ -451,6 +451,7 @@ import Oka.Analytification.RET.ES.NormalHartogs
 import Oka.Analytification.RET.ES.NormalHartogsDomain
 import Oka.Analytification.RET.ES.NormalToSmooth
 import Oka.Analytification.RET.ES.Normalization
+import Oka.Analytification.RET.ES.NormalizationInCover
 import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.ES.ReflexiveHull
 import Oka.Analytification.RET.ES.Smooth
@@ -607,6 +608,7 @@ import Oka.RingTheory.Finiteness.Basic
 import Oka.RingTheory.Finiteness.Ideal
 import Oka.RingTheory.Flat.Descent
 import Oka.RingTheory.Flat.Quotient
+import Oka.RingTheory.IntegralClosureEtale
 import Oka.RingTheory.LocalProperties.ProjectiveDimension
 import Oka.RingTheory.LocalRing.ResidueField.Basic
 import Oka.RingTheory.Localization.AtPrime.Basic
