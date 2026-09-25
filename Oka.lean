@@ -359,11 +359,16 @@ import Oka.Analytification.RET.ES.BoundedSectionsTrace
 import Oka.Analytification.RET.ES.Cap
 import Oka.Analytification.RET.ES.Codim2.BlowupChart
 import Oka.Analytification.RET.ES.Codim2.ContactOrder
+import Oka.Analytification.RET.ES.Codim2.CoverFunctions
+import Oka.Analytification.RET.ES.Codim2.Descent
+import Oka.Analytification.RET.ES.Codim2.DescentBaseChange
+import Oka.Analytification.RET.ES.Codim2.DescentSections
 import Oka.Analytification.RET.ES.Codim2.GraphCharts
 import Oka.Analytification.RET.ES.Codim2.KummerMonomial
 import Oka.Analytification.RET.ES.Codim2.NormalCrossingsBasis
 import Oka.Analytification.RET.ES.Codim2.NormalCrossingsCover
 import Oka.Analytification.RET.ES.Codim2.NormalCrossingsLocal
+import Oka.Analytification.RET.ES.Codim2.PuiseuxCoord
 import Oka.Analytification.RET.ES.Curve
 import Oka.Analytification.RET.ES.CurveCompare
 import Oka.Analytification.RET.ES.CurveEtale
