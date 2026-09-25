@@ -157,6 +157,7 @@ import Oka.AnalyticSpace.GaloisCategory
 import Oka.AnalyticSpace.GermGlobalDimension
 import Oka.AnalyticSpace.Glue
 import Oka.AnalyticSpace.HartogsModule
+import Oka.AnalyticSpace.HartogsTorsionFree
 import Oka.AnalyticSpace.Hausdorff
 import Oka.AnalyticSpace.HolomorphicFamily
 import Oka.AnalyticSpace.HolomorphicMap
@@ -436,6 +437,7 @@ import Oka.Analytification.RET.ES.Local
 import Oka.Analytification.RET.ES.LocalGlue
 import Oka.Analytification.RET.ES.LocalModel
 import Oka.Analytification.RET.ES.NilThickening
+import Oka.Analytification.RET.ES.NormalToSmooth
 import Oka.Analytification.RET.ES.Normalization
 import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.ES.ReflexiveHull
