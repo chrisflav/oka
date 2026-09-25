@@ -135,7 +135,9 @@ import Oka.AnalyticSpace.Factorisation
 import Oka.AnalyticSpace.Finite
 import Oka.AnalyticSpace.FiniteEtaleBaseChange
 import Oka.AnalyticSpace.FiniteEtaleOver
+import Oka.AnalyticSpace.FiniteEtalePushforwardCoherent
 import Oka.AnalyticSpace.FiniteEtaleStableUnderBaseChange
+import Oka.AnalyticSpace.FinitePushforwardCoherent
 import Oka.AnalyticSpace.FundamentalGroup
 import Oka.AnalyticSpace.GaloisCategory
 import Oka.AnalyticSpace.GermGlobalDimension
@@ -155,6 +157,7 @@ import Oka.AnalyticSpace.LocalAtTarget
 import Oka.AnalyticSpace.LocalFreeResolution
 import Oka.AnalyticSpace.LocalIso
 import Oka.AnalyticSpace.LocalModel
+import Oka.AnalyticSpace.LocalTupleRelations
 import Oka.AnalyticSpace.MonicProjection
 import Oka.AnalyticSpace.MonicSplitting
 import Oka.AnalyticSpace.MonoDirectSummand
@@ -172,6 +175,7 @@ import Oka.AnalyticSpace.PullbackLimit
 import Oka.AnalyticSpace.PullbackModulesStalk
 import Oka.AnalyticSpace.PullbackOpen
 import Oka.AnalyticSpace.PullbackReduction
+import Oka.AnalyticSpace.PushforwardStalkCoherent
 import Oka.AnalyticSpace.QuotientColimit
 import Oka.AnalyticSpace.QuotientCover
 import Oka.AnalyticSpace.Relations
@@ -330,16 +334,24 @@ import Oka.Analytification.RET.Connected
 import Oka.Analytification.RET.ConnectedZeroLocus
 import Oka.Analytification.RET.ES.Algebraize
 import Oka.Analytification.RET.ES.EtaleCriterion
+import Oka.Analytification.RET.ES.FiniteCoherent
 import Oka.Analytification.RET.ES.FinitePushforward
 import Oka.Analytification.RET.ES.FiniteSplitting
 import Oka.Analytification.RET.ES.Kummer
+import Oka.Analytification.RET.ES.KummerEvalSections
+import Oka.Analytification.RET.ES.KummerExtensionAlgebra
+import Oka.Analytification.RET.ES.KummerExtensionCoherent
+import Oka.Analytification.RET.ES.KummerExtensionFree
+import Oka.Analytification.RET.ES.KummerExtensionSheaf
 import Oka.Analytification.RET.ES.KummerModel
 import Oka.Analytification.RET.ES.KummerPi
 import Oka.Analytification.RET.ES.KummerSections
+import Oka.Analytification.RET.ES.KummerSectionsGlue
 import Oka.Analytification.RET.ES.Local
 import Oka.Analytification.RET.ES.LocalGlue
 import Oka.Analytification.RET.ES.LocalModel
 import Oka.Analytification.RET.ES.NilThickening
+import Oka.Analytification.RET.ES.Normalization
 import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.EtaleLocalIso
 import Oka.Analytification.RET.Faithful
@@ -479,6 +491,7 @@ import Oka.RenameIndex
 import Oka.RingTheory.AdicCompletion.Algebra
 import Oka.RingTheory.EtaleNilpotentLift
 import Oka.RingTheory.Filtration
+import Oka.RingTheory.FiniteNormalization
 import Oka.RingTheory.Finiteness.Basic
 import Oka.RingTheory.Finiteness.Ideal
 import Oka.RingTheory.Flat.Descent
@@ -490,6 +503,7 @@ import Oka.RingTheory.Localization.Away.Basic
 import Oka.RingTheory.Localization.Cech
 import Oka.RingTheory.Localization.CechRadical
 import Oka.RingTheory.Localization.Module
+import Oka.RingTheory.MilnorPatching
 import Oka.RingTheory.MvPolynomial.CechProjective
 import Oka.RingTheory.MvPolynomial.CechProjectiveAway
 import Oka.RingTheory.MvPolynomial.HomogeneousLocalization
