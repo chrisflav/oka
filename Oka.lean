@@ -240,6 +240,7 @@ import Oka.Analytification.Flatness
 import Oka.Analytification.FlatnessAtAPoint
 import Oka.Analytification.Functor
 import Oka.Analytification.GAGA.AffineSpace
+import Oka.Analytification.GAGA.AnalytificationStalkSections
 import Oka.Analytification.GAGA.CartanApprox
 import Oka.Analytification.GAGA.CartanBundle
 import Oka.Analytification.GAGA.CartanMatrixLemma
@@ -363,6 +364,15 @@ import Oka.Analytification.RET.ES.Codim2.KummerMonomial
 import Oka.Analytification.RET.ES.Codim2.NormalCrossingsBasis
 import Oka.Analytification.RET.ES.Codim2.NormalCrossingsCover
 import Oka.Analytification.RET.ES.Codim2.NormalCrossingsLocal
+import Oka.Analytification.RET.ES.Curve
+import Oka.Analytification.RET.ES.CurveCompare
+import Oka.Analytification.RET.ES.CurveEtale
+import Oka.Analytification.RET.ES.CurveExtension
+import Oka.Analytification.RET.ES.CurveInfinity
+import Oka.Analytification.RET.ES.CurveSections
+import Oka.Analytification.RET.ES.CurveSetup
+import Oka.Analytification.RET.ES.CurveStalk
+import Oka.Analytification.RET.ES.CurveTensor
 import Oka.Analytification.RET.ES.EtaleCriterion
 import Oka.Analytification.RET.ES.Evaluation
 import Oka.Analytification.RET.ES.EvaluationCramer
@@ -463,6 +473,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.CocycleTwistLocal
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Coherent
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentLocalPresentation
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModule
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModuleOpenEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentModuleSections
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.CoherentPushforwardClosedEmbedding
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.Cohomology
