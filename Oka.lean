@@ -156,6 +156,7 @@ import Oka.AnalyticSpace.FundamentalGroup
 import Oka.AnalyticSpace.GaloisCategory
 import Oka.AnalyticSpace.GermGlobalDimension
 import Oka.AnalyticSpace.Glue
+import Oka.AnalyticSpace.HartogsExtension
 import Oka.AnalyticSpace.HartogsModule
 import Oka.AnalyticSpace.HartogsTorsionFree
 import Oka.AnalyticSpace.Hausdorff
@@ -192,6 +193,8 @@ import Oka.AnalyticSpace.PullbackLimit
 import Oka.AnalyticSpace.PullbackModulesStalk
 import Oka.AnalyticSpace.PullbackOpen
 import Oka.AnalyticSpace.PullbackReduction
+import Oka.AnalyticSpace.PushUnitFunctionals
+import Oka.AnalyticSpace.PushUnitStalk
 import Oka.AnalyticSpace.PushforwardStalkCoherent
 import Oka.AnalyticSpace.QuotientColimit
 import Oka.AnalyticSpace.QuotientCover
@@ -369,7 +372,9 @@ import Oka.Analytification.PresentationStalk
 import Oka.Analytification.RET.ClosedPoints
 import Oka.Analytification.RET.Connected
 import Oka.Analytification.RET.ConnectedZeroLocus
+import Oka.Analytification.RET.ES.AffineSpaceHartogs
 import Oka.Analytification.RET.ES.Algebraize
+import Oka.Analytification.RET.ES.AnalyticStalkFlat
 import Oka.Analytification.RET.ES.BoundedSections
 import Oka.Analytification.RET.ES.BoundedSectionsHartogs
 import Oka.Analytification.RET.ES.BoundedSectionsTrace
@@ -401,6 +406,7 @@ import Oka.Analytification.RET.ES.Codim2.NormalCrossingsCover
 import Oka.Analytification.RET.ES.Codim2.NormalCrossingsLocal
 import Oka.Analytification.RET.ES.Codim2.PuiseuxCoord
 import Oka.Analytification.RET.ES.Codim2.RestrictCover
+import Oka.Analytification.RET.ES.CodimTwoAlgebra
 import Oka.Analytification.RET.ES.Curve
 import Oka.Analytification.RET.ES.CurveCompare
 import Oka.Analytification.RET.ES.CurveEtale
@@ -415,6 +421,7 @@ import Oka.Analytification.RET.ES.Evaluation
 import Oka.Analytification.RET.ES.EvaluationCramer
 import Oka.Analytification.RET.ES.FiniteCoherent
 import Oka.Analytification.RET.ES.FinitePushforward
+import Oka.Analytification.RET.ES.FinitePushforwardStalk
 import Oka.Analytification.RET.ES.FiniteSplitting
 import Oka.Analytification.RET.ES.GrauertRemmert
 import Oka.Analytification.RET.ES.GrauertRemmert.GraphPoint
@@ -439,6 +446,8 @@ import Oka.Analytification.RET.ES.Local
 import Oka.Analytification.RET.ES.LocalGlue
 import Oka.Analytification.RET.ES.LocalModel
 import Oka.Analytification.RET.ES.NilThickening
+import Oka.Analytification.RET.ES.NormalHartogs
+import Oka.Analytification.RET.ES.NormalHartogsDomain
 import Oka.Analytification.RET.ES.NormalToSmooth
 import Oka.Analytification.RET.ES.Normalization
 import Oka.Analytification.RET.ES.Reduced
@@ -610,9 +619,11 @@ import Oka.RingTheory.MvPolynomial.HomogeneousLocalization
 import Oka.RingTheory.MvPolynomial.Ideal
 import Oka.RingTheory.MvPolynomial.LaurentAway
 import Oka.RingTheory.MvPolynomial.Localization
+import Oka.RingTheory.NormalDepthTwo
 import Oka.RingTheory.Polynomial.ProjectiveDimension
 import Oka.RingTheory.Regular.ChangeOfRings
 import Oka.RingTheory.RingHom.FaithfullyFlat
+import Oka.RingTheory.TraceEmbedding
 import Oka.SetTheory.Cardinal.Finite
 import Oka.StalkEquiv
 import Oka.Statement
