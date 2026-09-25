@@ -176,6 +176,8 @@ import Oka.AnalyticSpace.LocalTupleRelations
 import Oka.AnalyticSpace.MonicProjection
 import Oka.AnalyticSpace.MonicSplitting
 import Oka.AnalyticSpace.MonoDirectSummand
+import Oka.AnalyticSpace.NoetherGerm
+import Oka.AnalyticSpace.NoetherProperty
 import Oka.AnalyticSpace.Noetherian
 import Oka.AnalyticSpace.Nonvanishing
 import Oka.AnalyticSpace.Nullstellensatz
