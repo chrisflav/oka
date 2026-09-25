@@ -87,6 +87,10 @@ import Oka.AlgebraicTopology.SimplexCochain
 import Oka.Analysis.Calculus.Implicit
 import Oka.Analysis.Complex.CoveringMap
 import Oka.Analysis.Complex.FundamentalGroup
+import Oka.Analysis.Complex.KummerCover
+import Oka.Analysis.Complex.KummerCoverPi
+import Oka.Analysis.Complex.KummerExtension
+import Oka.Analysis.Complex.KummerExtensionPi
 import Oka.Analysis.Complex.LiouvillePolynomial
 import Oka.Analysis.LocallyConvex.Schwartz
 import Oka.Analysis.Normed.Operator.Compact.Pi
@@ -152,6 +156,7 @@ import Oka.AnalyticSpace.LocalFreeResolution
 import Oka.AnalyticSpace.LocalIso
 import Oka.AnalyticSpace.LocalModel
 import Oka.AnalyticSpace.MonicProjection
+import Oka.AnalyticSpace.MonicSplitting
 import Oka.AnalyticSpace.MonoDirectSummand
 import Oka.AnalyticSpace.Noetherian
 import Oka.AnalyticSpace.Nonvanishing
@@ -326,6 +331,11 @@ import Oka.Analytification.RET.ConnectedZeroLocus
 import Oka.Analytification.RET.ES.Algebraize
 import Oka.Analytification.RET.ES.EtaleCriterion
 import Oka.Analytification.RET.ES.FinitePushforward
+import Oka.Analytification.RET.ES.FiniteSplitting
+import Oka.Analytification.RET.ES.Kummer
+import Oka.Analytification.RET.ES.KummerModel
+import Oka.Analytification.RET.ES.KummerPi
+import Oka.Analytification.RET.ES.KummerSections
 import Oka.Analytification.RET.ES.Local
 import Oka.Analytification.RET.ES.LocalGlue
 import Oka.Analytification.RET.ES.LocalModel
