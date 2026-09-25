@@ -285,6 +285,14 @@ import Oka.Analytification.GAGA.ProjectiveGAGA
 import Oka.Analytification.GAGA.ProjectiveGAGA3
 import Oka.Analytification.GAGA.ProjectiveGAGAHom
 import Oka.Analytification.GAGA.ProjectiveLineBundle
+import Oka.Analytification.GAGA.ProjectiveLineCoherentCartan
+import Oka.Analytification.GAGA.ProjectiveLineCoherentCover
+import Oka.Analytification.GAGA.ProjectiveLineCoherentDirectImage
+import Oka.Analytification.GAGA.ProjectiveLineCoherentGenerators
+import Oka.Analytification.GAGA.ProjectiveLineCoherentSplitting
+import Oka.Analytification.GAGA.ProjectiveLineCoherentTheoremA
+import Oka.Analytification.GAGA.ProjectiveLineCoherentTwist
+import Oka.Analytification.GAGA.ProjectiveLineCoherentVanishing
 import Oka.Analytification.GAGA.ProjectiveSpace
 import Oka.Analytification.GAGA.ProjectiveSpaceAlgebraization
 import Oka.Analytification.GAGA.ProjectiveSpaceAn
