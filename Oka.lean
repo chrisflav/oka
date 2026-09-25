@@ -135,7 +135,9 @@ import Oka.AnalyticSpace.Factorisation
 import Oka.AnalyticSpace.Finite
 import Oka.AnalyticSpace.FiniteEtaleBaseChange
 import Oka.AnalyticSpace.FiniteEtaleOver
+import Oka.AnalyticSpace.FiniteEtalePushforwardCoherent
 import Oka.AnalyticSpace.FiniteEtaleStableUnderBaseChange
+import Oka.AnalyticSpace.FinitePushforwardCoherent
 import Oka.AnalyticSpace.FundamentalGroup
 import Oka.AnalyticSpace.GaloisCategory
 import Oka.AnalyticSpace.GermGlobalDimension
@@ -155,6 +157,7 @@ import Oka.AnalyticSpace.LocalAtTarget
 import Oka.AnalyticSpace.LocalFreeResolution
 import Oka.AnalyticSpace.LocalIso
 import Oka.AnalyticSpace.LocalModel
+import Oka.AnalyticSpace.LocalTupleRelations
 import Oka.AnalyticSpace.MonicProjection
 import Oka.AnalyticSpace.MonicSplitting
 import Oka.AnalyticSpace.MonoDirectSummand
@@ -172,6 +175,7 @@ import Oka.AnalyticSpace.PullbackLimit
 import Oka.AnalyticSpace.PullbackModulesStalk
 import Oka.AnalyticSpace.PullbackOpen
 import Oka.AnalyticSpace.PullbackReduction
+import Oka.AnalyticSpace.PushforwardStalkCoherent
 import Oka.AnalyticSpace.QuotientColimit
 import Oka.AnalyticSpace.QuotientCover
 import Oka.AnalyticSpace.Relations
@@ -330,6 +334,7 @@ import Oka.Analytification.RET.Connected
 import Oka.Analytification.RET.ConnectedZeroLocus
 import Oka.Analytification.RET.ES.Algebraize
 import Oka.Analytification.RET.ES.EtaleCriterion
+import Oka.Analytification.RET.ES.FiniteCoherent
 import Oka.Analytification.RET.ES.FinitePushforward
 import Oka.Analytification.RET.ES.FiniteSplitting
 import Oka.Analytification.RET.ES.Kummer
