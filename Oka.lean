@@ -443,6 +443,14 @@ import Oka.Analytification.RET.ES.NormalToSmooth
 import Oka.Analytification.RET.ES.Normalization
 import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.ES.ReflexiveHull
+import Oka.Analytification.RET.ES.Smooth
+import Oka.Analytification.RET.ES.SmoothCompare
+import Oka.Analytification.RET.ES.SmoothExtension
+import Oka.Analytification.RET.ES.SmoothInfinity
+import Oka.Analytification.RET.ES.SmoothRiemann
+import Oka.Analytification.RET.ES.SmoothSections
+import Oka.Analytification.RET.ES.SmoothSetup
+import Oka.Analytification.RET.ES.SmoothStalk
 import Oka.Analytification.RET.EtaleLocalIso
 import Oka.Analytification.RET.Faithful
 import Oka.Analytification.RET.FiniteAnalytification
