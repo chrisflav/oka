@@ -13,8 +13,11 @@ project:
     over ℂ are analytified, and for a proper scheme X over ℂ the three GAGA theorems are proved:
     the comparison maps Hᵠ(X, F) → Hᵠ(X^an, F^an) are bijective for coherent F, analytification is
     fully faithful on coherent sheaves, and every coherent analytic sheaf on X^an is algebraic;
-    equivalently analytification is an equivalence Coh(X) ≌ Coh(X^an). Along the way: the ring of
-    convergent power series is a Noetherian regular UFD (Weierstrass preparation and division,
+    equivalently analytification is an equivalence Coh(X) ≌ Coh(X^an). The Riemann existence
+    theorem is proved: for every scheme X locally of finite type over ℂ, analytification is an
+    equivalence between finite étale covers of X and finite étale covers of X^an with separated
+    structure map, via a formalisation of the Grauert–Remmert extension theorem. Along the way:
+    the ring of convergent power series is a Noetherian regular UFD (Weierstrass preparation and division,
     Rückert basis theorem), the hard half of Rückert's Nullstellensatz, Cartan's Theorem B on
     product domains, Cartan–Serre finiteness on ℙⁿ, Chow's lemma, and relative Serre vanishing.
   authors:
@@ -50,11 +53,24 @@ sources:
     authors: ["Alexander Grothendieck", "Michèle Raynaud"]
     id: "arXiv:math/0206203"
     type: "book"
-    location: "Exposé XII, §4"
+    location: "Exposé XII, §4 and §5"
     relationship: "adapts"
     note: >-
       The reduction of GAGA for proper schemes to the projective case via Chow's lemma follows
-      the strategy of SGA 1 XII §4, with the changes listed under fidelity.divergences.
+      the strategy of SGA 1 XII §4, with the changes listed under fidelity.divergences. The
+      Riemann existence theorem follows the overall strategy of SGA 1 XII §5.
+    author_endorsement: "n/a"
+  - title: "Komplexe Räume"
+    authors: ["Hans Grauert", "Reinhold Remmert"]
+    id: "https://eudml.org/doc/160651"
+    type: "article"
+    location: "Math. Ann. 136 (1958), 245-318, §§11-14"
+    relationship: "adapts"
+    note: >-
+      The extension of finite étale covers across hypersurfaces (coherence of the sheaf of
+      bounded sections) follows the Grauert–Remmert route through ℙ¹-caps, Puiseux expansions
+      with parameters and blow-ups of codimension-2 centres, with the changes listed under
+      fidelity.divergences.
     author_endorsement: "n/a"
 
 related_formalizations: []
@@ -67,8 +83,8 @@ status:
   scope: >-
     Oka's coherence theorem for arbitrary complex analytic spaces, and Serre's GAGA (all three
     comparison theorems and the equivalence of categories of coherent sheaves) for proper schemes
-    over ℂ, proved from Lean's three standard axioms. Partial results towards the Riemann
-    existence theorem (analytification of finite étale morphisms) are included.
+    over ℂ, and the Riemann existence theorem for all schemes locally of finite type over ℂ,
+    proved from Lean's three standard axioms.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Classical.choice", "Quot.sound"]
@@ -100,6 +116,11 @@ status:
       literature_dependencies: []
     - declaration: "LocalOkaRing.mem_radical_span_of_eventually"
       file: "Oka/Nullstellensatz/Germ.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "ComplexAnalytic.riemannExistenceTheoremEquiv"
+      file: "Oka/Analytification/RET/RiemannExistence.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       literature_dependencies: []
@@ -138,7 +159,13 @@ fidelity:
     algebraic syzygies (no Grauert direct image theorem), and essential surjectivity avoids the
     comparison of Ext¹ groups by an Artin–Rees embedding argument combined with GAGA-2 and
     Rückert's Nullstellensatz. The Nullstellensatz is proved for the zero locus of a finite
-    generating family of an ideal.
+    generating family of an ideal. For the Riemann existence theorem, finite étale covers of X^an
+    are required to have separated structure map (otherwise the statement is false). The
+    Grauert–Remmert extension is proved without Oka's normalisation theorem and without a
+    primitive element: coherence of the sheaf of bounded sections follows from a reflexive-hull
+    criterion, generation by sections obtained from relative Theorem A on the ℙ¹-cap, a Plücker
+    lemma with Levi-type common denominators, Lagrange interpolation, and the Noether property of
+    coherent sheaves.
 
 review:
   status: "unchecked"
@@ -166,6 +193,15 @@ alignment:
     - source: "SGA 1, Exposé XII, Théorème 4.4 (GAGA for proper schemes)"
       lean: "ComplexAnalytic.gagaFull_proper, ComplexAnalytic.gagaEquivalenceOfIsProperℂ"
       module: "Oka/Analytification/GAGA/Proper/Equivalence.lean"
+      status: "proved"
+    - source: "SGA 1, Exposé XII, Théorème 5.1 (Riemann existence theorem)"
+      lean: "ComplexAnalytic.riemannExistenceTheorem, ComplexAnalytic.riemannExistenceTheoremEquiv"
+      module: "Oka/Analytification/RET/RiemannExistence.lean"
+      status: "proved"
+      note: "Covers of X^an are required to have separated structure map."
+    - source: "Grauert–Remmert, Komplexe Räume, Satz 33 (extension of coverings), local form"
+      lean: "ComplexAnalytic.BoundedSections.isCoherent_boundedModule_of_hasThinComplement"
+      module: "Oka/Analytification/RET/ES/CapExtension.lean"
       status: "proved"
 
 acknowledgements: "Built on Mathlib (Apache-2.0)."
