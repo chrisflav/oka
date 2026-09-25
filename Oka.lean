@@ -103,8 +103,10 @@ import Oka.Analytic.Laurent.Basic
 import Oka.Analytic.Laurent.Several
 import Oka.Analytic.OkaRingDifferentiable
 import Oka.Analytic.ParametricCircleIntegral
+import Oka.Analytic.Puiseux
 import Oka.Analytic.RiemannExtension
 import Oka.Analytic.RiemannExtensionOkaRing
+import Oka.Analytic.SimpleRootCover
 import Oka.AnalyticSpace.AffineProduct
 import Oka.AnalyticSpace.AffineProductOpen
 import Oka.AnalyticSpace.Basic
