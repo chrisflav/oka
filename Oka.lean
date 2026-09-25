@@ -88,6 +88,7 @@ import Oka.Analysis.Calculus.Implicit
 import Oka.Analysis.Complex.CoveringMap
 import Oka.Analysis.Complex.FundamentalGroup
 import Oka.Analysis.Complex.KummerCover
+import Oka.Analysis.Complex.KummerCoverAnnulus
 import Oka.Analysis.Complex.KummerCoverPi
 import Oka.Analysis.Complex.KummerExtension
 import Oka.Analysis.Complex.KummerExtensionPi
@@ -99,6 +100,7 @@ import Oka.Analytic.DifferentiableTsum
 import Oka.Analytic.DividedDifference
 import Oka.Analytic.Hartogs
 import Oka.Analytic.HartogsRegular
+import Oka.Analytic.HartogsRegularFamily
 import Oka.Analytic.Laurent.Basic
 import Oka.Analytic.Laurent.L1
 import Oka.Analytic.Laurent.L1Holomorphic
@@ -118,6 +120,7 @@ import Oka.Analytic.SimpleRootCover
 import Oka.AnalyticSpace.AffineProduct
 import Oka.AnalyticSpace.AffineProductOpen
 import Oka.AnalyticSpace.Basic
+import Oka.AnalyticSpace.BoundedPushforward
 import Oka.AnalyticSpace.ChartSections
 import Oka.AnalyticSpace.Clopen
 import Oka.AnalyticSpace.ClopenEqLocus
@@ -349,6 +352,10 @@ import Oka.Analytification.RET.ClosedPoints
 import Oka.Analytification.RET.Connected
 import Oka.Analytification.RET.ConnectedZeroLocus
 import Oka.Analytification.RET.ES.Algebraize
+import Oka.Analytification.RET.ES.BoundedSections
+import Oka.Analytification.RET.ES.BoundedSectionsHartogs
+import Oka.Analytification.RET.ES.BoundedSectionsTrace
+import Oka.Analytification.RET.ES.Cap
 import Oka.Analytification.RET.ES.EtaleCriterion
 import Oka.Analytification.RET.ES.FiniteCoherent
 import Oka.Analytification.RET.ES.FinitePushforward
@@ -369,6 +376,7 @@ import Oka.Analytification.RET.ES.LocalModel
 import Oka.Analytification.RET.ES.NilThickening
 import Oka.Analytification.RET.ES.Normalization
 import Oka.Analytification.RET.ES.Reduced
+import Oka.Analytification.RET.ES.ReflexiveHull
 import Oka.Analytification.RET.EtaleLocalIso
 import Oka.Analytification.RET.Faithful
 import Oka.Analytification.RET.FiniteAnalytification
@@ -482,6 +490,7 @@ import Oka.Geometry.RingedSpace.LocallyRingedSpace.PushforwardAcyclic
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PushforwardBaseChangeComp
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PushforwardBaseChangeLocal
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.PushforwardBaseChangeStalk
+import Oka.Geometry.RingedSpace.LocallyRingedSpace.ReflexiveHull
 import Oka.Geometry.RingedSpace.LocallyRingedSpace.RestrictModulesOver
 import Oka.Geometry.RingedSpace.OpenImmersion
 import Oka.Geometry.RingedSpace.PresheafedSpace.Double
