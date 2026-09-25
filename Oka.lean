@@ -82,6 +82,7 @@ import Oka.AlgebraicGeometry.ProjectiveSpace.TwistAlongMul
 import Oka.AlgebraicGeometry.ProjectiveSpace.TwistCohomology
 import Oka.AlgebraicGeometry.ProjectiveSpace.TwistSections
 import Oka.AlgebraicGeometry.ProjectiveSpace.Vanishing
+import Oka.AlgebraicGeometry.SmoothLocus
 import Oka.AlgebraicGeometry.Spec
 import Oka.AlgebraicTopology.SimplexCochain
 import Oka.Analysis.Calculus.Implicit
@@ -456,6 +457,7 @@ import Oka.Analytification.RET.ES.Smooth
 import Oka.Analytification.RET.ES.SmoothCompare
 import Oka.Analytification.RET.ES.SmoothExtension
 import Oka.Analytification.RET.ES.SmoothInfinity
+import Oka.Analytification.RET.ES.SmoothLocus
 import Oka.Analytification.RET.ES.SmoothRiemann
 import Oka.Analytification.RET.ES.SmoothSections
 import Oka.Analytification.RET.ES.SmoothSetup
@@ -623,6 +625,7 @@ import Oka.RingTheory.NormalDepthTwo
 import Oka.RingTheory.Polynomial.ProjectiveDimension
 import Oka.RingTheory.Regular.ChangeOfRings
 import Oka.RingTheory.RingHom.FaithfullyFlat
+import Oka.RingTheory.SmoothCodimOne
 import Oka.RingTheory.TraceEmbedding
 import Oka.SetTheory.Cardinal.Finite
 import Oka.StalkEquiv
