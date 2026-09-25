@@ -357,6 +357,8 @@ import Oka.Analytification.RET.ES.BoundedSectionsHartogs
 import Oka.Analytification.RET.ES.BoundedSectionsTrace
 import Oka.Analytification.RET.ES.Cap
 import Oka.Analytification.RET.ES.EtaleCriterion
+import Oka.Analytification.RET.ES.Evaluation
+import Oka.Analytification.RET.ES.EvaluationCramer
 import Oka.Analytification.RET.ES.FiniteCoherent
 import Oka.Analytification.RET.ES.FinitePushforward
 import Oka.Analytification.RET.ES.FiniteSplitting
