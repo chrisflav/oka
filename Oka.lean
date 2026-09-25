@@ -104,6 +104,11 @@ import Oka.Analytic.Laurent.L1
 import Oka.Analytic.Laurent.L1Holomorphic
 import Oka.Analytic.Laurent.Several
 import Oka.Analytic.Laurent.Toeplitz
+import Oka.Analytic.LeviDirection
+import Oka.Analytic.LeviExtension
+import Oka.Analytic.LeviHankel
+import Oka.Analytic.LeviMoments
+import Oka.Analytic.LeviRegular
 import Oka.Analytic.OkaRingDifferentiable
 import Oka.Analytic.ParametricCircleIntegral
 import Oka.Analytic.Puiseux
