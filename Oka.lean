@@ -351,6 +351,7 @@ import Oka.Analytification.RET.ES.Local
 import Oka.Analytification.RET.ES.LocalGlue
 import Oka.Analytification.RET.ES.LocalModel
 import Oka.Analytification.RET.ES.NilThickening
+import Oka.Analytification.RET.ES.Normalization
 import Oka.Analytification.RET.ES.Reduced
 import Oka.Analytification.RET.EtaleLocalIso
 import Oka.Analytification.RET.Faithful
@@ -490,6 +491,7 @@ import Oka.RenameIndex
 import Oka.RingTheory.AdicCompletion.Algebra
 import Oka.RingTheory.EtaleNilpotentLift
 import Oka.RingTheory.Filtration
+import Oka.RingTheory.FiniteNormalization
 import Oka.RingTheory.Finiteness.Basic
 import Oka.RingTheory.Finiteness.Ideal
 import Oka.RingTheory.Flat.Descent
@@ -501,6 +503,7 @@ import Oka.RingTheory.Localization.Away.Basic
 import Oka.RingTheory.Localization.Cech
 import Oka.RingTheory.Localization.CechRadical
 import Oka.RingTheory.Localization.Module
+import Oka.RingTheory.MilnorPatching
 import Oka.RingTheory.MvPolynomial.CechProjective
 import Oka.RingTheory.MvPolynomial.CechProjectiveAway
 import Oka.RingTheory.MvPolynomial.HomogeneousLocalization
