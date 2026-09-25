@@ -19,5 +19,8 @@ Authors: Yuichiro Hoshi, Junnosuke Koizumi, Christian Merten.
   coherent sheaves on `X` and coherent analytic sheaves on `X^an`
   (`ComplexAnalytic.gagaEquivalenceOfIsProperℂ`). The proof reduces to the projective case via
   Chow's lemma and uses Rückert's Nullstellensatz.
-* **Towards the Riemann existence theorem** (`Oka/Analytification/RET/`): analytification sends
-  finite étale morphisms to finite étale maps and is faithful on finite étale covers.
+* **The Riemann existence theorem** (`ComplexAnalytic.riemannExistenceTheoremEquiv`,
+  `Oka/Analytification/RET/RiemannExistence.lean`): for every scheme `X` locally of finite type
+  over `ℂ`, analytification is an equivalence between finite étale covers of `X` and finite étale
+  covers of `X^an` with separated structure map. The proof extends covers across boundary divisors
+  by a formalisation of the Grauert–Remmert extension theorem and algebraises them with GAGA.
