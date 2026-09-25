@@ -356,6 +356,13 @@ import Oka.Analytification.RET.ES.BoundedSections
 import Oka.Analytification.RET.ES.BoundedSectionsHartogs
 import Oka.Analytification.RET.ES.BoundedSectionsTrace
 import Oka.Analytification.RET.ES.Cap
+import Oka.Analytification.RET.ES.Codim2.BlowupChart
+import Oka.Analytification.RET.ES.Codim2.ContactOrder
+import Oka.Analytification.RET.ES.Codim2.GraphCharts
+import Oka.Analytification.RET.ES.Codim2.KummerMonomial
+import Oka.Analytification.RET.ES.Codim2.NormalCrossingsBasis
+import Oka.Analytification.RET.ES.Codim2.NormalCrossingsCover
+import Oka.Analytification.RET.ES.Codim2.NormalCrossingsLocal
 import Oka.Analytification.RET.ES.EtaleCriterion
 import Oka.Analytification.RET.ES.Evaluation
 import Oka.Analytification.RET.ES.EvaluationCramer
