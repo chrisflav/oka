@@ -21,3 +21,19 @@ rev = "v4.32.0"
 
 [[lean_lib]]
 name = "Oka"
+
+# The modular `j`-function with its fibres, and the lattice uniformisation of Weierstrass curves
+# over `ℂ`: used by `Oka/Uniformization/` (uniformisation of once-punctured elliptic curves).
+[[require]]
+name = "heights"
+git = "https://github.com/lana-agents/heights.git"
+rev = "3539e2a12dd3470c057a4eb531dc3fd627d4c97b"
+
+# The étale fundamental group of a scheme (`AlgebraicGeometry.FiniteEtale.galoisCategory`,
+# `AlgebraicGeometry.FiniteEtale.fiber`): the algebraic side of the comparison theorem in
+# `Oka/Analytification/Pi1/`. Pinned at `wp-pi1-warnings` (ca7def9, the commit the IUT development
+# uses, plus a cosmetic commit that makes pi1 build under `--wfail`).
+[[require]]
+name = "pi1"
+git = "https://github.com/lana-agents/pi1"
+rev = "4996dc3480421e96d6943095e5bceeb6051b3a65"

@@ -20,6 +20,13 @@ project:
     the ring of convergent power series is a Noetherian regular UFD (Weierstrass preparation and division,
     Rückert basis theorem), the hard half of Rückert's Nullstellensatz, Cartan's Theorem B on
     product domains, Cartan–Serre finiteness on ℙⁿ, Chow's lemma, and relative Serre vanishing.
+    The comparison theorem identifies the étale fundamental group of every connected scheme locally
+    of finite type over ℂ with the profinite completion of the topological fundamental group of its
+    analytification; local contractibility of X^an is proved by Łojasiewicz's gradient-flow
+    retraction from the Łojasiewicz gradient inequality. For use by other lana-agents projects the
+    repository also proves Serre's finiteness theorem on projective space over a noetherian ring,
+    Zariski's connectedness theorem over a complete discrete valuation ring, and the uniformisation
+    of once-punctured elliptic curves over ℂ together with the commensurator statement R3.
   authors:
     - "Claude (Anthropic)"
     - "Yuichiro Hoshi"
@@ -73,7 +80,23 @@ sources:
       fidelity.divergences.
     author_endorsement: "n/a"
 
-related_formalizations: []
+related_formalizations:
+  - id: "https://github.com/lana-agents/pi1"
+    relationship: "builds-on"
+    note: >-
+      The étale fundamental group of a scheme (AlgebraicGeometry.FiniteEtale.galoisCategory,
+      AlgebraicGeometry.FiniteEtale.fiber), the algebraic side of the π₁ comparison theorem.
+  - id: "https://github.com/lana-agents/heights"
+    relationship: "builds-on"
+    note: >-
+      The modular j-function and the lattice parametrisation of Weierstrass curves over ℂ, used
+      in Oka/Uniformization/.
+  - id: "https://github.com/lana-agents/tempered-fundamental-groups"
+    relationship: "other"
+    note: "Downstream consumer of Serre finiteness and Zariski's connectedness theorem."
+  - id: "https://github.com/lana-agents/iut"
+    relationship: "other"
+    note: "Downstream consumer (through its dependencies)."
 
 classification:
   arxiv: ["math.CV", "math.AG"]
@@ -83,8 +106,12 @@ status:
   scope: >-
     Oka's coherence theorem for arbitrary complex analytic spaces, and Serre's GAGA (all three
     comparison theorems and the equivalence of categories of coherent sheaves) for proper schemes
-    over ℂ, and the Riemann existence theorem for all schemes locally of finite type over ℂ,
-    proved from Lean's three standard axioms.
+    over ℂ, the Riemann existence theorem and the comparison π₁ᵉᵗ(X) ≅ π₁(X^an)^ for all
+    (connected) schemes locally of finite type over ℂ, local contractibility of X^an via the
+    Łojasiewicz gradient inequality, Serre's finiteness theorem on ℙⁿ over a noetherian ring,
+    Zariski's connectedness theorem over a complete discrete valuation ring, and the
+    uniformisation of once-punctured elliptic curves over ℂ, proved from Lean's three standard
+    axioms.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Classical.choice", "Quot.sound"]
@@ -129,6 +156,41 @@ status:
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       literature_dependencies: []
+    - declaration: "ComplexAnalytic.etaleFundamentalGroupEquivCompletion"
+      file: "Oka/Analytification/Pi1/General.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "ComplexAnalytic.locallyContractibleSpace_analytification"
+      file: "Oka/Analytification/Pi1/General.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "MvPolynomial.exists_lojasiewicz_gradient"
+      file: "Oka/Geometry/RealAlgebraic/Lojasiewicz.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "AlgebraicGeometry.ProjectiveSpace.cechFinite_of_isCoherent"
+      file: "Oka/AlgebraicGeometry/ProjectiveSpace/SerreFiniteness.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "AlgebraicGeometry.ProjectiveSpace.isPreconnected_closedFibre"
+      file: "Oka/AlgebraicGeometry/ProjectiveSpace/ZariskiConnected.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "Uniformization.uniformization_oncePunctured"
+      file: "Oka/Uniformization/OncePunctured.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "Uniformization.Peripheral.commensurator_eq_pmDeck_or"
+      file: "Oka/Uniformization/R3.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
 
 automation:
   methods:
@@ -137,17 +199,19 @@ automation:
         The statement and the proof of Oka's coherence lemma on open subsets of ℂⁿ (`oka`,
         Oka/Statement.lean) were written by hand.
     - method: "agent"
-      models: ["claude-fable-5", "claude-opus-5", "claude-opus-5-5"]
+      models: ["claude-fable-5", "claude-opus-4-8", "claude-opus-5", "claude-opus-5-5"]
       framework: "Claude Code"
       tool_setup: >-
-        Claude Code agents working on the repository with Lean, Lake and the project CI
-        (`lake build --wfail`, Batteries environment linters), with subagents for parallel stages.
+        orchestra for running the agents, taxis for project management, and Claude (Claude Code) as the
+        coding agent; Lean/Lake builds with `lake build --wfail`.
       prompting_notes: >-
         Apart from Oka's coherence lemma, the formalization was carried out completely by Claude
-        (Fable 5, Opus 5 and Opus 5.5), following lecture notes by Eberhard Freitag for Oka's
-        theorem. Human input consisted of high-level task descriptions and scope decisions.
+        (Fable 5, Opus 4.8, Opus 5 and Opus 5.5), following lecture notes by Eberhard Freitag for
+        Oka's theorem. Human input consisted of high-level task descriptions and scope decisions.
   notes: >-
-    Everything except the statement and proof of Oka's coherence lemma was formalised by Claude.
+    Agents were run with orchestra; project management (issues, status) was done in taxis;
+    Claude was the coding agent. Everything except the statement and proof of Oka's coherence
+    lemma was formalised by Claude.
 
 fidelity:
   divergences: >-
@@ -168,12 +232,17 @@ fidelity:
     coherent sheaves.
 
 review:
-  status: "unchecked"
-  reviewers: []
+  status: "agent-reviewed"
+  reviewers: ["Claude (Anthropic)"]
   notes: >-
-    All results are machine-checked by the Lean kernel; the main theorems depend only on propext,
-    Classical.choice and Quot.sound. The formal statements have not been independently reviewed
-    by a human beyond the hand-written statement of Oka's coherence lemma.
+    The formalization has only been reviewed by Claude; it has not been reviewed by a human.
+    All results are machine-checked by the Lean kernel (axioms as listed under status). The axioms
+    were checked with `#print axioms` on built checkouts of this code for all main results (for
+    the two uniformisation results, a checkout just before a 6-line addition to
+    Oka/Uniformization/Depth.lean). For etaleFundamentalGroupEquivCompletion,
+    locallyContractibleSpace_analytification and exists_lojasiewicz_gradient, `#print axioms` was
+    run on 2026-10-09 in a built checkout at 192edb0, an ancestor of this revision; the repository
+    contains no `sorry`, `axiom` or `opaque` declaration (checked by grep).
 
 alignment:
   namespace: "ComplexAnalytic"
@@ -202,6 +271,22 @@ alignment:
     - source: "Grauert–Remmert, Komplexe Räume, Satz 33 (extension of coverings), local form"
       lean: "ComplexAnalytic.BoundedSections.isCoherent_boundedModule_of_hasThinComplement"
       module: "Oka/Analytification/RET/ES/CapExtension.lean"
+      status: "proved"
+    - source: "SGA 1, Exposé XII, Corollaire 5.2 (π₁ᵉᵗ is the profinite completion of π₁ of X^an)"
+      lean: "ComplexAnalytic.etaleFundamentalGroupEquivCompletion"
+      module: "Oka/Analytification/Pi1/General.lean"
+      status: "proved"
+    - source: "Łojasiewicz gradient inequality for real polynomials"
+      lean: "MvPolynomial.exists_lojasiewicz_gradient"
+      module: "Oka/Geometry/RealAlgebraic/Lojasiewicz.lean"
+      status: "proved"
+    - source: "Serre's finiteness theorem for coherent sheaves on ℙⁿ (Čech cohomology)"
+      lean: "AlgebraicGeometry.ProjectiveSpace.cechFinite_of_isCoherent"
+      module: "Oka/AlgebraicGeometry/ProjectiveSpace/SerreFiniteness.lean"
+      status: "proved"
+    - source: "Zariski's connectedness theorem (closed fibre over a complete DVR)"
+      lean: "AlgebraicGeometry.ProjectiveSpace.isPreconnected_closedFibre"
+      module: "Oka/AlgebraicGeometry/ProjectiveSpace/ZariskiConnected.lean"
       status: "proved"
 
 acknowledgements: "Built on Mathlib (Apache-2.0)."

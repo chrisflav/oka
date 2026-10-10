@@ -38,8 +38,9 @@ fi
 # artifacts.
 lake exe cache get || exit 1
 
-# Verify all .lean files are imported by the root module `Oka.lean`.
-lake exe mk_all --lib Oka --git --check || exit 1
+# Verify all .lean files are imported by the root module `Oka.lean`: `mk_all --check` on the
+# import list below the root module's copyright header (`scripts/mk_all.sh` documents itself).
+bash scripts/mk_all.sh Oka --check || exit 1
 
 # Verify everything builds, and that it builds without warnings.
 lake build --wfail || exit 1
